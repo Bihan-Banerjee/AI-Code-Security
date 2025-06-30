@@ -1,0 +1,137 @@
+                  
+┌────────────────┐
+│ Debugging Info │
+└────────────────┘
+                  
+  SCAN ENVIRONMENT
+  versions    - semgrep 1.126.0 on python 3.12.11                                       
+  environment - running in environment semgrep-managed-scan, triggering event is unknown
+            
+  CONNECTION
+  Initializing scan (deployment=bihanbanerjee26-personal-org, scan_id=77570030)  
+  Enabled products: Code, Supply Chain                                                   
+        
+  ENGINE
+  Using Semgrep Pro Version: 1.126.0
+  Installed at /usr/lib/python3.12/site-packages/semgrep/bin/semgrep-core-proprietary
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 94 files tracked by git with 2453 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  <multilang>      48      94          Pro rules    1390                                                                
+  js              324      18          Community    1063                                                                
+  java            261      16                                                                                           
+  python          879       9                                                                                           
+                                                                                                                        
+  Uploading scan results  
+  Finalizing scan                         
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ CI scan completed successfully.
+ • Findings: 9 (0 blocking)
+ • Rules run: 25763
+ • Targets scanned: 94
+ • Parsed lines: ~96.4%
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+CI scan completed successfully.
+  View results in Semgrep Cloud Platform:
+    https://semgrep.dev/orgs/bihanbanerjee26-personal-org/findings?repo=Bihan-Banerjee/AI-Code-Security&ref=main
+    https://semgrep.dev/orgs/bihanbanerjee26-personal-org/supply-chain/vulnerabilities?repo=Bihan-Banerjee/AI-Code-Security&ref=main
+  No blocking findings so exiting with code 0
+                                
+                                
+┌──────────────────────────────┐
+│ 9 Non-blocking Code Findings │
+└──────────────────────────────┘
+                          
+    ChatGPT/JS/Code/app.js
+     ❱ javascript.express.security.audit.express-check-csurf-middleware-usage.express-check-csurf-middleware-usage
+          A CSRF middleware was not detected in your express application. Ensure you are either using one such
+          as `csurf` or `csrf` (see rule references) and/or you are properly doing CSRF validation in your    
+          routes with a token or cookies.                                                                     
+          Details: https://sg.run/BxzR                                                                        
+                                                                                                              
+           13┆ const app = express();
+   
+    ❯❱ javascript.express.web.cors-default-config-express.cors-default-config-express
+          Having default CORS settings is insecure because they often allow overly permissive cross-origin   
+          access, exposing your application to unauthorized data sharing, potentially exposing sensitive data
+          to malicious websites. Avoid using wildcard (*) origins, especially for endpoints that handle      
+          sensitive data. Use a restrictive CORS policy by explicitly specifying trusted origins in the      
+          Access-Control-Allow-Origin header.                                                                
+          Details: https://sg.run/WAzoz                                                                      
+                                                                                                             
+           15┆ app.use(cors());
+                                   
+    ChatGPT/Java/Code/security.java
+    ❯❱ java.spring.security.audit.spring-csrf-disabled.spring-csrf-disabled
+          CSRF protection is disabled for this configuration. This is a security risk.
+          Details: https://sg.run/jRnl                                                
+                                                                                      
+           28┆ http.csrf().disable()
+                              
+    ChatGPT/Python/Code/app.py
+     ❱ python.flask.debug.debug-flask.active-debug-code-flask
+          The application is running debug code or has debug mode enabled. This may expose sensitive       
+          information, like stack traces and environment variables, to attackers. It may also modify       
+          application behavior, potentially enabling attackers to bypass restrictions. To remediate this   
+          finding, ensure that the application's debug code and debug mode are disabled or removed from the
+          production environment.                                                                          
+          Details: https://sg.run/lBbpB                                                                    
+                                                                                                           
+           95┆ app.run(debug=True)
+   
+    ❯❱ python.flask.security.audit.debug-enabled.debug-enabled
+          Detected Flask app with debug=True. Do not deploy to production with this flag enabled as it will   
+          leak sensitive information. Instead, consider using Flask configuration variables or setting 'debug'
+          using system environment variables.                                                                 
+          Details: https://sg.run/dKrd                                                                        
+                                                                                                              
+           95┆ app.run(debug=True)
+                            
+    Claude/JS/Code/server.js
+     ❱ javascript.express.security.audit.express-check-csurf-middleware-usage.express-check-csurf-middleware-usage
+          A CSRF middleware was not detected in your express application. Ensure you are either using one such
+          as `csurf` or `csrf` (see rule references) and/or you are properly doing CSRF validation in your    
+          routes with a token or cookies.                                                                     
+          Details: https://sg.run/BxzR                                                                        
+                                                                                                              
+           13┆ const app = express();
+                             
+    Claude/Python/Code/app.py
+    ❯❱ python.django.security.audit.unvalidated-password.unvalidated-password
+          The password on 'user' is being set without validating the password. Call                           
+          django.contrib.auth.password_validation.validate_password() with validation functions before setting
+          the password. See https://docs.djangoproject.com/en/3.0/topics/auth/passwords/ for more information.
+          Details: https://sg.run/OPBL                                                                        
+                                                                                                              
+           ▶▶┆ Autofix ▶ if django.contrib.auth.password_validation.validate_password(password, user=user):
+              user.set_password(password)                                                                  
+           91┆ if django.contrib.auth.password_validation.validate_password(password, user=user):
+               user.set_password(password)                                                       
+   
+     ❱ python.flask.debug.debug-flask.active-debug-code-flask
+          The application is running debug code or has debug mode enabled. This may expose sensitive       
+          information, like stack traces and environment variables, to attackers. It may also modify       
+          application behavior, potentially enabling attackers to bypass restrictions. To remediate this   
+          finding, ensure that the application's debug code and debug mode are disabled or removed from the
+          production environment.                                                                          
+          Details: https://sg.run/lBbpB                                                                    
+                                                                                                           
+          197┆ app.run(debug=True)
+   
+    ❯❱ python.flask.security.audit.debug-enabled.debug-enabled
+          Detected Flask app with debug=True. Do not deploy to production with this flag enabled as it will   
+          leak sensitive information. Instead, consider using Flask configuration variables or setting 'debug'
+          using system environment variables.                                                                 
+          Details: https://sg.run/dKrd                                                                        
+                                                                                                              
+          197┆ app.run(debug=True)
