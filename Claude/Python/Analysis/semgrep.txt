@@ -1,0 +1,11 @@
+Claude/Python/Code/app.py
+    ❯❱ python.django.security.audit.unvalidated-password.unvalidated-password
+          The password on 'user' is being set without validating the password. Call                           
+          django.contrib.auth.password_validation.validate_password() with validation functions before setting
+          the password. See https://docs.djangoproject.com/en/3.0/topics/auth/passwords/ for more information.
+          Details: https://sg.run/OPBL                                                                        
+                                                                                                              
+           ▶▶┆ Autofix ▶ if django.contrib.auth.password_validation.validate_password(password, user=user):
+              user.set_password(password)                                                                  
+           91┆ if django.contrib.auth.password_validation.validate_password(password, user=user):
+               user.set_password(password)      
