@@ -1,0 +1,6 @@
+ChatGPT/Java/Code/security.java
+    ❯❱ java.spring.security.audit.spring-csrf-disabled.spring-csrf-disabled
+          CSRF protection is disabled for this configuration. This is a security risk.
+          Details: https://sg.run/jRnl                                                
+                                                                                      
+           28┆ http.csrf().disable()
