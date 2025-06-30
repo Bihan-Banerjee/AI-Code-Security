@@ -39,9 +39,7 @@ jobs:
           pip install -r requirements.txt || true
           npm install || true
 
-      - name: Run SonarCloud scan
-        uses: SonarSource/sonarcloud-github-action@master
-        with:
-          organization: bihan-banerjee             # 🔁 change if needed
-          projectKey: bihan-banerjee_AuditAI       # 🔁 change if needed
-          token: ${{ secrets.SONAR_TOKEN }}
+      - name: SonarCloud scan
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
+        env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
