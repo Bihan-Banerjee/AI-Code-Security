@@ -1,0 +1,1377 @@
+auth.java:12: error: class AuthappApplication is public, should be declared in a file named AuthappApplication.java
+public class AuthappApplication {
+       ^
+authcontroller.java:18: error: class AuthController is public, should be declared in a file named AuthController.java
+public class AuthController {
+       ^
+authfilter.java:21: error: class JwtAuthFilter is public, should be declared in a file named JwtAuthFilter.java
+public class JwtAuthFilter extends OncePerRequestFilter {
+       ^
+auth_response.java:6: error: class AuthResponseDto is public, should be declared in a file named AuthResponseDto.java
+public class AuthResponseDto {
+       ^
+auth_service.java:31: error: class AuthService is public, should be declared in a file named AuthService.java
+public class AuthService {
+       ^
+config.java:24: error: class SecurityConfig is public, should be declared in a file named SecurityConfig.java
+public class SecurityConfig implements WebMvcConfigurer {
+       ^
+CUDS.java:17: error: class CustomUserDetailsService is public, should be declared in a file named CustomUserDetailsService.java
+public class CustomUserDetailsService implements UserDetailsService {
+       ^
+entry.java:13: error: class JwtAuthEntryPoint is public, should be declared in a file named JwtAuthEntryPoint.java
+public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
+       ^
+GEH.java:16: error: class GlobalExceptionHandler is public, should be declared in a file named GlobalExceptionHandler.java
+public class GlobalExceptionHandler {
+       ^
+login_dto.java:8: error: class LoginDto is public, should be declared in a file named LoginDto.java
+public class LoginDto {
+       ^
+reg_dto.java:9: error: class RegisterDto is public, should be declared in a file named RegisterDto.java
+public class RegisterDto {
+       ^
+role.java:13: error: class Role is public, should be declared in a file named Role.java
+public class Role {
+       ^
+role_repo.java:8: error: interface RoleRepository is public, should be declared in a file named RoleRepository.java
+public interface RoleRepository extends JpaRepository<Role, Long> {
+       ^
+user.java:19: error: class User is public, should be declared in a file named User.java
+public class User {
+       ^
+usercontroller.java:16: error: class UserController is public, should be declared in a file named UserController.java
+public class UserController {
+       ^
+userdto.java:8: error: class UserDto is public, should be declared in a file named UserDto.java
+public class UserDto {
+       ^
+userservice.java:13: error: class UserService is public, should be declared in a file named UserService.java
+public class UserService {
+       ^
+user_repo.java:7: error: interface UserRepository is public, should be declared in a file named UserRepository.java
+public interface UserRepository extends JpaRepository<User, Long> {
+       ^
+util.java:14: error: class JwtUtil is public, should be declared in a file named JwtUtil.java
+public class JwtUtil {
+       ^
+auth.java:3: error: package org.springframework.boot does not exist
+import org.springframework.boot.SpringApplication;
+                               ^
+auth.java:4: error: package org.springframework.boot.autoconfigure does not exist
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+                                             ^
+auth.java:5: error: package org.springframework.context.annotation does not exist
+import org.springframework.context.annotation.Bean;
+                                             ^
+auth.java:6: error: package org.springframework.web.servlet.config.annotation does not exist
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+                                                        ^
+auth.java:7: error: package org.springframework.web.servlet.config.annotation does not exist
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+                                                        ^
+auth.java:11: error: cannot find symbol
+@SpringBootApplication
+ ^
+  symbol: class SpringBootApplication
+auth.java:29: error: cannot find symbol
+    public WebMvcConfigurer corsConfigurer() {
+           ^
+  symbol:   class WebMvcConfigurer
+  location: class AuthappApplication
+authcontroller.java:7: error: package jakarta.validation does not exist
+import jakarta.validation.Valid;
+                         ^
+authcontroller.java:8: error: package org.springframework.beans.factory.annotation does not exist
+import org.springframework.beans.factory.annotation.Autowired;
+                                                   ^
+authcontroller.java:9: error: package org.springframework.http does not exist
+import org.springframework.http.HttpStatus;
+                               ^
+authcontroller.java:10: error: package org.springframework.http does not exist
+import org.springframework.http.ResponseEntity;
+                               ^
+authcontroller.java:12: error: package org.springframework.web.multipart does not exist
+import org.springframework.web.multipart.MultipartFile;
+                                        ^
+authcontroller.java:16: error: cannot find symbol
+@RestController
+ ^
+  symbol: class RestController
+authcontroller.java:17: error: cannot find symbol
+@RequestMapping("/api/auth")
+ ^
+  symbol: class RequestMapping
+role.java:4: error: package lombok does not exist
+import lombok.Data;
+             ^
+role.java:5: error: package lombok does not exist
+import lombok.NoArgsConstructor;
+             ^
+role.java:6: error: package lombok does not exist
+import lombok.AllArgsConstructor;
+             ^
+auth_service.java:12: error: package org.springframework.beans.factory.annotation does not exist
+import org.springframework.beans.factory.annotation.Autowired;
+                                                   ^
+auth_service.java:13: error: package org.springframework.beans.factory.annotation does not exist
+import org.springframework.beans.factory.annotation.Value;
+                                                   ^
+auth_service.java:14: error: package org.springframework.security.authentication does not exist
+import org.springframework.security.authentication.AuthenticationManager;
+                                                  ^
+auth_service.java:15: error: package org.springframework.security.authentication does not exist
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+                                                  ^
+auth_service.java:16: error: package org.springframework.security.core does not exist
+import org.springframework.security.core.Authentication;
+                                        ^
+auth_service.java:17: error: package org.springframework.security.core.context does not exist
+import org.springframework.security.core.context.SecurityContextHolder;
+                                                ^
+auth_service.java:18: error: package org.springframework.security.crypto.password does not exist
+import org.springframework.security.crypto.password.PasswordEncoder;
+                                                   ^
+auth_service.java:19: error: package org.springframework.stereotype does not exist
+import org.springframework.stereotype.Service;
+                                     ^
+auth_service.java:20: error: package org.springframework.web.multipart does not exist
+import org.springframework.web.multipart.MultipartFile;
+                                        ^
+auth_service.java:30: error: cannot find symbol
+@Service
+ ^
+  symbol: class Service
+role.java:8: error: cannot find symbol
+@Data
+ ^
+  symbol: class Data
+role.java:9: error: cannot find symbol
+@NoArgsConstructor
+ ^
+  symbol: class NoArgsConstructor
+role.java:10: error: cannot find symbol
+@AllArgsConstructor
+ ^
+  symbol: class AllArgsConstructor
+role.java:11: error: cannot find symbol
+@Entity
+ ^
+  symbol: class Entity
+role.java:12: error: cannot find symbol
+@Table(name = "roles")
+ ^
+  symbol: class Table
+reg_dto.java:3: error: package jakarta.validation.constraints does not exist
+import jakarta.validation.constraints.Email;
+                                     ^
+reg_dto.java:4: error: package jakarta.validation.constraints does not exist
+import jakarta.validation.constraints.NotBlank;
+                                     ^
+reg_dto.java:5: error: package jakarta.validation.constraints does not exist
+import jakarta.validation.constraints.Size;
+                                     ^
+reg_dto.java:6: error: package lombok does not exist
+import lombok.Data;
+             ^
+reg_dto.java:8: error: cannot find symbol
+@Data
+ ^
+  symbol: class Data
+authcontroller.java:26: error: cannot find symbol
+            @RequestParam(value = "profilePic", required = false) MultipartFile profilePic) {
+                                                                  ^
+  symbol:   class MultipartFile
+  location: class AuthController
+authcontroller.java:24: error: cannot find symbol
+    public ResponseEntity<?> registerUser(
+           ^
+  symbol:   class ResponseEntity
+  location: class AuthController
+login_dto.java:3: error: package jakarta.validation.constraints does not exist
+import jakarta.validation.constraints.Email;
+                                     ^
+login_dto.java:4: error: package jakarta.validation.constraints does not exist
+import jakarta.validation.constraints.NotBlank;
+                                     ^
+login_dto.java:5: error: package lombok does not exist
+import lombok.Data;
+             ^
+login_dto.java:7: error: cannot find symbol
+@Data
+ ^
+  symbol: class Data
+authcontroller.java:38: error: cannot find symbol
+    public ResponseEntity<AuthResponseDto> loginUser(@Valid @RequestBody LoginDto loginDto) {
+           ^
+  symbol:   class ResponseEntity
+  location: class AuthController
+auth_response.java:3: error: package lombok does not exist
+import lombok.Data;
+             ^
+auth_response.java:5: error: cannot find symbol
+@Data
+ ^
+  symbol: class Data
+user_repo.java:4: error: package org.springframework.data.jpa.repository does not exist
+import org.springframework.data.jpa.repository.JpaRepository;
+                                              ^
+user_repo.java:7: error: cannot find symbol
+public interface UserRepository extends JpaRepository<User, Long> {
+                                        ^
+  symbol: class JpaRepository
+user.java:4: error: package lombok does not exist
+import lombok.Data;
+             ^
+user.java:5: error: package lombok does not exist
+import lombok.NoArgsConstructor;
+             ^
+user.java:6: error: package lombok does not exist
+import lombok.AllArgsConstructor;
+             ^
+user.java:11: error: cannot find symbol
+@Data
+ ^
+  symbol: class Data
+user.java:12: error: cannot find symbol
+@NoArgsConstructor
+ ^
+  symbol: class NoArgsConstructor
+user.java:13: error: cannot find symbol
+@AllArgsConstructor
+ ^
+  symbol: class AllArgsConstructor
+user.java:14: error: cannot find symbol
+@Entity
+ ^
+  symbol: class Entity
+user.java:15: error: cannot find symbol
+@Table(name = "users", uniqueConstraints = {
+ ^
+  symbol: class Table
+role_repo.java:5: error: package org.springframework.data.jpa.repository does not exist
+import org.springframework.data.jpa.repository.JpaRepository;
+                                              ^
+role_repo.java:8: error: cannot find symbol
+public interface RoleRepository extends JpaRepository<Role, Long> {
+                                        ^
+  symbol: class JpaRepository
+auth_service.java:40: error: cannot find symbol
+    private PasswordEncoder passwordEncoder;
+            ^
+  symbol:   class PasswordEncoder
+  location: class AuthService
+auth_service.java:43: error: cannot find symbol
+    private AuthenticationManager authenticationManager;
+            ^
+  symbol:   class AuthenticationManager
+  location: class AuthService
+util.java:4: error: package io.jsonwebtoken.io does not exist
+import io.jsonwebtoken.io.Decoders;
+                         ^
+util.java:5: error: package io.jsonwebtoken.security does not exist
+import io.jsonwebtoken.security.Keys;
+                               ^
+util.java:6: error: package org.springframework.beans.factory.annotation does not exist
+import org.springframework.beans.factory.annotation.Value;
+                                                   ^
+util.java:7: error: package org.springframework.security.core does not exist
+import org.springframework.security.core.Authentication;
+                                        ^
+util.java:8: error: package org.springframework.stereotype does not exist
+import org.springframework.stereotype.Component;
+                                     ^
+util.java:13: error: cannot find symbol
+@Component
+ ^
+  symbol: class Component
+auth_service.java:51: error: cannot find symbol
+    public String registerUser(RegisterDto registerDto, MultipartFile profilePic) throws IOException {
+                                                        ^
+  symbol:   class MultipartFile
+  location: class AuthService
+util.java:23: error: cannot find symbol
+    public String generateToken(Authentication authentication) {
+                                ^
+  symbol:   class Authentication
+  location: class JwtUtil
+authcontroller.java:11: error: package org.springframework.web.bind.annotation does not exist
+import org.springframework.web.bind.annotation.*;
+^
+util.java:3: error: package io.jsonwebtoken does not exist
+import io.jsonwebtoken.*;
+^
+user.java:3: error: package jakarta.persistence does not exist
+import jakarta.persistence.*;
+^
+role.java:3: error: package jakarta.persistence does not exist
+import jakarta.persistence.*;
+^
+authfilter.java:5: error: package jakarta.servlet does not exist
+import jakarta.servlet.FilterChain;
+                      ^
+authfilter.java:6: error: package jakarta.servlet does not exist
+import jakarta.servlet.ServletException;
+                      ^
+authfilter.java:7: error: package jakarta.servlet.http does not exist
+import jakarta.servlet.http.HttpServletRequest;
+                           ^
+authfilter.java:8: error: package jakarta.servlet.http does not exist
+import jakarta.servlet.http.HttpServletResponse;
+                           ^
+authfilter.java:9: error: package org.springframework.beans.factory.annotation does not exist
+import org.springframework.beans.factory.annotation.Autowired;
+                                                   ^
+authfilter.java:10: error: package org.springframework.security.authentication does not exist
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+                                                  ^
+authfilter.java:11: error: package org.springframework.security.core.context does not exist
+import org.springframework.security.core.context.SecurityContextHolder;
+                                                ^
+authfilter.java:12: error: package org.springframework.security.core.userdetails does not exist
+import org.springframework.security.core.userdetails.UserDetails;
+                                                    ^
+authfilter.java:13: error: package org.springframework.security.web.authentication does not exist
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+                                                      ^
+authfilter.java:14: error: package org.springframework.stereotype does not exist
+import org.springframework.stereotype.Component;
+                                     ^
+authfilter.java:15: error: package org.springframework.util does not exist
+import org.springframework.util.StringUtils;
+                               ^
+authfilter.java:16: error: package org.springframework.web.filter does not exist
+import org.springframework.web.filter.OncePerRequestFilter;
+                                     ^
+authfilter.java:21: error: cannot find symbol
+public class JwtAuthFilter extends OncePerRequestFilter {
+                                   ^
+  symbol: class OncePerRequestFilter
+authfilter.java:20: error: cannot find symbol
+@Component
+ ^
+  symbol: class Component
+
+CUDS.java:5: error: package org.springframework.beans.factory.annotation does not exist
+import org.springframework.beans.factory.annotation.Autowired;
+                                                   ^
+CUDS.java:6: error: package org.springframework.security.core does not exist
+import org.springframework.security.core.GrantedAuthority;
+                                        ^
+CUDS.java:7: error: package org.springframework.security.core.authority does not exist
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+                                                  ^
+CUDS.java:8: error: package org.springframework.security.core.userdetails does not exist
+import org.springframework.security.core.userdetails.UserDetails;
+                                                    ^
+CUDS.java:9: error: package org.springframework.security.core.userdetails does not exist
+import org.springframework.security.core.userdetails.UserDetailsService;
+                                                    ^
+CUDS.java:10: error: package org.springframework.security.core.userdetails does not exist
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+                                                    ^
+CUDS.java:11: error: package org.springframework.stereotype does not exist
+import org.springframework.stereotype.Service;
+                                     ^
+CUDS.java:17: error: cannot find symbol
+public class CustomUserDetailsService implements UserDetailsService {
+                                                 ^
+  symbol: class UserDetailsService
+CUDS.java:16: error: cannot find symbol
+@Service
+ ^
+  symbol: class Service
+authfilter.java:30: error: cannot find symbol
+    protected void doFilterInternal(HttpServletRequest request,
+                                    ^
+  symbol:   class HttpServletRequest
+  location: class JwtAuthFilter
+authfilter.java:31: error: cannot find symbol
+                                    HttpServletResponse response,
+                                    ^
+  symbol:   class HttpServletResponse
+  location: class JwtAuthFilter
+authfilter.java:32: error: cannot find symbol
+                                    FilterChain filterChain) throws ServletException, IOException {
+                                    ^
+  symbol:   class FilterChain
+  location: class JwtAuthFilter
+authfilter.java:32: error: cannot find symbol
+                                    FilterChain filterChain) throws ServletException, IOException {
+                                                                    ^
+  symbol:   class ServletException
+  location: class JwtAuthFilter
+authfilter.java:48: error: cannot find symbol
+    private String getJwtFromRequest(HttpServletRequest request) {
+                                     ^
+  symbol:   class HttpServletRequest
+  location: class JwtAuthFilter
+CUDS.java:23: error: cannot find symbol
+    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+           ^
+  symbol:   class UserDetails
+  location: class CustomUserDetailsService
+CUDS.java:23: error: cannot find symbol
+    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+                                                                         ^
+  symbol:   class UsernameNotFoundException
+  location: class CustomUserDetailsService
+config.java:4: error: package org.springframework.beans.factory.annotation does not exist
+import org.springframework.beans.factory.annotation.Autowired;
+                                                   ^
+config.java:5: error: package org.springframework.context.annotation does not exist
+import org.springframework.context.annotation.Bean;
+                                             ^
+config.java:6: error: package org.springframework.context.annotation does not exist
+import org.springframework.context.annotation.Configuration;
+                                             ^
+config.java:7: error: package org.springframework.http does not exist
+import org.springframework.http.HttpMethod;
+                               ^
+config.java:8: error: package org.springframework.security.authentication does not exist
+import org.springframework.security.authentication.AuthenticationManager;
+                                                  ^
+config.java:9: error: package org.springframework.security.config.annotation.authentication.configuration does not exist
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+                                                                                  ^
+config.java:10: error: package org.springframework.security.config.annotation.method.configuration does not exist
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+                                                                          ^
+config.java:11: error: package org.springframework.security.config.annotation.web.builders does not exist
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+                                                                  ^
+config.java:12: error: package org.springframework.security.config.http does not exist
+import org.springframework.security.config.http.SessionCreationPolicy;
+                                               ^
+config.java:13: error: package org.springframework.security.crypto.bcrypt does not exist
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+                                                 ^
+config.java:14: error: package org.springframework.security.crypto.password does not exist
+import org.springframework.security.crypto.password.PasswordEncoder;
+                                                   ^
+config.java:15: error: package org.springframework.security.web does not exist
+import org.springframework.security.web.SecurityFilterChain;
+                                       ^
+config.java:16: error: package org.springframework.security.web.authentication does not exist
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+                                                      ^
+config.java:17: error: package org.springframework.web.servlet.config.annotation does not exist
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+                                                        ^
+config.java:18: error: package org.springframework.web.servlet.config.annotation does not exist
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+                                                        ^
+config.java:24: error: cannot find symbol
+public class SecurityConfig implements WebMvcConfigurer {
+                                       ^
+  symbol: class WebMvcConfigurer
+config.java:22: error: cannot find symbol
+@Configuration
+ ^
+  symbol: class Configuration
+config.java:23: error: cannot find symbol
+@EnableMethodSecurity
+ ^
+  symbol: class EnableMethodSecurity
+entry.java:3: error: package jakarta.servlet does not exist
+import jakarta.servlet.ServletException;
+                      ^
+entry.java:4: error: package jakarta.servlet.http does not exist
+import jakarta.servlet.http.HttpServletRequest;
+                           ^
+entry.java:5: error: package jakarta.servlet.http does not exist
+import jakarta.servlet.http.HttpServletResponse;
+                           ^
+entry.java:6: error: package org.springframework.security.core does not exist
+import org.springframework.security.core.AuthenticationException;
+                                        ^
+entry.java:7: error: package org.springframework.security.web does not exist
+import org.springframework.security.web.AuthenticationEntryPoint;
+                                       ^
+entry.java:8: error: package org.springframework.stereotype does not exist
+import org.springframework.stereotype.Component;
+                                     ^
+entry.java:13: error: cannot find symbol
+public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
+                                          ^
+  symbol: class AuthenticationEntryPoint
+entry.java:12: error: cannot find symbol
+@Component
+ ^
+  symbol: class Component
+config.java:36: error: cannot find symbol
+    public static PasswordEncoder passwordEncoder() {
+                  ^
+  symbol:   class PasswordEncoder
+  location: class SecurityConfig
+config.java:41: error: cannot find symbol
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+                                                       ^
+  symbol:   class AuthenticationConfiguration
+  location: class SecurityConfig
+config.java:41: error: cannot find symbol
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+           ^
+  symbol:   class AuthenticationManager
+  location: class SecurityConfig
+config.java:46: error: cannot find symbol
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                                                   ^
+  symbol:   class HttpSecurity
+  location: class SecurityConfig
+config.java:46: error: cannot find symbol
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+           ^
+  symbol:   class SecurityFilterChain
+  location: class SecurityConfig
+config.java:63: error: cannot find symbol
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                                    ^
+  symbol:   class ResourceHandlerRegistry
+  location: class SecurityConfig
+entry.java:15: error: cannot find symbol
+    public void commence(HttpServletRequest request,
+                         ^
+  symbol:   class HttpServletRequest
+  location: class JwtAuthEntryPoint
+entry.java:16: error: cannot find symbol
+                         HttpServletResponse response,
+                         ^
+  symbol:   class HttpServletResponse
+  location: class JwtAuthEntryPoint
+entry.java:17: error: cannot find symbol
+                         AuthenticationException authException) throws IOException, ServletException {
+                         ^
+  symbol:   class AuthenticationException
+  location: class JwtAuthEntryPoint
+entry.java:17: error: cannot find symbol
+                         AuthenticationException authException) throws IOException, ServletException {
+                                                                                    ^
+  symbol:   class ServletException
+  location: class JwtAuthEntryPoint
+GEH.java:3: error: package org.springframework.http does not exist
+import org.springframework.http.HttpStatus;
+                               ^
+GEH.java:4: error: package org.springframework.http does not exist
+import org.springframework.http.ResponseEntity;
+                               ^
+GEH.java:5: error: package org.springframework.validation does not exist
+import org.springframework.validation.FieldError;
+                                     ^
+GEH.java:6: error: package org.springframework.web.bind does not exist
+import org.springframework.web.bind.MethodArgumentNotValidException;
+                                   ^
+GEH.java:7: error: package org.springframework.web.bind.annotation does not exist
+import org.springframework.web.bind.annotation.ControllerAdvice;
+                                              ^
+GEH.java:8: error: package org.springframework.web.bind.annotation does not exist
+import org.springframework.web.bind.annotation.ExceptionHandler;
+                                              ^
+GEH.java:9: error: package org.springframework.web.context.request does not exist
+import org.springframework.web.context.request.WebRequest;
+                                              ^
+GEH.java:10: error: package org.springframework.web.multipart does not exist
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+                                        ^
+GEH.java:15: error: cannot find symbol
+@ControllerAdvice
+ ^
+  symbol: class ControllerAdvice
+GEH.java:19: error: cannot find symbol
+    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+                                                                  ^
+  symbol:   class ResourceNotFoundException
+  location: class GlobalExceptionHandler
+GEH.java:19: error: cannot find symbol
+    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+                                                                                                ^
+  symbol:   class WebRequest
+  location: class GlobalExceptionHandler
+GEH.java:19: error: cannot find symbol
+    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+           ^
+  symbol:   class ResponseEntity
+  location: class GlobalExceptionHandler
+GEH.java:24: error: cannot find symbol
+    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
+                                                             ^
+  symbol:   class MethodArgumentNotValidException
+  location: class GlobalExceptionHandler
+GEH.java:24: error: cannot find symbol
+    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
+           ^
+  symbol:   class ResponseEntity
+  location: class GlobalExceptionHandler
+GEH.java:35: error: cannot find symbol
+    public ResponseEntity<String> handleMaxSizeException(MaxUploadSizeExceededException exc) {
+                                                         ^
+  symbol:   class MaxUploadSizeExceededException
+  location: class GlobalExceptionHandler
+GEH.java:35: error: cannot find symbol
+    public ResponseEntity<String> handleMaxSizeException(MaxUploadSizeExceededException exc) {
+           ^
+  symbol:   class ResponseEntity
+  location: class GlobalExceptionHandler
+GEH.java:41: error: cannot find symbol
+    public ResponseEntity<String> handleGlobalException(Exception ex, WebRequest request) {
+                                                                      ^
+  symbol:   class WebRequest
+  location: class GlobalExceptionHandler
+GEH.java:41: error: cannot find symbol
+    public ResponseEntity<String> handleGlobalException(Exception ex, WebRequest request) {
+           ^
+  symbol:   class ResponseEntity
+  location: class GlobalExceptionHandler
+usercontroller.java:5: error: package org.springframework.beans.factory.annotation does not exist
+import org.springframework.beans.factory.annotation.Autowired;
+                                                   ^
+usercontroller.java:6: error: package org.springframework.http does not exist
+import org.springframework.http.HttpStatus;
+                               ^
+usercontroller.java:7: error: package org.springframework.http does not exist
+import org.springframework.http.ResponseEntity;
+                               ^
+usercontroller.java:8: error: package org.springframework.security.core does not exist
+import org.springframework.security.core.Authentication;
+                                        ^
+usercontroller.java:9: error: package org.springframework.security.core.context does not exist
+import org.springframework.security.core.context.SecurityContextHolder;
+                                                ^
+usercontroller.java:10: error: package org.springframework.web.bind.annotation does not exist
+import org.springframework.web.bind.annotation.GetMapping;
+                                              ^
+usercontroller.java:11: error: package org.springframework.web.bind.annotation does not exist
+import org.springframework.web.bind.annotation.RequestMapping;
+                                              ^
+usercontroller.java:12: error: package org.springframework.web.bind.annotation does not exist
+import org.springframework.web.bind.annotation.RestController;
+                                              ^
+usercontroller.java:14: error: cannot find symbol
+@RestController
+ ^
+  symbol: class RestController
+usercontroller.java:15: error: cannot find symbol
+@RequestMapping("/api/user")
+ ^
+  symbol: class RequestMapping
+userservice.java:4: error: cannot find symbol
+import com.example.authapp.exception.ResourceNotFoundException;
+                                    ^
+  symbol:   class ResourceNotFoundException
+  location: package com.example.authapp.exception
+userservice.java:7: error: package org.springframework.beans.factory.annotation does not exist
+import org.springframework.beans.factory.annotation.Autowired;
+                                                   ^
+userservice.java:8: error: package org.springframework.stereotype does not exist
+import org.springframework.stereotype.Service;
+                                     ^
+userservice.java:12: error: cannot find symbol
+@Service
+ ^
+  symbol: class Service
+usercontroller.java:22: error: cannot find symbol
+    public ResponseEntity<UserDto> getUserProfile() {
+           ^
+  symbol:   class ResponseEntity
+  location: class UserController
+userdto.java:3: error: package lombok does not exist
+import lombok.Data;
+             ^
+userdto.java:7: error: cannot find symbol
+@Data
+ ^
+  symbol: class Data
+auth.java:28: error: cannot find symbol
+    @Bean
+     ^
+  symbol:   class Bean
+  location: class AuthappApplication
+authcontroller.java:20: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class AuthController
+authcontroller.java:25: error: cannot find symbol
+            @Valid @ModelAttribute RegisterDto registerDto, // Use @ModelAttribute for form data + file
+             ^
+  symbol:   class Valid
+  location: class AuthController
+authcontroller.java:25: error: cannot find symbol
+            @Valid @ModelAttribute RegisterDto registerDto, // Use @ModelAttribute for form data + file
+                    ^
+  symbol:   class ModelAttribute
+  location: class AuthController
+authcontroller.java:26: error: cannot find symbol
+            @RequestParam(value = "profilePic", required = false) MultipartFile profilePic) {
+             ^
+  symbol:   class RequestParam
+  location: class AuthController
+authcontroller.java:23: error: cannot find symbol
+    @PostMapping("/register")
+     ^
+  symbol:   class PostMapping
+  location: class AuthController
+authcontroller.java:38: error: cannot find symbol
+    public ResponseEntity<AuthResponseDto> loginUser(@Valid @RequestBody LoginDto loginDto) {
+                                                      ^
+  symbol:   class Valid
+  location: class AuthController
+authcontroller.java:38: error: cannot find symbol
+    public ResponseEntity<AuthResponseDto> loginUser(@Valid @RequestBody LoginDto loginDto) {
+                                                             ^
+  symbol:   class RequestBody
+  location: class AuthController
+authcontroller.java:37: error: cannot find symbol
+    @PostMapping("/login")
+     ^
+  symbol:   class PostMapping
+  location: class AuthController
+login_dto.java:9: error: cannot find symbol
+    @NotBlank(message = "Email is required")
+     ^
+  symbol:   class NotBlank
+  location: class LoginDto
+login_dto.java:10: error: cannot find symbol
+    @Email(message = "Invalid email format")
+     ^
+  symbol:   class Email
+  location: class LoginDto
+login_dto.java:13: error: cannot find symbol
+    @NotBlank(message = "Password is required")
+     ^
+  symbol:   class NotBlank
+  location: class LoginDto
+reg_dto.java:10: error: cannot find symbol
+    @NotBlank(message = "Username is required")
+     ^
+  symbol:   class NotBlank
+  location: class RegisterDto
+reg_dto.java:11: error: cannot find symbol
+    @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
+     ^
+  symbol:   class Size
+  location: class RegisterDto
+reg_dto.java:14: error: cannot find symbol
+    @NotBlank(message = "Email is required")
+     ^
+  symbol:   class NotBlank
+  location: class RegisterDto
+reg_dto.java:15: error: cannot find symbol
+    @Email(message = "Invalid email format")
+     ^
+  symbol:   class Email
+  location: class RegisterDto
+reg_dto.java:18: error: cannot find symbol
+    @NotBlank(message = "Password is required")
+     ^
+  symbol:   class NotBlank
+  location: class RegisterDto
+reg_dto.java:19: error: cannot find symbol
+    @Size(min = 6, message = "Password must be at least 6 characters long")
+     ^
+  symbol:   class Size
+  location: class RegisterDto
+user.java:16: error: cannot find symbol
+        @UniqueConstraint(columnNames = {"username"}),
+         ^
+  symbol: class UniqueConstraint
+user.java:17: error: cannot find symbol
+        @UniqueConstraint(columnNames = {"email"})
+         ^
+  symbol: class UniqueConstraint
+auth_service.java:33: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class AuthService
+auth_service.java:36: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class AuthService
+auth_service.java:39: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class AuthService
+auth_service.java:42: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class AuthService
+auth_service.java:45: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class AuthService
+auth_service.java:48: error: cannot find symbol
+    @Value("${file.upload-dir}")
+     ^
+  symbol:   class Value
+  location: class AuthService
+util.java:16: error: cannot find symbol
+    @Value("${app.jwt.secret}")
+     ^
+  symbol:   class Value
+  location: class JwtUtil
+util.java:19: error: cannot find symbol
+    @Value("${app.jwt.expiration-ms}")
+     ^
+  symbol:   class Value
+  location: class JwtUtil
+user.java:20: error: cannot find symbol
+    @Id
+     ^
+  symbol:   class Id
+  location: class User
+user.java:21: error: cannot find symbol
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+     ^
+  symbol:   class GeneratedValue
+  location: class User
+user.java:21: error: cannot find symbol
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+                               ^
+  symbol:   variable GenerationType
+  location: class User
+user.java:28: error: cannot find symbol
+    @Column(name = "profile_pic_path")
+     ^
+  symbol:   class Column
+  location: class User
+user.java:34: error: cannot find symbol
+    @ManyToMany(fetch = FetchType.EAGER)
+     ^
+  symbol:   class ManyToMany
+  location: class User
+user.java:34: error: cannot find symbol
+    @ManyToMany(fetch = FetchType.EAGER)
+                        ^
+  symbol:   variable FetchType
+  location: class User
+user.java:35: error: cannot find symbol
+    @JoinTable(name = "user_roles",
+     ^
+  symbol:   class JoinTable
+  location: class User
+user.java:36: error: cannot find symbol
+            joinColumns = @JoinColumn(name = "user_id"),
+                           ^
+  symbol:   class JoinColumn
+  location: class User
+user.java:37: error: cannot find symbol
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+                                  ^
+  symbol:   class JoinColumn
+  location: class User
+role.java:14: error: cannot find symbol
+    @Id
+     ^
+  symbol:   class Id
+  location: class Role
+role.java:15: error: cannot find symbol
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+     ^
+  symbol:   class GeneratedValue
+  location: class Role
+role.java:15: error: cannot find symbol
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+                               ^
+  symbol:   variable GenerationType
+  location: class Role
+role.java:18: error: cannot find symbol
+    @Enumerated(EnumType.STRING)
+     ^
+  symbol:   class Enumerated
+  location: class Role
+role.java:18: error: cannot find symbol
+    @Enumerated(EnumType.STRING)
+                ^
+  symbol:   variable EnumType
+  location: class Role
+role.java:19: error: cannot find symbol
+    @Column(length = 20)
+     ^
+  symbol:   class Column
+  location: class Role
+authfilter.java:23: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class JwtAuthFilter
+authfilter.java:26: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class JwtAuthFilter
+CUDS.java:19: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class CustomUserDetailsService
+config.java:26: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class SecurityConfig
+config.java:29: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class SecurityConfig
+config.java:32: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class SecurityConfig
+config.java:35: error: cannot find symbol
+    @Bean
+     ^
+  symbol:   class Bean
+  location: class SecurityConfig
+config.java:40: error: cannot find symbol
+    @Bean
+     ^
+  symbol:   class Bean
+  location: class SecurityConfig
+config.java:45: error: cannot find symbol
+    @Bean
+     ^
+  symbol:   class Bean
+  location: class SecurityConfig
+GEH.java:18: error: cannot find symbol
+    @ExceptionHandler(ResourceNotFoundException.class)
+     ^
+  symbol:   class ExceptionHandler
+  location: class GlobalExceptionHandler
+GEH.java:18: error: cannot find symbol
+    @ExceptionHandler(ResourceNotFoundException.class)
+                      ^
+  symbol:   class ResourceNotFoundException
+  location: class GlobalExceptionHandler
+GEH.java:23: error: cannot find symbol
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+     ^
+  symbol:   class ExceptionHandler
+  location: class GlobalExceptionHandler
+GEH.java:23: error: cannot find symbol
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+                      ^
+  symbol:   class MethodArgumentNotValidException
+  location: class GlobalExceptionHandler
+GEH.java:34: error: cannot find symbol
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+     ^
+  symbol:   class ExceptionHandler
+  location: class GlobalExceptionHandler
+GEH.java:34: error: cannot find symbol
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+                      ^
+  symbol:   class MaxUploadSizeExceededException
+  location: class GlobalExceptionHandler
+GEH.java:40: error: cannot find symbol
+    @ExceptionHandler(Exception.class)
+     ^
+  symbol:   class ExceptionHandler
+  location: class GlobalExceptionHandler
+usercontroller.java:18: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class UserController
+usercontroller.java:21: error: cannot find symbol
+    @GetMapping("/profile")
+     ^
+  symbol:   class GetMapping
+  location: class UserController
+userservice.java:15: error: cannot find symbol
+    @Autowired
+     ^
+  symbol:   class Autowired
+  location: class UserService
+auth.java:24: error: cannot find symbol
+        SpringApplication.run(AuthappApplication.class, args);
+        ^
+  symbol:   variable SpringApplication
+  location: class AuthappApplication
+auth.java:30: error: cannot find symbol
+        return new WebMvcConfigurer() {
+                   ^
+  symbol:   class WebMvcConfigurer
+  location: class AuthappApplication
+auth.java:32: error: cannot find symbol
+            public void addCorsMappings(CorsRegistry registry) {
+                                        ^
+  symbol: class CorsRegistry
+auth.java:31: error: method does not override or implement a method from a supertype
+            @Override
+            ^
+authcontroller.java:29: error: cannot find symbol
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
+                       ^
+  symbol:   class ResponseEntity
+  location: class AuthController
+authcontroller.java:29: error: cannot find symbol
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
+                                                 ^
+  symbol:   variable HttpStatus
+  location: class AuthController
+authcontroller.java:31: error: cannot find symbol
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+                       ^
+  symbol:   class ResponseEntity
+  location: class AuthController
+authcontroller.java:31: error: cannot find symbol
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+                                                        ^
+  symbol:   variable HttpStatus
+  location: class AuthController
+authcontroller.java:33: error: cannot find symbol
+            return new ResponseEntity<>("Failed to upload profile picture: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                       ^
+  symbol:   class ResponseEntity
+  location: class AuthController
+authcontroller.java:33: error: cannot find symbol
+            return new ResponseEntity<>("Failed to upload profile picture: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                                                                                               ^
+  symbol:   variable HttpStatus
+  location: class AuthController
+authcontroller.java:40: error: cannot find symbol
+        return new ResponseEntity<>(response, HttpStatus.OK);
+                   ^
+  symbol:   class ResponseEntity
+  location: class AuthController
+authcontroller.java:40: error: cannot find symbol
+        return new ResponseEntity<>(response, HttpStatus.OK);
+                                              ^
+  symbol:   variable HttpStatus
+  location: class AuthController
+auth_service.java:52: error: cannot find symbol
+        if (userRepository.existsByUsername(registerDto.getUsername())) {
+                                                       ^
+  symbol:   method getUsername()
+  location: variable registerDto of type RegisterDto
+auth_service.java:55: error: cannot find symbol
+        if (userRepository.existsByEmail(registerDto.getEmail())) {
+                                                    ^
+  symbol:   method getEmail()
+  location: variable registerDto of type RegisterDto
+auth_service.java:60: error: cannot find symbol
+        user.setUsername(registerDto.getUsername());
+                                    ^
+  symbol:   method getUsername()
+  location: variable registerDto of type RegisterDto
+auth_service.java:61: error: cannot find symbol
+        user.setEmail(registerDto.getEmail());
+                                 ^
+  symbol:   method getEmail()
+  location: variable registerDto of type RegisterDto
+auth_service.java:62: error: cannot find symbol
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+                                                           ^
+  symbol:   method getPassword()
+  location: variable registerDto of type RegisterDto
+auth_service.java:63: error: cannot find symbol
+        user.setBio(registerDto.getBio());
+                               ^
+  symbol:   method getBio()
+  location: variable registerDto of type RegisterDto
+auth_service.java:64: error: cannot find symbol
+        user.setPhoneNumber(registerDto.getPhoneNumber());
+                                       ^
+  symbol:   method getPhoneNumber()
+  location: variable registerDto of type RegisterDto
+auth_service.java:75: error: cannot find symbol
+            user.setProfilePicPath("/uploads/" + fileName); // Store relative path
+                ^
+  symbol:   method setProfilePicPath(String)
+  location: variable user of type User
+auth_service.java:80: error: cannot find symbol
+        user.setRoles(Collections.singleton(roles));
+            ^
+  symbol:   method setRoles(Set<Role>)
+  location: variable user of type User
+auth_service.java:82: error: cannot find symbol
+        userRepository.save(user);
+                      ^
+  symbol:   method save(User)
+  location: variable userRepository of type UserRepository
+auth_service.java:87: error: cannot find symbol
+        Authentication authentication = authenticationManager.authenticate(
+        ^
+  symbol:   class Authentication
+  location: class AuthService
+auth_service.java:88: error: cannot find symbol
+                new UsernamePasswordAuthenticationToken(
+                    ^
+  symbol:   class UsernamePasswordAuthenticationToken
+  location: class AuthService
+auth_service.java:89: error: cannot find symbol
+                        loginDto.getEmail(), // Authenticate by email
+                                ^
+  symbol:   method getEmail()
+  location: variable loginDto of type LoginDto
+auth_service.java:90: error: cannot find symbol
+                        loginDto.getPassword()
+                                ^
+  symbol:   method getPassword()
+  location: variable loginDto of type LoginDto
+auth_service.java:93: error: cannot find symbol
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        ^
+  symbol:   variable SecurityContextHolder
+  location: class AuthService
+util.java:28: error: cannot find symbol
+        return Jwts.builder()
+               ^
+  symbol:   variable Jwts
+  location: class JwtUtil
+util.java:37: error: cannot find symbol
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+               ^
+  symbol:   variable Keys
+  location: class JwtUtil
+util.java:37: error: package Decoders does not exist
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+                                          ^
+util.java:42: error: cannot find symbol
+        Claims claims = Jwts.parserBuilder()
+        ^
+  symbol:   class Claims
+  location: class JwtUtil
+util.java:42: error: cannot find symbol
+        Claims claims = Jwts.parserBuilder()
+                        ^
+  symbol:   variable Jwts
+  location: class JwtUtil
+util.java:53: error: cannot find symbol
+            Jwts.parserBuilder().setSigningKey(key()).build().parse(token);
+            ^
+  symbol:   variable Jwts
+  location: class JwtUtil
+util.java:55: error: cannot find symbol
+        } catch (MalformedJwtException e) {
+                 ^
+  symbol:   class MalformedJwtException
+  location: class JwtUtil
+util.java:57: error: cannot find symbol
+        } catch (ExpiredJwtException e) {
+                 ^
+  symbol:   class ExpiredJwtException
+  location: class JwtUtil
+util.java:59: error: cannot find symbol
+        } catch (UnsupportedJwtException e) {
+                 ^
+  symbol:   class UnsupportedJwtException
+  location: class JwtUtil
+authfilter.java:29: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+authfilter.java:35: error: cannot find symbol
+        if (StringUtils.hasText(token) && jwtUtil.validateToken(token)) {
+            ^
+  symbol:   variable StringUtils
+  location: class JwtAuthFilter
+authfilter.java:38: error: cannot find symbol
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            ^
+  symbol:   class UserDetails
+  location: class JwtAuthFilter
+authfilter.java:39: error: cannot find symbol
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+            ^
+  symbol:   class UsernamePasswordAuthenticationToken
+  location: class JwtAuthFilter
+authfilter.java:39: error: cannot find symbol
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                                                                          ^
+  symbol:   class UsernamePasswordAuthenticationToken
+  location: class JwtAuthFilter
+authfilter.java:42: error: cannot find symbol
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                                               ^
+  symbol:   class WebAuthenticationDetailsSource
+  location: class JwtAuthFilter
+authfilter.java:43: error: cannot find symbol
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            ^
+  symbol:   variable SecurityContextHolder
+  location: class JwtAuthFilter
+authfilter.java:50: error: cannot find symbol
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            ^
+  symbol:   variable StringUtils
+  location: class JwtAuthFilter
+CUDS.java:22: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+CUDS.java:26: error: cannot find symbol
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail)));
+                                               ^
+  symbol:   class UsernameNotFoundException
+  location: class CustomUserDetailsService
+CUDS.java:28: error: cannot find symbol
+        Set<GrantedAuthority> authorities = user.getRoles().stream()
+            ^
+  symbol:   class GrantedAuthority
+  location: class CustomUserDetailsService
+CUDS.java:28: error: cannot find symbol
+        Set<GrantedAuthority> authorities = user.getRoles().stream()
+                                                ^
+  symbol:   method getRoles()
+  location: variable user of type User
+CUDS.java:29: error: cannot find symbol
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                                 ^
+  symbol:   class SimpleGrantedAuthority
+  location: class CustomUserDetailsService
+CUDS.java:32: error: package org.springframework.security.core.userdetails does not exist
+        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+                                                                ^
+CUDS.java:32: error: cannot find symbol
+        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+                                                                          ^
+  symbol:   method getEmail()
+  location: variable user of type User
+CUDS.java:33: error: cannot find symbol
+                user.getPassword(),
+                    ^
+  symbol:   method getPassword()
+  location: variable user of type User
+config.java:37: error: cannot find symbol
+        return new BCryptPasswordEncoder();
+                   ^
+  symbol:   class BCryptPasswordEncoder
+  location: class SecurityConfig
+config.java:50: error: cannot find symbol
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                                                        ^
+  symbol:   variable SessionCreationPolicy
+  location: class SecurityConfig
+config.java:53: error: cannot find symbol
+                         .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll() // Allow access to uploaded files
+                                          ^
+  symbol:   variable HttpMethod
+  location: class SecurityConfig
+config.java:57: error: cannot find symbol
+        http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                                            ^
+  symbol:   class UsernamePasswordAuthenticationFilter
+  location: class SecurityConfig
+config.java:62: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+entry.java:14: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+entry.java:18: error: cannot find symbol
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+                           ^
+  symbol:   variable HttpServletResponse
+  location: class JwtAuthEntryPoint
+GEH.java:20: error: cannot find symbol
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+                   ^
+  symbol:   class ResponseEntity
+  location: class GlobalExceptionHandler
+GEH.java:20: error: cannot find symbol
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+                                                     ^
+  symbol:   variable HttpStatus
+  location: class GlobalExceptionHandler
+GEH.java:27: error: cannot find symbol
+            String fieldName = ((FieldError) error).getField();
+                                 ^
+  symbol:   class FieldError
+  location: class GlobalExceptionHandler
+GEH.java:31: error: cannot find symbol
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+                   ^
+  symbol:   class ResponseEntity
+  location: class GlobalExceptionHandler
+GEH.java:31: error: cannot find symbol
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+                                            ^
+  symbol:   variable HttpStatus
+  location: class GlobalExceptionHandler
+GEH.java:36: error: cannot find symbol
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+                                     ^
+  symbol:   variable HttpStatus
+  location: class GlobalExceptionHandler
+GEH.java:36: error: cannot find symbol
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+               ^
+  symbol:   variable ResponseEntity
+  location: class GlobalExceptionHandler
+GEH.java:45: error: cannot find symbol
+        return new ResponseEntity<>("An internal server error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                   ^
+  symbol:   class ResponseEntity
+  location: class GlobalExceptionHandler
+GEH.java:45: error: cannot find symbol
+        return new ResponseEntity<>("An internal server error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                                                                                             ^
+  symbol:   variable HttpStatus
+  location: class GlobalExceptionHandler
+usercontroller.java:23: error: cannot find symbol
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ^
+  symbol:   class Authentication
+  location: class UserController
+usercontroller.java:23: error: cannot find symbol
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                                        ^
+  symbol:   variable SecurityContextHolder
+  location: class UserController
+usercontroller.java:26: error: cannot find symbol
+        return new ResponseEntity<>(userProfile, HttpStatus.OK);
+                   ^
+  symbol:   class ResponseEntity
+  location: class UserController
+usercontroller.java:26: error: cannot find symbol
+        return new ResponseEntity<>(userProfile, HttpStatus.OK);
+                                                 ^
+  symbol:   variable HttpStatus
+  location: class UserController
+userservice.java:20: error: cannot find symbol
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+                                       ^
+  symbol:   class ResourceNotFoundException
+  location: class UserService
+userservice.java:23: error: cannot find symbol
+        userDto.setId(user.getId());
+                          ^
+  symbol:   method getId()
+  location: variable user of type User
+userservice.java:24: error: cannot find symbol
+        userDto.setUsername(user.getUsername());
+                                ^
+  symbol:   method getUsername()
+  location: variable user of type User
+userservice.java:25: error: cannot find symbol
+        userDto.setEmail(user.getEmail());
+                             ^
+  symbol:   method getEmail()
+  location: variable user of type User
+userservice.java:26: error: cannot find symbol
+        userDto.setProfilePicPath(user.getProfilePicPath());
+                                      ^
+  symbol:   method getProfilePicPath()
+  location: variable user of type User
+userservice.java:27: error: cannot find symbol
+        userDto.setBio(user.getBio());
+                           ^
+  symbol:   method getBio()
+  location: variable user of type User
+userservice.java:28: error: cannot find symbol
+        userDto.setPhoneNumber(user.getPhoneNumber());
+                                   ^
+  symbol:   method getPhoneNumber()
+  location: variable user of type User
+userservice.java:29: error: cannot find symbol
+        userDto.setRoles(user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toSet()));
+                             ^
+  symbol:   method getRoles()
+  location: variable user of type User
+334 errors

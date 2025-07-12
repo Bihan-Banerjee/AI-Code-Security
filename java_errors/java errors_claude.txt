@@ -1,0 +1,23 @@
+dto.java:41: error: class, interface, enum, or record expected
+package com.example.authsystem.dto;
+^
+dto.java:43: error: class, interface, enum, or record expected
+import jakarta.validation.constraints.Email;
+^
+dto.java:44: error: class, interface, enum, or record expected
+import jakarta.validation.constraints.NotBlank;
+^
+dto.java:45: error: class, interface, enum, or record expected
+import jakarta.validation.constraints.Size;
+^
+dto.java:128: error: class, interface, enum, or record expected
+package com.example.authsystem.dto;
+^
+dto.java:188: error: class, interface, enum, or record expected
+package com.example.authsystem.dto;
+^
+dto.java:190: error: class, interface, enum, or record expected
+import java.time.LocalDateTime;
+^
+security.java:90: error: reached end of file while parsing
+8 errors

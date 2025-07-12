@@ -1,0 +1,155 @@
+auth.java:3: error: class AuthController is public, should be declared in a file named AuthController.java
+public class AuthController {
+       ^
+controller.java:3: error: class UserController is public, should be declared in a file named UserController.java
+public class UserController {
+       ^
+dtos.java:1: error: class UserRegisterDto is public, should be declared in a file named UserRegisterDto.java
+public class UserRegisterDto {
+       ^
+dtos.java:12: error: class UserLoginDto is public, should be declared in a file named UserLoginDto.java
+public class UserLoginDto {
+       ^
+dtos.java:20: error: class UserResponseDto is public, should be declared in a file named UserResponseDto.java
+public class UserResponseDto {
+       ^
+repo.java:1: error: interface UserRepository is public, should be declared in a file named UserRepository.java
+public interface UserRepository extends JpaRepository<User, Long> {
+       ^
+user.java:3: error: class User is public, should be declared in a file named User.java
+public class User {
+       ^
+auth.java:1: error: cannot find symbol
+@RestController
+ ^
+  symbol: class RestController
+auth.java:2: error: cannot find symbol
+@RequestMapping("/api/auth")
+ ^
+  symbol: class RequestMapping
+auth.java:5: error: cannot find symbol
+    public ResponseEntity<?> register(@ModelAttribute @Valid UserRegisterDto dto) {
+           ^
+  symbol:   class ResponseEntity
+  location: class AuthController
+auth.java:10: error: cannot find symbol
+    public ResponseEntity<?> login(@RequestBody @Valid UserLoginDto dto) {
+           ^
+  symbol:   class ResponseEntity
+  location: class AuthController
+dtos.java:8: error: cannot find symbol
+    private MultipartFile profileImage;
+            ^
+  symbol:   class MultipartFile
+  location: class UserRegisterDto
+controller.java:1: error: cannot find symbol
+@RestController
+ ^
+  symbol: class RestController
+controller.java:2: error: cannot find symbol
+@RequestMapping("/api/user")
+ ^
+  symbol: class RequestMapping
+controller.java:5: error: cannot find symbol
+    public ResponseEntity<UserResponseDto> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+                                                                                   ^
+  symbol:   class UserDetails
+  location: class UserController
+controller.java:5: error: cannot find symbol
+    public ResponseEntity<UserResponseDto> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+           ^
+  symbol:   class ResponseEntity
+  location: class UserController
+repo.java:1: error: cannot find symbol
+public interface UserRepository extends JpaRepository<User, Long> {
+                                        ^
+  symbol: class JpaRepository
+user.java:1: error: cannot find symbol
+@Entity
+ ^
+  symbol: class Entity
+user.java:2: error: cannot find symbol
+@Table(name = "users")
+ ^
+  symbol: class Table
+repo.java:2: error: cannot find symbol
+    Optional<User> findByUsername(String username);
+    ^
+  symbol:   class Optional
+  location: interface UserRepository
+auth.java:5: error: cannot find symbol
+    public ResponseEntity<?> register(@ModelAttribute @Valid UserRegisterDto dto) {
+                                       ^
+  symbol:   class ModelAttribute
+  location: class AuthController
+auth.java:5: error: cannot find symbol
+    public ResponseEntity<?> register(@ModelAttribute @Valid UserRegisterDto dto) {
+                                                       ^
+  symbol:   class Valid
+  location: class AuthController
+auth.java:4: error: cannot find symbol
+    @PostMapping("/register")
+     ^
+  symbol:   class PostMapping
+  location: class AuthController
+auth.java:10: error: cannot find symbol
+    public ResponseEntity<?> login(@RequestBody @Valid UserLoginDto dto) {
+                                    ^
+  symbol:   class RequestBody
+  location: class AuthController
+auth.java:10: error: cannot find symbol
+    public ResponseEntity<?> login(@RequestBody @Valid UserLoginDto dto) {
+                                                 ^
+  symbol:   class Valid
+  location: class AuthController
+auth.java:9: error: cannot find symbol
+    @PostMapping("/login")
+     ^
+  symbol:   class PostMapping
+  location: class AuthController
+dtos.java:13: error: cannot find symbol
+    @NotBlank
+     ^
+  symbol:   class NotBlank
+  location: class UserLoginDto
+dtos.java:15: error: cannot find symbol
+    @NotBlank
+     ^
+  symbol:   class NotBlank
+  location: class UserLoginDto
+dtos.java:2: error: cannot find symbol
+    @NotBlank
+     ^
+  symbol:   class NotBlank
+  location: class UserRegisterDto
+dtos.java:4: error: cannot find symbol
+    @NotBlank
+     ^
+  symbol:   class NotBlank
+  location: class UserRegisterDto
+controller.java:5: error: cannot find symbol
+    public ResponseEntity<UserResponseDto> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+                                                           ^
+  symbol:   class AuthenticationPrincipal
+  location: class UserController
+controller.java:4: error: cannot find symbol
+    @GetMapping("/me")
+     ^
+  symbol:   class GetMapping
+  location: class UserController
+user.java:4: error: cannot find symbol
+    @Id @GeneratedValue
+     ^
+  symbol:   class Id
+  location: class User
+user.java:4: error: cannot find symbol
+    @Id @GeneratedValue
+         ^
+  symbol:   class GeneratedValue
+  location: class User
+user.java:6: error: cannot find symbol
+    @Column(unique = true, nullable = false)
+     ^
+  symbol:   class Column
+  location: class User
+35 errors

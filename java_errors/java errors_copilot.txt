@@ -1,0 +1,18 @@
+user.java:2: error: class User is public, should be declared in a file named User.java
+public class User {
+       ^
+user.java:1: error: cannot find symbol
+@Entity
+ ^
+  symbol: class Entity
+user.java:3: error: cannot find symbol
+  @Id @GeneratedValue
+   ^
+  symbol:   class Id
+  location: class User
+user.java:3: error: cannot find symbol
+  @Id @GeneratedValue
+       ^
+  symbol:   class GeneratedValue
+  location: class User
+4 errors
