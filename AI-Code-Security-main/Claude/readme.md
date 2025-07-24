@@ -1,1 +1,0 @@
-Claude Sonnet - 4

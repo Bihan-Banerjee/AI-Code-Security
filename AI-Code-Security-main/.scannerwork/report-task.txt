@@ -1,7 +1,0 @@
-organization=bihan-banerjee
-projectKey=bihan-banerjee_AI-Code-Security
-serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.65494
-dashboardUrl=https://sonarcloud.io/dashboard?id=bihan-banerjee_AI-Code-Security
-ceTaskId=AZgSL5tFuzeoVykM3JkW
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZgSL5tFuzeoVykM3JkW
