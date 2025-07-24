@@ -13,10 +13,10 @@ const SecurityHeader = () => {
         </div>
         
         <nav className="flex items-center space-x-6 ml-8">
-          <a href="#scanner" className="text-sm font-medium transition-colors hover:text-primary">
+          <a href="scanner" className="text-sm font-medium transition-colors hover:text-primary">
             Scanner
           </a>
-          <a href="#analyzer" className="text-sm font-medium transition-colors hover:text-primary">
+          <a href="scanner" className="text-sm font-medium transition-colors hover:text-primary">
             Analyzer
           </a>
           <a href="#dashboard" className="text-sm font-medium transition-colors hover:text-primary">
