@@ -1,0 +1,67 @@
+name: Full Security Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    steps:
+    # ✅ 1. Checkout code
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # ✅ 2. Setup Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    # ✅ 3. Install Dependencies
+    - name: Install Python & JS dependencies (optional)
+      run: |
+        pip install bandit
+        pip install -r requirements.txt || true
+        npm install || true
+
+    # ✅ 4. Run Semgrep (for JS + Python)
+    - name: Run Semgrep
+      uses: returntocorp/semgrep-action@v1
+      with:
+        config: 'p/javascript p/python'
+      continue-on-error: true
+
+    # ✅ 5. Run Bandit (Python vulnerabilities)
+    - name: Run Bandit on Python code
+      run: bandit -r . -f json -o bandit-report.json || true
+
+    # ✅ 6. Run TruffleHog (Secret scanning)
+    - name: Run TruffleHog
+      uses: trufflesecurity/trufflehog@main
+      with:
+        scanArguments: '--json .'
+      continue-on-error: true
+
+    # ✅ 7. Run OWASP Dependency-Check
+    - name: Run OWASP Dependency-Check
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: "AI-Code-Security"
+        format: "HTML"
+        out: "reports"
+      continue-on-error: true
+
+    # ✅ 8. Run SonarCloud Scan
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarqube-scan-action@v5.0.0
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

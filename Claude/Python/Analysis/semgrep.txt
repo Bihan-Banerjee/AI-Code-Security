@@ -1,0 +1,29 @@
+Claude/Python/Code/app.py
+    ❯❱ python.django.security.audit.unvalidated-password.unvalidated-password
+          The password on 'user' is being set without validating the password. Call                           
+          django.contrib.auth.password_validation.validate_password() with validation functions before setting
+          the password. See https://docs.djangoproject.com/en/3.0/topics/auth/passwords/ for more information.
+          Details: https://sg.run/OPBL                                                                        
+                                                                                                              
+           ▶▶┆ Autofix ▶ if django.contrib.auth.password_validation.validate_password(password, user=user):
+              user.set_password(password)                                                                  
+           91┆ if django.contrib.auth.password_validation.validate_password(password, user=user):
+               user.set_password(password)                                                       
+   
+     ❱ python.flask.debug.debug-flask.active-debug-code-flask
+          The application is running debug code or has debug mode enabled. This may expose sensitive       
+          information, like stack traces and environment variables, to attackers. It may also modify       
+          application behavior, potentially enabling attackers to bypass restrictions. To remediate this   
+          finding, ensure that the application's debug code and debug mode are disabled or removed from the
+          production environment.                                                                          
+          Details: https://sg.run/lBbpB                                                                    
+                                                                                                           
+          197┆ app.run(debug=True)
+   
+    ❯❱ python.flask.security.audit.debug-enabled.debug-enabled
+          Detected Flask app with debug=True. Do not deploy to production with this flag enabled as it will   
+          leak sensitive information. Instead, consider using Flask configuration variables or setting 'debug'
+          using system environment variables.                                                                 
+          Details: https://sg.run/dKrd                                                                        
+                                                                                                              
+          197┆ app.run(debug=True)
