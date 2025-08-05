@@ -1,6 +1,8 @@
 import { Shield, Code, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import { FaUser } from "react-icons/fa";        
+import { HiOutlineUser } from "react-icons/hi"; 
+import { MdPerson } from "react-icons/md"; 
 const SecurityHeader = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -28,13 +30,10 @@ const SecurityHeader = () => {
         </nav>
 
         <div className="ml-auto flex items-center space-x-4">
-          <Button variant="outline" size="sm">
-            <Code className="h-4 w-4 mr-2" />
-            API
-          </Button>
           <Button variant="security" size="sm">
-            <Lock className="h-4 w-4 mr-2" />
-            Secure Scan
+             <FaUser className="w-4 h-4" />
+
+            Login
           </Button>
         </div>
       </div>
