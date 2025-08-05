@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+from routes.auth import auth_bp
 import tempfile
 import os
 import subprocess
 import json
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'T_u_H_i_B_a_T_a'
+app.register_blueprint(auth_bp, url_prefix="/api")
 
 @app.route('/api/scan', methods=['POST'])
 def scan_code():
