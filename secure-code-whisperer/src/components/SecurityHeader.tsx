@@ -18,14 +18,15 @@ const SecurityHeader = () => {
           <a href="scanner" className="text-sm font-medium transition-colors hover:text-primary">
             Scanner
           </a>
-          <a href="scanner" className="text-sm font-medium transition-colors hover:text-primary">
-            Analyzer
-          </a>
+          
           <a href="#dashboard" className="text-sm font-medium transition-colors hover:text-primary">
             Dashboard
           </a>
           <a href="#reports" className="text-sm font-medium transition-colors hover:text-primary">
-            Reports
+            About Us
+          </a>
+          <a href="#reports" className="text-sm font-medium transition-colors hover:text-primary">
+            Reviews
           </a>
         </nav>
 

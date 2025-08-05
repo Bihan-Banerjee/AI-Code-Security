@@ -19,7 +19,7 @@ const HeroSection = () => {
               
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
                 Secure Your Code with
-                <span className="bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent"> AI Intelligence</span>
+                <span className="bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent"> AI Intelligence !</span>
               </h1>
               
               <p className="max-w-[600px] text-muted-foreground md:text-xl">
@@ -27,7 +27,7 @@ const HeroSection = () => {
                 Get real-time security scoring and comprehensive audit reports.
               </p>
             </div>
-
+git
             <div className="flex flex-col gap-4 min-[400px]:flex-row">
               <Button variant="security" size="lg" className="text-base">
                 <Zap className="h-5 w-5 mr-2" />
