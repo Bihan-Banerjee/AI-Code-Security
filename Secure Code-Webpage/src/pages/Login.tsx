@@ -13,6 +13,9 @@ export default function Login() {
       const res = await axios.post("/api/login", { username, password });
       localStorage.setItem("token", res.data.token);
       setMessage("Login successful!");
+      
+      // optionally redirect
+      // window.location.href = "/dashboard";
     } catch (err: any) {
       setMessage(err.response?.data?.error || "Login failed");
     }
@@ -21,9 +24,22 @@ export default function Login() {
   return (
     <div className="p-6 space-y-4">
       <h1 className="text-xl font-bold">🔐 Login</h1>
-      <Input placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+
+      <Input
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+
+      <Input
+        placeholder="Password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
       <Button onClick={handleLogin}>Login</Button>
+
       {message && <p>{message}</p>}
     </div>
   );

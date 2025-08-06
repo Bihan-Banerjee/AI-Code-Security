@@ -1,13 +1,25 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
+from routes.auth import auth_bp
+from dotenv import load_dotenv
 from routes.auth import auth_bp
 import tempfile
 import os
 import subprocess
 import json
 
+load_dotenv()
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'T_u_H_i_B_a_T_a'
+CORS(app)
+
+app.config['MONGO_URI'] = os.getenv("MONGO_URI")
+app.config['SECRET_KEY'] = os.getenv('JWT_SECRET') or 'super-secret-key'
+app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET') or 'super-secret-key'
+
+jwt = JWTManager(app)
+
 app.register_blueprint(auth_bp, url_prefix="/api")
 
 @app.route('/api/scan', methods=['POST'])
@@ -41,10 +53,9 @@ def scan_code():
             print(f"[DEBUG] STDOUT: {result.stdout}")
             print(f"[DEBUG] STDERR: {result.stderr}")
 
-            if result.returncode not in (0, 1, 2):  # 0=clean, 1=vulns, 2=semgrep found issues
+            if result.returncode not in (0, 1, 2):
                 return jsonify({"error": result.stderr}), 500
 
-            # Safely parse the JSON
             try:
                 output_json = json.loads(result.stdout)
             except json.JSONDecodeError:
@@ -55,5 +66,9 @@ def scan_code():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/api/health")
+def health():
+    return jsonify({"status": "ok"})
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
