@@ -29,6 +29,9 @@ const SecurityHeader = () => {
           <a href="scanner" className="text-sm font-medium transition-colors hover:text-primary">
             Scanner
           </a>
+          <a href="/enhancer" className="text-sm font-medium transition-colors hover:text-primary">
+            AI Enhancer
+          </a>
           <a href="#dashboard" className="text-sm font-medium transition-colors hover:text-primary">
             Dashboard
           </a>

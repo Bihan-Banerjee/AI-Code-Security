@@ -4,6 +4,7 @@ from flask_jwt_extended import JWTManager
 from routes.auth import auth_bp
 from dotenv import load_dotenv
 from routes.auth import auth_bp
+from model import enhance_code
 import tempfile
 import os
 import subprocess
@@ -69,6 +70,27 @@ def scan_code():
 @app.route("/api/health")
 def health():
     return jsonify({"status": "ok"})
+
+@app.route('/api/enhance', methods=['POST'])
+def enhance():
+    try:
+        data = request.get_json()
+        code = data.get("code", "")
+        language = data.get("language", "python").lower()
+
+        if language not in ["python", "javascript"]:
+            return jsonify({"error": "Unsupported language"}), 400
+
+        if not code.strip():
+            return jsonify({"error": "No code provided"}), 400
+
+        enhanced_code, diff = enhance_code(code, language)
+        return jsonify({
+            "enhanced_code": enhanced_code,
+            "diff": diff
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)

@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import CodeScanner from "./components/CodeScanner";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Enhancer from './pages/Enhancer';
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/scanner" element={<CodeScanner />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/enhancer" element={<Enhancer />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
