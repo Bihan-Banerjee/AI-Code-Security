@@ -1,8 +1,7 @@
 import { Shield, Code, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FaUser } from "react-icons/fa";        
-import { HiOutlineUser } from "react-icons/hi"; 
-import { MdPerson } from "react-icons/md"; 
+import LogoutButton from "./logoutButton";
 const SecurityHeader = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -36,6 +35,7 @@ const SecurityHeader = () => {
 
             Login
           </Button>
+          <LogoutButton />
         </div>
       </div>
     </header>

@@ -17,13 +17,14 @@ users = db["users"]
 def register():
     data = request.json
     username = data["username"]
+    email = data["email"]
     password = data["password"]
 
     if users.find_one({"username": username}):
         return jsonify({"error": "User already exists"}), 400
 
     hashed_pw = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
-    users.insert_one({"username": username, "password": hashed_pw})
+    users.insert_one({"username": username, "email": email, "password": hashed_pw})
     token = create_access_token(identity=username)
     return jsonify({"token": token}), 201
 
