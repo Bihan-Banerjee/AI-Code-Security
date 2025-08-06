@@ -6,8 +6,16 @@ export default function LogoutButton() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("⚠️ You are not logged in!");
+      return;
+    }
+
     localStorage.removeItem("token");
-    toast.success("Logged out successfully");
+    localStorage.removeItem("username");
+    toast.success("✅ Logged out successfully");
     navigate("/login");
   };
 
