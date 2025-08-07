@@ -86,8 +86,8 @@ def enhance():
 
         enhanced_code, diff = enhance_code(code, language)
         return jsonify({
-            "enhanced_code": enhanced_code,
-            "diff": diff
+            "enhanced_code": diff,
+            "diff": enhanced_code
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
