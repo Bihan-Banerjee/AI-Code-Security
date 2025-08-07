@@ -35,7 +35,7 @@ const SecurityHeader = () => {
           <a href="#dashboard" className="text-sm font-medium transition-colors hover:text-primary">
             Dashboard
           </a>
-          <a href="#reports" className="text-sm font-medium transition-colors hover:text-primary">
+          <a href="/about" className="text-sm font-medium transition-colors hover:text-primary">
             About Us
           </a>
           <a href="#reports" className="text-sm font-medium transition-colors hover:text-primary">
