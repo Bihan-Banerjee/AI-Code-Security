@@ -11,6 +11,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { toast } from "react-hot-toast";
 
 export default function CodeScanner() {
   const [files, setFiles] = useState([{ filename: "app.py", content: "" }]);
@@ -36,7 +37,22 @@ export default function CodeScanner() {
 
   const handleScan = async () => {
     try {
-      const res = await axios.post("/api/scan", { files, language });
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("You must be logged in to scan code.");
+        return;
+      }
+
+      const res = await axios.post(
+        "/api/scan",
+        { files, language },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       const parsed = res.data.result || JSON.parse(res.data.output || "{}");
       const resultIssues = Array.isArray(parsed.results) ? parsed.results : [];
 
@@ -63,13 +79,15 @@ export default function CodeScanner() {
       else if (numericScore >= 50) grade = "D";
 
       setScore(`${numericScore} (${grade})`);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      toast.error(err.response?.data?.error || "Scan failed");
       setIssues([]);
       setScanComplete(true);
       setScore("N/A");
     }
   };
+
 
   const getSeverityColor = (severity) => {
     switch (severity?.toLowerCase()) {

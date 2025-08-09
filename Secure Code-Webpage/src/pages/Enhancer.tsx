@@ -12,13 +12,29 @@ export default function Enhancer() {
 
   const handleEnhance = async () => {
     try {
-      const res = await axios.post("/api/enhance", { code, language });
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("You must be logged in to enhance code!");
+        return;
+      }
+    
+      const res = await axios.post(
+        "/api/enhance",
+        { code, language },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    
       setResult({ enhanced: res.data.enhanced_code, diff: res.data.diff });
       toast.success("Code enhanced successfully!");
     } catch (err: any) {
       toast.error(err.response?.data?.error || "Enhancement failed");
     }
   };
+
 
   return (
     <div className="p-6 space-y-6">

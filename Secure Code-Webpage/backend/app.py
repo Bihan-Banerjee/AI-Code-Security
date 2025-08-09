@@ -1,34 +1,48 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from routes.auth import auth_bp
 from dotenv import load_dotenv
-from routes.auth import auth_bp
 from model import enhance_code
 import tempfile
 import os
 import subprocess
 import json
+from pymongo import MongoClient
 
+# Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
+# Config
 app.config['MONGO_URI'] = os.getenv("MONGO_URI")
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET') or 'super-secret-key'
 app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET') or 'super-secret-key'
 
+# Init JWT
 jwt = JWTManager(app)
 
+# MongoDB connection
+client = MongoClient(app.config['MONGO_URI'])
+db = client["codewhisperer"]
+users = db["users"]
+enhance_history = db["enhance_history"]
+scan_history = db["scan_history"]
+
+# Register auth blueprint
 app.register_blueprint(auth_bp, url_prefix="/api")
 
+# ------------------ CODE SCANNER ------------------
 @app.route('/api/scan', methods=['POST'])
+@jwt_required()
 def scan_code():
     try:
         data = request.get_json()
         files = data.get("files", [])
         language = data.get("language", "python").lower()
+        username = get_jwt_identity()
 
         written_files = []
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -38,8 +52,6 @@ def scan_code():
                     code_file.write(f["content"])
                 written_files.append(filepath)
 
-            print(f"[DEBUG] Files written to: {written_files}")
-
             if language == "python":
                 scan_command = ["python", "-m", "bandit", "-r", temp_dir, "-f", "json"]
             elif language == "javascript":
@@ -47,12 +59,7 @@ def scan_code():
             else:
                 return jsonify({"error": "Unsupported language"}), 400
 
-            print(f"[DEBUG] Command run: {' '.join(scan_command)}")
-
             result = subprocess.run(scan_command, capture_output=True, text=True)
-            print(f"[DEBUG] Bandit return code: {result.returncode}")
-            print(f"[DEBUG] STDOUT: {result.stdout}")
-            print(f"[DEBUG] STDERR: {result.stderr}")
 
             if result.returncode not in (0, 1, 2):
                 return jsonify({"error": result.stderr}), 500
@@ -62,21 +69,33 @@ def scan_code():
             except json.JSONDecodeError:
                 return jsonify({"error": "Invalid JSON output from scanner"}), 500
 
+            # Save scan history to DB
+            scan_history.insert_one({
+                "username": username,
+                "language": language,
+                "files": files,
+                "result": output_json
+            })
+
             return jsonify({"result": output_json})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# ------------------ HEALTH CHECK ------------------
 @app.route("/api/health")
 def health():
     return jsonify({"status": "ok"})
 
+# ------------------ AI CODE ENHANCER ------------------
 @app.route('/api/enhance', methods=['POST'])
+@jwt_required()
 def enhance():
     try:
         data = request.get_json()
         code = data.get("code", "")
         language = data.get("language", "python").lower()
+        username = get_jwt_identity()
 
         if language not in ["python", "javascript"]:
             return jsonify({"error": "Unsupported language"}), 400
@@ -85,12 +104,37 @@ def enhance():
             return jsonify({"error": "No code provided"}), 400
 
         enhanced_code, diff = enhance_code(code, language)
-        return jsonify({
-            "enhanced_code": diff,
-            "diff": enhanced_code
+
+        # Save enhancement history to DB
+        enhance_history.insert_one({
+            "username": username,
+            "code": code,
+            "language": language,
+            "enhanced_code": enhanced_code,
+            "diff": diff
         })
+
+        return jsonify({
+            "enhanced_code": enhanced_code,
+            "diff": diff
+        })
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# ------------------ HISTORY FETCH ------------------
+@app.route('/api/history', methods=['GET'])
+@jwt_required()
+def get_history():
+    username = get_jwt_identity()
+    enhance_logs = list(enhance_history.find({"username": username}, {"_id": 0}))
+    scan_logs = list(scan_history.find({"username": username}, {"_id": 0}))
+
+    return jsonify({
+        "enhance": enhance_logs,
+        "scan": scan_logs
+    })
+
+# ------------------ MAIN ------------------
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
