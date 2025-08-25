@@ -22,7 +22,9 @@ const SecurityHeader = () => {
           <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-primary to-primary-glow">
             <Shield className="h-5 w-5 text-primary-foreground" />
           </div>
-          <span className="font-bold text-xl">SecureCode AI</span>
+          <a 
+          href="/"
+          className="font-bold text-xl">SecureCode AI</a>
         </div>
 
         <nav className="flex items-center space-x-6 ml-8">
@@ -38,7 +40,7 @@ const SecurityHeader = () => {
           <a href="/about" className="text-sm font-medium transition-colors hover:text-primary">
             About Us
           </a>
-          <a href="#reports" className="text-sm font-medium transition-colors hover:text-primary">
+          <a href="/reviews" className="text-sm font-medium transition-colors hover:text-primary">
             Reviews
           </a>
         </nav>

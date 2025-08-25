@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import SecurityHeader from "@/components/SecurityHeader";
+
 import {
   Select,
   SelectTrigger,
@@ -103,9 +105,14 @@ export default function CodeScanner() {
   };
 
   return (
+    <div className="min-h-screen bg-background">
+      <SecurityHeader />
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 p-8">
+     
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 items-start">
+         
         <div className="flex-1 space-y-6">
+          
           <div className="inline-block bg-blue-100 text-blue-800 font-semibold px-4 py-1 rounded-full text-sm">
             AI-Powered Security Scanner
           </div>
@@ -225,5 +232,6 @@ export default function CodeScanner() {
         </div>
       </div>
     </div>
+  </div>
   );
 }
