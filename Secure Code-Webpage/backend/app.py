@@ -9,6 +9,10 @@ import os
 import subprocess
 import json
 from pymongo import MongoClient
+from routes.reviews import reviews_bp
+from datetime import datetime
+from bson import ObjectId
+from models.reviews import reviews_collection
 
 # Load environment variables
 load_dotenv()
@@ -20,7 +24,7 @@ CORS(app)
 app.config['MONGO_URI'] = os.getenv("MONGO_URI")
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET') or 'super-secret-key'
 app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET') or 'super-secret-key'
-
+app.register_blueprint(reviews_bp)
 # Init JWT
 jwt = JWTManager(app)
 
@@ -134,6 +138,40 @@ def get_history():
         "enhance": enhance_logs,
         "scan": scan_logs
     })
+
+@app.route("/api/reviews", methods=["POST"])
+def submit_review():
+    try:
+        data = request.get_json()
+
+        # Validate required fields
+        name = data.get("name")
+        email = data.get("email")
+        rating = data.get("rating")
+        review = data.get("review")
+        date = data.get("date", datetime.utcnow().isoformat())
+
+        if not all([name, email, rating, review]):
+            return jsonify({"error": "All fields are required"}), 400
+
+        review_doc = {
+            "name": name,
+            "email": email,
+            "rating": rating,
+            "review": review,
+            "date": date,
+        }
+
+        # Insert into DB
+        result = reviews_collection.insert_one(review_doc)
+
+        return jsonify({
+            "message": "Review submitted successfully",
+            "id": str(result.inserted_id)
+        }), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # ------------------ MAIN ------------------
 if __name__ == '__main__':
