@@ -1,10 +1,14 @@
 import { Shield, Users, Award, Globe, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import SecurityHeader from "@/components/SecurityHeader";
 
 const About = () => {
   return (
     <div className="min-h-screen bg-background">
+
+       <SecurityHeader />
+
       {/* Hero Section */}
       <section className="relative py-20 px-4">
         <div className="container mx-auto">
