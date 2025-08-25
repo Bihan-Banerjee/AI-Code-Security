@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
+import SecurityHeader from "@/components/SecurityHeader";
 export default function Dashboard() {
   const [history, setHistory] = useState<{ enhance: any[]; scan: any[] }>({ enhance: [], scan: [] });
   const navigate = useNavigate();
@@ -33,6 +33,7 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 space-y-6">
+      <SecurityHeader />
       <h1 className="text-2xl font-bold">📊 Dashboard</h1>
 
       <div>
