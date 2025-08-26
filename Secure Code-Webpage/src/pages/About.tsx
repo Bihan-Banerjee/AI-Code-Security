@@ -117,12 +117,12 @@ const About = () => {
               {
                 name: "Bihan Banerjee",
                 role: "Cybersecurity Specialist",
-                bio: "Former CISO with 15+ years in cybersecurity and AI research."
+                bio: "3rd year undergraduate student specializing in CSE Information Security at VIT Vellore."
               },
               {
                 name: "Nethra Krishnan",
                 role: "AI Specialist",
-                bio: "PhD in Machine Learning, specializing in code analysis algorithms."
+                bio: "3rd year undergraduate student specializing in CSE Data Science at VIT Vellore."
               },
               
             ].map((member) => (
