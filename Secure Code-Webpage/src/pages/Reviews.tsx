@@ -267,12 +267,12 @@ const Reviews = () => {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-6">
             <div className="flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-primary shadow-glow">
-              <Quote className="h-8 w-8 text-white" />
+              <Quote className="h-8 w-8 text-black" />
             </div>
           </div>
           <h1 className="text-4xl font-bold mb-4">
             What Our{" "}
-            <span className="bg-gradient-primary bg-clip-text text-transparent drop-shadow-lg text-black/80">
+            <span className="text-4xl font-bold mb-4">
               Users
             </span>{" "}
             Say
@@ -370,7 +370,7 @@ const Reviews = () => {
         {/* Submit Review Form */}
         <div className="bg-gradient-to-r from-primary/10 to-primary-glow/10 rounded-2xl p-8 border border-primary/20 shadow-md max-w-2xl mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center">
-            Share Your Experience ✍️
+            Share Your Experience
           </h2>
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
