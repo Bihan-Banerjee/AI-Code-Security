@@ -48,7 +48,7 @@ export default function Enhancer() {
       <SecurityHeader />
     <div className="p-8 max-w-5xl mx-auto space-y-8">
       <h1 className="text-3xl font-bold flex items-center gap-2">
-        💡 AI Code Enhancer
+        AI Code Enhancer
       </h1>
       <p className="text-gray-600">
         Paste your insecure code, choose the language, and let AI enhance it with improved security and clarity.
@@ -57,7 +57,7 @@ export default function Enhancer() {
       {/* Input Card */}
       <Card className="shadow-lg rounded-2xl">
         <CardHeader>
-          <CardTitle>🔧 Enhance Your Code</CardTitle>
+          <CardTitle>Enhance Your Code</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">

@@ -9,7 +9,7 @@ export default function LogoutButton() {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      toast.error("⚠️ You are not logged in!");
+      toast.error("You are not logged in!");
       return;
     }
 
@@ -19,5 +19,5 @@ export default function LogoutButton() {
     navigate("/login");
   };
 
-  return <Button onClick={handleLogout}>🚪 Logout</Button>;
+  return <Button onClick={handleLogout}>Logout</Button>;
 }
