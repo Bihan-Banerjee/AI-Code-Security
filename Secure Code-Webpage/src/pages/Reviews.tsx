@@ -272,7 +272,7 @@ const Reviews = () => {
           </div>
           <h1 className="text-4xl font-bold mb-4">
             What Our{" "}
-            <span className="text-4xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
               Users
             </span>{" "}
             Say

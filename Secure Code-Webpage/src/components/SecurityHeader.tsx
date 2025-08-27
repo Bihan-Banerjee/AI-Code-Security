@@ -49,7 +49,7 @@ const SecurityHeader = () => {
           {username ? (
             <>
               <span className="text-sm font-medium text-muted-foreground">
-                👋 Welcome, <span className="text-primary font-semibold">{username}</span>
+                Welcome, <span className="text-primary font-semibold">{username}</span>
               </span>
               <LogoutButton />
             </>
