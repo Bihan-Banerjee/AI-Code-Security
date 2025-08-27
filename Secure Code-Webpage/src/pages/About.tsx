@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SecurityHeader from "@/components/SecurityHeader";
 import { useIsMobile } from "@/hooks/use-mobile"; 
+import Footer from "@/components/Footer";
 
 const About = () => {
   const isMobile = useIsMobile(); 
@@ -189,6 +190,8 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { Star, Shield, Lock, Users, Award, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import axios from "axios";
+import Footer from "@/components/Footer";
 import { toast } from "react-hot-toast";
 
 const Reviews = () => {
@@ -423,6 +424,7 @@ const Reviews = () => {
           </form>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "react-hot-toast";
 import { Loader2, Sparkles } from "lucide-react";
 import SecurityHeader from "@/components/SecurityHeader";
+import Footer from "@/components/Footer";
 
 
 export default function Enhancer() {
@@ -125,7 +126,7 @@ export default function Enhancer() {
         </div>
       )}
     </div>
-
+ <Footer />
     </div>
   );
 }
