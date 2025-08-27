@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import SecurityHeader from "@/components/SecurityHeader";
+import Footer from "@/components/Footer";
 
 import {
   Select,
@@ -230,6 +231,7 @@ export default function CodeScanner() {
         </div>
       </div>
     </div>
+      <Footer />
   </div>
   );
 }

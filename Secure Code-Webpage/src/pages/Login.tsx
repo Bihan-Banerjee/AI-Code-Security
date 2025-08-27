@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate} from "react-router-dom";
@@ -116,7 +117,8 @@ export default function Login() {
         </p>
       </div>
     </div>
-    </div>
+      <Footer />
+  </div>
   );
 }
 
