@@ -107,7 +107,7 @@ export default function Enhancer() {
         <div className="grid md:grid-cols-2 gap-6">
           <Card className="shadow-lg rounded-2xl">
             <CardHeader>
-              <CardTitle>✅ Enhanced Code</CardTitle>
+              <CardTitle>Enhanced Code</CardTitle>
             </CardHeader>
             <CardContent>
               <Textarea value={result.enhanced} readOnly rows={12} />
@@ -116,7 +116,7 @@ export default function Enhancer() {
 
           <Card className="shadow-lg rounded-2xl">
             <CardHeader>
-              <CardTitle>🧠 Diff</CardTitle>
+              <CardTitle>Diff</CardTitle>
             </CardHeader>
             <CardContent>
               <Textarea value={result.diff} readOnly rows={12} />

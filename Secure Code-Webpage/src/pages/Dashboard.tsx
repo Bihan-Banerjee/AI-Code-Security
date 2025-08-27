@@ -34,10 +34,10 @@ export default function Dashboard() {
   return (
     <div className="p-6 space-y-6">
       <SecurityHeader />
-      <h1 className="text-2xl font-bold">📊 Dashboard</h1>
+      <h1 className="text-2xl font-bold">Dashboard</h1>
 
       <div>
-        <h2 className="text-xl font-semibold">💡 AI Code Enhancer History</h2>
+        <h2 className="text-xl font-semibold">AI Code Enhancer History</h2>
         {history.enhance.length > 0 ? (
           history.enhance.map((h, i) => (
             <div key={i} className="border p-3 mt-2 rounded">

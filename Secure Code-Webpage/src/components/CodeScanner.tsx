@@ -61,7 +61,6 @@ export default function CodeScanner() {
       setIssues(resultIssues);
       setScanComplete(true);
 
-      // Calculate numeric score based on severity
       let numericScore = 100;
       resultIssues.forEach((issue) => {
         const severity = issue.issue_severity?.toLowerCase();
@@ -70,9 +69,8 @@ export default function CodeScanner() {
         else if (severity === "low") numericScore -= 2;
       });
 
-      numericScore = Math.max(0, numericScore); // clamp
+      numericScore = Math.max(0, numericScore); 
 
-      // Convert to letter grade
       let grade = "F";
       if (numericScore >= 95) grade = "A+";
       else if (numericScore >= 85) grade = "A";

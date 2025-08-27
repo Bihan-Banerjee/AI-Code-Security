@@ -2,10 +2,10 @@ import { Shield, Users, Award, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SecurityHeader from "@/components/SecurityHeader";
-import { useIsMobile } from "@/hooks/use-mobile"; // ✅ Import hook
+import { useIsMobile } from "@/hooks/use-mobile"; 
 
 const About = () => {
-  const isMobile = useIsMobile(); // ✅ Use hook here
+  const isMobile = useIsMobile(); 
 
   return (
     <div className="min-h-screen bg-background">

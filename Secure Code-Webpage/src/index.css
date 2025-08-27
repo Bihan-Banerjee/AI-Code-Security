@@ -2,13 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
 
 @layer base {
   :root {
-    /* Security-themed color palette */
     --background: 220 15% 97%;
     --foreground: 220 13% 18%;
 
@@ -18,12 +14,10 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 220 13% 18%;
 
-    /* Primary: Security blue-green */
     --primary: 195 85% 45%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 195 85% 65%;
 
-    /* Secondary: Dark security theme */
     --secondary: 220 13% 91%;
     --secondary-foreground: 220 13% 18%;
 
@@ -33,7 +27,6 @@ All colors MUST be HSL.
     --accent: 195 85% 95%;
     --accent-foreground: 195 85% 25%;
 
-    /* Security status colors */
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
     --warning: 45 93% 47%;
@@ -45,13 +38,11 @@ All colors MUST be HSL.
     --input: 220 13% 91%;
     --ring: 195 85% 45%;
 
-    /* Security-themed gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     --gradient-security: linear-gradient(135deg, hsl(195 85% 45%), hsl(195 85% 25%));
     --gradient-danger: linear-gradient(135deg, hsl(0 84% 60%), hsl(0 84% 40%));
     --gradient-success: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 46%));
     
-    /* Security shadows */
     --shadow-security: 0 10px 30px -10px hsl(var(--primary) / 0.3);
     --shadow-danger: 0 10px 30px -10px hsl(var(--destructive) / 0.3);
     --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.4);

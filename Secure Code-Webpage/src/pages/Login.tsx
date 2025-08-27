@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { toast } from "react-hot-toast";
 import SecurityHeader from "@/components/SecurityHeader";
 
@@ -26,12 +26,11 @@ export default function Login() {
     try {
       const res = await axios.post("/api/login", { username, password });
 
-      // ✅ Save both token and username
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("username", username);
 
       toast.success("Login successful!");
-      navigate("/");
+      navigate("/dashboard");
     } catch (err: any) {
       toast.error(err.response?.data?.error || "Login failed");
     } finally {

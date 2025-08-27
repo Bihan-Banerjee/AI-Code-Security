@@ -14,31 +14,25 @@ from datetime import datetime
 from bson import ObjectId
 from models.reviews import reviews_collection
 
-# Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-# Config
 app.config['MONGO_URI'] = os.getenv("MONGO_URI")
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET') or 'super-secret-key'
 app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET') or 'super-secret-key'
 app.register_blueprint(reviews_bp)
-# Init JWT
 jwt = JWTManager(app)
 
-# MongoDB connection
 client = MongoClient(app.config['MONGO_URI'])
 db = client["codewhisperer"]
 users = db["users"]
 enhance_history = db["enhance_history"]
 scan_history = db["scan_history"]
 
-# Register auth blueprint
 app.register_blueprint(auth_bp, url_prefix="/api")
 
-# ------------------ CODE SCANNER ------------------
 @app.route('/api/scan', methods=['POST'])
 @jwt_required()
 def scan_code():
@@ -73,7 +67,6 @@ def scan_code():
             except json.JSONDecodeError:
                 return jsonify({"error": "Invalid JSON output from scanner"}), 500
 
-            # Save scan history to DB
             scan_history.insert_one({
                 "username": username,
                 "language": language,
@@ -86,12 +79,10 @@ def scan_code():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ------------------ HEALTH CHECK ------------------
 @app.route("/api/health")
 def health():
     return jsonify({"status": "ok"})
 
-# ------------------ AI CODE ENHANCER ------------------
 @app.route('/api/enhance', methods=['POST'])
 @jwt_required()
 def enhance():
@@ -109,7 +100,6 @@ def enhance():
 
         enhanced_code, diff = enhance_code(code, language)
 
-        # Save enhancement history to DB
         enhance_history.insert_one({
             "username": username,
             "code": code,
@@ -126,7 +116,6 @@ def enhance():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ------------------ HISTORY FETCH ------------------
 @app.route('/api/history', methods=['GET'])
 @jwt_required()
 def get_history():
@@ -144,7 +133,6 @@ def submit_review():
     try:
         data = request.get_json()
 
-        # Validate required fields
         name = data.get("name")
         email = data.get("email")
         rating = data.get("rating")
@@ -162,7 +150,6 @@ def submit_review():
             "date": date,
         }
 
-        # Insert into DB
         result = reviews_collection.insert_one(review_doc)
 
         return jsonify({
@@ -173,6 +160,5 @@ def submit_review():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ------------------ MAIN ------------------
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)

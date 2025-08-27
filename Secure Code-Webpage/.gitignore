@@ -1,4 +1,4 @@
-# Logs
+
 logs
 *.log
 npm-debug.log*
@@ -12,7 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -23,75 +22,58 @@ dist-ssr
 *.sln
 *.sw?
 
-# Node modules (frontend)
 frontend/node_modules/
 frontend/.vite/
 
-# Build output
 frontend/dist/
 frontend/.next/
 frontend/build/
 *.log
 
-# System files
 .DS_Store
 Thumbs.db
 
-# Environment variables
 *.env
 .env.*
 
-# Python cache files
 __pycache__/
 *.py[cod]
 *.pyo
 
-# Python virtual environments
 venv/
 .env/
 env/
 ENV/
 
-# Flask instance & database
 instance/
 *.sqlite3
 *.db
 
-# VSCode settings
 .vscode/
 
-# Pytest cache
 .pytest_cache/
 
-# Coverage reports
 htmlcov/
 .coverage
 coverage.xml
 *.cover
 
-# macOS and Linux file metadata
 *.swp
 *.swo
 *.bak
 
-# JetBrains IDEs
 .idea/
 
-# Backup files
 *.bak
 *.tmp
 
-# Logs
 *.log
 
-# Local MongoDB dumps (if any)
 dump/
 
-# Uploads or temp files
 uploads/
 temp/
 *.tmp
 
-# Bandit / Semgrep temp folders
 tmp*/
 
