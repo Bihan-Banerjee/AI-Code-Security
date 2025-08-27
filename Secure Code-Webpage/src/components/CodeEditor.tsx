@@ -123,16 +123,6 @@ def authenticate_user(username, password):
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     Code Input
-                    <div className="flex space-x-2">
-                      <Button variant="outline" size="sm">
-                        <Upload className="h-4 w-4 mr-2" />
-                        Upload File
-                      </Button>
-                      <Button variant="security" size="sm" onClick={handleScan}>
-                        <Play className="h-4 w-4 mr-2" />
-                        Analyze Security
-                      </Button>
-                    </div>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -171,12 +161,6 @@ def authenticate_user(username, password):
                         ))}
                       </div>
                     </ScrollArea>
-                    <div className="mt-4 pt-4 border-t">
-                      <Button variant="success" onClick={handleFix} className="w-full">
-                        <CheckCircle className="h-4 w-4 mr-2" />
-                        Apply AI Fixes
-                      </Button>
-                    </div>
                   </CardContent>
                 </Card>
 
@@ -190,12 +174,6 @@ def authenticate_user(username, password):
                         <code>{vulnerableCode}</code>
                       </pre>
                     </ScrollArea>
-                    <div className="mt-4 pt-4 border-t">
-                      <Button variant="outline" onClick={() => handleCopy(vulnerableCode)} className="w-full">
-                        <Copy className="h-4 w-4 mr-2" />
-                        Copy Code
-                      </Button>
-                    </div>
                   </CardContent>
                 </Card>
               </div>
@@ -255,16 +233,6 @@ def authenticate_user(username, password):
                         <code>{fixedCode}</code>
                       </pre>
                     </ScrollArea>
-                    <div className="mt-4 pt-4 border-t flex space-x-2">
-                      <Button variant="outline" onClick={() => handleCopy(fixedCode)} className="flex-1">
-                        <Copy className="h-4 w-4 mr-2" />
-                        Copy Fixed Code
-                      </Button>
-                      <Button variant="security" className="flex-1">
-                        <Download className="h-4 w-4 mr-2" />
-                        Download
-                      </Button>
-                    </div>
                   </CardContent>
                 </Card>
               </div>

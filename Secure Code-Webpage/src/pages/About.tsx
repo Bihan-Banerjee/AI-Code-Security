@@ -1,13 +1,16 @@
-import { Shield, Users, Award, Globe, ChevronRight } from "lucide-react";
+import { Shield, Users, Award, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SecurityHeader from "@/components/SecurityHeader";
+import { useIsMobile } from "@/hooks/use-mobile"; // ✅ Import hook
 
 const About = () => {
+  const isMobile = useIsMobile(); // ✅ Use hook here
+
   return (
     <div className="min-h-screen bg-background">
 
-       <SecurityHeader />
+      <SecurityHeader />
 
       {/* Hero Section */}
       <section className="relative py-20 px-4">
@@ -17,7 +20,7 @@ const About = () => {
               About SecureCode AI
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-              We're pioneering the future of code security through advanced AI technology, 
+              We're pioneering the future of code security through advanced AI technology,
               helping developers build safer applications with confidence.
             </p>
           </div>
@@ -31,12 +34,12 @@ const About = () => {
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Mission</h2>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                At SecureCode AI, we believe that security shouldn't be an afterthought. 
-                Our mission is to democratize code security by making advanced vulnerability 
+                At SecureCode AI, we believe that security shouldn't be an afterthought.
+                Our mission is to democratize code security by making advanced vulnerability
                 detection accessible to every developer, regardless of their security expertise.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Through cutting-edge AI and machine learning, we're transforming how 
+                Through cutting-edge AI and machine learning, we're transforming how
                 security vulnerabilities are discovered, analyzed, and resolved in real-time.
               </p>
             </div>
@@ -67,7 +70,7 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-center">
-                  We prioritize security in every aspect of our platform, 
+                  We prioritize security in every aspect of our platform,
                   ensuring your code and data remain protected.
                 </CardDescription>
               </CardContent>
@@ -80,7 +83,7 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-center">
-                  We build tools by developers, for developers, focusing on 
+                  We build tools by developers, for developers, focusing on
                   seamless integration into existing workflows.
                 </CardDescription>
               </CardContent>
@@ -93,7 +96,7 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-center">
-                  We constantly push the boundaries of what's possible 
+                  We constantly push the boundaries of what's possible
                   with AI-powered security analysis.
                 </CardDescription>
               </CardContent>
@@ -124,7 +127,6 @@ const About = () => {
                 role: "AI Specialist",
                 bio: "3rd year undergraduate student specializing in CSE Data Science at VIT Vellore."
               },
-              
             ].map((member) => (
               <Card key={member.name} className="text-center">
                 <CardHeader>
