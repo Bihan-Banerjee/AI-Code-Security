@@ -4,19 +4,35 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import SecurityHeader from "@/components/SecurityHeader";
 import Footer from "@/components/Footer";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { 
-  Code2, 
-  ShieldCheck, 
-  Loader2, 
-  Copy, 
-  CheckCircle2, 
+import {
+  Code2,
+  ShieldCheck,
+  Loader2,
+  Copy,
+  CheckCircle2,
   Activity,
   Sparkles,
-  TrendingUp
+  TrendingUp,
 } from "lucide-react";
 
 interface HistoryItem {
@@ -27,6 +43,17 @@ interface HistoryItem {
   timestamp?: string;
 }
 
+const ITEMS_PER_PAGE = 5;
+
+function getStoredToken(): string | null {
+  return localStorage.getItem("token") || sessionStorage.getItem("token") || null;
+}
+
+function removeStoredToken() {
+  localStorage.removeItem("token");
+  sessionStorage.removeItem("token");
+}
+
 export default function Dashboard() {
   const [history, setHistory] = useState<{ enhance: HistoryItem[]; scan: HistoryItem[] }>({
     enhance: [],
@@ -34,38 +61,74 @@ export default function Dashboard() {
   });
   const [loading, setLoading] = useState(true);
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<HistoryItem | null>(null);
+  const [selectedType, setSelectedType] = useState<"enhancer" | "scanner" | null>(null);
+
+  const [enhancePage, setEnhancePage] = useState(1);
+  const [scanPage, setScanPage] = useState(1);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const token = getStoredToken();
     if (!token) {
       toast.error("You must be logged in to view the dashboard.");
       navigate("/login");
       return;
     }
 
+    const controller = new AbortController();
+    setLoading(true);
+
     axios
       .get("/api/history", {
         headers: { Authorization: `Bearer ${token}` },
+        signal: controller.signal,
       })
-      .then((res) => setHistory(res.data))
+      .then((res) => {
+        const enhance = Array.isArray(res.data?.enhance) ? res.data.enhance : [];
+        const scan = Array.isArray(res.data?.scan) ? res.data.scan : [];
+        setHistory({ enhance, scan });
+      })
       .catch((err) => {
-        if (err.response?.status === 401) {
+        if (axios.isCancel(err) || err?.name === "CanceledError") return;
+
+        if (err?.response?.status === 401) {
           toast.error("Session expired. Please log in again.");
-          sessionStorage.removeItem("token");
+          removeStoredToken();
           navigate("/login");
         } else {
-          toast.error(err.response?.data?.error || "Failed to load history");
+          toast.error(err?.response?.data?.error || "Failed to load history");
         }
       })
       .finally(() => setLoading(false));
+
+    return () => controller.abort();
   }, [navigate]);
 
-  const handleCopy = (code: string, type: string) => {
+  const handleCopy = (code: string, id: string) => {
     navigator.clipboard.writeText(code || "");
-    setCopySuccess(type);
-    toast.success("Code copied to clipboard!");
+    setCopySuccess(id);
+    toast.success("Code copied!");
     setTimeout(() => setCopySuccess(null), 2000);
+  };
+
+  const openDetails = (item: HistoryItem, type: "enhancer" | "scanner") => {
+    setSelectedItem(item);
+    setSelectedType(type);
+  };
+
+  const closeDetails = () => {
+    setSelectedItem(null);
+    setSelectedType(null);
+  };
+
+  const paginate = (
+    data: HistoryItem[],
+    currentPage: number
+  ): HistoryItem[] => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return data.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   };
 
   return (
@@ -73,43 +136,42 @@ export default function Dashboard() {
       <SecurityHeader />
 
       <div className="p-8 max-w-6xl mx-auto space-y-8">
-        {/* Enhanced Header Section */}
-        <div className="space-y-6 animate-fade-in">
-          <div className="text-center space-y-4">
-            <h1 className="text-4xl font-bold tracking-tight">
-              Welcome back to your{" "}
-              <span className="bg-gradient-to-r from-blue-500 to-blue-700 bg-clip-text text-transparent">
-                Dashboard
-              </span>
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Monitor your code enhancement history and security scan results in one elegant interface
-            </p>
-          </div>
-
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            <StatsCard
-              icon={<Code2 className="w-6 h-6" />}
-              title="Enhancements"
-              value={history.enhance.length}
-              gradient="bg-gradient-primary"
-            />
-            <StatsCard
-              icon={<ShieldCheck className="w-6 h-6" />}
-              title="Security Scans"
-              value={history.scan.length}
-              gradient="bg-gradient-secondary"
-            />
-            <StatsCard
-              icon={<TrendingUp className="w-6 h-6" />}
-              title="Total Actions"
-              value={history.enhance.length + history.scan.length}
-              gradient="bg-gradient-to-r from-success to-warning"
-            />
-          </div>
+        {/* Header */}
+        <div className="text-center space-y-4 animate-fade-in">
+          <h1 className="text-4xl font-bold tracking-tight">
+            Your{" "}
+            <span className="bg-gradient-to-r from-blue-500 to-blue-700 bg-clip-text text-transparent">
+              Security Dashboard
+            </span>
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Monitor your code enhancements and security scans in one place.
+          </p>
         </div>
 
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          <StatsCard
+            icon={<Code2 className="w-6 h-6" />}
+            title="Enhancements"
+            value={history.enhance.length}
+            gradient="bg-gradient-primary"
+          />
+          <StatsCard
+            icon={<ShieldCheck className="w-6 h-6" />}
+            title="Security Scans"
+            value={history.scan.length}
+            gradient="bg-gradient-secondary"
+          />
+          <StatsCard
+            icon={<TrendingUp className="w-6 h-6" />}
+            title="Total Actions"
+            value={history.enhance.length + history.scan.length}
+            gradient="bg-gradient-to-r from-success to-warning"
+          />
+        </div>
+
+        {/* Main Content */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-24 space-y-4">
             <div className="p-4 rounded-full bg-primary/10 animate-glow">
@@ -118,206 +180,210 @@ export default function Dashboard() {
             <p className="text-muted-foreground">Loading your dashboard...</p>
           </div>
         ) : (
-          <div className="animate-slide-up">
-            <Tabs defaultValue="enhancer" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 rounded-2xl p-1 bg-card/50 backdrop-blur-sm border shadow-secondary">
-                <TabsTrigger 
-                  value="enhancer" 
-                  className="flex gap-2 rounded-xl data-[state=active]:bg-gradient-primary data-[state=active]:text-white data-[state=active]:shadow-glow transition-all duration-300"
-                >
-                  <Sparkles className="w-4 h-4" /> 
-                  Enhancement History
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="scanner" 
-                  className="flex gap-2 rounded-xl data-[state=active]:bg-gradient-secondary data-[state=active]:text-white data-[state=active]:shadow-glow transition-all duration-300"
-                >
-                  <Activity className="w-4 h-4" /> 
-                  Security Scans
-                </TabsTrigger>
-              </TabsList>
+          <Tabs defaultValue="enhancer" className="w-full animate-slide-up">
+            <TabsList className="grid w-full grid-cols-2 rounded-2xl p-1 bg-card/50 backdrop-blur-sm border shadow-secondary">
+              <TabsTrigger
+                value="enhancer"
+                className="flex gap-2 rounded-xl data-[state=active]:bg-gradient-primary data-[state=active]:text-black data-[state=active]:shadow-glow transition-all duration-300"
+              >
+                <Sparkles className="w-4 h-4" />
+                Enhancement History
+              </TabsTrigger>
+              <TabsTrigger
+                value="scanner"
+                className="flex gap-2 rounded-xl data-[state=active]:bg-gradient-secondary data-[state=active]:text-black data-[state=active]:shadow-glow transition-all duration-300"
+              >
+                <Activity className="w-4 h-4" />
+                Security Scans
+              </TabsTrigger>
+            </TabsList>
 
-              <TabsContent value="enhancer" className="mt-8">
-                {history.enhance.length > 0 ? (
-                  <HistoryList 
-                    data={history.enhance} 
-                    type="enhancer" 
-                    onCopy={handleCopy}
-                    copySuccess={copySuccess}
+            {/* Enhancer List */}
+            <TabsContent value="enhancer" className="mt-8">
+              {history.enhance.length > 0 ? (
+                <>
+                  <ListView
+                    data={paginate(history.enhance, enhancePage)}
+                    type="enhancer"
+                    onOpen={openDetails}
                   />
-                ) : (
-                  <EmptyState
-                    icon={<Sparkles className="w-8 h-8" />}
-                    title="No enhancements yet"
-                    description="Your AI-enhanced code will appear here. Start improving your code with our intelligent enhancement tools."
-                    gradient="bg-gradient-primary"
+                  <PaginationControls
+                    totalItems={history.enhance.length}
+                    currentPage={enhancePage}
+                    setPage={setEnhancePage}
                   />
-                )}
-              </TabsContent>
+                </>
+              ) : (
+                <EmptyState
+                  icon={<Sparkles className="w-8 h-8" />}
+                  title="No enhancements yet"
+                  description="Your AI-enhanced code will appear here after you run the enhancer."
+                  gradient="bg-gradient-primary"
+                />
+              )}
+            </TabsContent>
 
-              <TabsContent value="scanner" className="mt-8">
-                {history.scan.length > 0 ? (
-                  <HistoryList 
-                    data={history.scan} 
-                    type="scanner" 
-                    onCopy={handleCopy}
-                    copySuccess={copySuccess}
+            {/* Scanner List */}
+            <TabsContent value="scanner" className="mt-8">
+              {history.scan.length > 0 ? (
+                <>
+                  <ListView
+                    data={paginate(history.scan, scanPage)}
+                    type="scanner"
+                    onOpen={openDetails}
                   />
-                ) : (
-                  <EmptyState
-                    icon={<Activity className="w-8 h-8" />}
-                    title="No security scans yet"
-                    description="Your security analysis results will appear here. Run comprehensive scans to identify vulnerabilities."
-                    gradient="bg-gradient-secondary"
+                  <PaginationControls
+                    totalItems={history.scan.length}
+                    currentPage={scanPage}
+                    setPage={setScanPage}
                   />
-                )}
-              </TabsContent>
-            </Tabs>
-          </div>
+                </>
+              ) : (
+                <EmptyState
+                  icon={<Activity className="w-8 h-8" />}
+                  title="No security scans yet"
+                  description="Your code scan results will appear here after you run the scanner."
+                  gradient="bg-gradient-secondary"
+                />
+              )}
+            </TabsContent>
+          </Tabs>
         )}
       </div>
-       <Footer />
+
+      {/* Popup for Expanded Details */}
+      <Dialog open={!!selectedItem} onOpenChange={closeDetails}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {selectedType === "enhancer" ? "Code Enhancement Details" : "Security Scan Results"}
+            </DialogTitle>
+            <DialogDescription>
+              {selectedItem?.language?.toUpperCase() || "Unknown"} |{" "}
+              {selectedItem?.timestamp && new Date(selectedItem.timestamp).toLocaleString()}
+            </DialogDescription>
+          </DialogHeader>
+
+          {/* Show Details */}
+          {selectedType === "enhancer" && selectedItem && (
+            <div className="grid gap-6">
+              <CodeBlock
+                title="Original Code"
+                code={selectedItem.code || ""}
+                variant="original"
+                onCopy={handleCopy}
+                copySuccess={copySuccess}
+                copyId="original-expanded"
+              />
+              <CodeBlock
+                title="Enhanced Code"
+                code={selectedItem.enhanced_code || ""}
+                variant="enhanced"
+                onCopy={handleCopy}
+                copySuccess={copySuccess}
+                copyId="enhanced-expanded"
+              />
+            </div>
+          )}
+
+          {selectedType === "scanner" && selectedItem && (
+            <div className="rounded-lg bg-muted p-4 overflow-x-auto">
+              <pre className="text-sm font-mono leading-relaxed whitespace-pre-wrap text-black">
+                {JSON.stringify(selectedItem.result, null, 2)}
+              </pre>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Footer />
     </div>
   );
 }
 
-// Enhanced Stats Card Component
-function StatsCard({ 
-  icon, 
-  title, 
-  value, 
-  gradient 
-}: { 
-  icon: React.ReactNode; 
-  title: string; 
-  value: number; 
-  gradient: string;
-}) {
+/* ---------------- Helper Components ---------------- */
+
+function StatsCard({ icon, title, value, gradient }: { icon: React.ReactNode; title: string; value: number; gradient: string }) {
   return (
     <Card className="hover-lift border-0 shadow-secondary bg-card/50 backdrop-blur-sm">
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <p className="text-3xl font-bold">{value}</p>
-          </div>
-          <div className={`p-3 rounded-xl ${gradient} text-white shadow-glow`}>
-            {icon}
-          </div>
+      <CardContent className="p-6 flex items-center justify-between">
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-muted-foreground">{title}</p>
+          <p className="text-3xl font-bold">{value}</p>
         </div>
+        <div className={`p-3 rounded-xl ${gradient} text-white shadow-glow`}>{icon}</div>
       </CardContent>
     </Card>
   );
 }
 
-// Enhanced History List Component
-function HistoryList({ 
-  data, 
-  type, 
-  onCopy, 
-  copySuccess 
-}: { 
-  data: HistoryItem[]; 
-  type: "enhancer" | "scanner";
-  onCopy: (code: string, type: string) => void;
-  copySuccess: string | null;
-}) {
+function ListView({ data, type, onOpen }: { data: HistoryItem[]; type: "enhancer" | "scanner"; onOpen: (item: HistoryItem, type: "enhancer" | "scanner") => void }) {
   return (
-    <div className="space-y-6">
-      {data.map((item, index) => (
-        <Card 
-          key={index} 
-          className="hover-lift border-0 shadow-secondary bg-card/50 backdrop-blur-sm overflow-hidden"
+    <div className="border rounded-xl divide-y">
+      {data.map((item, idx) => (
+        <div
+          key={idx}
+          className="flex justify-between items-center p-4 cursor-pointer hover:bg-muted/40 transition-colors"
+          onClick={() => onOpen(item, type)}
         >
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-lg ${type === 'enhancer' ? 'bg-gradient-primary' : 'bg-gradient-secondary'}`}>
-                  {type === 'enhancer' ? 
-                    <Sparkles className="w-4 h-4 text-white" /> : 
-                    <Activity className="w-4 h-4 text-white" />
-                  }
-                </div>
-                <span className="text-lg">
-                  {item.language?.toUpperCase() || "Unknown"} {type === "enhancer" ? "Enhancement" : "Security Scan"}
-                </span>
-              </div>
-              {item.timestamp && (
-                <span className="text-sm text-muted-foreground">
-                  {new Date(item.timestamp).toLocaleDateString()}
-                </span>
-              )}
-            </CardTitle>
-          </CardHeader>
-          
-          <CardContent className="space-y-6">
-            {type === "enhancer" ? (
-              <div className="grid gap-6">
-                <CodeBlock
-                  title="Original Code"
-                  code={item.code || ""}
-                  variant="original"
-                  onCopy={onCopy}
-                  copySuccess={copySuccess}
-                  copyId={`original-${index}`}
-                />
-                <CodeBlock
-                  title="Enhanced Code"
-                  code={item.enhanced_code || ""}
-                  variant="enhanced"
-                  onCopy={onCopy}
-                  copySuccess={copySuccess}
-                  copyId={`enhanced-${index}`}
-                />
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <h4 className="font-semibold text-lg flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-success" />
-                  Security Analysis Results
-                </h4>
-                <div className="rounded-xl gradient-code overflow-hidden">
-                  <div className="scroll-container overflow-y-auto max-h-96 p-6">
-                    <pre className="text-sm font-mono leading-relaxed whitespace-pre-wrap text-black">
-                      {JSON.stringify(item.result, null, 2)}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+          <div className="flex items-center gap-3">
+            <div className={`p-2 rounded-lg ${type === "enhancer" ? "bg-gradient-primary" : "bg-gradient-secondary"}`}>
+              {type === "enhancer" ? <Sparkles className="w-4 h-4 text-white" /> : <Activity className="w-4 h-4 text-white" />}
+            </div>
+            <div>
+              <p className="font-semibold">
+                {item.language?.toUpperCase() || "Unknown"} {type === "enhancer" ? "Enhancement" : "Security Scan"}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {item.timestamp ? new Date(item.timestamp).toLocaleString() : "Unknown time"}
+              </p>
+            </div>
+          </div>
+          <span className="text-sm text-muted-foreground">Click to view details →</span>
+        </div>
       ))}
     </div>
   );
 }
 
-// Enhanced Code Block Component
-function CodeBlock({ 
-  title, 
-  code, 
-  variant, 
-  onCopy, 
-  copySuccess, 
-  copyId 
-}) {
-  const isEnhanced = variant === 'enhanced';
-  
+function PaginationControls({ totalItems, currentPage, setPage }: { totalItems: number; currentPage: number; setPage: (page: number) => void }) {
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+  if (totalPages <= 1) return null;
+
+  return (
+    <div className="flex justify-center items-center gap-4 mt-6">
+      <Button
+        variant="outline"
+        size="sm"
+        disabled={currentPage === 1}
+        onClick={() => setPage(currentPage - 1)}
+      >
+        Previous
+      </Button>
+      <span className="text-muted-foreground text-sm">
+        Page {currentPage} of {totalPages}
+      </span>
+      <Button
+        variant="outline"
+        size="sm"
+        disabled={currentPage === totalPages}
+        onClick={() => setPage(currentPage + 1)}
+      >
+        Next
+      </Button>
+    </div>
+  );
+}
+
+function CodeBlock({ title, code, variant, onCopy, copySuccess, copyId }: { title: string; code: string; variant: "original" | "enhanced"; onCopy: (code: string, id: string) => void; copySuccess: string | null; copyId: string }) {
+  const isEnhanced = variant === "enhanced";
   return (
     <div className="space-y-3">
       <div className="flex justify-between items-center">
         <h4 className="font-semibold flex items-center gap-2">
-          {isEnhanced ? (
-            <>
-              <Sparkles className="w-4 h-4 text-success" />
-              {title}
-            </>
-          ) : (
-            <>
-              <Code2 className="w-4 h-4 text-muted-foreground" />
-              {title}
-            </>
-          )}
+          {isEnhanced ? <Sparkles className="w-4 h-4 text-success" /> : <Code2 className="w-4 h-4 text-muted-foreground" />}
+          {title}
         </h4>
         <Button
           variant="outline"
@@ -325,20 +391,11 @@ function CodeBlock({
           onClick={() => onCopy(code, copyId)}
           className="hover:bg-primary hover:text-primary-foreground transition-all duration-200"
         >
-          {copySuccess === copyId ? (
-            <CheckCircle2 className="w-4 h-4 text-success" />
-          ) : (
-            <Copy className="w-4 h-4" />
-          )}
+          {copySuccess === copyId ? <CheckCircle2 className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4" />}
         </Button>
       </div>
-      
-      <div className={`rounded-xl overflow-hidden ${
-        isEnhanced ? 'code-enhanced' : 'code-original'
-      }`}>
-        <div className={`overflow-y-auto max-h-96 p-6 ${
-          isEnhanced ? 'scroll-visible-dark' : 'scroll-visible'
-        }`}>
+      <div className={`rounded-xl overflow-hidden ${isEnhanced ? "code-enhanced" : "code-original"}`}>
+        <div className={`overflow-y-auto max-h-96 p-6 ${isEnhanced ? "scroll-visible-dark" : "scroll-visible"}`}>
           <pre className="text-sm font-mono leading-relaxed whitespace-pre">
             {code || "// No code available"}
           </pre>
@@ -348,29 +405,14 @@ function CodeBlock({
   );
 }
 
-// Enhanced Empty State Component
-function EmptyState({
-  icon,
-  title,
-  description,
-  gradient,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  gradient: string;
-}) {
+function EmptyState({ icon, title, description, gradient }: { icon: React.ReactNode; title: string; description: string; gradient: string }) {
   return (
     <Card className="border-0 shadow-secondary bg-card/30 backdrop-blur-sm">
       <CardContent className="flex flex-col items-center justify-center py-16 text-center space-y-6">
-        <div className={`p-6 rounded-2xl ${gradient} text-white shadow-glow animate-float`}>
-          {icon}
-        </div>
+        <div className={`p-6 rounded-2xl ${gradient} text-white shadow-glow animate-float`}>{icon}</div>
         <div className="space-y-2">
           <h3 className="text-xl font-semibold">{title}</h3>
-          <p className="text-muted-foreground max-w-md leading-relaxed">
-            {description}
-          </p>
+          <p className="text-muted-foreground max-w-md leading-relaxed">{description}</p>
         </div>
       </CardContent>
     </Card>
