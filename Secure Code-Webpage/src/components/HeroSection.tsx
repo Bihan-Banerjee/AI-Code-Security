@@ -27,7 +27,6 @@ const HeroSection = () => {
                 Get real-time security scoring and comprehensive audit reports.
               </p>
             </div>
-git
             <div className="flex flex-col gap-4 min-[400px]:flex-row">
               <Button variant="security" size="lg" className="text-base">
                 <Zap className="h-5 w-5 mr-2" />

@@ -9,11 +9,6 @@ const Features = () => {
       description: "Advanced machine learning models trained on millions of code samples to identify complex security patterns and vulnerabilities."
     },
     {
-      icon: <Zap className="h-8 w-8" />,
-      title: "Real-time Scanning",
-      description: "Instant security analysis as you code with live feedback and immediate vulnerability detection."
-    },
-    {
       icon: <Shield className="h-8 w-8" />,
       title: "Auto-Fix Generation",
       description: "Automatically generate secure code fixes with detailed explanations of what was changed and why."
@@ -28,21 +23,6 @@ const Features = () => {
       title: "50+ Vulnerability Types",
       description: "Detect SQL injection, XSS, CSRF, buffer overflows, authentication issues, and many more security flaws."
     },
-    {
-      icon: <Eye className="h-8 w-8" />,
-      title: "Code Highlighting",
-      description: "Visual highlighting of vulnerable code sections with detailed explanations and fix suggestions."
-    },
-    {
-      icon: <Cpu className="h-8 w-8" />,
-      title: "Multi-Language Support",
-      description: "Support for Python, JavaScript, Java, C/C++, Go, Rust, and 20+ other programming languages."
-    },
-    {
-      icon: <Cloud className="h-8 w-8" />,
-      title: "CI/CD Integration",
-      description: "Seamlessly integrate with your existing development workflow through GitHub Actions, Jenkins, and more."
-    }
   ];
 
   return (
