@@ -27,8 +27,8 @@ export default function Login() {
     try {
       const res = await axios.post("/api/login", { username, password });
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("username", username);
+      sessionStorage.setItem("token", res.data.token);
+      sessionStorage.setItem("username", username);
 
       toast.success("Login successful!");
       navigate("/dashboard");

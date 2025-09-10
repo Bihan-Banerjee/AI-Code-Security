@@ -19,7 +19,7 @@ export default function Enhancer() {
 
   const handleEnhance = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       if (!token) {
         toast.error("You must be logged in to enhance code!");
         return;

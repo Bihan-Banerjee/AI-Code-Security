@@ -37,7 +37,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (!token) {
       toast.error("You must be logged in to view the dashboard.");
       navigate("/login");
@@ -52,7 +52,7 @@ export default function Dashboard() {
       .catch((err) => {
         if (err.response?.status === 401) {
           toast.error("Session expired. Please log in again.");
-          localStorage.removeItem("token");
+          sessionStorage.removeItem("token");
           navigate("/login");
         } else {
           toast.error(err.response?.data?.error || "Failed to load history");
