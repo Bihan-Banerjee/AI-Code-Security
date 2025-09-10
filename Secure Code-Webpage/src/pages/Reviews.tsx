@@ -284,26 +284,6 @@ const Reviews = () => {
           </p>
         </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          {stats.map((stat, index) => (
-            <Card
-              key={index}
-              className="text-center border-0 shadow-security bg-gradient-to-br from-card to-accent/10"
-            >
-              <CardContent className="p-6">
-                <div className="flex items-center justify-center w-14 h-14 rounded-full bg-muted mb-4 mx-auto shadow-md">
-                  <stat.icon className="h-7 w-7 text-primary" />
-                </div>
-                <div className="text-2xl font-bold text-foreground mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
         {/* Reviews Grid */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-16">
           {reviews.map((review) => (
