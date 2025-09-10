@@ -276,11 +276,13 @@ function HistoryList({
                   <ShieldCheck className="w-5 h-5 text-success" />
                   Security Analysis Results
                 </h4>
-                <ScrollArea className="rounded-xl border bg-gradient-code p-6 max-h-96">
-                  <pre className="text-sm font-mono leading-relaxed whitespace-pre-wrap">
-                    {JSON.stringify(item.result, null, 2)}
-                  </pre>
-                </ScrollArea>
+                <div className="rounded-xl gradient-code overflow-hidden">
+                  <div className="scroll-container overflow-y-auto max-h-96 p-6">
+                    <pre className="text-sm font-mono leading-relaxed whitespace-pre-wrap text-black">
+                      {JSON.stringify(item.result, null, 2)}
+                    </pre>
+                  </div>
+                </div>
               </div>
             )}
           </CardContent>
@@ -298,13 +300,6 @@ function CodeBlock({
   onCopy, 
   copySuccess, 
   copyId 
-}: { 
-  title: string; 
-  code: string; 
-  variant: 'original' | 'enhanced';
-  onCopy: (code: string, type: string) => void;
-  copySuccess: string | null;
-  copyId: string;
 }) {
   const isEnhanced = variant === 'enhanced';
   
@@ -338,15 +333,17 @@ function CodeBlock({
         </Button>
       </div>
       
-      <ScrollArea 
-        className={`rounded-xl border p-6 max-h-96 ${
-          isEnhanced ? 'code-enhanced' : 'code-original'
-        }`}
-      >
-        <pre className="text-sm font-mono leading-relaxed whitespace-pre">
-          {code || "// No code available"}
-        </pre>
-      </ScrollArea>
+      <div className={`rounded-xl overflow-hidden ${
+        isEnhanced ? 'code-enhanced' : 'code-original'
+      }`}>
+        <div className={`overflow-y-auto max-h-96 p-6 ${
+          isEnhanced ? 'scroll-visible-dark' : 'scroll-visible'
+        }`}>
+          <pre className="text-sm font-mono leading-relaxed whitespace-pre">
+            {code || "// No code available"}
+          </pre>
+        </div>
+      </div>
     </div>
   );
 }
