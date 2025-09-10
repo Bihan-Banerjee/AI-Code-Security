@@ -1,4 +1,4 @@
-import { Shield, Users, Award, ChevronRight } from "lucide-react";
+import { Shield, Users, Award, ChevronRight, Star, Target, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SecurityHeader from "@/components/SecurityHeader";
@@ -10,7 +10,6 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
-
       <SecurityHeader />
 
       {/* Hero Section */}
@@ -46,7 +45,7 @@ const About = () => {
             </div>
             <div className="relative">
               <div className="w-full h-64 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl flex items-center justify-center">
-                <Shield className="h-24 w-24 text-primary" />
+                <Target className="h-24 w-24 text-primary" />
               </div>
             </div>
           </div>
@@ -107,7 +106,7 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 bg-muted/30">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Team</h2>
@@ -148,46 +147,67 @@ const About = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 px-4 bg-muted/30">
+           {/* Future Goals Section */}
+      <section className="py-16 px-4">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-primary mb-2">50M+</div>
-              <div className="text-muted-foreground">Lines of Code Analyzed</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-primary mb-2">10K+</div>
-              <div className="text-muted-foreground">Developers Protected</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-primary mb-2">99.9%</div>
-              <div className="text-muted-foreground">Uptime Guarantee</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-primary mb-2">24/7</div>
-              <div className="text-muted-foreground">Security Monitoring</div>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Future Goals</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Building towards a safer, smarter, and more secure coding ecosystem
+            </p>
+          </div>
+
+          <div className="rounded-2xl bg-muted/30 p-10 shadow-sm">
+            <div className="grid md:grid-cols-3 gap-8 text-center">
+              
+              <div>
+                <div className="text-4xl font-bold text-primary mb-2">
+                   <Rocket className="h-12 w-12 text-primary mx-auto mb-4" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Global Expansion</h3>
+                <p className="text-muted-foreground">
+                  Bringing SecureCode AI to developers worldwide, setting a universal standard for secure coding.
+                </p>
+              </div>
+
+              <div>
+                <div className="text-4xl font-bold text-primary mb-2">
+                  <Star className="h-12 w-12 text-primary mx-auto mb-4" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">AI Advancements</h3>
+                <p className="text-muted-foreground">
+                  Continuously evolving our AI to detect even the most complex and emerging vulnerabilities.
+                </p>
+              </div>
+
+              <div>
+                <div className="text-4xl font-bold text-primary mb-2">
+                  <Target className="h-12 w-12 text-primary mx-auto mb-4" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Developer Ecosystem</h3>
+                <p className="text-muted-foreground">
+                  Building a collaborative ecosystem of developers, contributors, and researchers for a safer digital world.
+                </p>
+              </div>
+
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Secure Your Code?</h2>
+
+
+      {/* Call to Action */}
+      <section className="py-20 px-4 text-center">
+        <div className="container mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Join the SecureCode AI Journey</h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join thousands of developers who trust SecureCode AI to protect their applications.
+            Be part of our mission to make secure coding accessible to all developers.  
+            Let's build a safer digital future together.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="text-lg px-8">
-              Start Free Trial
-              <ChevronRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8">
-              Contact Sales
-            </Button>
-          </div>
+          <Button size="lg" className="px-6 py-3 text-lg">
+            Get Started <ChevronRight className="ml-2 h-5 w-5" />
+          </Button>
         </div>
       </section>
 
