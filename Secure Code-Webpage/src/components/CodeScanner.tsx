@@ -40,7 +40,7 @@ export default function CodeScanner() {
 
   const handleScan = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       if (!token) {
         toast.error("You must be logged in to scan code.");
         return;

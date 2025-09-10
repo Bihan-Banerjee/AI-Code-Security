@@ -9,7 +9,7 @@ const SecurityHeader = () => {
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("username");
+    const storedUser = sessionStorage.getItem("username");
     if (storedUser) {
       setUsername(storedUser);
     }

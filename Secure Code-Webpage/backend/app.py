@@ -22,6 +22,8 @@ CORS(app)
 app.config['MONGO_URI'] = os.getenv("MONGO_URI")
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET') or 'super-secret-key'
 app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET') or 'super-secret-key'
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = False
+
 app.register_blueprint(reviews_bp)
 jwt = JWTManager(app)
 
