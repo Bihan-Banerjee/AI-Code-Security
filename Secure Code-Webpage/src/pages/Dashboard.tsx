@@ -171,6 +171,13 @@ export default function Dashboard() {
           />
         </div>
 
+        {/* Extra Components */}
+        <div className="grid md:grid-cols-3 gap-6 mt-10">
+          <ActivityFeed history={history} />
+          <TipsCard />
+          <QuickActions navigate={navigate} />
+        </div>
+
         {/* Main Content */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-24 space-y-4">
@@ -346,13 +353,23 @@ function ListView({ data, type, onOpen }: { data: HistoryItem[]; type: "enhancer
   );
 }
 
-function PaginationControls({ totalItems, currentPage, setPage }: { totalItems: number; currentPage: number; setPage: (page: number) => void }) {
+// Enhanced Pagination
+function PaginationControls({
+  totalItems,
+  currentPage,
+  setPage,
+}: {
+  totalItems: number;
+  currentPage: number;
+  setPage: (page: number) => void;
+}) {
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-
   if (totalPages <= 1) return null;
 
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
   return (
-    <div className="flex justify-center items-center gap-4 mt-6">
+    <div className="flex justify-center items-center gap-2 mt-6 flex-wrap">
       <Button
         variant="outline"
         size="sm"
@@ -361,9 +378,17 @@ function PaginationControls({ totalItems, currentPage, setPage }: { totalItems: 
       >
         Previous
       </Button>
-      <span className="text-muted-foreground text-sm">
-        Page {currentPage} of {totalPages}
-      </span>
+      {pages.map((p) => (
+        <Button
+          key={p}
+          size="sm"
+          variant={p === currentPage ? "default" : "outline"}
+          className={`rounded-full w-9 h-9 ${p === currentPage ? "shadow-glow" : ""}`}
+          onClick={() => setPage(p)}
+        >
+          {p}
+        </Button>
+      ))}
       <Button
         variant="outline"
         size="sm"
@@ -418,3 +443,87 @@ function EmptyState({ icon, title, description, gradient }: { icon: React.ReactN
     </Card>
   );
 }
+
+/* ---------------- Extra Components ---------------- */
+
+// Recent Activity Feed
+function ActivityFeed({ history }: { history: { enhance: HistoryItem[]; scan: HistoryItem[] } }) {
+  const allHistory = [...history.enhance, ...history.scan]
+    .sort((a, b) => (new Date(b.timestamp || "").getTime() - new Date(a.timestamp || "").getTime()))
+    .slice(0, 5);
+
+  return (
+    <Card className="shadow-secondary border-0 bg-card/40 backdrop-blur-sm">
+      <CardHeader>
+        <CardTitle className="text-lg">Recent Activity</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {allHistory.length === 0 ? (
+          <p className="text-muted-foreground text-sm">No activity yet</p>
+        ) : (
+          allHistory.map((item, idx) => (
+            <div key={idx} className="flex items-center gap-3 text-sm">
+              <div className={`p-2 rounded-lg ${item.enhanced_code ? "bg-gradient-primary" : "bg-gradient-secondary"} text-white`}>
+                {item.enhanced_code ? <Sparkles className="w-4 h-4" /> : <Activity className="w-4 h-4" />}
+              </div>
+              <div>
+                <p className="font-medium">{item.language?.toUpperCase() || "Unknown"} {item.enhanced_code ? "Enhancement" : "Scan"}</p>
+                <p className="text-xs text-muted-foreground">{new Date(item.timestamp || "").toLocaleString()}</p>
+              </div>
+            </div>
+          ))
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+// Tips & Insights
+function TipsCard() {
+  const tips = [
+    "Use parameterized queries to avoid SQL injection.",
+    "Always validate user input before processing.",
+    "Keep dependencies updated to patch vulnerabilities.",
+    "Use environment variables for storing secrets.",
+  ];
+  const randomTip = tips[Math.floor(Math.random() * tips.length)];
+
+  return (
+    <Card className="shadow-secondary border-0 bg-gradient-to-r from-blue-50 to-indigo-50">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <Sparkles className="w-5 h-5 text-blue-600" /> Pro Tip
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm text-muted-foreground">{randomTip}</p>
+      </CardContent>
+    </Card>
+  );
+}
+
+// Quick Actions
+function QuickActions({ navigate }: { navigate: any }) {
+  return (
+    <Card className="shadow-secondary border-0 bg-card/40 backdrop-blur-sm">
+      <CardHeader>
+        <CardTitle className="text-lg">Quick Actions</CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-3">
+        <Button
+          onClick={() => navigate("/enhancer")}
+          className="w-full bg-transparent border border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
+        >
+          <Sparkles className="w-4 h-4 mr-2" /> Enhance Code
+        </Button>
+        <Button
+          onClick={() => navigate("/scanner")}
+          className="w-full bg-transparent border border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
+        >
+          <Activity className="w-4 h-4 mr-2" /> Run Security Scan
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+
