@@ -10,19 +10,42 @@ import subprocess
 import json
 from pymongo import MongoClient
 from routes.reviews import reviews_bp
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from datetime import datetime
+from datetime import timedelta
 from bson import ObjectId
 from models.reviews import reviews_collection
-
+from schemas import ScanRequest
+from pydantic import ValidationError
+from flask_compress import Compress
+from flask_caching import Cache
+import hashlib
 load_dotenv()
 
 app = Flask(__name__)
+Compress(app)
 CORS(app)
+
+cache = Cache(config={
+    "CACHE_TYPE": "RedisCache",
+    "CACHE_REDIS_URL": os.getenv("REDIS_URL", "redis://localhost:6379/0"),
+    "CACHE_DEFAULT_TIMEOUT": 3600
+})
+cache.init_app(app)
+
+def files_hash(files):
+    h = hashlib.sha256()
+    for f in sorted(files, key=lambda x: x["filename"]):
+        h.update(f["filename"].encode())
+        h.update(b"\0")
+        h.update(f["content"].encode())
+    return h.hexdigest()
 
 app.config['MONGO_URI'] = os.getenv("MONGO_URI")
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET') or 'super-secret-key'
 app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET') or 'super-secret-key'
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = False
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=60)
 
 app.register_blueprint(reviews_bp)
 jwt = JWTManager(app)
@@ -35,19 +58,38 @@ scan_history = db["scan_history"]
 
 app.register_blueprint(auth_bp, url_prefix="/api")
 
+limiter = Limiter(
+    key_func=get_remote_address,
+    default_limits=["20 per minute"]
+)
+limiter.init_app(app)
+
 @app.route('/api/scan', methods=['POST'])
+@limiter.limit("5/minute")
 @jwt_required()
 def scan_code():
     try:
         data = request.get_json()
-        files = data.get("files", [])
-        language = data.get("language", "python").lower()
+        try:
+            req = ScanRequest(**data)
+        except ValidationError as e:
+            return jsonify({"error": e.errors()}), 400
+
+        files = [f.dict() for f in req.files]
+        language = req.language.lower()
         username = get_jwt_identity()
+
+        # Caching
+        key = f"scan:{username}:{files_hash(files)}"
+        cached = cache.get(key)
+        if cached:
+            return jsonify({"result": cached, "cached": True})
 
         written_files = []
         with tempfile.TemporaryDirectory() as temp_dir:
             for f in files:
-                filepath = os.path.join(temp_dir, f["filename"])
+                filename = os.path.basename(f["filename"])
+                filepath = os.path.join(temp_dir, filename)
                 with open(filepath, "w", encoding="utf-8") as code_file:
                     code_file.write(f["content"])
                 written_files.append(filepath)
@@ -55,11 +97,14 @@ def scan_code():
             if language == "python":
                 scan_command = ["python", "-m", "bandit", "-r", temp_dir, "-f", "json"]
             elif language == "javascript":
-                scan_command = ["semgrep", "--config=p/javascript", temp_dir, "--json"]
+                scan_command = ["semgrep", "--config=p/javascript", "--json", temp_dir]
             else:
                 return jsonify({"error": "Unsupported language"}), 400
 
-            result = subprocess.run(scan_command, capture_output=True, text=True)
+            try:
+                result = subprocess.run(scan_command, capture_output=True, text=True, timeout=40)
+            except subprocess.TimeoutExpired:
+                return jsonify({"error": "Scan timed out"}), 500
 
             if result.returncode not in (0, 1, 2):
                 return jsonify({"error": result.stderr}), 500
@@ -69,11 +114,14 @@ def scan_code():
             except json.JSONDecodeError:
                 return jsonify({"error": "Invalid JSON output from scanner"}), 500
 
+            # Cache + DB
+            cache.set(key, output_json)
             scan_history.insert_one({
                 "username": username,
                 "language": language,
                 "files": files,
-                "result": output_json
+                "result": output_json,
+                "timestamp": datetime.utcnow().isoformat()
             })
 
             return jsonify({"result": output_json})
@@ -81,11 +129,13 @@ def scan_code():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 @app.route("/api/health")
 def health():
     return jsonify({"status": "ok"})
 
 @app.route('/api/enhance', methods=['POST'])
+@limiter.limit("5/minute")
 @jwt_required()
 def enhance():
     try:
@@ -107,8 +157,10 @@ def enhance():
             "code": code,
             "language": language,
             "enhanced_code": enhanced_code,
-            "diff": diff
+            "diff": diff,
+            "timestamp": datetime.utcnow().isoformat()
         })
+
 
         return jsonify({
             "enhanced_code": enhanced_code,
@@ -131,6 +183,7 @@ def get_history():
     })
 
 @app.route("/api/reviews", methods=["POST"])
+@limiter.limit("5/minute")
 def submit_review():
     try:
         data = request.get_json()
