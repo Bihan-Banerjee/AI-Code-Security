@@ -27,11 +27,20 @@ app = Flask(__name__)
 Compress(app)
 CORS(app)
 
-cache = Cache(config={
-    "CACHE_TYPE": "RedisCache",
-    "CACHE_REDIS_URL": os.getenv("REDIS_URL", "redis://localhost:6379/0"),
-    "CACHE_DEFAULT_TIMEOUT": 3600
-})
+if os.getenv("USE_REDIS", "false").lower() == "true":
+    cache = Cache(config={
+        "CACHE_TYPE": "RedisCache",
+        "CACHE_REDIS_URL": os.getenv("REDIS_URL", "redis://localhost:6379/0"),
+        "CACHE_DEFAULT_TIMEOUT": 3600
+    })
+else:
+    cache = Cache(config={
+        "CACHE_TYPE": "SimpleCache",
+        "CACHE_DEFAULT_TIMEOUT": 3600
+    })
+
+cache.init_app(app)
+
 cache.init_app(app)
 
 def files_hash(files):
@@ -70,51 +79,50 @@ limiter.init_app(app)
 def scan_code():
     try:
         data = request.get_json()
+        app.logger.info(f"Incoming request: {data}")   # 👈 log incoming payload
+
         try:
             req = ScanRequest(**data)
         except ValidationError as e:
+            app.logger.error(f"Validation error: {e.errors()}")
             return jsonify({"error": e.errors()}), 400
 
         files = [f.dict() for f in req.files]
         language = req.language.lower()
         username = get_jwt_identity()
 
-        # Caching
         key = f"scan:{username}:{files_hash(files)}"
         cached = cache.get(key)
         if cached:
             return jsonify({"result": cached, "cached": True})
 
-        written_files = []
         with tempfile.TemporaryDirectory() as temp_dir:
             for f in files:
-                filename = os.path.basename(f["filename"])
-                filepath = os.path.join(temp_dir, filename)
-                with open(filepath, "w", encoding="utf-8") as code_file:
+                path = os.path.join(temp_dir, f["filename"])
+                with open(path, "w", encoding="utf-8") as code_file:
                     code_file.write(f["content"])
-                written_files.append(filepath)
 
             if language == "python":
-                scan_command = ["python", "-m", "bandit", "-r", temp_dir, "-f", "json"]
+                scan_command = ["bandit", "-r", temp_dir, "-f", "json"]  # 👈 drop "python -m"
             elif language == "javascript":
                 scan_command = ["semgrep", "--config=p/javascript", "--json", temp_dir]
             else:
                 return jsonify({"error": "Unsupported language"}), 400
 
-            try:
-                result = subprocess.run(scan_command, capture_output=True, text=True, timeout=40)
-            except subprocess.TimeoutExpired:
-                return jsonify({"error": "Scan timed out"}), 500
+            app.logger.info(f"Running: {' '.join(scan_command)}")
+            result = subprocess.run(scan_command, capture_output=True, text=True)
+
+            app.logger.info(f"stdout: {result.stdout[:500]}")
+            app.logger.info(f"stderr: {result.stderr}")
 
             if result.returncode not in (0, 1, 2):
                 return jsonify({"error": result.stderr}), 500
 
             try:
                 output_json = json.loads(result.stdout)
-            except json.JSONDecodeError:
-                return jsonify({"error": "Invalid JSON output from scanner"}), 500
+            except Exception as e:
+                return jsonify({"error": f"JSON parse failed: {str(e)}", "raw": result.stdout}), 500
 
-            # Cache + DB
             cache.set(key, output_json)
             scan_history.insert_one({
                 "username": username,
@@ -127,7 +135,9 @@ def scan_code():
             return jsonify({"result": output_json})
 
     except Exception as e:
+        app.logger.error(f"Unexpected error: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
 
 
 @app.route("/api/health")

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import SecurityHeader from "@/components/SecurityHeader";
 import Footer from "@/components/Footer";
+import { useMutation } from "@tanstack/react-query";
 
 import {
   Select,
@@ -15,15 +16,24 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { toast } from "react-hot-toast";
+import { z } from "zod";
+import { BanditResponse, BanditItem } from "@/lib/schemas";
+
+type File = {
+  filename: string;
+  content: string;
+};
+
+type ScanResult = z.infer<typeof BanditResponse>;
 
 export default function CodeScanner() {
-  const [files, setFiles] = useState([{ filename: "app.py", content: "" }]);
+  const [files, setFiles] = useState<File[]>([{ filename: "app.py", content: "" }]);
   const [language, setLanguage] = useState("python");
-  const [issues, setIssues] = useState([]);
+  const [issues, setIssues] = useState<z.infer<typeof BanditItem>[]>([]);
   const [scanComplete, setScanComplete] = useState(false);
   const [score, setScore] = useState("A+");
 
-  const handleFileChange = (index, field, value) => {
+  const handleFileChange = (index: number, field: keyof File, value: string) => {
     const updated = [...files];
     updated[index][field] = value;
     setFiles(updated);
@@ -33,64 +43,65 @@ export default function CodeScanner() {
     setFiles([...files, { filename: `file${files.length + 1}.py`, content: "" }]);
   };
 
-  const deleteFile = (index) => {
+  const deleteFile = (index: number) => {
     const updated = files.filter((_, i) => i !== index);
     setFiles(updated);
   };
 
-  const handleScan = async () => {
-    try {
-      const token = sessionStorage.getItem("token");
-      if (!token) {
-        toast.error("You must be logged in to scan code.");
-        return;
-      }
-
-      const res = await axios.post(
-        "/api/scan",
-        { files, language },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+  const scanMutation = useMutation<any, AxiosError, { files: File[], language: string }>({
+    mutationFn: (newScan: { files: File[], language: string }) => {
+        const token = sessionStorage.getItem("token");
+        if (!token) {
+            throw new Error("You must be logged in to scan code.");
         }
-      );
+        return axios.post("/api/scan", newScan, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+    },
+    onSuccess: (res) => {
+        const parsed: ScanResult = res.data.result || JSON.parse(res.data.output || "{}");
+        const resultIssues = Array.isArray(parsed.results) ? parsed.results : [];
 
-      const parsed = res.data.result || JSON.parse(res.data.output || "{}");
-      const resultIssues = Array.isArray(parsed.results) ? parsed.results : [];
+        setIssues(resultIssues);
+        setScanComplete(true);
 
-      setIssues(resultIssues);
-      setScanComplete(true);
+        let numericScore = 100;
+        resultIssues.forEach((issue: z.infer<typeof BanditItem>) => {
+            const severity = issue.issue_severity?.toLowerCase();
+            if (severity === "high") numericScore -= 10;
+            else if (severity === "medium") numericScore -= 5;
+            else if (severity === "low") numericScore -= 2;
+        });
 
-      let numericScore = 100;
-      resultIssues.forEach((issue) => {
-        const severity = issue.issue_severity?.toLowerCase();
-        if (severity === "high") numericScore -= 10;
-        else if (severity === "medium") numericScore -= 5;
-        else if (severity === "low") numericScore -= 2;
-      });
+        numericScore = Math.max(0, numericScore);
 
-      numericScore = Math.max(0, numericScore); 
+        let grade = "F";
+        if (numericScore >= 95) grade = "A+";
+        else if (numericScore >= 85) grade = "A";
+        else if (numericScore >= 75) grade = "B";
+        else if (numericScore >= 65) grade = "C";
+        else if (numericScore >= 50) grade = "D";
 
-      let grade = "F";
-      if (numericScore >= 95) grade = "A+";
-      else if (numericScore >= 85) grade = "A";
-      else if (numericScore >= 75) grade = "B";
-      else if (numericScore >= 65) grade = "C";
-      else if (numericScore >= 50) grade = "D";
+        setScore(`${numericScore} (${grade})`);
+        toast.success("Scan complete!");
+    },
+    onError: (err: any) => {
+        console.error(err);
+        toast.error(err.response?.data?.error || "Scan failed");
+        setIssues([]);
+        setScanComplete(true);
+        setScore("N/A");
+    },
+});
 
-      setScore(`${numericScore} (${grade})`);
-    } catch (err: any) {
-      console.error(err);
-      toast.error(err.response?.data?.error || "Scan failed");
-      setIssues([]);
-      setScanComplete(true);
-      setScore("N/A");
-    }
-  };
+  const handleScan = () => {
+    scanMutation.mutate({ files, language });
+    };
 
 
-  const getSeverityColor = (severity) => {
+  const getSeverityColor = (severity?: string) => {
     switch (severity?.toLowerCase()) {
       case "high":
         return "text-red-600 font-semibold";
@@ -122,7 +133,9 @@ export default function CodeScanner() {
             Our AI-powered scanner analyzes your source code to detect weaknesses and insecure patterns across multiple languages. It highlights issues with severity levels, provides clear descriptions and helps you understand where your code might be at risk all in a matter of seconds. No setup required, just paste your code and get instant feedback.
           </p>
           <div className="flex gap-4">
-            <Button onClick={handleScan}>Start Security Scan</Button>
+            <Button onClick={handleScan} disabled={scanMutation.isPending}>
+                {scanMutation.isPending ? "Scanning..." : "Start Security Scan"}
+            </Button>
           </div>
 
           <div className="flex gap-8 pt-6">
@@ -185,7 +198,7 @@ export default function CodeScanner() {
             <p className="text-green-600 font-bold">Security Score: {score}</p>
           </div>
 
-          {scanComplete && issues.length > 0 ? (
+          {scanComplete && issues && issues.length > 0 ? (
             <div className="mt-4 overflow-x-auto">
               <table className="w-full text-sm border border-gray-300">
                 <thead className="bg-gray-100">
