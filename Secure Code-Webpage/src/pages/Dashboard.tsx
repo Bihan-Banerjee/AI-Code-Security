@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import axios, { AxiosError } from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import SecurityHeader from "@/components/SecurityHeader";
@@ -34,6 +34,7 @@ import {
   Sparkles,
   TrendingUp,
 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 interface HistoryItem {
   language?: string;
@@ -41,6 +42,11 @@ interface HistoryItem {
   enhanced_code?: string;
   result?: any;
   timestamp?: string;
+}
+
+interface HistoryData {
+    enhance: HistoryItem[];
+    scan: HistoryItem[];
 }
 
 const ITEMS_PER_PAGE = 5;
@@ -54,12 +60,19 @@ function removeStoredToken() {
   sessionStorage.removeItem("token");
 }
 
+const fetchHistory = async (): Promise<HistoryData> => {
+    const token = getStoredToken();
+    if (!token) {
+        throw new Error("You must be logged in to view the dashboard.");
+    }
+    const { data } = await axios.get("/api/history", {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return data;
+};
+
+
 export default function Dashboard() {
-  const [history, setHistory] = useState<{ enhance: HistoryItem[]; scan: HistoryItem[] }>({
-    enhance: [],
-    scan: [],
-  });
-  const [loading, setLoading] = useState(true);
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<HistoryItem | null>(null);
   const [selectedType, setSelectedType] = useState<"enhancer" | "scanner" | null>(null);
@@ -69,42 +82,21 @@ export default function Dashboard() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = getStoredToken();
-    if (!token) {
-      toast.error("You must be logged in to view the dashboard.");
-      navigate("/login");
-      return;
+    const { data: history, isLoading, error } = useQuery<HistoryData, AxiosError>({
+        queryKey: ['history'],
+        queryFn: fetchHistory,
+    });
+
+    if (error) {
+        if (error.response?.status === 401) {
+            toast.error("Session expired. Please log in again.");
+            removeStoredToken();
+            navigate("/login");
+        } else {
+            toast.error(error.response?.data?.error || "Failed to load history");
+        }
     }
 
-    const controller = new AbortController();
-    setLoading(true);
-
-    axios
-      .get("/api/history", {
-        headers: { Authorization: `Bearer ${token}` },
-        signal: controller.signal,
-      })
-      .then((res) => {
-        const enhance = Array.isArray(res.data?.enhance) ? res.data.enhance : [];
-        const scan = Array.isArray(res.data?.scan) ? res.data.scan : [];
-        setHistory({ enhance, scan });
-      })
-      .catch((err) => {
-        if (axios.isCancel(err) || err?.name === "CanceledError") return;
-
-        if (err?.response?.status === 401) {
-          toast.error("Session expired. Please log in again.");
-          removeStoredToken();
-          navigate("/login");
-        } else {
-          toast.error(err?.response?.data?.error || "Failed to load history");
-        }
-      })
-      .finally(() => setLoading(false));
-
-    return () => controller.abort();
-  }, [navigate]);
 
   const handleCopy = (code: string, id: string) => {
     navigator.clipboard.writeText(code || "");
@@ -154,19 +146,19 @@ export default function Dashboard() {
           <StatsCard
             icon={<Code2 className="w-6 h-6" />}
             title="Enhancements"
-            value={history.enhance.length}
+            value={history?.enhance.length || 0}
             gradient="bg-gradient-primary"
           />
           <StatsCard
             icon={<ShieldCheck className="w-6 h-6" />}
             title="Security Scans"
-            value={history.scan.length}
+            value={history?.scan.length || 0}
             gradient="bg-gradient-secondary"
           />
           <StatsCard
             icon={<TrendingUp className="w-6 h-6" />}
             title="Total Actions"
-            value={history.enhance.length + history.scan.length}
+            value={(history?.enhance.length || 0) + (history?.scan.length || 0)}
             gradient="bg-gradient-to-r from-success to-warning"
           />
         </div>
@@ -179,13 +171,17 @@ export default function Dashboard() {
         </div>
 
         {/* Main Content */}
-        {loading ? (
+        {isLoading ? (
           <div className="flex flex-col items-center justify-center py-24 space-y-4">
             <div className="p-4 rounded-full bg-primary/10 animate-glow">
               <Loader2 className="w-8 h-8 animate-spin text-primary" />
             </div>
             <p className="text-muted-foreground">Loading your dashboard...</p>
           </div>
+        ) : error ? (
+            <div className="text-center text-red-500">
+                <p>{error.message}</p>
+            </div>
         ) : (
           <Tabs defaultValue="enhancer" className="w-full animate-slide-up">
             <TabsList className="grid w-full grid-cols-2 rounded-2xl p-1 bg-card/50 backdrop-blur-sm border shadow-secondary">
@@ -207,7 +203,7 @@ export default function Dashboard() {
 
             {/* Enhancer List */}
             <TabsContent value="enhancer" className="mt-8">
-              {history.enhance.length > 0 ? (
+              {history?.enhance && history.enhance.length > 0 ? (
                 <>
                   <ListView
                     data={paginate(history.enhance, enhancePage)}
@@ -232,7 +228,7 @@ export default function Dashboard() {
 
             {/* Scanner List */}
             <TabsContent value="scanner" className="mt-8">
-              {history.scan.length > 0 ? (
+              {history?.scan && history.scan.length > 0 ? (
                 <>
                   <ListView
                     data={paginate(history.scan, scanPage)}
@@ -447,8 +443,8 @@ function EmptyState({ icon, title, description, gradient }: { icon: React.ReactN
 /* ---------------- Extra Components ---------------- */
 
 // Recent Activity Feed
-function ActivityFeed({ history }: { history: { enhance: HistoryItem[]; scan: HistoryItem[] } }) {
-  const allHistory = [...history.enhance, ...history.scan]
+function ActivityFeed({ history }: { history: HistoryData | undefined }) {
+  const allHistory = [...(history?.enhance || []), ...(history?.scan || [])]
     .sort((a, b) => (new Date(b.timestamp || "").getTime() - new Date(a.timestamp || "").getTime()))
     .slice(0, 5);
 
@@ -503,7 +499,7 @@ function TipsCard() {
 }
 
 // Quick Actions
-function QuickActions({ navigate }: { navigate: any }) {
+function QuickActions({ navigate }: { navigate: (path: string) => void }) {
   return (
     <Card className="shadow-secondary border-0 bg-card/40 backdrop-blur-sm">
       <CardHeader>
@@ -526,4 +522,3 @@ function QuickActions({ navigate }: { navigate: any }) {
     </Card>
   );
 }
-

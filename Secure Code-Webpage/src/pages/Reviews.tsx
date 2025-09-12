@@ -4,18 +4,25 @@ import { Badge } from "@/components/ui/badge";
 import { Star, Shield, Lock, Users, Award, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Footer from "@/components/Footer";
 import { toast } from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
+
+interface ReviewFormData {
+    name: string;
+    email: string;
+    rating: number;
+    review: string;
+}
 
 const Reviews = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ReviewFormData>({
     name: "",
     email: "",
     rating: 0,
     review: "",
   });
-  const [submitting, setSubmitting] = useState(false);
 
   const stats = [
     { icon: Users, label: "Active Users", value: "50K+" },
@@ -235,7 +242,23 @@ const Reviews = () => {
     ));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+    const mutation = useMutation<any, AxiosError, ReviewFormData>({
+        mutationFn: (newReview: ReviewFormData) => {
+            return axios.post("/api/reviews", {
+                ...newReview,
+                date: new Date().toISOString(),
+            });
+        },
+        onSuccess: () => {
+            toast.success("Review submitted successfully!");
+            setFormData({ name: "", email: "", rating: 0, review: "" });
+        },
+        onError: (error: any) => {
+            toast.error(error.response?.data?.error || "Failed to submit review");
+        }
+    });
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const { name, email, rating, review } = formData;
 
@@ -244,19 +267,7 @@ const Reviews = () => {
       return;
     }
 
-    setSubmitting(true);
-    try {
-      await axios.post("/api/reviews", {
-        ...formData,
-        date: new Date().toISOString(),
-      });
-      toast.success("Review submitted successfully!");
-      setFormData({ name: "", email: "", rating: 0, review: "" });
-    } catch (error: any) {
-      toast.error(error.response?.data?.error || "Failed to submit review");
-    } finally {
-      setSubmitting(false);
-    }
+    mutation.mutate(formData);
   };
 
   return (
@@ -396,10 +407,10 @@ const Reviews = () => {
               type="submit"
               variant="default"
               size="lg"
-              disabled={submitting}
+              disabled={mutation.isPending}
               className="w-full"
             >
-              {submitting ? "Submitting..." : "Submit Review"}
+              {mutation.isPending ? "Submitting..." : "Submit Review"}
             </Button>
           </form>
         </div>
