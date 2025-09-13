@@ -93,7 +93,11 @@ export default function Dashboard() {
             removeStoredToken();
             navigate("/login");
         } else {
-            toast.error(error.response?.data?.error || "Failed to load history");
+            toast.error(
+              typeof error.response?.data === "object" && error.response?.data !== null && "error" in error.response.data
+                ? (error.response.data as { error?: string }).error || "Failed to load history"
+                : "Failed to load history"
+            );
         }
     }
 
