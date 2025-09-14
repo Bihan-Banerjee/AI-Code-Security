@@ -160,37 +160,62 @@ def enhance():
         if not code.strip():
             return jsonify({"error": "No code provided"}), 400
 
-        enhanced_code, diff = enhance_code(code, language)
+        # 🔹 New format (returns dict)
+        result = enhance_code(code, language)
 
+        # Save to history (with candidates + explanations)
         enhance_history.insert_one({
             "username": username,
             "code": code,
             "language": language,
-            "enhanced_code": enhanced_code,
-            "diff": diff,
+            "enhanced_code": result["enhanced_code"],
+            "diff": result["diff"],
+            "candidates": result.get("candidates", []),
+            "explanations": result.get("explanations", []),
             "timestamp": datetime.utcnow().isoformat()
         })
 
-
-        return jsonify({
-            "enhanced_code": enhanced_code,
-            "diff": diff
-        })
+        return jsonify(result), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/history', methods=['GET'])
+@limiter.limit("10/minute")
 @jwt_required()
-def get_history():
-    username = get_jwt_identity()
-    enhance_logs = list(enhance_history.find({"username": username}, {"_id": 0}))
-    scan_logs = list(scan_history.find({"username": username}, {"_id": 0}))
+def history():
+    try:
+        username = get_jwt_identity()
 
-    return jsonify({
-        "enhance": enhance_logs,
-        "scan": scan_logs
-    })
+        # Fetch both histories
+        enhance_records = list(enhance_history.find({"username": username}).sort("timestamp", -1))
+        scan_records = list(scan_history.find({"username": username}).sort("timestamp", -1))
+
+        # Convert ObjectId to string & return only relevant fields
+        def clean(record, record_type):
+            return {
+                "id": str(record.get("_id")),
+                "language": record.get("language"),
+                "code": record.get("code"),
+                "enhanced_code": record.get("enhanced_code"),
+                "diff": record.get("diff"),
+                "candidates": record.get("candidates", []),   # ✅ added
+                "explanations": record.get("explanations", []), # ✅ added
+                "result": record.get("result") if record_type == "scan" else None,
+                "timestamp": record.get("timestamp"),
+            }
+
+        enhance_list = [clean(r, "enhance") for r in enhance_records]
+        scan_list = [clean(r, "scan") for r in scan_records]
+
+        return jsonify({
+            "enhance": enhance_list,
+            "scan": scan_list
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route("/api/reviews", methods=["POST"])
 @limiter.limit("5/minute")

@@ -37,12 +37,24 @@ import {
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
+interface Candidate {
+  model: string;
+  code: string;
+}
+
+interface Explanation {
+  change: string;
+  reason: string;
+}
+
 interface HistoryItem {
   language?: string;
   code?: string;
   enhanced_code?: string;
   result?: any;
   timestamp?: string;
+  candidates?: Candidate[];
+  explanations?: Explanation[];
 }
 
 interface HistoryData {
@@ -261,39 +273,79 @@ export default function Dashboard() {
 
       {/* Popup for Expanded Details */}
       <Dialog open={!!selectedItem} onOpenChange={closeDetails}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
               {selectedType === "enhancer" ? "Code Enhancement Details" : "Security Scan Results"}
             </DialogTitle>
             <DialogDescription>
               {selectedItem?.language?.toUpperCase() || "Unknown"} |{" "}
-              {selectedItem?.timestamp && new Date(selectedItem.timestamp).toLocaleString()}
+              {selectedItem?.timestamp ? new Date(selectedItem.timestamp).toLocaleString() : "No time"}
             </DialogDescription>
           </DialogHeader>
 
-          {/* Show Details */}
+          {/* Enhancer Details */}
           {selectedType === "enhancer" && selectedItem && (
-            <div className="grid gap-6">
+            <div className="grid gap-8">
+              {/* Original */}
               <CodeBlock
                 title="Original Code"
-                code={selectedItem.code || ""}
+                code={selectedItem.code ?? ""}
                 variant="original"
                 onCopy={handleCopy}
                 copySuccess={copySuccess}
                 copyId="original-expanded"
               />
+
+              {/* Primary Enhanced */}
               <CodeBlock
-                title="Enhanced Code"
-                code={selectedItem.enhanced_code || ""}
+                title="Enhanced Code (Primary)"
+                code={selectedItem.enhanced_code ?? ""}
                 variant="enhanced"
                 onCopy={handleCopy}
                 copySuccess={copySuccess}
                 copyId="enhanced-expanded"
               />
+
+              {Array.isArray(selectedItem.candidates) && selectedItem.candidates.length > 0 && (
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-lg flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-blue-500" />
+                    Alternative Suggestions
+                  </h4>
+                  <div className="grid gap-4">
+                    {selectedItem.candidates.map((c, i) => (
+                      <CodeBlock
+                        key={i}
+                        title={`Candidate #${i + 1} (${c.model})`}
+                        code={c.code}
+                        variant="enhanced"
+                        onCopy={handleCopy}
+                        copySuccess={copySuccess}
+                        copyId={`candidate-${i}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {Array.isArray(selectedItem.explanations) && selectedItem.explanations.length > 0 && (
+                <div className="space-y-2">
+                  <h4 className="font-semibold text-lg flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-green-600" />
+                    Security Explanations
+                  </h4>
+                  <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
+                    {selectedItem.explanations.map((exp, i) => (
+                      <li key={i}><strong>{exp.change}:</strong> {exp.reason}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           )}
 
+          {/* Scanner Details */}
           {selectedType === "scanner" && selectedItem && (
             <div className="rounded-lg bg-white p-4 shadow-md">
               <ScanResultsTable issues={Array.isArray(selectedItem.result?.results) ? selectedItem.result.results : []} />

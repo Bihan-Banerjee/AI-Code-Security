@@ -10,11 +10,27 @@ import SecurityHeader from "@/components/SecurityHeader";
 import Footer from "@/components/Footer";
 
 type DiffLine = { type: "add" | "remove" | "context"; content: string };
+interface EnhanceResult {
+  enhanced: string;  
+  diff: DiffLine[];
+  candidates: Candidate[];
+  explanations: Explanation[];
+}
+
+interface Candidate {
+  model: string;
+  code: string;
+}
+
+interface Explanation {
+  change: string;
+  reason: string;
+}
 
 export default function Enhancer() {
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("python");
-  const [result, setResult] = useState<{ enhanced: string; diff: DiffLine[] } | null>(null);
+  const [result, setResult] = useState<EnhanceResult | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleEnhance = async () => {
@@ -35,8 +51,11 @@ export default function Enhancer() {
 
       setResult({
         enhanced: res.data.enhanced_code,
-        diff: res.data.diff, 
+        diff: res.data.diff,
+        candidates: res.data.candidates || [],
+        explanations: res.data.explanations || [],
       });
+
       toast.success("Code enhanced successfully!");
     } catch (err: any) {
       toast.error(err.response?.data?.error || "Enhancement failed");
@@ -106,35 +125,43 @@ export default function Enhancer() {
 
         {/* Results */}
         {result && (
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Enhanced Code */}
+          <div className="space-y-6">
+            {/* Explanations */}
             <Card className="shadow-lg rounded-2xl">
-              <CardHeader>
-                <CardTitle>Enhanced Code</CardTitle>
-              </CardHeader>
+              <CardHeader><CardTitle>Why These Changes?</CardTitle></CardHeader>
               <CardContent>
-                <Textarea value={result.enhanced} readOnly rows={12} />
+                <ul className="list-disc pl-6 space-y-1 text-sm text-gray-700">
+                  {result.explanations?.map((ex, i) => (
+                    <li key={i}><strong>{ex.change}:</strong> {ex.reason}</li>
+                  ))}
+                </ul>
               </CardContent>
             </Card>
-
-            {/* Diff */}
+                
+            {/* Candidate Tabs */}
+            <div className="grid md:grid-cols-3 gap-6">
+              {result.candidates?.map((c, i) => (
+              <Card key={i} className="shadow-lg rounded-2xl">
+                <CardHeader>
+                  <CardTitle>{c.model}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Textarea value={c.code} readOnly rows={12} />
+                </CardContent>
+              </Card>
+            ))}
+            </div>
+            
+            {/* Final Diff */}
             <Card className="shadow-lg rounded-2xl">
-              <CardHeader>
-                <CardTitle>Diff</CardTitle>
-              </CardHeader>
+              <CardHeader><CardTitle>Final Chosen Diff</CardTitle></CardHeader>
               <CardContent>
                 <div className="font-mono text-sm border rounded-md overflow-hidden">
                   {result.diff.map((line, i) => (
-                    <pre
-                      key={i}
-                      className={
-                        line.type === "add"
-                          ? "bg-green-100 text-green-800 px-2"
-                          : line.type === "remove"
-                          ? "bg-red-100 text-red-800 px-2"
-                          : "px-2 text-gray-700"
-                      }
-                    >
+                    <pre key={i}
+                      className={line.type === "add" ? "bg-green-100 text-green-800 px-2"
+                        : line.type === "remove" ? "bg-red-100 text-red-800 px-2"
+                        : "px-2 text-gray-700"}>
                       {line.type === "add" ? "+" : line.type === "remove" ? "-" : " "}
                       {line.content}
                     </pre>
@@ -144,6 +171,7 @@ export default function Enhancer() {
             </Card>
           </div>
         )}
+
       </div>
       <Footer />
     </div>
