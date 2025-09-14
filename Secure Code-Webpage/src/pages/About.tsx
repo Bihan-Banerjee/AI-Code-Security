@@ -4,9 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import SecurityHeader from "@/components/SecurityHeader";
 import { useIsMobile } from "@/hooks/use-mobile"; 
 import Footer from "@/components/Footer";
+import { useNavigate } from "react-router-dom"; 
 
 const About = () => {
   const isMobile = useIsMobile(); 
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-background">
@@ -205,7 +207,7 @@ const About = () => {
             Be part of our mission to make secure coding accessible to all developers.  
             Let's build a safer digital future together.
           </p>
-          <Button size="lg" className="px-6 py-3 text-lg">
+          <Button size="lg" className="px-6 py-3 text-lg" onClick={() => navigate("/login")}>
             Get Started <ChevronRight className="ml-2 h-5 w-5" />
           </Button>
         </div>
