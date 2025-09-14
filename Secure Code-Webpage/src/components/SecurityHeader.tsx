@@ -54,9 +54,11 @@ const SecurityHeader = () => {
               <LogoutButton />
             </>
           ) : (
-            <Button variant="security" size="sm" onClick={() => window.location.href = "/login"}>
+            <Button variant="security" size="sm" onClick={() => window.location.href = "/login"} 
+            className="mr-0 p-2"
+            >
               <FaUser className="w-4 h-4 mr-2" />
-              Login
+              Login / Sign Up
             </Button>
           )}
         </div>
