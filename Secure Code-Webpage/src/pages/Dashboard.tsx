@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import SecurityHeader from "@/components/SecurityHeader";
 import Footer from "@/components/Footer";
+import ScanResultsTable from "@/components/ScanResultsTable";
 import {
   Card,
   CardContent,
@@ -294,10 +295,8 @@ export default function Dashboard() {
           )}
 
           {selectedType === "scanner" && selectedItem && (
-            <div className="rounded-lg bg-muted p-4 overflow-x-auto">
-              <pre className="text-sm font-mono leading-relaxed whitespace-pre-wrap text-black">
-                {JSON.stringify(selectedItem.result, null, 2)}
-              </pre>
+            <div className="rounded-lg bg-white p-4 shadow-md">
+              <ScanResultsTable issues={Array.isArray(selectedItem.result?.results) ? selectedItem.result.results : []} />
             </div>
           )}
         </DialogContent>
