@@ -35,7 +35,7 @@ export default function Enhancer() {
 
       setResult({
         enhanced: res.data.enhanced_code,
-        diff: res.data.diff, // should already be structured JSON from backend
+        diff: res.data.diff, 
       });
       toast.success("Code enhanced successfully!");
     } catch (err: any) {

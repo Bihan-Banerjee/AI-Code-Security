@@ -30,7 +30,7 @@ const SecurityFooter = () => {
         {/* Center Section: Social Icons */}
         <div className="flex gap-4">
           <a
-            href="https://github.com/"
+            href="https://github.com/Bihan-Banerjee/AI-Code-Security/"
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 rounded-full transition hover:bg-primary/10"
@@ -38,7 +38,7 @@ const SecurityFooter = () => {
             <Github className="h-5 w-5 text-gray-700 hover:text-primary transition" />
           </a>
           <a
-            href="https://linkedin.com/"
+            href="https://linktr.ee/bihanbanerjee26"
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 rounded-full transition hover:bg-primary/10"

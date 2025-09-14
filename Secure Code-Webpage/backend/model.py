@@ -27,16 +27,14 @@ def preserve_structure(original: str, enhanced: str) -> str:
     """
     final_code = enhanced
 
-    # Ensure imports are preserved
     original_imports = [line for line in original.splitlines() if line.strip().startswith("import")]
     for imp in original_imports:
         if imp not in final_code:
             final_code = imp + "\n" + final_code
 
-    # Ensure function definitions are preserved
     original_defs = [line for line in original.splitlines() if line.strip().startswith("def ")]
     for d in original_defs:
-        if d.split("(")[0] not in final_code:  # signature missing
+        if d.split("(")[0] not in final_code:  
             final_code = d + "\n    # [!] Function body missing, please review\n" + final_code
 
     return final_code

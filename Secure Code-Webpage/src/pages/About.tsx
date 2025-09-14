@@ -149,7 +149,7 @@ const About = () => {
         </div>
       </section>
 
-           {/* Future Goals Section */}
+      {/* Future Goals Section */}
       <section className="py-16 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-12">

@@ -191,14 +191,14 @@ export default function Dashboard() {
             <TabsList className="grid w-full grid-cols-2 rounded-2xl p-1 bg-card/50 backdrop-blur-sm border shadow-secondary">
               <TabsTrigger
                 value="enhancer"
-                className="flex gap-2 rounded-xl data-[state=active]:bg-gradient-primary data-[state=active]:text-black data-[state=active]:shadow-glow transition-all duration-300"
+                className="flex gap-2 rounded-xl data-[state=active]:bg-blue-300 data-[state=active]:text-black data-[state=active]:shadow-glow transition-all duration-300"
               >
                 <Sparkles className="w-4 h-4" />
                 Enhancement History
               </TabsTrigger>
               <TabsTrigger
                 value="scanner"
-                className="flex gap-2 rounded-xl data-[state=active]:bg-gradient-secondary data-[state=active]:text-black data-[state=active]:shadow-glow transition-all duration-300"
+                className="flex gap-2 rounded-xl data-[state=active]:bg-blue-300 data-[state=active]:text-black data-[state=active]:shadow-glow transition-all duration-300"
               >
                 <Activity className="w-4 h-4" />
                 Security Scans
@@ -308,7 +308,6 @@ export default function Dashboard() {
   );
 }
 
-/* ---------------- Helper Components ---------------- */
 
 function StatsCard({ icon, title, value, gradient }: { icon: React.ReactNode; title: string; value: number; gradient: string }) {
   return (
@@ -353,7 +352,6 @@ function ListView({ data, type, onOpen }: { data: HistoryItem[]; type: "enhancer
   );
 }
 
-// Enhanced Pagination
 function PaginationControls({
   totalItems,
   currentPage,
@@ -444,9 +442,6 @@ function EmptyState({ icon, title, description, gradient }: { icon: React.ReactN
   );
 }
 
-/* ---------------- Extra Components ---------------- */
-
-// Recent Activity Feed
 function ActivityFeed({ history }: { history: HistoryData | undefined }) {
   const allHistory = [...(history?.enhance || []), ...(history?.scan || [])]
     .sort((a, b) => (new Date(b.timestamp || "").getTime() - new Date(a.timestamp || "").getTime()))
@@ -478,7 +473,6 @@ function ActivityFeed({ history }: { history: HistoryData | undefined }) {
   );
 }
 
-// Tips & Insights
 function TipsCard() {
   const tips = [
     "Use parameterized queries to avoid SQL injection.",
