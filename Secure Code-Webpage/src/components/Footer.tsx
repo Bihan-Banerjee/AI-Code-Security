@@ -8,19 +8,19 @@ const SecurityFooter = () => {
         {/* Left Section: Links */}
         <nav className="flex flex-wrap justify-center gap-6 text-sm font-medium">
           <a
-            href="/terms"
+            href="/terms-and-conditions"
             className="transition-colors hover:text-primary hover:underline text-gray-700"
           >
             Terms
           </a>
           <a
-            href="/privacy"
+            href="/privacy-policy"
             className="transition-colors hover:text-primary hover:underline text-gray-700"
           >
             Privacy
           </a>
           <a
-            href="/contact"
+            href="/about"
             className="transition-colors hover:text-primary hover:underline text-gray-700"
           >
             Contact

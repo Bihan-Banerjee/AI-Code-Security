@@ -123,7 +123,7 @@ export default function Login() {
 
           {/* Footer */}
           <p className="text-center text-xs text-gray-500 mt-6">
-            By signing in, you agree to our Terms of Service and Privacy Policy
+            By signing in, you agree to our <a className="text-blue-600 hover:underline" href="/terms-and-conditions">Terms of Service</a> and <a href="/privacy-policy" className="text-blue-600 hover:underline">Privacy Policy</a>
           </p>
         </div>
       </div>
