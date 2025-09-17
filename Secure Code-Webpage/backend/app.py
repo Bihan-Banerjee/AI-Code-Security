@@ -147,6 +147,7 @@ def health():
 @app.route('/api/enhance', methods=['POST'])
 @limiter.limit("5/minute")
 @jwt_required()
+
 def enhance():
     try:
         data = request.get_json()

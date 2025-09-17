@@ -1,27 +1,29 @@
-
 # Flask dependencies
-flask==2.3.3
-flask-cors==4.0.0
-flask-jwt-extended==4.5.3
-flask-limiter==3.5.0
-flask-compress==1.13
-flask-caching==2.1.0
-python-dotenv==1.0.0
+flask>=2.3.0,<3.0.0
+flask-cors>=4.0.0,<5.0.0
+flask-jwt-extended>=4.5.0,<5.0.0
+flask-limiter>=3.5.0,<4.0.0
+flask-compress>=1.13,<2.0.0
+flask-caching>=2.1.0,<3.0.0
+python-dotenv>=1.0.0,<2.0.0
 
 # Database
-pymongo==4.5.0
+pymongo>=4.5.0,<5.0.0
 
-# Validation
-pydantic==2.4.2
+# Validation (compatible versions)
+pydantic>=2.4.0,<3.0.0
+pydantic-core>=2.10.0,<3.0.0
 
 # AI/ML dependencies
 torch>=2.0.0
 transformers>=4.30.0
-difflib2
 
 # Security scanning tools
 bandit>=1.7.5
 semgrep>=1.45.0
+
+# Additional dependencies from your code
+bson  # for ObjectId (usually comes with pymongo, but explicit is better)
 
 # Optional: for better performance
 accelerate>=0.20.0

@@ -1,8 +1,3 @@
-from transformers import (
-    AutoTokenizer,
-    AutoModelForSeq2SeqLM,
-    AutoModelForCausalLM
-)
 import difflib, re, torch
 
 # Models and their types
@@ -12,15 +7,29 @@ MODEL_CONFIGS = {
     "microsoft/CodeGPT-small-py": "causal",     # CodeGPT-small (Python)
 }
 
-# Load tokenizers and models
+# Initialize empty dictionaries - models will be loaded on demand
 tokenizers, models = {}, {}
 
-for name, mtype in MODEL_CONFIGS.items():
-    tokenizers[name] = AutoTokenizer.from_pretrained(name)
-    if mtype == "seq2seq":
-        models[name] = AutoModelForSeq2SeqLM.from_pretrained(name)
-    else:
-        models[name] = AutoModelForCausalLM.from_pretrained(name)
+def load_model_if_needed(model_name):
+    """Load model and tokenizer only when needed"""
+    if model_name not in models:
+        print(f"Loading {model_name}... (this may take a few minutes)")
+        
+        from transformers import (
+            AutoTokenizer,
+            AutoModelForSeq2SeqLM,
+            AutoModelForCausalLM
+        )
+        
+        tokenizers[model_name] = AutoTokenizer.from_pretrained(model_name)
+        mtype = MODEL_CONFIGS[model_name]
+        
+        if mtype == "seq2seq":
+            models[model_name] = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+        else:
+            models[model_name] = AutoModelForCausalLM.from_pretrained(model_name)
+        
+        print(f"✅ {model_name} loaded successfully")
 
 # Rule-based fixes
 SECURE_REPLACEMENTS = {
@@ -74,6 +83,9 @@ def postprocess_code(code: str):
     return "\n".join([l.replace("\t", "    ").rstrip() for l in lines])
 
 def run_model(model_name, code, language):
+    # Load model only when needed
+    load_model_if_needed(model_name)
+    
     tokenizer = tokenizers[model_name]
     model = models[model_name]
     mtype = MODEL_CONFIGS[model_name]
