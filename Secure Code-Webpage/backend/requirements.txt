@@ -1,3 +1,28 @@
-flask
-bandit
-semgrep
+
+# Flask dependencies
+flask==2.3.3
+flask-cors==4.0.0
+flask-jwt-extended==4.5.3
+flask-limiter==3.5.0
+flask-compress==1.13
+flask-caching==2.1.0
+python-dotenv==1.0.0
+
+# Database
+pymongo==4.5.0
+
+# Validation
+pydantic==2.4.2
+
+# AI/ML dependencies
+torch>=2.0.0
+transformers>=4.30.0
+difflib2
+
+# Security scanning tools
+bandit>=1.7.5
+semgrep>=1.45.0
+
+# Optional: for better performance
+accelerate>=0.20.0
+safetensors>=0.3.0
