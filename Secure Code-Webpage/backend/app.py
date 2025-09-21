@@ -79,7 +79,7 @@ limiter.init_app(app)
 def scan_code():
     try:
         data = request.get_json()
-        app.logger.info(f"Incoming request: {data}")   # 👈 log incoming payload
+        app.logger.info(f"Incoming request: {data}")   
 
         try:
             req = ScanRequest(**data)

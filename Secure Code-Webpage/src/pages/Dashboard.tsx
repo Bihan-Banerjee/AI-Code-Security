@@ -567,6 +567,12 @@ function QuickActions({ navigate }: { navigate: (path: string) => void }) {
         >
           <Activity className="w-4 h-4 mr-2" /> Run Security Scan
         </Button>
+        <Button
+          onClick={() => navigate("/analytics")}
+          className="w-full bg-transparent border border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
+        >
+          <Activity className="w-4 h-4 mr-2" /> Analyze Vulnerabilities
+        </Button>
       </CardContent>
     </Card>
   );

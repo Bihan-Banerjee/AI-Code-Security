@@ -16,6 +16,7 @@ const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Reviews = React.lazy(() => import("./pages/Reviews"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const TermsAndConditions = React.lazy(() => import("./pages/TermsAndConditions"));
+const Analytics = React.lazy(() => import("./pages/Analytics"));
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+            <Route path="/analytics" element={<Analytics />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
