@@ -34,6 +34,7 @@ import {
   Activity,
   Sparkles,
   TrendingUp,
+  ChartColumn,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -571,7 +572,7 @@ function QuickActions({ navigate }: { navigate: (path: string) => void }) {
           onClick={() => navigate("/analytics")}
           className="w-full bg-transparent border border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
         >
-          <Activity className="w-4 h-4 mr-2" /> Analyze Vulnerabilities
+          <ChartColumn className="w-4 h-4 mr-2" /> Analyze Vulnerabilities
         </Button>
       </CardContent>
     </Card>
