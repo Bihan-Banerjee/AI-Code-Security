@@ -12,12 +12,12 @@ python-dotenv==1.0.0
 pymongo==4.5.0
 
 # Validation
-pydantic==2.4.2
+pydantic>=2.9.2
+
 
 # AI/ML dependencies
 torch>=2.0.0
 transformers>=4.30.0
-difflib2
 
 # Security scanning tools
 bandit>=1.7.5
