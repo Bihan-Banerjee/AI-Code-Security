@@ -113,7 +113,7 @@ const About = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Team</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              A diverse group of security experts, AI researchers, and passionate developers
+              A diverse duo of a Security Expert, an AI Researcher, and Passionate Developers.
             </p>
           </div>
           
@@ -207,7 +207,7 @@ const About = () => {
             Be part of our mission to make secure coding accessible to all developers.  
             Let's build a safer digital future together.
           </p>
-          <Button size="lg" className="px-6 py-3 text-lg" onClick={() => navigate("/login")}>
+          <Button size="lg" className="px-6 py-3 text-lg" onClick={() => navigate("/dashboard")}>
             Get Started <ChevronRight className="ml-2 h-5 w-5" />
           </Button>
         </div>

@@ -130,7 +130,7 @@ export default function CodeScanner() {
             Code Scanner with <span className="text-blue-600">AI Intelligence</span>!
           </h1>
           <p className="text-gray-600 text-lg">
-            Our AI-powered scanner analyzes your source code to detect weaknesses and insecure patterns across multiple languages. It highlights issues with severity levels, provides clear descriptions and helps you understand where your code might be at risk all in a matter of seconds. No setup required, just paste your code and get instant feedback.
+            Our AI-powered scanner analyzes your source code to detect weaknesses and insecure patterns across 2 Major Languages, Python and Javascript. It highlights issues with severity levels, provides clear descriptions and helps you understand where your code might be at risk all in a matter of seconds. No setup required, just paste your code and get instant feedback.
           </p>
           <div className="flex gap-4">
             <Button onClick={handleScan} disabled={scanMutation.isPending}>
