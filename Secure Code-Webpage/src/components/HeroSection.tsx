@@ -48,8 +48,8 @@ const HeroSection = () => {
                 <div className="text-sm text-muted-foreground">Vulnerability Types</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">10M+</div>
-                <div className="text-sm text-muted-foreground">Lines Analyzed</div>
+                <div className="text-2xl font-bold text-primary">100%</div>
+                <div className="text-sm text-muted-foreground">Happy Users</div>
               </div>
             </div>
           </div>

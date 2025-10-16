@@ -148,8 +148,8 @@ export default function CodeScanner() {
               <p className="text-sm text-gray-500">Vulnerability Types</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-blue-700">10M+</p>
-              <p className="text-sm text-gray-500">Lines Analyzed</p>
+              <p className="text-2xl font-bold text-blue-700">100%</p>
+              <p className="text-sm text-gray-500">Happy Users</p>
             </div>
           </div>
 
