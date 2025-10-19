@@ -103,9 +103,9 @@ def scan_code():
                     code_file.write(f["content"])
 
             if language == "python":
-                scan_command = ["bandit", "-r", temp_dir, "-f", "json"]  # 👈 drop "python -m"
+                scan_command = ["python", "-m", "bandit", "-r", temp_dir, "-f", "json"]
             elif language == "javascript":
-                scan_command = ["semgrep", "--config=p/javascript", "--json", temp_dir]
+                scan_command = ["python", "-m", "semgrep", "--config=p/javascript", "--json", temp_dir]
             else:
                 return jsonify({"error": "Unsupported language"}), 400
 
