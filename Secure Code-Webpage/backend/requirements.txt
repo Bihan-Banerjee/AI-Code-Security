@@ -27,8 +27,5 @@ semgrep>=1.45.0
 accelerate>=0.20.0
 safetensors>=0.3.0
 
-os>=0.1.5
 bcrypt>=4.0.1
-dotenv>=0.1.5
-datetime>=4.8.2
-typing>=4.15.0
+python-dotenv
