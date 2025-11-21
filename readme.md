@@ -168,11 +168,11 @@ Enhanced versions & diffs. - Visual dashboards.
 
 ## 🤝 Contributing
 
-We welcome contributions!\
-- Fork the repo\
-- Create a feature branch (`git checkout -b feature/my-feature`)\
-- Commit changes (`git commit -m 'Add new feature'`)\
-- Push (`git push origin feature/my-feature`)\
+We welcome contributions!
+- Fork the repo
+- Create a feature branch (`git checkout -b feature/my-feature`)
+- Commit changes (`git commit -m 'Add new feature'`)
+- Push (`git push origin feature/my-feature`)
 - Open a Pull Request 🚀
 
 ------------------------------------------------------------------------
