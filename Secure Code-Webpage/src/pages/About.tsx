@@ -5,6 +5,8 @@ import SecurityHeader from "@/components/SecurityHeader";
 import { useIsMobile } from "@/hooks/use-mobile"; 
 import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom"; 
+import BihanPic from "../assets/Bihan.jpeg";
+import NethraPic from "../assets/Nethra.jpeg";
 
 const About = () => {
   const isMobile = useIsMobile(); 
@@ -122,19 +124,23 @@ const About = () => {
               {
                 name: "Bihan Banerjee",
                 role: "Cybersecurity Specialist",
-                bio: "3rd year undergraduate student specializing in CSE Information Security at VIT Vellore."
+                bio: "3rd year undergraduate student specializing in CSE Information Security at VIT Vellore.",
+                image: BihanPic,
               },
               {
                 name: "Nethra Krishnan",
                 role: "AI Specialist",
-                bio: "3rd year undergraduate student specializing in CSE Data Science at VIT Vellore."
+                bio: "3rd year undergraduate student specializing in CSE Data Science at VIT Vellore.",
+                image: NethraPic,
               },
             ].map((member) => (
               <Card key={member.name} className="text-center">
                 <CardHeader>
-                  <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <Users className="h-8 w-8 text-primary" />
-                  </div>
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-20 h-20 rounded-full object-cover mx-auto mb-4 shadow-md"
+                  />
                   <CardTitle className="text-xl">{member.name}</CardTitle>
                   <CardDescription className="text-primary font-medium">
                     {member.role}
