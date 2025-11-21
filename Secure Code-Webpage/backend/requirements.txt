@@ -26,3 +26,9 @@ semgrep>=1.45.0
 # Optional: for better performance
 accelerate>=0.20.0
 safetensors>=0.3.0
+
+os
+bcrypt
+dotenv
+datetime
+typing
