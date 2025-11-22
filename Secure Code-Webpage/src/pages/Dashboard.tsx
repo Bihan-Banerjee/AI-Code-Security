@@ -164,19 +164,19 @@ export default function Dashboard() {
           <StatsCard
             icon={<Code2 className="w-6 h-6" />}
             title="Enhancements"
-            value={history?.enhance.length || 0}
+            value={history?.enhance?.length || 0}
             gradient="bg-gradient-primary"
           />
           <StatsCard
             icon={<ShieldCheck className="w-6 h-6" />}
             title="Security Scans"
-            value={history?.scan.length || 0}
+            value={history?.scan?.length || 0}
             gradient="bg-gradient-secondary"
           />
           <StatsCard
             icon={<TrendingUp className="w-6 h-6" />}
             title="Total Actions"
-            value={(history?.enhance.length || 0) + (history?.scan.length || 0)}
+            value={(history?.enhance?.length || 0) + (history?.scan?.length || 0)}
             gradient="bg-gradient-to-r from-success to-warning"
           />
         </div>

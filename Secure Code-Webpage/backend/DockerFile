@@ -1,25 +1,17 @@
-# Use Python 3.9
 FROM python:3.9
 
-# Set working directory
 WORKDIR /app
 
-# Copy requirements and install dependencies
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
-# Copy the rest of the backend code
 COPY . .
 
-# Create a non-root user (Security requirement for HF Spaces)
 RUN useradd -m -u 1000 user
 USER user
 ENV HOME=/home/user \
     PATH=/home/user/.local/bin:$PATH
 
-# Expose port 7860 (Required by Hugging Face)
 EXPOSE 7860
 
-# Command to run the application
-# We use gunicorn for production performance
 CMD ["gunicorn", "-b", "0.0.0.0:7860", "app:app", "--timeout", "120"]
