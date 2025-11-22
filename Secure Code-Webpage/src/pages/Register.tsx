@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "@/lib/api";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ export default function Register() {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("/api/register", { username, email, password });
+      const res = await api.post("/api/register", { username, email, password });
       toast.success(res.data.message || "Registration successful! Please log in.");
       navigate("/login");
     } catch (err: any) {

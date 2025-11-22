@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "@/lib/api";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("/api/login", { username, password });
+      const res = await api.post("/api/login", { username, password });
 
       sessionStorage.setItem("token", res.data.token);
       sessionStorage.setItem("username", username);
