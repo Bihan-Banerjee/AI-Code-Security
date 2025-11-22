@@ -1,5 +1,6 @@
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import api from "@/lib/api";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import SecurityHeader from "@/components/SecurityHeader";
@@ -79,7 +80,7 @@ const fetchHistory = async (): Promise<HistoryData> => {
     if (!token) {
         throw new Error("You must be logged in to view the dashboard.");
     }
-    const { data } = await axios.get("/api/history", {
+    const { data } = await api.get("/api/history", {
         headers: { Authorization: `Bearer ${token}` },
     });
     return data;

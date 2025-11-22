@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import api from "@/lib/api";
 import {
   LineChart, Line,
   BarChart, Bar,
@@ -42,7 +43,7 @@ function getStoredToken(): string | null {
 const fetchHistory = async (): Promise<HistoryItem[]> => {
   const token = getStoredToken();
   if (!token) throw new Error("Not logged in");
-  const { data } = await axios.get<HistoryData>("/api/history", {
+  const { data } = await api.get<HistoryData>("/api/history", {
     headers: { Authorization: `Bearer ${token}` },
   });
   return data.scan || [];

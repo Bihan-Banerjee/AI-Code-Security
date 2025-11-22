@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "@/lib/api";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -43,7 +43,7 @@ export default function Enhancer() {
 
       setLoading(true);
 
-      const res = await axios.post(
+      const res = await api.post(
         "/api/enhance",
         { code, language },
         { headers: { Authorization: `Bearer ${token}` } }

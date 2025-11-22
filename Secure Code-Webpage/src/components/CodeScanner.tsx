@@ -1,5 +1,6 @@
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import api from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -54,7 +55,7 @@ export default function CodeScanner() {
         if (!token) {
             throw new Error("You must be logged in to scan code.");
         }
-        return axios.post("/api/scan", newScan, {
+        return api.post("/api/scan", newScan, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
