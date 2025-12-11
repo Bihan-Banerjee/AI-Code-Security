@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import React, { Suspense } from "react";
+import ViewDemo from "./pages/viewDemo";
 
 const Index = React.lazy(() => import("./pages/Index"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
@@ -17,6 +18,7 @@ const Reviews = React.lazy(() => import("./pages/Reviews"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const TermsAndConditions = React.lazy(() => import("./pages/TermsAndConditions"));
 const Analytics = React.lazy(() => import("./pages/Analytics"));
+
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,7 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/demo" element={<ViewDemo />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="*" element={<NotFound />} />

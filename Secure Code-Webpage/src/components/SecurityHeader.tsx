@@ -24,7 +24,7 @@ const SecurityHeader = () => {
           </div>
           <a 
           href="/"
-          className="font-bold text-xl">SecureCode AI</a>
+          className="font-bold text-xl">FortiScan</a>
         </div>
 
         <nav className="flex items-center space-x-6 ml-8">

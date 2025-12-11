@@ -39,7 +39,7 @@ const Reviews = () => {
       company: "TechCorp Solutions",
       rating: 5,
       review:
-        "SecureCode AI has revolutionized our workflow. The AI-powered vulnerability detection caught issues our traditional scanners missed!",
+        "FortiScan has revolutionized our workflow. The AI-powered vulnerability detection caught issues our traditional scanners missed!",
       avatar: "AT",
       date: "2024-01-15",
       verified: true,
@@ -65,7 +65,7 @@ const Reviews = () => {
       company: "StartupScale",
       rating: 4,
       review:
-        "As a growing startup, we needed enterprise-level security without the cost. SecureCode AI delivers exactly that!",
+        "As a growing startup, we needed enterprise-level security without the cost. FortiScan delivers exactly that!",
       avatar: "DC",
       date: "2024-02-01",
       verified: true,
@@ -78,7 +78,7 @@ const Reviews = () => {
       company: "FinanceFirst Bank",
       rating: 5,
       review:
-        "In the financial sector, security isn't optional. SecureCode AI helps us maintain compliance while enabling rapid development.",
+        "In the financial sector, security isn't optional. FortiScan helps us maintain compliance while enabling rapid development.",
       avatar: "SW",
       date: "2024-02-08",
       verified: true,
@@ -220,7 +220,7 @@ const Reviews = () => {
       company: "CloudLock IO",
       rating: 5,
       review:
-        "AI-powered secure coding is the future. SecureCode AI makes it real today!",
+        "AI-powered secure coding is the future. FortiScan makes it real today!",
       avatar: "AH",
       date: "2024-04-18",
       verified: true,
@@ -291,7 +291,7 @@ const Reviews = () => {
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Trusted by security professionals and developers worldwide. See how
-            SecureCode AI is transforming application security across industries.
+            FortiScan is transforming application security across industries.
           </p>
         </div>
 
