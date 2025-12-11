@@ -2,6 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Shield, Zap, Eye, TrendingUp } from "lucide-react";
 import heroImage from "@/assets/hero-security.jpg";
+import { Link } from "react-router-dom";
+
+
 
 const HeroSection = () => {
   return (
@@ -28,14 +31,19 @@ const HeroSection = () => {
               </p>
             </div>
             <div className="flex flex-col gap-4 min-[400px]:flex-row">
+              <Link to="/scanner">
               <Button variant="security" size="lg" className="text-base">
                 <Zap className="h-5 w-5 mr-2" />
                 Start Security Scan
               </Button>
+              </Link>
+
+              <Link to="/demo">
               <Button variant="outline" size="lg" className="text-base">
-                <Eye className="h-5 w-5 mr-2" />
+               <Eye className="h-5 w-5 mr-2" />
                 View Demo
               </Button>
+              </Link>
             </div>
 
             <div className="grid grid-cols-3 gap-6 pt-4">
@@ -82,5 +90,6 @@ const HeroSection = () => {
     </section>
   );
 };
+
 
 export default HeroSection;

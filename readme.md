@@ -32,7 +32,7 @@ detailed reports and diffs. - Share reviews and feedback.
 ## 🚀 Features
 
 ✅ **AI-Powered Code Enhancer** -- Fixes insecure code (Python &
-JavaScript) using CodeT5.\
+JavaScript) using CodeT5 and other models.\
 ✅ **Security Scanner** -- Detects vulnerabilities via Bandit (Python) &
 Semgrep (JavaScript).\
 ✅ **Unified Diff Viewer** -- GitHub-style inline diffs showing code
@@ -47,65 +47,6 @@ feedback.\
 limiting.\
 ✅ **Research Dataset** -- Scripts for collecting and analyzing
 LLM-generated code.
-
-------------------------------------------------------------------------
-
-## 🛠️ Tech Stack
-
-### **Frontend**
-
--   React (Vite + TypeScript + TailwindCSS + ShadCN UI)
--   React Query (for caching API calls)
--   Axios
--   Lucide Icons
-
-### **Backend**
-
--   Flask (REST API)
--   Flask-JWT-Extended (Authentication)
--   Flask-Limiter (Rate limiting)
--   Flask-Caching + Redis (Performance)
--   Flask-Compress (Gzip)
--   MongoDB (Atlas or local)
-
-### **AI Model**
-
--   Hugging Face **Salesforce/CodeT5-base**\
--   PyTorch + Transformers
--   Secure code postprocessing & diffing
-
-### **Static Analysis Tools**
-
--   Bandit (Python Security Scanning)
--   Semgrep (JavaScript Security Scanning)
-
-------------------------------------------------------------------------
-
-## 📂 Project Structure
-
-    AI-Code-Security/
-    │── frontend/                # React + Vite + TS Web App
-    │   ├── src/
-    │   │   ├── pages/           # UI Pages (Dashboard, Scanner, Enhancer, etc.)
-    │   │   ├── components/      # Reusable components
-    │   │   ├── lib/             # Schemas & utils
-    │   │   └── main.tsx
-    │   └── public/              # Static assets (favicon, logos)
-    │
-    │── backend/                 # Flask Backend
-    │   ├── app.py               # Main server entrypoint
-    │   ├── model.py             # CodeT5 enhancer logic
-    │   ├── routes/              # Auth, Reviews, etc.
-    │   ├── schemas.py           # Validation
-    │   └── models/              # MongoDB models
-    │
-    │── research/                # Paper-related scripts & datasets
-    │   ├── collect_llm_code.py  # Generate AI code from GPT models
-    │   ├── scan_results/        # Static analysis results
-    │   └── analysis.ipynb       # Vulnerability metrics
-    │
-    │── docs/                    # Paper drafts, notes
-    │── README.md                # This file
 
 ------------------------------------------------------------------------
 
@@ -151,18 +92,6 @@ python collect_llm_code.py
 bandit -r generated_code/ -f json > scan_results/python.json
 semgrep --config=p/javascript --json generated_code/ > scan_results/js.json
 ```
-
-------------------------------------------------------------------------
-
-## 📊 Research Goals
-
-This project is part of a formal research study on: - 🔍 **Prevalence of
-vulnerabilities in AI-generated code.** - ⚠️ **Risks of adopting AI code
-blindly in production.** - 🛠️ **Enhancement strategies via ML
-models.** - 📈 **Empirical evaluation of AI-assisted security fixes.**
-
-We provide: - Raw datasets (insecure LLM outputs). - Scanning results. -
-Enhanced versions & diffs. - Visual dashboards.
 
 ------------------------------------------------------------------------
 

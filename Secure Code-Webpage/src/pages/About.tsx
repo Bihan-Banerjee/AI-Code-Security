@@ -21,7 +21,7 @@ const About = () => {
         <div className="container mx-auto">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-primary-glow to-secondary bg-clip-text text-transparent">
-              About SecureCode AI
+              About FortiScan
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
               We're pioneering the future of code security through advanced AI technology,
@@ -38,7 +38,7 @@ const About = () => {
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Mission</h2>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                At SecureCode AI, we believe that security shouldn't be an afterthought.
+                At FortiScan, we believe that security shouldn't be an afterthought.
                 Our mission is to democratize code security by making advanced vulnerability
                 detection accessible to every developer, regardless of their security expertise.
               </p>
@@ -174,7 +174,7 @@ const About = () => {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Global Expansion</h3>
                 <p className="text-muted-foreground">
-                  Bringing SecureCode AI to developers worldwide, setting a universal standard for secure coding.
+                  Bringing FortiScan to developers worldwide, setting a universal standard for secure coding.
                 </p>
               </div>
 
@@ -208,7 +208,7 @@ const About = () => {
       {/* Call to Action */}
       <section className="py-20 px-4 text-center">
         <div className="container mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Join the SecureCode AI Journey</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Join the FortiScan Journey</h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
             Be part of our mission to make secure coding accessible to all developers.  
             Let's build a safer digital future together.
