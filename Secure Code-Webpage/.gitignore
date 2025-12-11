@@ -77,3 +77,8 @@ temp/
 
 tmp*/
 
+# TypeScript
+*.tsbuildinfo
+**/*.d.ts
+**/*.d.ts.map
+!src/vite-env.d.ts
