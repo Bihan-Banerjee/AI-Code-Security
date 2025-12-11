@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import SecurityHeader from "@/components/SecurityHeader";
 import Footer from "@/components/Footer";
 import { useMutation } from "@tanstack/react-query";
@@ -18,7 +19,17 @@ import {
 import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { BanditResponse, BanditItem } from "@/lib/schemas";
-import { Upload, File as FileIcon, X } from "lucide-react"; 
+import { 
+  Upload, 
+  FileCode, 
+  X, 
+  Shield, 
+  Loader2, 
+  AlertTriangle,
+  CheckCircle2,
+  XCircle,
+  AlertCircle
+} from "lucide-react";
 
 type File = {
   filename: string;
@@ -203,186 +214,350 @@ export default function CodeScanner() {
     }
   };
 
+  const getSeverityIcon = (severity?: string) => {
+    switch (severity?.toLowerCase()) {
+      case "high":
+        return <XCircle className="w-4 h-4 text-red-600" />;
+      case "medium":
+        return <AlertTriangle className="w-4 h-4 text-yellow-600" />;
+      case "low":
+        return <AlertCircle className="w-4 h-4 text-green-600" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SecurityHeader />
-      <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 p-8">
-        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 items-start">
-          {/* Left Section */}
-          <div className="flex-1 space-y-6">
+      <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 p-4 md:p-8">
+        <div className="max-w-7xl mx-auto space-y-8">
+          
+          {/* Hero Section */}
+          <div className="text-center space-y-4">
             <div className="inline-block bg-blue-100 text-blue-800 font-semibold px-4 py-1 rounded-full text-sm">
               AI-Powered Security Scanner
             </div>
-            <h1 className="text-4xl font-bold text-gray-900">
-              Code Scanner with <span className="text-blue-600">AI Intelligence</span>!
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 flex items-center justify-center gap-3">
+              <Shield className="w-8 h-8 text-blue-600" />
+              Code Scanner with <span className="text-blue-600 ml-2">AI Intelligence</span>
             </h1>
-            <p className="text-gray-600 text-lg">
-              Our AI-powered scanner analyzes your source code to detect weaknesses and insecure patterns across 2 Major Languages, Python and Javascript. It highlights issues with severity levels, provides clear descriptions and helps you understand where your code might be at risk all in a matter of seconds. No setup required, just paste your code and get instant feedback.
+            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+              Our AI-powered scanner analyzes your source code to detect weaknesses and insecure patterns 
+              across 2 major languages. It highlights issues with severity levels, provides clear descriptions 
+              and helps you understand where your code might be at risk—all in a matter of seconds.
             </p>
-            <div className="flex gap-4">
-              <Button onClick={handleScan} disabled={scanMutation.isPending}>
-                {scanMutation.isPending ? "Scanning..." : "Start Security Scan"}
-              </Button>
+          </div>
+
+          {/* Stats Section */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            <div className="bg-white rounded-lg p-4 text-center shadow-sm">
+              <p className="text-2xl font-bold text-blue-700">99.8%</p>
+              <p className="text-sm text-gray-500">Accuracy Rate</p>
             </div>
-
-            <div className="flex gap-8 pt-6">
-              <div>
-                <p className="text-2xl font-bold text-blue-700">99.8%</p>
-                <p className="text-sm text-gray-500">Accuracy Rate</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-blue-700">50+</p>
-                <p className="text-sm text-gray-500">Vulnerability Types</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-blue-700">100%</p>
-                <p className="text-sm text-gray-500">Happy Users</p>
-              </div>
+            <div className="bg-white rounded-lg p-4 text-center shadow-sm">
+              <p className="text-2xl font-bold text-blue-700">50+</p>
+              <p className="text-sm text-gray-500">Vulnerability Types</p>
             </div>
-
-            <div className="pt-6">
-              <Select onValueChange={setLanguage} defaultValue="python">
-                <SelectTrigger className="w-60">
-                  <SelectValue placeholder="Language" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="python">Python</SelectItem>
-                  <SelectItem value="javascript">JavaScript</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="bg-white rounded-lg p-4 text-center shadow-sm">
+              <p className="text-2xl font-bold text-blue-700">2</p>
+              <p className="text-sm text-gray-500">Languages</p>
             </div>
-
-            {/* Drag and Drop Zone */}
-            <div
-              onDragEnter={handleDragEnter}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                isDragging
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-gray-300 bg-white hover:border-blue-400"
-              }`}
-            >
-              <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-              <p className="text-lg font-medium text-gray-700 mb-2">
-                Drag & Drop files here
-              </p>
-              <p className="text-sm text-gray-500 mb-4">or</p>
-              <Button variant="outline" onClick={handleBrowseClick}>
-                <FileIcon className="mr-2 h-4 w-4" />
-                Browse Files
-              </Button>
-              <p className="text-xs text-gray-400 mt-4">
-                Supported: {language === "python" ? ".py, .pyw" : ".js, .jsx, .ts, .tsx, .mjs"}
-              </p>
-              <input
-                ref={fileInputRef}
-                type="file"
-                multiple
-                accept={language === "python" ? ".py,.pyw" : ".js,.jsx,.ts,.tsx,.mjs"}
-                onChange={(e) => handleFileUpload(e.target.files)}
-                className="hidden"
-              />
-            </div>
-
-            {/* Manual Code Input */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  Or Enter Code Manually
-                </h3>
-                <Button variant="outline" size="sm" onClick={addFile}>
-                  + Add File
-                </Button>
-              </div>
-
-              {files.map((file, index) => (
-                <div
-                  key={index}
-                  className="space-y-2 border border-blue-200 bg-white p-4 rounded-lg shadow-sm"
-                >
-                  <div className="flex items-center gap-4">
-                    <Label className="w-20">Filename:</Label>
-                    <Input
-                      value={file.filename}
-                      onChange={(e) => handleFileChange(index, "filename", e.target.value)}
-                      className="flex-1"
-                    />
-                    {files.length > 1 && (
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => deleteFile(index)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                  <Textarea
-                    rows={6}
-                    value={file.content}
-                    onChange={(e) => handleFileChange(index, "content", e.target.value)}
-                    placeholder="Paste your code here..."
-                    className="font-mono text-sm"
-                  />
-                </div>
-              ))}
+            <div className="bg-white rounded-lg p-4 text-center shadow-sm">
+              <p className="text-2xl font-bold text-blue-700">Instant</p>
+              <p className="text-sm text-gray-500">Results</p>
             </div>
           </div>
 
-          {/* Right Section - Results */}
-          <div className="flex-1 bg-white rounded-xl shadow-lg p-6 w-full">
-            <div className="flex items-center justify-between border-b pb-4">
-              <p className="text-lg font-medium">Scan Results</p>
-              <p className="text-green-600 font-bold">Security Score: {score}</p>
+          <div className="grid lg:grid-cols-2 gap-8">
+            
+            {/* Left Column - Input */}
+            <div className="space-y-6">
+              
+              {/* Language Selection */}
+              <Card className="shadow-lg rounded-2xl border-2 border-blue-100">
+                <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
+                  <CardTitle className="flex items-center gap-2 text-blue-900">
+                    <FileCode className="w-5 h-5" />
+                    Configuration
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4 pt-6">
+                  <div className="space-y-2">
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Programming Language
+                    </Label>
+                    <Select onValueChange={setLanguage} defaultValue="python">
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select language" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="python">
+                          <span className="flex items-center gap-2">
+                            🐍 Python
+                          </span>
+                        </SelectItem>
+                        <SelectItem value="javascript">
+                          <span className="flex items-center gap-2">
+                            ⚡ JavaScript
+                          </span>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Drag & Drop Zone */}
+              <Card className="shadow-lg rounded-2xl border-2 border-blue-100">
+                <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
+                  <CardTitle className="flex items-center gap-2 text-blue-900">
+                    <Upload className="w-5 h-5" />
+                    Upload Code Files
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-6">
+                  <div
+                    onDragEnter={handleDragEnter}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    className={`border-2 border-dashed rounded-lg p-8 text-center transition-all ${
+                      isDragging
+                        ? "border-blue-500 bg-blue-50 scale-105"
+                        : "border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50"
+                    }`}
+                  >
+                    <Upload className={`mx-auto h-12 w-12 mb-4 transition-colors ${
+                      isDragging ? "text-blue-600" : "text-gray-400"
+                    }`} />
+                    <p className="text-lg font-medium text-gray-700 mb-2">
+                      {isDragging ? "Drop your files here" : "Drag & Drop your code files"}
+                    </p>
+                    <p className="text-sm text-gray-500 mb-4">or</p>
+                    <Button 
+                      variant="outline" 
+                      onClick={handleBrowseClick}
+                      className="border-blue-300 hover:bg-blue-50"
+                    >
+                      <FileCode className="mr-2 h-4 w-4" />
+                      Browse Files
+                    </Button>
+                    <p className="text-xs text-gray-400 mt-4">
+                      Supported: {language === "python" ? ".py, .pyw" : ".js, .jsx, .ts, .tsx, .mjs"}
+                    </p>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      multiple
+                      accept={language === "python" ? ".py,.pyw" : ".js,.jsx,.ts,.tsx,.mjs"}
+                      onChange={(e) => handleFileUpload(e.target.files)}
+                      className="hidden"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Manual Code Input */}
+              <Card className="shadow-lg rounded-2xl border-2 border-blue-100">
+                <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2 text-blue-900">
+                      <FileCode className="w-5 h-5" />
+                      Or Enter Code Manually
+                    </CardTitle>
+                    <Button variant="outline" size="sm" onClick={addFile}>
+                      + Add File
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4 pt-6">
+                  {files.map((file, index) => (
+                    <div
+                      key={index}
+                      className="space-y-3 p-4 rounded-lg border-2 border-blue-100 bg-white"
+                    >
+                      <div className="flex items-center gap-4">
+                        <Label className="text-sm font-semibold text-gray-700 w-20">
+                          Filename:
+                        </Label>
+                        <Input
+                          value={file.filename}
+                          onChange={(e) => handleFileChange(index, "filename", e.target.value)}
+                          className="flex-1 font-mono text-sm"
+                        />
+                        {files.length > 1 && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => deleteFile(index)}
+                            className="hover:bg-red-50 hover:text-red-600"
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
+                      <Textarea
+                        rows={8}
+                        value={file.content}
+                        onChange={(e) => handleFileChange(index, "content", e.target.value)}
+                        placeholder="Paste your code here..."
+                        className="font-mono text-sm resize-none"
+                      />
+                    </div>
+                  ))}
+
+                  {/* Scan Button - Prominent Position */}
+                  <Button
+                    onClick={handleScan}
+                    disabled={scanMutation.isPending}
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
+                  >
+                    {scanMutation.isPending ? (
+                      <>
+                        <Loader2 className="animate-spin w-5 h-5 mr-2" />
+                        Scanning for Vulnerabilities...
+                      </>
+                    ) : (
+                      <>
+                        <Shield className="w-5 h-5 mr-2" />
+                        Start Security Scan
+                      </>
+                    )}
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
 
-            {scanComplete && issues && issues.length > 0 ? (
-              <div className="mt-4 overflow-x-auto">
-                <table className="w-full text-sm border border-gray-300">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      <th className="p-2 border">File</th>
-                      <th className="p-2 border">Line</th>
-                      <th className="p-2 border">Severity</th>
-                      <th className="p-2 border">Description</th>
-                      <th className="p-2 border">CWE</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {issues.map((issue, idx) => (
-                      <tr key={idx} className="border-t">
-                        <td className="p-2 border">{issue.filename?.split("\\").pop() || "-"}</td>
-                        <td className="p-2 border">{issue.line_number || "-"}</td>
-                        <td className={`p-2 border ${getSeverityColor(issue.issue_severity)}`}>
-                          {issue.issue_severity || "-"}
-                        </td>
-                        <td className="p-2 border">{issue.issue_text || "-"}</td>
-                        <td className="p-2 border">
-                          {issue.issue_cwe?.id ? (
-                            <a
-                              href={issue.issue_cwe.link}
-                              className="text-blue-600 underline"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              CWE-{issue.issue_cwe.id}
-                            </a>
-                          ) : (
-                            "-"
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : scanComplete ? (
-              <p className="mt-4 text-green-700">No vulnerabilities found. Your code is secure!</p>
-            ) : (
-              <p className="mt-4 text-gray-500">Run a scan to see results here.</p>
-            )}
+            {/* Right Column - Results */}
+            <div className="space-y-6">
+              {!scanComplete ? (
+                <Card className="shadow-lg rounded-2xl border-2 border-blue-100 h-full flex items-center justify-center min-h-[600px]">
+                  <CardContent className="text-center py-12">
+                    <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Shield className="w-10 h-10 text-blue-600" />
+                    </div>
+                    <p className="text-gray-500 text-lg mb-2">No scan results yet</p>
+                    <p className="text-gray-400 text-sm max-w-sm mx-auto">
+                      Upload files or paste your code, then click "Start Security Scan" to analyze your code for vulnerabilities
+                    </p>
+                  </CardContent>
+                </Card>
+              ) : (
+                <>
+                  {/* Score Card */}
+                  <Card className="shadow-lg rounded-2xl border-2 border-green-100">
+                    <CardHeader className="bg-gradient-to-r from-green-50 to-white">
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="flex items-center gap-2 text-green-900">
+                          <CheckCircle2 className="w-5 h-5" />
+                          Scan Complete
+                        </CardTitle>
+                        <div className="text-right">
+                          <p className="text-sm text-gray-600">Security Score</p>
+                          <p className="text-2xl font-bold text-green-600">{score}</p>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-6">
+                      {issues.length === 0 ? (
+                        <div className="text-center py-8">
+                          <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                          <p className="text-lg font-semibold text-green-700">
+                            No vulnerabilities found!
+                          </p>
+                          <p className="text-sm text-gray-600 mt-2">
+                            Your code passed all security checks. Great job!
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          <p className="text-sm text-gray-600">
+                            Found <span className="font-bold text-red-600">{issues.length}</span> security {issues.length === 1 ? 'issue' : 'issues'}
+                          </p>
+                          <div className="flex gap-4 text-xs">
+                            <div className="flex items-center gap-1">
+                              <div className="w-3 h-3 bg-red-500 rounded"></div>
+                              <span>{issues.filter(i => i.issue_severity?.toLowerCase() === 'high').length} High</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-3 h-3 bg-yellow-500 rounded"></div>
+                              <span>{issues.filter(i => i.issue_severity?.toLowerCase() === 'medium').length} Medium</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-3 h-3 bg-green-500 rounded"></div>
+                              <span>{issues.filter(i => i.issue_severity?.toLowerCase() === 'low').length} Low</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  {/* Vulnerabilities Table */}
+                  {issues.length > 0 && (
+                    <Card className="shadow-lg rounded-2xl border-2 border-red-100">
+                      <CardHeader className="bg-gradient-to-r from-red-50 to-white">
+                        <CardTitle className="flex items-center gap-2 text-red-900">
+                          <AlertTriangle className="w-5 h-5" />
+                          Detected Vulnerabilities
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="pt-6">
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-sm">
+                            <thead>
+                              <tr className="border-b-2 border-gray-200">
+                                <th className="text-left p-3 font-semibold text-gray-700">File</th>
+                                <th className="text-left p-3 font-semibold text-gray-700">Line</th>
+                                <th className="text-left p-3 font-semibold text-gray-700">Severity</th>
+                                <th className="text-left p-3 font-semibold text-gray-700">Description</th>
+                                <th className="text-left p-3 font-semibold text-gray-700">CWE</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {issues.map((issue, idx) => (
+                                <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
+                                  <td className="p-3 font-mono text-xs">
+                                    {issue.filename?.split("\\").pop() || "-"}
+                                  </td>
+                                  <td className="p-3 font-mono text-xs">
+                                    {issue.line_number || "-"}
+                                  </td>
+                                  <td className={`p-3 ${getSeverityColor(issue.issue_severity)}`}>
+                                    <div className="flex items-center gap-2">
+                                      {getSeverityIcon(issue.issue_severity)}
+                                      <span>{issue.issue_severity || "-"}</span>
+                                    </div>
+                                  </td>
+                                  <td className="p-3 text-gray-700 text-xs">
+                                    {issue.issue_text || "-"}
+                                  </td>
+                                  <td className="p-3">
+                                    {issue.issue_cwe?.id ? (
+                                      <a
+                                        href={issue.issue_cwe.link}
+                                        className="text-blue-600 hover:text-blue-800 underline text-xs font-medium"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                      >
+                                        CWE-{issue.issue_cwe.id}
+                                      </a>
+                                    ) : (
+                                      "-"
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
