@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --mode development --host",
-    "build": "tsc && vite build --mode production",
+    "build": "rm -rf dist && tsc --noEmit && vite build",
     "build:dev": "tsc && vite build --mode development",
     "preview": "vite preview --host",
     "type-check": "tsc --noEmit",
