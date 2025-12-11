@@ -27,6 +27,13 @@ app = Flask(__name__)
 Compress(app)
 CORS(app)
 
+# Load environment variables
+env = os.getenv('FLASK_ENV', 'development')
+if env == 'development':
+    load_dotenv('.env.development')
+else:
+    load_dotenv('.env.production')
+
 if os.getenv("USE_REDIS", "false").lower() == "true":
     cache = Cache(config={
         "CACHE_TYPE": "RedisCache",
