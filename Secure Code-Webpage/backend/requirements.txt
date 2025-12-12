@@ -30,3 +30,5 @@ safetensors>=0.3.0
 bcrypt>=4.0.1
 python-dotenv
 gunicorn
+
+requests==2.31.0
