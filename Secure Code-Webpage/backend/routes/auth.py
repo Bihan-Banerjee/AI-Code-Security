@@ -6,17 +6,21 @@ import os
 import re
 import requests
 from dotenv import load_dotenv
+import secrets
+from datetime import datetime, timedelta
 
 load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI")
-ABSTRACT_API_KEY = os.getenv("ABSTRACT_API_KEY", "")  # Free API key
-
+ABSTRACT_API_KEY = os.getenv("ABSTRACT_API_KEY", "")  
+RESEND_API_KEY = os.getenv("RESEND_API_KEY", "") 
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 auth_bp = Blueprint('auth', __name__)
 
 client = MongoClient(MONGO_URI)
 db = client["codewhisperer"]
 users = db["users"]
+reset_tokens = db["reset_tokens"]
 
 # Common disposable email domains to block
 DISPOSABLE_DOMAINS = {
@@ -205,3 +209,214 @@ def validate_email_endpoint():
         return jsonify({"valid": False, "error": error_message}), 200
     
     return jsonify({"valid": True, "message": "Email is valid"}), 200
+
+def send_reset_email(email, reset_token, username):
+    """
+    Send password reset email using Resend API
+    """
+    if not RESEND_API_KEY:
+        print("Warning: RESEND_API_KEY not set, email not sent")
+        return False
+    
+    try:
+        reset_link = f"{FRONTEND_URL}/reset-password?token={reset_token}"
+        
+        # HTML email template
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); 
+                          color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }}
+                .content {{ background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; }}
+                .button {{ display: inline-block; background: #2563eb; color: white; 
+                          padding: 14px 28px; text-decoration: none; border-radius: 8px; 
+                          font-weight: bold; margin: 20px 0; }}
+                .footer {{ text-align: center; margin-top: 20px; color: #6b7280; font-size: 12px; }}
+                .warning {{ background: #fef3c7; border-left: 4px solid #f59e0b; 
+                           padding: 12px; margin: 20px 0; border-radius: 4px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>🔐 Password Reset Request</h1>
+                </div>
+                <div class="content">
+                    <p>Hi <strong>{username}</strong>,</p>
+                    
+                    <p>We received a request to reset your password for your AI Code Security account.</p>
+                    
+                    <p>Click the button below to reset your password:</p>
+                    
+                    <center>
+                        <a href="{reset_link}" class="button">Reset My Password</a>
+                    </center>
+                    
+                    <p>Or copy and paste this link into your browser:</p>
+                    <p style="background: #e5e7eb; padding: 10px; border-radius: 4px; word-break: break-all;">
+                        {reset_link}
+                    </p>
+                    
+                    <div class="warning">
+                        <strong>⚠️ Security Notice:</strong>
+                        <ul>
+                            <li>This link will expire in <strong>1 hour</strong></li>
+                            <li>If you didn't request this, please ignore this email</li>
+                            <li>Never share this link with anyone</li>
+                        </ul>
+                    </div>
+                    
+                    <p>If you didn't request a password reset, your account is still secure and you can safely ignore this email.</p>
+                    
+                    <p>Best regards,<br><strong>AI Code Security Team</strong></p>
+                </div>
+                <div class="footer">
+                    <p>This is an automated message, please do not reply.</p>
+                    <p>&copy; 2025 AI Code Security. All rights reserved.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # Send via Resend API
+        url = "https://api.resend.com/emails"
+        headers = {
+            "Authorization": f"Bearer {RESEND_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        data = {
+            "from": "AI Code Security <onboarding@resend.dev>",  
+            "to": [email],
+            "subject": "Reset Your Password - AI Code Security",
+            "html": html_content
+        }
+        
+        response = requests.post(url, json=data, headers=headers, timeout=10)
+        
+        if response.status_code == 200:
+            print(f"Reset email sent successfully to {email}")
+            return True
+        else:
+            print(f"Failed to send email: {response.text}")
+            return False
+            
+    except Exception as e:
+        print(f"Email sending error: {str(e)}")
+        return False
+
+@auth_bp.route("/forgot-password", methods=["POST"])
+def forgot_password():
+    """
+    Request password reset - generates token and sends email
+    """
+    data = request.json
+    email = data.get("email", "").strip().lower()
+    
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+    
+    if not validate_email_format(email):
+        return jsonify({"error": "Invalid email format"}), 400
+    
+    # Find user by email
+    user = users.find_one({"email": email})
+    
+    # Always return success to prevent email enumeration
+    # But only send email if user exists
+    if user:
+        # Generate secure random token
+        reset_token = secrets.token_urlsafe(32)
+        
+        # Store token with expiration (1 hour)
+        reset_tokens.insert_one({
+            "email": email,
+            "token": reset_token,
+            "created_at": datetime.utcnow(),
+            "expires_at": datetime.utcnow() + timedelta(hours=1),
+            "used": False
+        })
+        
+        # Send email
+        send_reset_email(email, reset_token, user["username"])
+    
+    # Always return success message (security best practice)
+    return jsonify({
+        "message": "If an account exists with that email, a password reset link has been sent."
+    }), 200
+
+@auth_bp.route("/verify-reset-token", methods=["POST"])
+def verify_reset_token():
+    """
+    Verify if reset token is valid
+    """
+    data = request.json
+    token = data.get("token", "")
+    
+    if not token:
+        return jsonify({"valid": False, "error": "Token is required"}), 400
+    
+    # Find token in database
+    token_doc = reset_tokens.find_one({
+        "token": token,
+        "used": False
+    })
+    
+    if not token_doc:
+        return jsonify({"valid": False, "error": "Invalid or expired token"}), 400
+    
+    # Check if token is expired
+    if datetime.utcnow() > token_doc["expires_at"]:
+        return jsonify({"valid": False, "error": "Token has expired"}), 400
+    
+    return jsonify({"valid": True, "email": token_doc["email"]}), 200
+
+@auth_bp.route("/reset-password", methods=["POST"])
+def reset_password():
+    """
+    Reset password using valid token
+    """
+    data = request.json
+    token = data.get("token", "")
+    new_password = data.get("password", "")
+    
+    if not token or not new_password:
+        return jsonify({"error": "Token and new password are required"}), 400
+    
+    # Validate password strength
+    if len(new_password) < 8:
+        return jsonify({"error": "Password must be at least 8 characters"}), 400
+    
+    # Find valid token
+    token_doc = reset_tokens.find_one({
+        "token": token,
+        "used": False
+    })
+    
+    if not token_doc:
+        return jsonify({"error": "Invalid or expired reset token"}), 400
+    
+    # Check expiration
+    if datetime.utcnow() > token_doc["expires_at"]:
+        return jsonify({"error": "Reset token has expired"}), 400
+    
+    # Hash new password
+    hashed_pw = bcrypt.hashpw(new_password.encode("utf-8"), bcrypt.gensalt())
+    
+    # Update user password
+    users.update_one(
+        {"email": token_doc["email"]},
+        {"$set": {"password": hashed_pw, "updated_at": datetime.utcnow()}}
+    )
+    
+    # Mark token as used
+    reset_tokens.update_one(
+        {"_id": token_doc["_id"]},
+        {"$set": {"used": True, "used_at": datetime.utcnow()}}
+    )
+    
+    return jsonify({"message": "Password reset successfully!"}), 200

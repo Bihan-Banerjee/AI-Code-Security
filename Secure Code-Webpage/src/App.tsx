@@ -18,7 +18,8 @@ const Reviews = React.lazy(() => import("./pages/Reviews"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const TermsAndConditions = React.lazy(() => import("./pages/TermsAndConditions"));
 const Analytics = React.lazy(() => import("./pages/Analytics"));
-
+const ForgotPassword = React.lazy(() => import("./pages/ForgotPassword"));
+const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,8 @@ const App = () => (
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
