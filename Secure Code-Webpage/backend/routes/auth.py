@@ -15,6 +15,7 @@ MONGO_URI = os.getenv("MONGO_URI")
 ABSTRACT_API_KEY = os.getenv("ABSTRACT_API_KEY", "")  
 RESEND_API_KEY = os.getenv("RESEND_API_KEY", "") 
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+BREVO_API_KEY = os.getenv("BREVO_API_KEY", "")
 auth_bp = Blueprint('auth', __name__)
 
 client = MongoClient(MONGO_URI)
@@ -212,10 +213,11 @@ def validate_email_endpoint():
 
 def send_reset_email(email, reset_token, username):
     """
-    Send password reset email using Resend API
+    Send password reset email using Brevo (Sendinblue) API
+    FREE: 300 emails/day forever!
     """
-    if not RESEND_API_KEY:
-        print("Warning: RESEND_API_KEY not set, email not sent")
+    if not BREVO_API_KEY:
+        print("⚠️ Warning: BREVO_API_KEY not set, email not sent")
         return False
     
     try:
@@ -226,18 +228,103 @@ def send_reset_email(email, reset_token, username):
         <!DOCTYPE html>
         <html>
         <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
-                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
-                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
-                .header {{ background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); 
-                          color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }}
-                .content {{ background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; }}
-                .button {{ display: inline-block; background: #2563eb; color: white; 
-                          padding: 14px 28px; text-decoration: none; border-radius: 8px; 
-                          font-weight: bold; margin: 20px 0; }}
-                .footer {{ text-align: center; margin-top: 20px; color: #6b7280; font-size: 12px; }}
-                .warning {{ background: #fef3c7; border-left: 4px solid #f59e0b; 
-                           padding: 12px; margin: 20px 0; border-radius: 4px; }}
+                body {{ 
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
+                    line-height: 1.6; 
+                    color: #333; 
+                    margin: 0;
+                    padding: 0;
+                    background-color: #f5f5f5;
+                }}
+                .container {{ 
+                    max-width: 600px; 
+                    margin: 20px auto; 
+                    background: white;
+                    border-radius: 12px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                }}
+                .header {{ 
+                    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); 
+                    color: white; 
+                    padding: 40px 30px; 
+                    text-align: center;
+                }}
+                .header h1 {{
+                    margin: 0;
+                    font-size: 28px;
+                    font-weight: 700;
+                }}
+                .content {{ 
+                    padding: 40px 30px;
+                    background: white;
+                }}
+                .content p {{
+                    margin: 0 0 16px 0;
+                    font-size: 16px;
+                    color: #4b5563;
+                }}
+                .button-container {{
+                    text-align: center;
+                    margin: 30px 0;
+                }}
+                .button {{ 
+                    display: inline-block; 
+                    background: #2563eb; 
+                    color: white !important; 
+                    padding: 16px 32px; 
+                    text-decoration: none; 
+                    border-radius: 8px; 
+                    font-weight: 600;
+                    font-size: 16px;
+                    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+                }}
+                .button:hover {{
+                    background: #1d4ed8;
+                }}
+                .link-box {{
+                    background: #f3f4f6; 
+                    padding: 16px; 
+                    border-radius: 8px; 
+                    word-break: break-all;
+                    font-size: 14px;
+                    color: #6b7280;
+                    margin: 20px 0;
+                }}
+                .warning {{ 
+                    background: #fef3c7; 
+                    border-left: 4px solid #f59e0b; 
+                    padding: 16px; 
+                    margin: 24px 0; 
+                    border-radius: 4px;
+                }}
+                .warning strong {{
+                    color: #92400e;
+                    display: block;
+                    margin-bottom: 8px;
+                }}
+                .warning ul {{
+                    margin: 8px 0 0 0;
+                    padding-left: 20px;
+                    color: #78350f;
+                }}
+                .warning li {{
+                    margin: 4px 0;
+                }}
+                .footer {{ 
+                    text-align: center; 
+                    padding: 24px 30px;
+                    background: #f9fafb;
+                    color: #6b7280; 
+                    font-size: 13px;
+                    border-top: 1px solid #e5e7eb;
+                }}
+                .footer p {{
+                    margin: 4px 0;
+                }}
             </style>
         </head>
         <body>
@@ -248,18 +335,16 @@ def send_reset_email(email, reset_token, username):
                 <div class="content">
                     <p>Hi <strong>{username}</strong>,</p>
                     
-                    <p>We received a request to reset your password for your AI Code Security account.</p>
+                    <p>We received a request to reset your password for your <strong>AI Code Security</strong> account.</p>
                     
-                    <p>Click the button below to reset your password:</p>
+                    <p>Click the button below to create a new password:</p>
                     
-                    <center>
+                    <div class="button-container">
                         <a href="{reset_link}" class="button">Reset My Password</a>
-                    </center>
+                    </div>
                     
-                    <p>Or copy and paste this link into your browser:</p>
-                    <p style="background: #e5e7eb; padding: 10px; border-radius: 4px; word-break: break-all;">
-                        {reset_link}
-                    </p>
+                    <p style="font-size: 14px; color: #6b7280;">Or copy and paste this link into your browser:</p>
+                    <div class="link-box">{reset_link}</div>
                     
                     <div class="warning">
                         <strong>⚠️ Security Notice:</strong>
@@ -267,15 +352,19 @@ def send_reset_email(email, reset_token, username):
                             <li>This link will expire in <strong>1 hour</strong></li>
                             <li>If you didn't request this, please ignore this email</li>
                             <li>Never share this link with anyone</li>
+                            <li>Your account is safe until you click the link</li>
                         </ul>
                     </div>
                     
-                    <p>If you didn't request a password reset, your account is still secure and you can safely ignore this email.</p>
+                    <p style="margin-top: 24px;">If you didn't request a password reset, your account is still secure and you can safely ignore this email.</p>
                     
-                    <p>Best regards,<br><strong>AI Code Security Team</strong></p>
+                    <p style="margin-top: 24px;">
+                        Best regards,<br>
+                        <strong>AI Code Security Team</strong>
+                    </p>
                 </div>
                 <div class="footer">
-                    <p>This is an automated message, please do not reply.</p>
+                    <p>This is an automated message, please do not reply to this email.</p>
                     <p>&copy; 2025 AI Code Security. All rights reserved.</p>
                 </div>
             </div>
@@ -283,31 +372,67 @@ def send_reset_email(email, reset_token, username):
         </html>
         """
         
-        # Send via Resend API
-        url = "https://api.resend.com/emails"
+        # Plain text version (fallback)
+        text_content = f"""
+        Password Reset Request
+        
+        Hi {username},
+        
+        We received a request to reset your password for your AI Code Security account.
+        
+        Click this link to reset your password:
+        {reset_link}
+        
+        This link will expire in 1 hour.
+        
+        If you didn't request this, please ignore this email. Your account is safe.
+        
+        Best regards,
+        AI Code Security Team
+        """
+        
+        # Send via Brevo API
+        url = "https://api.brevo.com/v3/smtp/email"
         headers = {
-            "Authorization": f"Bearer {RESEND_API_KEY}",
-            "Content-Type": "application/json"
+            "accept": "application/json",
+            "api-key": BREVO_API_KEY,
+            "content-type": "application/json"
         }
-        data = {
-            "from": "AI Code Security <onboarding@resend.dev>",  
-            "to": [email],
+        
+        payload = {
+            "sender": {
+                "name": "AI Code Security",
+                "email": "bihanbanerjee26@gmail.com"  # Can be any email!
+            },
+            "to": [
+                {
+                    "email": email,
+                    "name": username
+                }
+            ],
             "subject": "Reset Your Password - AI Code Security",
-            "html": html_content
+            "htmlContent": html_content,
+            "textContent": text_content
         }
         
-        response = requests.post(url, json=data, headers=headers, timeout=10)
+        response = requests.post(url, json=payload, headers=headers, timeout=10)
         
-        if response.status_code == 200:
-            print(f"Reset email sent successfully to {email}")
+        if response.status_code in [200, 201]:
+            print(f"✅ Reset email sent successfully to {email}")
+            print(f"📧 Message ID: {response.json().get('messageId', 'N/A')}")
             return True
         else:
-            print(f"Failed to send email: {response.text}")
+            print(f"❌ Failed to send email: {response.status_code}")
+            print(f"❌ Response: {response.text}")
             return False
             
-    except Exception as e:
-        print(f"Email sending error: {str(e)}")
+    except requests.exceptions.Timeout:
+        print("❌ Email sending timeout")
         return False
+    except Exception as e:
+        print(f"❌ Email sending error: {str(e)}")
+        return False
+
 
 @auth_bp.route("/forgot-password", methods=["POST"])
 def forgot_password():
