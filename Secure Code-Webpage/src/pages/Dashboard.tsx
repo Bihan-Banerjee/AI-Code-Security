@@ -86,7 +86,6 @@ const fetchHistory = async (): Promise<HistoryData> => {
     return data;
 };
 
-
 export default function Dashboard() {
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<HistoryItem | null>(null);
@@ -116,7 +115,6 @@ export default function Dashboard() {
         }
     }
 
-
   const handleCopy = (code: string, id: string) => {
     navigator.clipboard.writeText(code || "");
     setCopySuccess(id);
@@ -143,19 +141,19 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-purple-50">
       <SecurityHeader />
 
       <div className="p-8 max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div className="text-center space-y-4 animate-fade-in">
-          <h1 className="text-4xl font-bold tracking-tight">
+          <h1 className="text-5xl font-bold tracking-tight">
             Your{" "}
-            <span className="bg-gradient-to-r from-blue-500 to-blue-700 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Security Dashboard
             </span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Monitor your code enhancements and security scans in one place.
           </p>
         </div>
@@ -166,19 +164,19 @@ export default function Dashboard() {
             icon={<Code2 className="w-6 h-6" />}
             title="Enhancements"
             value={history?.enhance?.length || 0}
-            gradient="bg-gradient-primary"
+            gradient="from-blue-500 to-blue-600"
           />
           <StatsCard
             icon={<ShieldCheck className="w-6 h-6" />}
             title="Security Scans"
             value={history?.scan?.length || 0}
-            gradient="bg-gradient-secondary"
+            gradient="from-purple-500 to-purple-600"
           />
           <StatsCard
             icon={<TrendingUp className="w-6 h-6" />}
             title="Total Actions"
             value={(history?.enhance?.length || 0) + (history?.scan?.length || 0)}
-            gradient="bg-gradient-to-r from-success to-warning"
+            gradient="from-green-500 to-emerald-600"
           />
         </div>
 
@@ -192,10 +190,10 @@ export default function Dashboard() {
         {/* Main Content */}
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-24 space-y-4">
-            <div className="p-4 rounded-full bg-primary/10 animate-glow">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <div className="p-4 rounded-full bg-blue-100 animate-pulse">
+              <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
             </div>
-            <p className="text-muted-foreground">Loading your dashboard...</p>
+            <p className="text-gray-600 font-medium">Loading your dashboard...</p>
           </div>
         ) : error ? (
             <div className="text-center text-red-500">
@@ -203,19 +201,19 @@ export default function Dashboard() {
             </div>
         ) : (
           <Tabs defaultValue="enhancer" className="w-full animate-slide-up">
-            <TabsList className="grid w-full grid-cols-2 rounded-2xl p-1 bg-card/50 backdrop-blur-sm border shadow-secondary">
+            <TabsList className="grid w-full grid-cols-2 rounded-2xl p-1 bg-white shadow-lg border-2 border-blue-100">
               <TabsTrigger
                 value="enhancer"
-                className="flex gap-2 rounded-xl data-[state=active]:bg-blue-300 data-[state=active]:text-black data-[state=active]:shadow-glow transition-all duration-300"
+                className="group flex gap-2 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 font-semibold hover:scale-105 hover:shadow-md"
               >
-                <Sparkles className="w-4 h-4" />
+                <Sparkles className="w-4 h-4 group-hover:animate-spin" />
                 Enhancement History
               </TabsTrigger>
               <TabsTrigger
                 value="scanner"
-                className="flex gap-2 rounded-xl data-[state=active]:bg-blue-300 data-[state=active]:text-black data-[state=active]:shadow-glow transition-all duration-300"
+                className="group flex gap-2 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-purple-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 font-semibold hover:scale-105 hover:shadow-md"
               >
-                <Activity className="w-4 h-4" />
+                <Activity className="w-4 h-4 group-hover:animate-pulse" />
                 Security Scans
               </TabsTrigger>
             </TabsList>
@@ -240,7 +238,7 @@ export default function Dashboard() {
                   icon={<Sparkles className="w-8 h-8" />}
                   title="No enhancements yet"
                   description="Your AI-enhanced code will appear here after you run the enhancer."
-                  gradient="bg-gradient-primary"
+                  gradient="from-blue-500 to-blue-600"
                 />
               )}
             </TabsContent>
@@ -265,7 +263,7 @@ export default function Dashboard() {
                   icon={<Activity className="w-8 h-8" />}
                   title="No security scans yet"
                   description="Your code scan results will appear here after you run the scanner."
-                  gradient="bg-gradient-secondary"
+                  gradient="from-purple-500 to-purple-600"
                 />
               )}
             </TabsContent>
@@ -275,12 +273,12 @@ export default function Dashboard() {
 
       {/* Popup for Expanded Details */}
       <Dialog open={!!selectedItem} onOpenChange={closeDetails}>
-        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-blue-50 to-purple-50">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               {selectedType === "enhancer" ? "Code Enhancement Details" : "Security Scan Results"}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-gray-600 font-medium">
               {selectedItem?.language?.toUpperCase() || "Unknown"} |{" "}
               {selectedItem?.timestamp ? new Date(selectedItem.timestamp).toLocaleString() : "No time"}
             </DialogDescription>
@@ -332,12 +330,12 @@ export default function Dashboard() {
               )}
 
               {Array.isArray(selectedItem.explanations) && selectedItem.explanations.length > 0 && (
-                <div className="space-y-2">
+                <div className="space-y-2 bg-green-50 p-4 rounded-xl border-2 border-green-200">
                   <h4 className="font-semibold text-lg flex items-center gap-2">
                     <ShieldCheck className="w-5 h-5 text-green-600" />
                     Security Explanations
                   </h4>
-                  <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
+                  <ul className="list-disc list-inside text-sm text-gray-700 space-y-2">
                     {selectedItem.explanations.map((exp, i) => (
                       <li key={i}><strong>{exp.change}:</strong> {exp.reason}</li>
                     ))}
@@ -349,7 +347,7 @@ export default function Dashboard() {
 
           {/* Scanner Details */}
           {selectedType === "scanner" && selectedItem && (
-            <div className="rounded-lg bg-white p-4 shadow-md">
+            <div className="rounded-lg bg-white p-4 shadow-md border-2 border-purple-200">
               <ScanResultsTable issues={Array.isArray(selectedItem.result?.results) ? selectedItem.result.results : []} />
             </div>
           )}
@@ -361,16 +359,17 @@ export default function Dashboard() {
   );
 }
 
-
 function StatsCard({ icon, title, value, gradient }: { icon: React.ReactNode; title: string; value: number; gradient: string }) {
   return (
-    <Card className="hover-lift border-0 shadow-secondary bg-card/50 backdrop-blur-sm">
+    <Card className="group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-2 border-gray-200 bg-white">
       <CardContent className="p-6 flex items-center justify-between">
         <div className="space-y-2">
-          <p className="text-sm font-medium text-muted-foreground">{title}</p>
-          <p className="text-3xl font-bold">{value}</p>
+          <p className="text-sm font-semibold text-gray-600">{title}</p>
+          <p className="text-4xl font-bold text-gray-800">{value}</p>
         </div>
-        <div className={`p-3 rounded-xl ${gradient} text-white shadow-glow`}>{icon}</div>
+        <div className={`p-4 rounded-xl bg-gradient-to-r ${gradient} text-white shadow-lg group-hover:scale-110 transition-transform`}>
+          {icon}
+        </div>
       </CardContent>
     </Card>
   );
@@ -378,27 +377,29 @@ function StatsCard({ icon, title, value, gradient }: { icon: React.ReactNode; ti
 
 function ListView({ data, type, onOpen }: { data: HistoryItem[]; type: "enhancer" | "scanner"; onOpen: (item: HistoryItem, type: "enhancer" | "scanner") => void }) {
   return (
-    <div className="border rounded-xl divide-y">
+    <div className="border-2 border-gray-200 rounded-xl divide-y bg-white shadow-lg overflow-hidden">
       {data.map((item, idx) => (
         <div
           key={idx}
-          className="flex justify-between items-center p-4 cursor-pointer hover:bg-muted/40 transition-colors"
+          className="flex justify-between items-center p-4 cursor-pointer hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200"
           onClick={() => onOpen(item, type)}
         >
-          <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-lg ${type === "enhancer" ? "bg-gradient-primary" : "bg-gradient-secondary"}`}>
-              {type === "enhancer" ? <Sparkles className="w-4 h-4 text-white" /> : <Activity className="w-4 h-4 text-white" />}
+          <div className="flex items-center gap-4">
+            <div className={`p-3 rounded-lg bg-gradient-to-r ${type === "enhancer" ? "from-blue-500 to-blue-600" : "from-purple-500 to-purple-600"} shadow-md`}>
+              {type === "enhancer" ? <Sparkles className="w-5 h-5 text-white" /> : <Activity className="w-5 h-5 text-white" />}
             </div>
             <div>
-              <p className="font-semibold">
+              <p className="font-bold text-gray-800">
                 {item.language?.toUpperCase() || "Unknown"} {type === "enhancer" ? "Enhancement" : "Security Scan"}
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-sm text-gray-600 font-medium">
                 {item.timestamp ? new Date(item.timestamp).toLocaleString() : "Unknown time"}
               </p>
             </div>
           </div>
-          <span className="text-sm text-muted-foreground">Click to view details →</span>
+          <span className="text-sm text-blue-600 font-semibold hover:text-purple-600 transition-colors">
+            View Details →
+          </span>
         </div>
       ))}
     </div>
@@ -426,6 +427,7 @@ function PaginationControls({
         size="sm"
         disabled={currentPage === 1}
         onClick={() => setPage(currentPage - 1)}
+        className="border-2 border-blue-200 hover:bg-blue-50 font-semibold"
       >
         Previous
       </Button>
@@ -433,8 +435,11 @@ function PaginationControls({
         <Button
           key={p}
           size="sm"
-          variant={p === currentPage ? "default" : "outline"}
-          className={`rounded-full w-9 h-9 ${p === currentPage ? "shadow-glow" : ""}`}
+          className={`rounded-full w-10 h-10 font-bold ${
+            p === currentPage 
+              ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg" 
+              : "bg-white border-2 border-gray-200 text-gray-700 hover:border-blue-300"
+          }`}
           onClick={() => setPage(p)}
         >
           {p}
@@ -445,6 +450,7 @@ function PaginationControls({
         size="sm"
         disabled={currentPage === totalPages}
         onClick={() => setPage(currentPage + 1)}
+        className="border-2 border-blue-200 hover:bg-blue-50 font-semibold"
       >
         Next
       </Button>
@@ -457,22 +463,23 @@ function CodeBlock({ title, code, variant, onCopy, copySuccess, copyId }: { titl
   return (
     <div className="space-y-3">
       <div className="flex justify-between items-center">
-        <h4 className="font-semibold flex items-center gap-2">
-          {isEnhanced ? <Sparkles className="w-4 h-4 text-success" /> : <Code2 className="w-4 h-4 text-muted-foreground" />}
+        <h4 className="font-bold text-lg flex items-center gap-2">
+          {isEnhanced ? <Sparkles className="w-5 h-5 text-green-600" /> : <Code2 className="w-5 h-5 text-gray-600" />}
           {title}
         </h4>
         <Button
           variant="outline"
           size="sm"
           onClick={() => onCopy(code, copyId)}
-          className="hover:bg-primary hover:text-primary-foreground transition-all duration-200"
+          className="border-2 border-gray-300 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-200 font-semibold"
         >
-          {copySuccess === copyId ? <CheckCircle2 className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4" />}
+          {copySuccess === copyId ? <CheckCircle2 className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+          {copySuccess === copyId ? " Copied" : " Copy"}
         </Button>
       </div>
-      <div className={`rounded-xl overflow-hidden ${isEnhanced ? "code-enhanced" : "code-original"}`}>
-        <div className={`overflow-y-auto max-h-96 p-6 ${isEnhanced ? "scroll-visible-dark" : "scroll-visible"}`}>
-          <pre className="text-sm font-mono leading-relaxed whitespace-pre">
+      <div className={`rounded-xl overflow-hidden border-2 ${isEnhanced ? "border-green-200 bg-green-50" : "border-gray-200 bg-gray-50"}`}>
+        <div className="overflow-y-auto max-h-96 p-6">
+          <pre className="text-sm font-mono leading-relaxed whitespace-pre text-gray-800">
             {code || "// No code available"}
           </pre>
         </div>
@@ -483,12 +490,14 @@ function CodeBlock({ title, code, variant, onCopy, copySuccess, copyId }: { titl
 
 function EmptyState({ icon, title, description, gradient }: { icon: React.ReactNode; title: string; description: string; gradient: string }) {
   return (
-    <Card className="border-0 shadow-secondary bg-card/30 backdrop-blur-sm">
+    <Card className="border-2 border-gray-200 shadow-xl bg-white">
       <CardContent className="flex flex-col items-center justify-center py-16 text-center space-y-6">
-        <div className={`p-6 rounded-2xl ${gradient} text-white shadow-glow animate-float`}>{icon}</div>
+        <div className={`p-6 rounded-2xl bg-gradient-to-r ${gradient} text-white shadow-lg animate-pulse`}>
+          {icon}
+        </div>
         <div className="space-y-2">
-          <h3 className="text-xl font-semibold">{title}</h3>
-          <p className="text-muted-foreground max-w-md leading-relaxed">{description}</p>
+          <h3 className="text-2xl font-bold text-gray-800">{title}</h3>
+          <p className="text-gray-600 max-w-md leading-relaxed">{description}</p>
         </div>
       </CardContent>
     </Card>
@@ -498,25 +507,28 @@ function EmptyState({ icon, title, description, gradient }: { icon: React.ReactN
 function ActivityFeed({ history }: { history: HistoryData | undefined }) {
   const allHistory = [...(history?.enhance || []), ...(history?.scan || [])]
     .sort((a, b) => (new Date(b.timestamp || "").getTime() - new Date(a.timestamp || "").getTime()))
-    .slice(0, 5);
+    .slice(0, 3); // Limited to 3 items
 
   return (
-    <Card className="shadow-secondary border-0 bg-card/40 backdrop-blur-sm">
-      <CardHeader>
-        <CardTitle className="text-lg">Recent Activity</CardTitle>
+    <Card className="group shadow-lg border-2 border-blue-200 bg-white hover:shadow-2xl hover:-translate-y-1 hover:border-blue-400 transition-all duration-300">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-lg font-bold flex items-center gap-2">
+          <Activity className="w-5 h-5 text-blue-600 group-hover:animate-pulse" />
+          Recent Activity
+        </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-3 pt-0">
         {allHistory.length === 0 ? (
-          <p className="text-muted-foreground text-sm">No activity yet</p>
+          <p className="text-gray-600 text-sm py-2">No activity yet</p>
         ) : (
           allHistory.map((item, idx) => (
-            <div key={idx} className="flex items-center gap-3 text-sm">
-              <div className={`p-2 rounded-lg ${item.enhanced_code ? "bg-gradient-primary" : "bg-gradient-secondary"} text-white`}>
+            <div key={idx} className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-blue-50 transition-all duration-200 hover:scale-105 cursor-pointer">
+              <div className={`p-2 rounded-lg bg-gradient-to-r ${item.enhanced_code ? "from-blue-500 to-blue-600" : "from-purple-500 to-purple-600"} text-white shadow-md`}>
                 {item.enhanced_code ? <Sparkles className="w-4 h-4" /> : <Activity className="w-4 h-4" />}
               </div>
-              <div>
-                <p className="font-medium">{item.language?.toUpperCase() || "Unknown"} {item.enhanced_code ? "Enhancement" : "Scan"}</p>
-                <p className="text-xs text-muted-foreground">{new Date(item.timestamp || "").toLocaleString()}</p>
+              <div className="flex-1">
+                <p className="font-semibold text-gray-800">{item.language?.toUpperCase() || "Unknown"} {item.enhanced_code ? "Enhancement" : "Scan"}</p>
+                <p className="text-xs text-gray-600">{new Date(item.timestamp || "").toLocaleString()}</p>
               </div>
             </div>
           ))
@@ -536,44 +548,46 @@ function TipsCard() {
   const randomTip = tips[Math.floor(Math.random() * tips.length)];
 
   return (
-    <Card className="shadow-secondary border-0 bg-gradient-to-r from-blue-50 to-indigo-50">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Sparkles className="w-5 h-5 text-blue-600" /> Pro Tip
+    <Card className="group shadow-lg border-2 border-purple-200 bg-gradient-to-br from-blue-50 to-purple-50 hover:shadow-2xl hover:-translate-y-1 hover:border-purple-400 transition-all duration-300">
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center gap-2 text-lg font-bold">
+          <Sparkles className="w-5 h-5 text-purple-600 group-hover:animate-spin" /> Pro Tip
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <p className="text-sm text-muted-foreground">{randomTip}</p>
+      <CardContent className="pt-0">
+        <p className="text-sm text-gray-700 font-medium leading-relaxed">{randomTip}</p>
       </CardContent>
     </Card>
   );
 }
 
-// Quick Actions
 function QuickActions({ navigate }: { navigate: (path: string) => void }) {
   return (
-    <Card className="shadow-secondary border-0 bg-card/40 backdrop-blur-sm">
-      <CardHeader>
-        <CardTitle className="text-lg">Quick Actions</CardTitle>
+    <Card className="group shadow-lg border-2 border-green-200 bg-white hover:shadow-2xl hover:-translate-y-1 hover:border-green-400 transition-all duration-300">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-lg font-bold flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-green-600 group-hover:rotate-12 transition-transform" />
+          Quick Actions
+        </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-3">
+      <CardContent className="flex flex-col gap-3 pt-0">
         <Button
           onClick={() => navigate("/enhancer")}
-          className="w-full bg-transparent border border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
+          className="group w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold shadow-md hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
         >
-          <Sparkles className="w-4 h-4 mr-2" /> Enhance Code
+          <Sparkles className="w-4 h-4 mr-2 group-hover:animate-spin" /> Enhance Code
         </Button>
         <Button
           onClick={() => navigate("/scanner")}
-          className="w-full bg-transparent border border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
+          className="group w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold shadow-md hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
         >
-          <Activity className="w-4 h-4 mr-2" /> Run Security Scan
+          <Activity className="w-4 h-4 mr-2 group-hover:animate-pulse" /> Run Security Scan
         </Button>
         <Button
           onClick={() => navigate("/analytics")}
-          className="w-full bg-transparent border border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
+          className="group w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold shadow-md hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
         >
-          <ChartColumn className="w-4 h-4 mr-2" /> Analyze Vulnerabilities
+          <ChartColumn className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" /> Analyze Vulnerabilities
         </Button>
       </CardContent>
     </Card>
