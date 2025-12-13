@@ -8,14 +8,16 @@ const SecurityFooter = () => {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div className="col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-xl">
-                <Shield className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold">FortiScan</h3>
-              </div>
-            </div>
+            <Link to="/" className="flex items-center gap-0 group">
+              <img 
+                src="/logo.png" 
+                alt="FortiScan" 
+                className="w-13 h-8 group-hover:scale-110 transition-transform duration-300"
+              />
+              <span className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                FortiScan
+              </span>
+            </Link>
             <p className="text-gray-400 max-w-md leading-relaxed">
               Advanced AI-powered security analysis platform that helps developers write secure code
               and protect applications from vulnerabilities.

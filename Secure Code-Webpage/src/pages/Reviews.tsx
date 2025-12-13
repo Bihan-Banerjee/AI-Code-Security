@@ -221,16 +221,20 @@ const Reviews = () => {
     },
   ];
 
+  const [hoveredRating, setHoveredRating] = useState(0);
+
   const renderStars = (rating: number, interactive = false) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`h-5 w-5 cursor-pointer transition-all duration-200 ${
-          i < rating
+        className={`h-6 w-6 cursor-pointer transition-all duration-200 ${
+          i < (interactive ? (hoveredRating || rating) : rating)
             ? "text-yellow-400 fill-yellow-400 scale-110"
             : "text-gray-300"
         } ${interactive ? "hover:scale-125" : ""}`}
         onClick={() => interactive && setFormData({ ...formData, rating: i + 1 })}
+        onMouseEnter={() => interactive && setHoveredRating(i + 1)}
+        onMouseLeave={() => interactive && setHoveredRating(0)}
       />
     ));
   };
@@ -355,41 +359,41 @@ const Reviews = () => {
             </h2>
             <p className="text-gray-600">Help others by sharing your thoughts about FortiScan</p>
           </div>
-          
+                
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label className="block mb-2 font-semibold text-gray-700">Name</label>
               <input
                 type="text"
-                className="w-full p-3 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full p-3 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-300 hover:shadow-md transition-all duration-200"
                 placeholder="Your name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
               />
             </div>
-
+                
             <div>
               <label className="block mb-2 font-semibold text-gray-700">Email</label>
               <input
                 type="email"
-                className="w-full p-3 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full p-3 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-300 hover:shadow-md transition-all duration-200"
                 placeholder="your.email@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
               />
             </div>
-
+                
             <div>
               <label className="block mb-2 font-semibold text-gray-700">Rating</label>
               <div className="flex gap-2">{renderStars(formData.rating, true)}</div>
             </div>
-
+                
             <div>
               <label className="block mb-2 font-semibold text-gray-700">Your Review</label>
               <textarea
-                className="w-full p-3 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full p-3 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-300 hover:shadow-md transition-all duration-200 resize-none"
                 rows={4}
                 placeholder="Share your experience with FortiScan..."
                 value={formData.review}
@@ -397,14 +401,21 @@ const Reviews = () => {
                 required
               />
             </div>
-
+                
             <Button
               type="submit"
               size="lg"
               disabled={mutation.isPending}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {mutation.isPending ? "Submitting..." : "Submit Review"}
+              {mutation.isPending ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                  Submitting...
+                </>
+              ) : (
+                "Submit Review"
+              )}
             </Button>
           </form>
         </div>

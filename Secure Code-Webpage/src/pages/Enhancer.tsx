@@ -195,24 +195,39 @@ export default function Enhancer() {
             </p>
           </div>
 
-          {/* Stats Section */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-              <p className="text-2xl font-bold text-blue-700">3+</p>
-              <p className="text-sm text-gray-500">AI Models</p>
-            </div>
-            <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-              <p className="text-2xl font-bold text-blue-700">99%</p>
-              <p className="text-sm text-gray-500">Success Rate</p>
-            </div>
-            <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-              <p className="text-2xl font-bold text-blue-700">2</p>
-              <p className="text-sm text-gray-500">Languages</p>
-            </div>
-            <div className="bg-white rounded-lg p-4 text-center shadow-sm">
-              <p className="text-2xl font-bold text-blue-700">Instant</p>
-              <p className="text-sm text-gray-500">Results</p>
-            </div>
+          {/* Stats Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <Card className="group border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+              <CardContent className="p-6 text-center">
+                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">3+</div>
+                <div className="text-sm text-gray-600 font-medium">AI Models</div>
+                <div className="h-1 w-0 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
+              </CardContent>
+            </Card>
+            
+            <Card className="group border-2 border-green-200 hover:border-green-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+              <CardContent className="p-6 text-center">
+                <div className="text-3xl font-bold text-green-600 mb-2 group-hover:scale-110 transition-transform">99%</div>
+                <div className="text-sm text-gray-600 font-medium">Success Rate</div>
+                <div className="h-1 w-0 bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
+              </CardContent>
+            </Card>
+            
+            <Card className="group border-2 border-purple-200 hover:border-purple-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+              <CardContent className="p-6 text-center">
+                <div className="text-3xl font-bold text-purple-600 mb-2 group-hover:scale-110 transition-transform">2</div>
+                <div className="text-sm text-gray-600 font-medium">Languages</div>
+                <div className="h-1 w-0 bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
+              </CardContent>
+            </Card>
+            
+            <Card className="group border-2 border-orange-200 hover:border-orange-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+              <CardContent className="p-6 text-center">
+                <div className="text-3xl font-bold text-orange-600 mb-2 group-hover:scale-110 transition-transform">Instant</div>
+                <div className="text-sm text-gray-600 font-medium">Results</div>
+                <div className="h-1 w-0 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
+              </CardContent>
+            </Card>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">

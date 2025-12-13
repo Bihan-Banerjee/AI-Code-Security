@@ -1,4 +1,4 @@
-import { ArrowLeft, Play, Pause, Volume2, VolumeX, Maximize } from "lucide-react";
+import { ArrowLeft, Play, Pause, Volume2, VolumeX, Maximize, Shield, Zap, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useState, useRef } from "react";
@@ -36,59 +36,70 @@ const ViewDemo = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-purple-50">
       <SecurityHeader />
+      
       {/* Main Content */}
-      <main className="container mx-auto px-6 py-12">
-        <div className="max-w-5xl mx-auto space-y-8">
+      <main className="container mx-auto px-6 py-8">
+        <div className="max-w-6xl mx-auto space-y-6">
+          {/* Back Button */}
+          <Link to="/">
+            <Button 
+              variant="ghost" 
+              className="group font-semibold hover:bg-blue-50 hover:text-blue-600 transition-all"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+              Back to Home
+            </Button>
+          </Link>
+
           {/* Title Section */}
-          <div className="text-center space-y-4">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-primary/80 to-accent bg-clip-text text-transparent">
+          <div className="text-center space-y-3">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Watch Our Demo
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               See how our platform works in action. This quick walkthrough will show you all the key features.
             </p>
           </div>
 
           {/* Video Container */}
-          <div className="relative group rounded-2xl overflow-hidden border border-border/50 shadow-2xl shadow-primary/10 bg-card">
+          <div className="relative group rounded-2xl overflow-hidden border-2 border-blue-200 shadow-2xl bg-white">
             {/* Video Element */}
             <video
-                ref={videoRef}
-                className="w-full aspect-video bg-muted"
-                poster="/placeholder.svg"
-                onEnded={() => setIsPlaying(false)}
-                >
-                <source src={demoVideo} type="video/mp4" />
-                Your browser does not support the video tag.
+              ref={videoRef}
+              className="w-full aspect-video bg-gray-900"
+              poster="/placeholder.svg"
+              onEnded={() => setIsPlaying(false)}
+            >
+              <source src={demoVideo} type="video/mp4" />
+              Your browser does not support the video tag.
             </video>
 
-
             {/* Custom Controls Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               {/* Center Play Button */}
               <button
                 onClick={togglePlay}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                <div className="w-20 h-20 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center transform hover:scale-110 transition-transform duration-200 shadow-lg">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 backdrop-blur-sm flex items-center justify-center transform hover:scale-110 transition-all duration-200 shadow-2xl">
                   {isPlaying ? (
-                    <Pause className="h-8 w-8 text-primary-foreground" />
+                    <Pause className="h-10 w-10 text-white" />
                   ) : (
-                    <Play className="h-8 w-8 text-primary-foreground ml-1" />
+                    <Play className="h-10 w-10 text-white ml-1" />
                   )}
                 </div>
               </button>
 
               {/* Bottom Controls */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
+              <div className="absolute bottom-0 left-0 right-0 p-6 flex items-center justify-between bg-gradient-to-t from-black/60 to-transparent">
+                <div className="flex items-center gap-3">
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={togglePlay}
-                    className="text-white hover:bg-white/20"
+                    className="text-white hover:bg-white/20 hover:scale-110 transition-all"
                   >
                     {isPlaying ? (
                       <Pause className="h-5 w-5" />
@@ -100,7 +111,7 @@ const ViewDemo = () => {
                     variant="ghost"
                     size="icon"
                     onClick={toggleMute}
-                    className="text-white hover:bg-white/20"
+                    className="text-white hover:bg-white/20 hover:scale-110 transition-all"
                   >
                     {isMuted ? (
                       <VolumeX className="h-5 w-5" />
@@ -113,7 +124,7 @@ const ViewDemo = () => {
                   variant="ghost"
                   size="icon"
                   onClick={toggleFullscreen}
-                  className="text-white hover:bg-white/20"
+                  className="text-white hover:bg-white/20 hover:scale-110 transition-all"
                 >
                   <Maximize className="h-5 w-5" />
                 </Button>
@@ -122,37 +133,40 @@ const ViewDemo = () => {
           </div>
 
           {/* Description Cards */}
-          <div className="grid md:grid-cols-3 gap-6 pt-8">
-            <div className="p-6 rounded-xl bg-card border border-border/50 space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <span className="text-primary font-bold">1</span>
+          <div className="grid md:grid-cols-3 gap-6 pt-6">
+            <div className="group p-6 rounded-xl bg-white border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 space-y-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <Shield className="h-6 w-6 text-white" />
               </div>
-              <h3 className="font-semibold text-foreground">User Friendly</h3>
-              <p className="text-sm text-muted-foreground">
-                Get started in minutes with our intuitive onboarding process.
+              <h3 className="font-bold text-xl text-gray-800">User Friendly</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Get started in minutes with our intuitive onboarding process and easy-to-use interface.
               </p>
             </div>
-            <div className="p-6 rounded-xl bg-card border border-border/50 space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <span className="text-primary font-bold">2</span>
+
+            <div className="group p-6 rounded-xl bg-white border-2 border-purple-200 hover:border-purple-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 space-y-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <Zap className="h-6 w-6 text-white" />
               </div>
-              <h3 className="font-semibold text-foreground">Powerful Features</h3>
-              <p className="text-sm text-muted-foreground">
-                Access all the tools you need to secure your code.
+              <h3 className="font-bold text-xl text-gray-800">Powerful Features</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Access all the tools you need to scan, enhance, and secure your code with AI precision.
               </p>
             </div>
-            <div className="p-6 rounded-xl bg-card border border-border/50 space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <span className="text-primary font-bold">3</span>
+
+            <div className="group p-6 rounded-xl bg-white border-2 border-green-200 hover:border-green-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 space-y-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <Rocket className="h-6 w-6 text-white" />
               </div>
-              <h3 className="font-semibold text-foreground">Launch Fast</h3>
-              <p className="text-sm text-muted-foreground">
-                Scan and Enhance your code with one click and share it with the world.
+              <h3 className="font-bold text-xl text-gray-800">Launch Fast</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Scan and enhance your code with one click and deploy secure applications faster.
               </p>
             </div>
           </div>
         </div>
       </main>
+      
       <Footer />
     </div>
   );

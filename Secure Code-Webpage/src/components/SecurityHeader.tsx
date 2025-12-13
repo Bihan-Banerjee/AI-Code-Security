@@ -1,4 +1,3 @@
-import { Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FaUser } from "react-icons/fa";
 import LogoutButton from "./logoutButton";
@@ -19,11 +18,13 @@ const SecurityHeader = () => {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-xl group-hover:scale-110 transition-transform duration-300">
-              <Shield className="w-6 h-6 text-white" />
-            </div>
+          {/* Logo with PNG */}
+          <Link to="/" className="flex items-center gap-0 group">
+            <img 
+              src="/logo.png" 
+              alt="FortiScan Logo" 
+              className="w-15 h-12 group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
+            />
             <div>
               <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 FortiScan
