@@ -1,7 +1,7 @@
 import SecurityHeader from "@/components/SecurityHeader";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Shield, Lock, Users, Award, Quote } from "lucide-react";
+import { Star, Shield, Quote, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
@@ -10,10 +10,10 @@ import { toast } from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 
 interface ReviewFormData {
-    name: string;
-    email: string;
-    rating: number;
-    review: string;
+  name: string;
+  email: string;
+  rating: number;
+  review: string;
 }
 
 const Reviews = () => {
@@ -23,13 +23,6 @@ const Reviews = () => {
     rating: 0,
     review: "",
   });
-
-  const stats = [
-    { icon: Users, label: "Active Users", value: "50K+" },
-    { icon: Shield, label: "Vulnerabilities Found", value: "2M+" },
-    { icon: Award, label: "Enterprise Clients", value: "500+" },
-    { icon: Lock, label: "Security Issues Prevented", value: "10K+" },
-  ];
 
   const reviews = [
     {
@@ -130,7 +123,7 @@ const Reviews = () => {
       company: "CryptoChain Labs",
       rating: 3,
       review:
-        "Good tool but I’d love deeper integration for smart contract vulnerability detection.",
+        "Good tool but I'd love deeper integration for smart contract vulnerability detection.",
       avatar: "EC",
       date: "2024-03-05",
       verified: true,
@@ -232,31 +225,31 @@ const Reviews = () => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`h-6 w-6 cursor-pointer transition-transform duration-200 ${
+        className={`h-5 w-5 cursor-pointer transition-all duration-200 ${
           i < rating
             ? "text-yellow-400 fill-yellow-400 scale-110"
-            : "text-gray-400"
+            : "text-gray-300"
         } ${interactive ? "hover:scale-125" : ""}`}
         onClick={() => interactive && setFormData({ ...formData, rating: i + 1 })}
       />
     ));
   };
 
-    const mutation = useMutation<any, AxiosError, ReviewFormData>({
-        mutationFn: (newReview: ReviewFormData) => {
-            return axios.post("/api/reviews", {
-                ...newReview,
-                date: new Date().toISOString(),
-            });
-        },
-        onSuccess: () => {
-            toast.success("Review submitted successfully!");
-            setFormData({ name: "", email: "", rating: 0, review: "" });
-        },
-        onError: (error: any) => {
-            toast.error(error.response?.data?.error || "Failed to submit review");
-        }
-    });
+  const mutation = useMutation<any, AxiosError, ReviewFormData>({
+    mutationFn: (newReview: ReviewFormData) => {
+      return axios.post("/api/reviews", {
+        ...newReview,
+        date: new Date().toISOString(),
+      });
+    },
+    onSuccess: () => {
+      toast.success("Review submitted successfully!");
+      setFormData({ name: "", email: "", rating: 0, review: "" });
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.error || "Failed to submit review");
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -271,87 +264,82 @@ const Reviews = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <SecurityHeader />
 
       <main className="container mx-auto px-4 py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <div className="flex items-center justify-center mb-6">
-            <div className="flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-primary shadow-glow">
-              <Quote className="h-8 w-8 text-black" />
-            </div>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 mb-6 shadow-lg">
+            <Quote className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-4xl font-bold mb-4">
+          <h1 className="text-5xl font-bold mb-4">
             What Our{" "}
-            <span className="bg-gradient-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Users
             </span>{" "}
             Say
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Trusted by security professionals and developers worldwide. See how
             FortiScan is transforming application security across industries.
           </p>
         </div>
 
         {/* Reviews Grid */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-16">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-16">
           {reviews.map((review) => (
             <Card
               key={review.id}
-              className={`relative border-0 shadow-security transition-transform hover:scale-105 duration-300 ${
+              className={`group relative border-2 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 ${
                 review.featured
-                  ? "bg-gradient-to-br from-primary/5 to-primary/10 ring-1 ring-primary/20"
-                  : "bg-card"
+                  ? "bg-gradient-to-br from-blue-50 to-purple-50 border-blue-200"
+                  : "bg-white border-gray-200"
               }`}
             >
               {review.featured && (
-                <div className="absolute -top-2 -right-2">
-                  <Badge
-                    variant="default"
-                    className="bg-gradient-primary text-white shadow-glow"
-                  >
-                    Featured
+                <div className="absolute -top-3 -right-3">
+                  <Badge className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg font-semibold px-3 py-1">
+                    ⭐ Featured
                   </Badge>
                 </div>
               )}
 
               <CardHeader className="pb-4">
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-security text-white font-semibold">
+                  <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold text-lg shadow-md">
                     {review.avatar}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-semibold text-foreground">
+                      <h3 className="font-bold text-gray-800">
                         {review.name}
                       </h3>
                       {review.verified && (
-                        <Shield className="h-4 w-4 text-success" />
+                        <CheckCircle className="h-4 w-4 text-green-600" />
                       )}
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600 font-medium">
                       {review.role}
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-gray-500">
                       {review.company}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 mt-3">
+                <div className="flex items-center justify-between mt-3">
                   <div className="flex items-center gap-1">
                     {renderStars(review.rating)}
                   </div>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-xs text-gray-500 font-medium">
                     {new Date(review.date).toLocaleDateString()}
                   </span>
                 </div>
               </CardHeader>
 
               <CardContent>
-                <blockquote className="text-sm text-muted-foreground leading-relaxed">
+                <blockquote className="text-sm text-gray-700 leading-relaxed italic">
                   "{review.review}"
                 </blockquote>
               </CardContent>
@@ -360,16 +348,21 @@ const Reviews = () => {
         </div>
 
         {/* Submit Review Form */}
-        <div className="bg-gradient-to-r from-primary/10 to-primary-glow/10 rounded-2xl p-8 border border-primary/20 shadow-md max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6 text-center">
-            Share Your Experience
-          </h2>
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 shadow-xl max-w-2xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Share Your Experience
+            </h2>
+            <p className="text-gray-600">Help others by sharing your thoughts about FortiScan</p>
+          </div>
+          
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label className="block mb-1 font-medium">Name</label>
+              <label className="block mb-2 font-semibold text-gray-700">Name</label>
               <input
                 type="text"
-                className="w-full p-3 rounded border focus:ring-2 focus:ring-primary"
+                className="w-full p-3 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                placeholder="Your name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
@@ -377,10 +370,11 @@ const Reviews = () => {
             </div>
 
             <div>
-              <label className="block mb-1 font-medium">Email</label>
+              <label className="block mb-2 font-semibold text-gray-700">Email</label>
               <input
                 type="email"
-                className="w-full p-3 rounded border focus:ring-2 focus:ring-primary"
+                className="w-full p-3 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                placeholder="your.email@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
@@ -388,15 +382,16 @@ const Reviews = () => {
             </div>
 
             <div>
-              <label className="block mb-2 font-medium">Rating</label>
+              <label className="block mb-2 font-semibold text-gray-700">Rating</label>
               <div className="flex gap-2">{renderStars(formData.rating, true)}</div>
             </div>
 
             <div>
-              <label className="block mb-1 font-medium">Your Review</label>
+              <label className="block mb-2 font-semibold text-gray-700">Your Review</label>
               <textarea
-                className="w-full p-3 rounded border focus:ring-2 focus:ring-primary"
+                className="w-full p-3 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                 rows={4}
+                placeholder="Share your experience with FortiScan..."
                 value={formData.review}
                 onChange={(e) => setFormData({ ...formData, review: e.target.value })}
                 required
@@ -405,10 +400,9 @@ const Reviews = () => {
 
             <Button
               type="submit"
-              variant="default"
               size="lg"
               disabled={mutation.isPending}
-              className="w-full"
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
             >
               {mutation.isPending ? "Submitting..." : "Submit Review"}
             </Button>
