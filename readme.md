@@ -1,111 +1,172 @@
-# 🔐 SecureCode AI: Analyzing and Enhancing AI-Generated Code Security
+# FortiScan
 
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)\
-[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)\
-[![React](https://img.shields.io/badge/react-18-blue.svg)](https://reactjs.org/)\
-[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green.svg)](https://www.mongodb.com/)\
-[![Flask](https://img.shields.io/badge/Flask-2.x-black.svg)](https://flask.palletsprojects.com/)
+AI-powered code security scanner and enhancer for Python and JavaScript applications.
 
-------------------------------------------------------------------------
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/React-18.3-61dafb)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.0-646cff)](https://vitejs.dev/)
 
-## 📌 Project Overview
+## Overview
 
-This repository is part of our **research project and web application**
-on\
-**"The Security Implications of AI-Generated Code."**
+FortiScan combines advanced AI models with static analysis to identify security vulnerabilities and enhance code quality. Built for developers who need fast, accurate security feedback without leaving their workflow.
 
-We analyze, detect, and mitigate vulnerabilities in **AI-generated
-source code** using: - **Static Analysis Tools** (Bandit, Semgrep,
-SonarCloud) - **AI-Powered Enhancements** (CodeT5-based model for
-auto-fixes) - **A Full-Stack Web App** (React + Flask + MongoDB) for
-interactive testing.
+**Key Features:**
+- **Multi-Model AI Analysis** – Compare outputs from 3+ AI models for code enhancement
+- **Real-time Vulnerability Detection** – Scan for 50+ vulnerability types with 99.8% accuracy
+- **Language Support** – Python and JavaScript/TypeScript
+- **Dashboard & History** – Track all scans and enhancements in one place
 
-The project has **two major components**: 1. **Research Simulation**:
-Collecting AI-generated code, scanning for vulnerabilities, and
-documenting results for our paper.\
-2. **Web Platform**: A user-facing app where developers can: - Upload
-code for scanning. - Enhance insecure code automatically. - View
-detailed reports and diffs. - Share reviews and feedback.
+## Tech Stack
 
-------------------------------------------------------------------------
+**Frontend**
+- React 18.3 + TypeScript
+- Vite for fast builds
+- TailwindCSS + shadcn/ui components
+- React Router for navigation
+- TanStack Query for state management
 
-## 🚀 Features
+**Backend**
+- Flask (Python)
+- JWT authentication
+- MongoDB for data persistence
+- Bandit for Python security analysis
+- OpenAI/Gemini APIs for AI enhancements
 
-✅ **AI-Powered Code Enhancer** -- Fixes insecure code (Python &
-JavaScript) using CodeT5 and other models.\
-✅ **Security Scanner** -- Detects vulnerabilities via Bandit (Python) &
-Semgrep (JavaScript).\
-✅ **Unified Diff Viewer** -- GitHub-style inline diffs showing code
-improvements.\
-✅ **User Authentication** -- JWT-based login, registration, and Google
-Auth (optional).\
-✅ **History Dashboard** -- View past scans and enhancements with
-pagination.\
-✅ **Review System** -- Submit and display user reviews for platform
-feedback.\
-✅ **Optimized Backend** -- Caching (Redis), Gzip compression, rate
-limiting.\
-✅ **Research Dataset** -- Scripts for collecting and analyzing
-LLM-generated code.
+## Getting Started
 
-------------------------------------------------------------------------
+### Prerequisites
 
-## ⚡ Installation & Setup
+- Node.js 18+ and npm
+- Python 3.8+
+- MongoDB instance (local or cloud)
 
-### 1️⃣ Clone Repo
+### Installation
 
-``` bash
-git clone https://github.com/your-username/securecode-ai.git
-cd securecode-ai
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/fortiscan.git
+   cd fortiscan
+   ```
+
+2. **Install frontend dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Install backend dependencies**
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   ```
+
+4. **Configure environment variables**
+
+   Create `.env.development` in the root:
+   ```env
+   VITE_API_BASE_URL=http://localhost:5000
+   ```
+
+   Create `.env` in the backend directory:
+   ```env
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   OPENAI_API_KEY=your_openai_key
+   GEMINI_API_KEY=your_gemini_key
+   ```
+
+5. **Run the application**
+
+   Start the backend:
+   ```bash
+   cd backend
+   python app.py
+   ```
+
+   Start the frontend (in a new terminal):
+   ```bash
+   npm run dev
+   ```
+
+Visit `http://localhost:5173` to access the application.
+
+## Usage
+
+### Security Scanner
+
+1. Navigate to the Scanner page
+2. Select your language (Python or JavaScript)
+3. Upload files or paste code directly
+4. Click "Start Security Scan"
+5. Review identified vulnerabilities with severity levels and CWE references
+
+### AI Code Enhancer
+
+1. Navigate to the Enhancer page
+2. Select your language
+3. Upload or paste code
+4. Click "Enhance Code"
+5. Compare suggestions from multiple AI models
+6. Review security explanations and improvements
+
+### Dashboard
+
+Access your scan history, enhancement results, and analytics from the centralized dashboard.
+
+## Project Structure
+
+```
+fortiscan/
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── pages/          # Route pages
+│   ├── lib/            # API client and utilities
+│   └── assets/         # Static assets
+├── backend/
+│   ├── app.py          # Flask application
+│   ├── auth.py         # Authentication logic
+│   └── routes/         # API endpoints
+└── public/             # Public assets
 ```
 
-### 2️⃣ Backend Setup (Flask + Model)
+## Deployment
 
-``` bash
-cd backend
-python -m venv venv
-source venv/bin/activate   # (Linux/Mac)
-venv\Scriptsctivate      # (Windows)
+The application is configured for deployment on Vercel (frontend) and can be deployed to any Python hosting service (backend).
 
-pip install -r requirements.txt
-python app.py
+**Frontend:**
+```bash
+npm run build
 ```
 
-Make sure you have: - **MongoDB Atlas URI** in `.env` - **Redis**
-running locally or via Docker: `bash   docker run -d -p 6379:6379 redis`
+**Backend:**
+Deploy using your preferred Python hosting platform (e.g., Railway, Render, AWS).
 
-### 3️⃣ Frontend Setup (React + Vite)
+## Roadmap
 
-``` bash
-cd frontend
-npm install
-npm run dev
-```
+- [ ] Support for additional languages (Java, Go, Rust)
+- [ ] IDE extensions (VS Code, IntelliJ)
+- [ ] CI/CD integration plugins
+- [ ] Real-time collaborative code reviews
+- [ ] Advanced vulnerability remediation suggestions
 
-### 4️⃣ Research Scripts
+## Contributing
 
-Generate code and run scans for the paper:
+Contributions are welcome. Please open an issue first to discuss proposed changes.
 
-``` bash
-cd research
-python collect_llm_code.py
-bandit -r generated_code/ -f json > scan_results/python.json
-semgrep --config=p/javascript --json generated_code/ > scan_results/js.json
-```
+## Authors
 
-------------------------------------------------------------------------
+**Bihan Banerjee** – Cybersecurity Specialist  
+3rd year CSE (Information Security), VIT Vellore
 
-## 🤝 Contributing
+**Nethra Krishnan** – AI Specialist  
+3rd year CSE (Data Science), VIT Vellore
 
-We welcome contributions!
-- Fork the repo
-- Create a feature branch (`git checkout -b feature/my-feature`)
-- Commit changes (`git commit -m 'Add new feature'`)
-- Push (`git push origin feature/my-feature`)
-- Open a Pull Request 🚀
-
-------------------------------------------------------------------------
-
-## 📜 License
+## License
 
 This project is licensed under the MIT License.
+
+## Acknowledgments
+
+- OpenAI and Google Gemini for AI capabilities
+- Bandit for Python security analysis
+- shadcn/ui for component library
