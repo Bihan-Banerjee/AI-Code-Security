@@ -40,7 +40,7 @@ const SecurityFooter = () => {
             <h4 className="font-bold text-lg mb-4">Connect</h4>
             <div className="flex gap-3">
               <a 
-                href="https://github.com" 
+                href="https://github.com/Bihan-Banerjee/AI-Code-Security/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors"
@@ -48,7 +48,7 @@ const SecurityFooter = () => {
                 <Github className="w-5 h-5" />
               </a>
               <a 
-                href="https://linkedin.com" 
+                href="https://linktr.ee/bihanbanerjee26" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors"

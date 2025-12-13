@@ -7,12 +7,15 @@ import { useNavigate } from "react-router-dom";
 import BihanPic from "../assets/Bihan.jpeg";
 import NethraPic from "../assets/Nethra.jpeg";
 
+
 const About = () => {
   const navigate = useNavigate();
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-purple-50">
       <SecurityHeader />
+
 
       {/* Hero Section */}
       <section className="relative py-20 px-4">
@@ -31,6 +34,7 @@ const About = () => {
           </div>
         </div>
       </section>
+
 
       {/* Mission Section with Animated Graphic */}
       <section className="py-16 px-4">
@@ -51,6 +55,7 @@ const About = () => {
               </p>
             </div>
 
+
             {/* Animated Mission Graphic */}
             <div className="relative flex items-center justify-center h-96">
               {/* Rotating Outer Ring */}
@@ -58,10 +63,12 @@ const About = () => {
                 <div className="w-80 h-80 rounded-full border-4 border-blue-200 animate-spin-slow"></div>
               </div>
 
+
               {/* Pulsing Middle Ring */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-64 h-64 rounded-full border-2 border-purple-200 animate-pulse"></div>
               </div>
+
 
               {/* Center Target Icon */}
               <div className="relative z-10">
@@ -71,6 +78,7 @@ const About = () => {
                 </div>
               </div>
 
+
               {/* Floating Security Icons */}
               <div className="absolute top-8 left-8 animate-float">
                 <div className="bg-blue-100 p-4 rounded-xl shadow-lg">
@@ -78,11 +86,13 @@ const About = () => {
                 </div>
               </div>
 
+
               <div className="absolute top-8 right-8 animate-float animation-delay-1000">
                 <div className="bg-purple-100 p-4 rounded-xl shadow-lg">
                   <Lock className="w-8 h-8 text-purple-600" />
                 </div>
               </div>
+
 
               <div className="absolute bottom-8 left-8 animate-float animation-delay-2000">
                 <div className="bg-green-100 p-4 rounded-xl shadow-lg">
@@ -90,11 +100,13 @@ const About = () => {
                 </div>
               </div>
 
+
               <div className="absolute bottom-8 right-8 animate-float animation-delay-3000">
                 <div className="bg-pink-100 p-4 rounded-xl shadow-lg">
                   <Eye className="w-8 h-8 text-pink-600" />
                 </div>
               </div>
+
 
               {/* Orbiting Dots */}
               <div className="absolute inset-0 flex items-center justify-center animate-spin-slow">
@@ -106,12 +118,14 @@ const About = () => {
                 </div>
               </div>
 
+
               {/* Background Glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl opacity-20"></div>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* Values Section */}
       <section className="py-16 px-4 bg-white">
@@ -124,7 +138,7 @@ const About = () => {
               The principles that guide everything we do
             </p>
           </div>
-          
+         
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="group border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-white to-blue-50">
               <CardHeader className="text-center">
@@ -141,6 +155,7 @@ const About = () => {
               </CardContent>
             </Card>
 
+
             <Card className="group border-2 border-purple-200 hover:border-purple-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-white to-purple-50">
               <CardHeader className="text-center">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-r from-purple-500 to-purple-600 mx-auto mb-4 group-hover:scale-110 transition-transform">
@@ -155,6 +170,7 @@ const About = () => {
                 </CardDescription>
               </CardContent>
             </Card>
+
 
             <Card className="group border-2 border-green-200 hover:border-green-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-white to-green-50">
               <CardHeader className="text-center">
@@ -174,6 +190,7 @@ const About = () => {
         </div>
       </section>
 
+
       {/* Team Section */}
       <section className="py-16 px-4 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto">
@@ -185,7 +202,7 @@ const About = () => {
               A diverse duo of a Security Expert, an AI Researcher, and Passionate Developers.
             </p>
           </div>
-          
+         
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {[
               {
@@ -227,6 +244,7 @@ const About = () => {
         </div>
       </section>
 
+
       {/* Future Goals Section */}
       <section className="py-16 px-4 bg-white">
         <div className="container mx-auto">
@@ -238,6 +256,7 @@ const About = () => {
               Building towards a safer, smarter, and more secure coding ecosystem
             </p>
           </div>
+
 
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="group text-center border-2 border-blue-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-white to-blue-50">
@@ -254,6 +273,7 @@ const About = () => {
               </CardContent>
             </Card>
 
+
             <Card className="group text-center border-2 border-purple-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-white to-purple-50">
               <CardHeader>
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-r from-purple-500 to-purple-600 mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all">
@@ -267,6 +287,7 @@ const About = () => {
                 </p>
               </CardContent>
             </Card>
+
 
             <Card className="group text-center border-2 border-green-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-white to-green-50">
               <CardHeader>
@@ -285,6 +306,7 @@ const About = () => {
         </div>
       </section>
 
+
       {/* Call to Action */}
       <section className="py-20 px-4 text-center bg-gradient-to-r from-blue-600 to-purple-600">
         <div className="container mx-auto">
@@ -293,8 +315,8 @@ const About = () => {
             Be part of our mission to make secure coding accessible to all developers.  
             Let's build a safer digital future together.
           </p>
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             onClick={() => navigate("/dashboard")}
             className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105"
           >
@@ -303,7 +325,9 @@ const About = () => {
         </div>
       </section>
 
+
       <Footer />
+
 
       {/* Custom Animations */}
       <style>{`
@@ -312,10 +336,12 @@ const About = () => {
           to { transform: rotate(360deg); }
         }
 
+
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-20px); }
         }
+
 
         .animate-spin-slow { animation: spin-slow 20s linear infinite; }
         .animate-float { animation: float 3s ease-in-out infinite; }
@@ -326,5 +352,6 @@ const About = () => {
     </div>
   );
 };
+
 
 export default About;

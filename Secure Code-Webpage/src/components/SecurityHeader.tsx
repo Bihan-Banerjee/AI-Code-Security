@@ -33,36 +33,41 @@ const SecurityHeader = () => {
           </Link>
 
           {/* Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-6 ml-8">
+          <nav className="hidden md:flex items-center space-x-1 ml-8">
             <Link 
               to="/scanner" 
-              className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors"
+              className="relative text-sm font-semibold text-gray-700 transition-colors group px-4 py-2"
             >
-              Scanner
+              <span className="relative z-10 group-hover:text-white transition-colors">Scanner</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </Link>
             <Link 
               to="/enhancer" 
-              className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors"
+              className="relative text-sm font-semibold text-gray-700 transition-colors group px-4 py-2"
             >
-              AI Enhancer
+              <span className="relative z-10 group-hover:text-white transition-colors">AI Enhancer</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </Link>
             <Link 
               to="/dashboard" 
-              className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors"
+              className="relative text-sm font-semibold text-gray-700 transition-colors group px-4 py-2"
             >
-              Dashboard
+              <span className="relative z-10 group-hover:text-white transition-colors">Dashboard</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </Link>
             <Link 
               to="/about" 
-              className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors"
+              className="relative text-sm font-semibold text-gray-700 transition-colors group px-4 py-2"
             >
-              About Us
+              <span className="relative z-10 group-hover:text-white transition-colors">About Us</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </Link>
             <Link 
               to="/reviews" 
-              className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors"
+              className="relative text-sm font-semibold text-gray-700 transition-colors group px-4 py-2"
             >
-              Reviews
+              <span className="relative z-10 group-hover:text-white transition-colors">Reviews</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </Link>
           </nav>
 
