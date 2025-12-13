@@ -2,21 +2,24 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Upload, Play, Download, AlertTriangle, CheckCircle, Copy } from "lucide-react";
+import { Upload, Play, Download, AlertTriangle, CheckCircle, Copy, Shield } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { Link } from "react-router-dom";
 
 const CodeEditor = () => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("input");
-  
+
   const vulnerableCode = `import sqlite3
 import hashlib
 
 def authenticate_user(username, password):
     # SQL Injection vulnerability
     query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
+    
     conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
     result = cursor.execute(query).fetchone()
@@ -26,218 +29,222 @@ def authenticate_user(username, password):
     
     if result:
         # XSS vulnerability - unescaped output
-        return f"<h1>Welcome {username}!</h1>"
-    return None`;
+        return f"<div>Welcome {username}!</div>"`;
 
   const fixedCode = `import sqlite3
 import hashlib
-import html
-from cryptography.fernet import Fernet
 import os
+from html import escape
 
 def authenticate_user(username, password):
-    # Fixed: Using parameterized queries to prevent SQL injection
+    # Fixed: Using parameterized queries
     query = "SELECT * FROM users WHERE username=? AND password=?"
+    
     conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
+    result = cursor.execute(query, (username, password)).fetchone()
     
-    # Hash the password before comparison
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    result = cursor.execute(query, (username, hashed_password)).fetchone()
-    
-    # Fixed: Use environment variable for secret
+    # Fixed: Using environment variable
     SECRET_KEY = os.getenv('SECRET_KEY')
-    if not SECRET_KEY:
-        raise ValueError("SECRET_KEY environment variable not set")
     
     if result:
-        # Fixed: Escape HTML to prevent XSS
-        safe_username = html.escape(username)
-        return f"<h1>Welcome {safe_username}!</h1>"
-    return None`;
+        # Fixed: Proper HTML escaping
+        return f"<div>Welcome {escape(username)}!</div>"`;
 
   const vulnerabilities = [
     {
-      line: 5,
       type: "SQL Injection",
-      severity: "critical",
-      message: "Direct string concatenation in SQL query allows injection attacks"
+      severity: "Critical",
+      line: 6,
+      message: "User input concatenated directly into SQL query without sanitization",
     },
     {
-      line: 11,
       type: "Hardcoded Secret",
-      severity: "critical", 
-      message: "Secret key exposed in source code"
+      severity: "High",
+      line: 13,
+      message: "Sensitive credentials stored in source code",
     },
     {
-      line: 15,
       type: "XSS Vulnerability",
-      severity: "high",
-      message: "Unescaped user input in HTML output"
-    }
+      severity: "Medium",
+      line: 17,
+      message: "User input rendered without HTML escaping",
+    },
   ];
 
-  const handleScan = () => {
-    setActiveTab("results");
-    toast({
-      title: "Security Scan Complete",
-      description: "Found 3 vulnerabilities in your code",
-    });
-  };
+  const fixes = [
+    { title: "SQL Injection Fix", description: "Replaced with parameterized queries" },
+    { title: "Secret Management", description: "Moved to environment variable" },
+    { title: "XSS Prevention", description: "Added HTML escaping" },
+  ];
 
-  const handleFix = () => {
-    setActiveTab("fixed");
-    toast({
-      title: "AI Fixes Applied",
-      description: "All vulnerabilities have been automatically fixed",
-    });
-  };
-
-  const handleCopy = (code: string) => {
+  const copyCode = (code: string, type: string) => {
     navigator.clipboard.writeText(code);
     toast({
-      title: "Code Copied",
-      description: "Code has been copied to clipboard",
+      title: "Copied!",
+      description: `${type} code copied to clipboard`,
     });
   };
 
   return (
-    <section className="py-16 px-4 bg-muted/30">
-      <div className="container mx-auto">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-2">AI Code Security Enhancer</h2>
-          <p className="text-muted-foreground">Paste your code, detect vulnerabilities, and get AI-powered fixes</p>
+    <section id="demo" className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <Shield className="w-4 h-4" />
+            Interactive Demo
+          </div>
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            See It In Action
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Paste your code, detect vulnerabilities, and get AI-powered fixes
+          </p>
         </div>
 
-        <div className="max-w-6xl mx-auto">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="input">Input Code</TabsTrigger>
-              <TabsTrigger value="results">Security Analysis</TabsTrigger>
-              <TabsTrigger value="fixed">Fixed Code</TabsTrigger>
-            </TabsList>
+        <Card className="shadow-2xl border-2 border-blue-100">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 border-b-2 border-blue-100">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-2xl font-bold flex items-center gap-2">
+                <Shield className="w-6 h-6 text-blue-600" />
+                Code Security Scanner
+              </CardTitle>
+              <div className="flex gap-2">
+                <Link to="/scanner">
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <Upload className="w-4 h-4" />
+                    Upload
+                  </Button>
+                </Link>
+                <Link to="/scanner">
+                  <Button size="sm" className="gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                    <Play className="w-4 h-4" />
+                    Scan Code
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </CardHeader>
 
-            <TabsContent value="input">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    Code Input
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Textarea
-                    placeholder="Paste your code here for security analysis..."
-                    className="min-h-[400px] font-mono text-sm"
-                    defaultValue={vulnerableCode}
-                  />
-                </CardContent>
-              </Card>
-            </TabsContent>
+          <CardContent className="p-6">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+              <TabsList className="grid w-full grid-cols-3 bg-gray-100 p-1 rounded-xl">
+                <TabsTrigger 
+                  value="input"
+                  className="data-[state=active]:bg-white data-[state=active]:shadow-md rounded-lg font-semibold"
+                >
+                  ⚠️ Vulnerable Code
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="vulnerabilities"
+                  className="data-[state=active]:bg-white data-[state=active]:shadow-md rounded-lg font-semibold"
+                >
+                  🔍 Detected Issues
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="fixed"
+                  className="data-[state=active]:bg-white data-[state=active]:shadow-md rounded-lg font-semibold"
+                >
+                  ✅ Fixed Code
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="results">
-              <div className="grid gap-6 lg:grid-cols-2">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <AlertTriangle className="h-5 w-5 mr-2 text-destructive" />
-                      Detected Vulnerabilities
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ScrollArea className="h-[400px]">
-                      <div className="space-y-4">
-                        {vulnerabilities.map((vuln, index) => (
-                          <div key={index} className="p-4 border rounded-lg space-y-2">
-                            <div className="flex items-center justify-between">
-                              <Badge variant={vuln.severity === "critical" ? "destructive" : "warning"}>
-                                {vuln.severity.toUpperCase()}
-                              </Badge>
-                              <span className="text-sm text-muted-foreground">Line {vuln.line}</span>
+              <TabsContent value="input" className="space-y-4">
+                <div className="relative">
+                  <ScrollArea className="h-96 w-full rounded-xl border-2 border-red-200 bg-gray-50">
+                    <pre className="p-6 text-sm font-mono">
+                      <code className="text-gray-800">{vulnerableCode}</code>
+                    </pre>
+                  </ScrollArea>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="absolute top-4 right-4 gap-2"
+                    onClick={() => copyCode(vulnerableCode, "Vulnerable")}
+                  >
+                    <Copy className="w-4 h-4" />
+                  </Button>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="vulnerabilities" className="space-y-4">
+                <div className="space-y-4">
+                  {vulnerabilities.map((vuln, index) => (
+                    <Card 
+                      key={index} 
+                      className={`border-l-4 ${
+                        vuln.severity === "Critical"
+                          ? "border-l-red-500 bg-red-50"
+                          : vuln.severity === "High"
+                          ? "border-l-orange-500 bg-orange-50"
+                          : "border-l-yellow-500 bg-yellow-50"
+                      }`}
+                    >
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <AlertTriangle className={`w-6 h-6 ${
+                              vuln.severity === "Critical"
+                                ? "text-red-600"
+                                : vuln.severity === "High"
+                                ? "text-orange-600"
+                                : "text-yellow-600"
+                            }`} />
+                            <div>
+                              <h3 className="text-lg font-bold text-gray-800">{vuln.type}</h3>
+                              <p className="text-sm text-gray-600">Line {vuln.line}</p>
                             </div>
-                            <h4 className="font-semibold">{vuln.type}</h4>
-                            <p className="text-sm text-muted-foreground">{vuln.message}</p>
                           </div>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Original Code</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ScrollArea className="h-[400px]">
-                      <pre className="text-sm bg-muted p-4 rounded-lg overflow-x-auto">
-                        <code>{vulnerableCode}</code>
-                      </pre>
-                    </ScrollArea>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="fixed">
-              <div className="grid gap-6 lg:grid-cols-2">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <CheckCircle className="h-5 w-5 mr-2 text-success" />
-                      Security Fixes Applied
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ScrollArea className="h-[400px]">
-                      <div className="space-y-4">
-                        <div className="p-4 border border-success/20 bg-success/5 rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <Badge variant="success">FIXED</Badge>
-                            <span className="text-sm text-muted-foreground">Lines 5-6</span>
-                          </div>
-                          <h4 className="font-semibold">SQL Injection</h4>
-                          <p className="text-sm text-muted-foreground">Replaced with parameterized queries</p>
+                          <Badge
+                            variant={vuln.severity === "Critical" ? "destructive" : "secondary"}
+                            className="font-semibold"
+                          >
+                            {vuln.severity}
+                          </Badge>
                         </div>
-                        <div className="p-4 border border-success/20 bg-success/5 rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <Badge variant="success">FIXED</Badge>
-                            <span className="text-sm text-muted-foreground">Line 11</span>
-                          </div>
-                          <h4 className="font-semibold">Hardcoded Secret</h4>
-                          <p className="text-sm text-muted-foreground">Moved to environment variable</p>
-                        </div>
-                        <div className="p-4 border border-success/20 bg-success/5 rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <Badge variant="success">FIXED</Badge>
-                            <span className="text-sm text-muted-foreground">Line 15</span>
-                          </div>
-                          <h4 className="font-semibold">XSS Vulnerability</h4>
-                          <p className="text-sm text-muted-foreground">Added HTML escaping</p>
-                        </div>
-                      </div>
-                    </ScrollArea>
-                  </CardContent>
-                </Card>
+                        <p className="text-gray-700">{vuln.message}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      Secured Code
-                      <Badge variant="success">Security Score: A+</Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ScrollArea className="h-[400px]">
-                      <pre className="text-sm bg-muted p-4 rounded-lg overflow-x-auto">
-                        <code>{fixedCode}</code>
-                      </pre>
-                    </ScrollArea>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </div>
+              <TabsContent value="fixed" className="space-y-4">
+                <div className="relative">
+                  <ScrollArea className="h-96 w-full rounded-xl border-2 border-green-200 bg-gray-50">
+                    <pre className="p-6 text-sm font-mono">
+                      <code className="text-gray-800">{fixedCode}</code>
+                    </pre>
+                  </ScrollArea>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="absolute top-4 right-4 gap-2"
+                    onClick={() => copyCode(fixedCode, "Fixed")}
+                  >
+                    <Copy className="w-4 h-4" />
+                  </Button>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-4 mt-6">
+                  {fixes.map((fix, index) => (
+                    <Card key={index} className="border-2 border-green-200 bg-green-50">
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                          <div>
+                            <h4 className="font-bold text-gray-800 mb-1">{fix.title}</h4>
+                            <p className="text-sm text-gray-600">{fix.description}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
       </div>
     </section>
   );

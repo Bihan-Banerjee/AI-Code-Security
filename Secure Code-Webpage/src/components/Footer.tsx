@@ -1,62 +1,78 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const SecurityFooter = () => {
   return (
-    <footer className="border-t bg-gray-100">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between py-6 px-4 space-y-4 md:space-y-0">
-        
-        {/* Left Section: Links */}
-        <nav className="flex flex-wrap justify-center gap-6 text-sm font-medium">
-          <a
-            href="/terms-and-conditions"
-            className="transition-colors hover:text-primary hover:underline text-gray-700"
-          >
-            Terms
-          </a>
-          <a
-            href="/privacy-policy"
-            className="transition-colors hover:text-primary hover:underline text-gray-700"
-          >
-            Privacy
-          </a>
-          <a
-            href="/about"
-            className="transition-colors hover:text-primary hover:underline text-gray-700"
-          >
-            Contact
-          </a>
-        </nav>
+    <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
+          {/* Brand */}
+          <div className="col-span-2">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-xl">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold">FortiScan</h3>
+              </div>
+            </div>
+            <p className="text-gray-400 max-w-md leading-relaxed">
+              Advanced AI-powered security analysis platform that helps developers write secure code
+              and protect applications from vulnerabilities.
+            </p>
+          </div>
 
-        {/* Center Section: Social Icons */}
-        <div className="flex gap-4">
-          <a
-            href="https://github.com/Bihan-Banerjee/AI-Code-Security/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 rounded-full transition hover:bg-primary/10"
-          >
-            <Github className="h-5 w-5 text-gray-700 hover:text-primary transition" />
-          </a>
-          <a
-            href="https://linktr.ee/bihanbanerjee26"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 rounded-full transition hover:bg-primary/10"
-          >
-            <Linkedin className="h-5 w-5 text-gray-700 hover:text-primary transition" />
-          </a>
-          <a
-            href="mailto:youremail@example.com"
-            className="p-2 rounded-full transition hover:bg-primary/10"
-          >
-            <Mail className="h-5 w-5 text-gray-700 hover:text-primary transition" />
-          </a>
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-bold text-lg mb-4">Quick Links</h4>
+            <ul className="space-y-2">
+              <li><Link to="/dashboard" className="text-gray-400 hover:text-white transition-colors">Dashboard</Link></li>
+              <li><Link to="/scanner" className="text-gray-400 hover:text-white transition-colors">Scanner</Link></li>
+              <li><Link to="/enhancer" className="text-gray-400 hover:text-white transition-colors">Enhancer</Link></li>
+              <li><Link to="/#demo" className="text-gray-400 hover:text-white transition-colors">Demo</Link></li>
+            </ul>
+          </div>
+
+          {/* Connect */}
+          <div>
+            <h4 className="font-bold text-lg mb-4">Connect</h4>
+            <div className="flex gap-3">
+              <a 
+                href="https://github.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                <Github className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://linkedin.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a 
+                href="mailto:contact@example.com"
+                className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                <Mail className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
         </div>
 
-        {/* Right Section: Copyright */}
-        <p className="text-xs md:text-sm text-gray-600 text-center md:text-right">
-          © 2025 <span className="font-semibold text-primary">SecureCode AI</span> · All rights reserved.
-        </p>
+        {/* Bottom */}
+        <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-400 text-sm">
+            © 2025 FortiScan. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-sm">
+            <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms-and-conditions" className="text-gray-400 hover:text-white transition-colors">Terms of Service</Link>
+          </div>
+        </div>
       </div>
     </footer>
   );
