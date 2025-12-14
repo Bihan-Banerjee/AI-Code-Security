@@ -21,7 +21,7 @@ const SecurityHeader = () => {
           {/* Logo with PNG */}
           <Link to="/" className="flex items-center gap-0 group">
             <img 
-              src="/logo.png" 
+              src="/icon.png" 
               alt="FortiScan Logo" 
               className="w-15 h-12 group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
             />

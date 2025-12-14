@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Shield } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const SecurityFooter = () => {
@@ -10,7 +10,7 @@ const SecurityFooter = () => {
           <div className="col-span-2">
             <Link to="/" className="flex items-center gap-0 group">
               <img 
-                src="/logo.png" 
+                src="/icon.png" 
                 alt="FortiScan" 
                 className="w-13 h-8 group-hover:scale-110 transition-transform duration-300"
               />
