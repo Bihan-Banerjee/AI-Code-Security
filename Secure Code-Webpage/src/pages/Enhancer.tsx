@@ -255,12 +255,12 @@ export default function Enhancer() {
                       <SelectContent>
                         <SelectItem value="python">
                           <span className="flex items-center gap-2">
-                            🐍 Python
+                            Python
                           </span>
                         </SelectItem>
                         <SelectItem value="javascript">
                           <span className="flex items-center gap-2">
-                            ⚡ JavaScript
+                            JavaScript
                           </span>
                         </SelectItem>
                       </SelectContent>

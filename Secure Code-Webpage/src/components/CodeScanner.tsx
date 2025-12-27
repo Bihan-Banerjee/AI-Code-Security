@@ -245,7 +245,7 @@ export default function CodeScanner() {
             <p className="text-gray-600 text-lg max-w-3xl mx-auto">
               Our AI-powered scanner analyzes your source code to detect weaknesses and insecure patterns 
               across 2 major languages. It highlights issues with severity levels, provides clear descriptions 
-              and helps you understand where your code might be at risk—all in a matter of seconds.
+              and helps you understand where your code might be at risk, all in a matter of seconds.
             </p>
           </div>
 
@@ -310,12 +310,12 @@ export default function CodeScanner() {
                       <SelectContent>
                         <SelectItem value="python">
                           <span className="flex items-center gap-2">
-                            🐍 Python
+                            Python
                           </span>
                         </SelectItem>
                         <SelectItem value="javascript">
                           <span className="flex items-center gap-2">
-                            ⚡ JavaScript
+                            JavaScript
                           </span>
                         </SelectItem>
                       </SelectContent>

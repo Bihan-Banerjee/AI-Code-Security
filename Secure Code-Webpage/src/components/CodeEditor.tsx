@@ -107,7 +107,7 @@ def authenticate_user(username, password):
             <div className="flex items-center justify-between">
               <CardTitle className="text-2xl font-bold flex items-center gap-2">
                 <Shield className="w-6 h-6 text-blue-600" />
-                Code Security Scanner
+                Code Security Scanner & Enhancer
               </CardTitle>
               <div className="flex gap-2">
                 <Link to="/scanner">
@@ -133,19 +133,19 @@ def authenticate_user(username, password):
                   value="input"
                   className="data-[state=active]:bg-white data-[state=active]:shadow-md rounded-lg font-semibold"
                 >
-                  ⚠️ Vulnerable Code
+                  Vulnerable Code
                 </TabsTrigger>
                 <TabsTrigger 
                   value="vulnerabilities"
                   className="data-[state=active]:bg-white data-[state=active]:shadow-md rounded-lg font-semibold"
                 >
-                  🔍 Detected Issues
+                  Security Analysis
                 </TabsTrigger>
                 <TabsTrigger 
                   value="fixed"
                   className="data-[state=active]:bg-white data-[state=active]:shadow-md rounded-lg font-semibold"
                 >
-                  ✅ Fixed Code
+                  Fixed Code
                 </TabsTrigger>
               </TabsList>
 
