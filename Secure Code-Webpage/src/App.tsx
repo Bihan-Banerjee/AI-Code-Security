@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import React, { Suspense } from "react";
 import ViewDemo from "./pages/viewDemo";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 
 const Index = React.lazy(() => import("./pages/Index"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
@@ -26,6 +27,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <VercelAnalytics />
       <Toaster />
       <Sonner />
       <BrowserRouter>
