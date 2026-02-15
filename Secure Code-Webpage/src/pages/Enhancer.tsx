@@ -122,41 +122,119 @@ export default function Enhancer() {
     fileInputRef.current?.click();
   };
 
+//  const handleEnhance = async () => {
+//    if (!code.trim()) {
+//      toast.error("Please provide some code to enhance!");
+//      return;
+//    }
+//
+//    try {
+//      const token = sessionStorage.getItem("token");
+//      if (!token) {
+//        toast.error("You must be logged in to enhance code!");
+//        return;
+//      }
+//
+//      setLoading(true);
+//
+//      const res = await api.post(
+//        "/api/enhance",
+//        { code, language },
+//        { headers: { Authorization: `Bearer ${token}` } }
+//      );
+//
+//      setResult({
+//        enhanced: res.data.enhanced_code,
+//        diff: res.data.diff,
+//        candidates: res.data.candidates || [],
+//        explanations: res.data.explanations || [],
+//      });
+//
+//      toast.success("Code enhanced successfully!");
+//    } catch (err: any) {
+//      toast.error(err.response?.data?.error || "Enhancement failed");
+//    } finally {
+//      setLoading(false);
+//    }
+//  };
+
+  const [progress, setProgress] = useState(0);
+
   const handleEnhance = async () => {
-    if (!code.trim()) {
-      toast.error("Please provide some code to enhance!");
+  if (!code.trim()) {
+    toast.error("Please provide some code to enhance!");
+    return;
+  }
+
+  try {
+    setLoading(true);
+    setResult(null);
+    setProgress(0);
+
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      toast.error("You must be logged in!");
+      setLoading(false);
       return;
     }
 
-    try {
-      const token = sessionStorage.getItem("token");
-      if (!token) {
-        toast.error("You must be logged in to enhance code!");
-        return;
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/enhance-stream`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ code, language }),
       }
+    );
 
-      setLoading(true);
-
-      const res = await api.post(
-        "/api/enhance",
-        { code, language },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      setResult({
-        enhanced: res.data.enhanced_code,
-        diff: res.data.diff,
-        candidates: res.data.candidates || [],
-        explanations: res.data.explanations || [],
-      });
-
-      toast.success("Code enhanced successfully!");
-    } catch (err: any) {
-      toast.error(err.response?.data?.error || "Enhancement failed");
-    } finally {
-      setLoading(false);
+    if (!res.ok || !res.body) {
+      throw new Error("Server error");
     }
-  };
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+
+    let buffer = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+
+      for (const line of lines) {
+        if (!line.trim()) continue;
+
+        const msg = JSON.parse(line);
+
+        if (msg.type === "progress") {
+          setProgress(msg.progress);
+        }
+
+        if (msg.type === "result") {
+          setResult(msg.data);
+          setLoading(false);
+          toast.success("Enhancement complete!");
+        }
+
+        if (msg.type === "error") {
+          toast.error(msg.message);
+          setLoading(false);
+        }
+      }
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error("Enhancement failed");
+    setLoading(false);
+  }
+};
+
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -364,6 +442,17 @@ export default function Enhancer() {
                       </>
                     )}
                   </Button>
+                  {loading && (
+                    <div className="w-full bg-gray-200 rounded-full h-3 mt-4 overflow-hidden">
+                      <div
+                        className="bg-blue-600 h-3 transition-all duration-300"
+                        style={{ width: `${progress}%` }}
+                      />
+                      <p className="text-xs text-center mt-1 text-gray-500">
+                        {progress}%
+                      </p>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>

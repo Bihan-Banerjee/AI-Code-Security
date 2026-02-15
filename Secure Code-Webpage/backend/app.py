@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response, stream_with_context
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from routes.auth import auth_bp
@@ -8,6 +8,7 @@ import tempfile
 import os
 import subprocess
 import json
+import time
 from pymongo import MongoClient
 from routes.reviews import reviews_bp
 from flask_limiter import Limiter
@@ -256,6 +257,55 @@ def submit_review():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route("/api/enhance-stream", methods=["POST"])
+@jwt_required()
+def enhance_stream():
+    data = request.get_json()
+    code = data.get("code", "")
+    language = data.get("language", "python")
+
+    if not code.strip():
+        return jsonify({"error": "No code"}), 400
+
+    def generate():
+        try:
+            # 1️⃣ starting
+            yield json.dumps({
+                "type": "progress",
+                "progress": 5
+            }) + "\n"
+
+            time.sleep(0.5)
+
+            # 2️⃣ preprocessing
+            yield json.dumps({
+                "type": "progress",
+                "progress": 20
+            }) + "\n"
+
+            # 3️⃣ heavy AI call
+            result = enhance_code(code, language)
+
+            # 4️⃣ done
+            yield json.dumps({
+                "type": "result",
+                "data": result
+            }) + "\n"
+
+        except Exception as e:
+            yield json.dumps({
+                "type": "error",
+                "message": str(e)
+            }) + "\n"
+
+    return Response(
+        stream_with_context(generate()),
+        mimetype="text/plain"
+    )
+
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
