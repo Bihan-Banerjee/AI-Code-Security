@@ -30,7 +30,8 @@ import {
   XCircle,
   AlertCircle
 } from "lucide-react";
-
+const MAX_FILE_SIZE_BYTES = 500 * 1024; 
+const MAX_FILE_COUNT = 10;
 type File = {
   filename: string;
   content: string;
@@ -71,12 +72,23 @@ export default function CodeScanner() {
     const validExtensions = language === "python" 
       ? [".py", ".pyw"] 
       : [".js", ".jsx", ".ts", ".tsx", ".mjs"];
+    
+    const totalAfterUpload = files.filter(f => f.content.trim() !== "").length + fileArray.length;
+    if (totalAfterUpload > MAX_FILE_COUNT) {
+      toast.error(`Maximum ${MAX_FILE_COUNT} files allowed per scan.`);
+      return;
+    }
 
     for (const file of fileArray) {
       const extension = file.name.substring(file.name.lastIndexOf("."));
       
       if (!validExtensions.includes(extension.toLowerCase())) {
         toast.error(`Invalid file type: ${file.name}. Please upload ${language} files only.`);
+        continue;
+      }
+      
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        toast.error(`${file.name} exceeds 500 KB limit. Please split into smaller files.`);
         continue;
       }
 

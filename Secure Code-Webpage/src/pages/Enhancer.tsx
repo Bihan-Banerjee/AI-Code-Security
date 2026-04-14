@@ -6,12 +6,12 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "react-hot-toast";
-import { 
-  Loader2, 
-  Sparkles, 
-  Upload, 
-  FileCode, 
-  CheckCircle2, 
+import {
+  Loader2,
+  Sparkles,
+  Upload,
+  FileCode,
+  CheckCircle2,
   AlertCircle,
   Copy,
   Download
@@ -45,6 +45,11 @@ interface Explanation {
   reason: string;
 }
 
+// FIX: Shared token helper — checks both sessionStorage and localStorage
+function getStoredToken(): string | null {
+  return sessionStorage.getItem("token") || localStorage.getItem("token") || null;
+}
+
 export default function Enhancer() {
   const [code, setCode] = useState("");
   const [filename, setFilename] = useState("code.py");
@@ -55,16 +60,14 @@ export default function Enhancer() {
   const [activeTab, setActiveTab] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // File upload handler
   const handleFileUpload = async (uploadedFiles: FileList | null) => {
     if (!uploadedFiles || uploadedFiles.length === 0) return;
 
-    const file = uploadedFiles[0]; // Take only the first file
+    const file = uploadedFiles[0];
     const extension = file.name.substring(file.name.lastIndexOf("."));
 
-    // Validate file extension
-    const validExtensions = language === "python" 
-      ? [".py", ".pyw"] 
+    const validExtensions = language === "python"
+      ? [".py", ".pyw"]
       : [".js", ".jsx", ".ts", ".tsx", ".mjs"];
 
     if (!validExtensions.includes(extension.toLowerCase())) {
@@ -83,7 +86,6 @@ export default function Enhancer() {
     }
   };
 
-  // Read file content
   const readFileContent = (file: Blob): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -93,7 +95,6 @@ export default function Enhancer() {
     });
   };
 
-  // Drag and drop handlers
   const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -122,119 +123,83 @@ export default function Enhancer() {
     fileInputRef.current?.click();
   };
 
-//  const handleEnhance = async () => {
-//    if (!code.trim()) {
-//      toast.error("Please provide some code to enhance!");
-//      return;
-//    }
-//
-//    try {
-//      const token = sessionStorage.getItem("token");
-//      if (!token) {
-//        toast.error("You must be logged in to enhance code!");
-//        return;
-//      }
-//
-//      setLoading(true);
-//
-//      const res = await api.post(
-//        "/api/enhance",
-//        { code, language },
-//        { headers: { Authorization: `Bearer ${token}` } }
-//      );
-//
-//      setResult({
-//        enhanced: res.data.enhanced_code,
-//        diff: res.data.diff,
-//        candidates: res.data.candidates || [],
-//        explanations: res.data.explanations || [],
-//      });
-//
-//      toast.success("Code enhanced successfully!");
-//    } catch (err: any) {
-//      toast.error(err.response?.data?.error || "Enhancement failed");
-//    } finally {
-//      setLoading(false);
-//    }
-//  };
-
   const [progress, setProgress] = useState(0);
 
   const handleEnhance = async () => {
-  if (!code.trim()) {
-    toast.error("Please provide some code to enhance!");
-    return;
-  }
-
-  try {
-    setLoading(true);
-    setResult(null);
-    setProgress(0);
-
-    const token = sessionStorage.getItem("token");
-    if (!token) {
-      toast.error("You must be logged in!");
-      setLoading(false);
+    if (!code.trim()) {
+      toast.error("Please provide some code to enhance!");
       return;
     }
 
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/enhance-stream`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ code, language }),
+    try {
+      setLoading(true);
+      setResult(null);
+      setProgress(0);
+
+      // FIX: Use shared helper that checks both sessionStorage and localStorage
+      const token = getStoredToken();
+      if (!token) {
+        toast.error("You must be logged in!");
+        setLoading(false);
+        return;
       }
-    );
 
-    if (!res.ok || !res.body) {
-      throw new Error("Server error");
-    }
-
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-
-    let buffer = "";
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split("\n");
-      buffer = lines.pop() || "";
-
-      for (const line of lines) {
-        if (!line.trim()) continue;
-
-        const msg = JSON.parse(line);
-
-        if (msg.type === "progress") {
-          setProgress(msg.progress);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/enhance-stream`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ code, language }),
         }
+      );
 
-        if (msg.type === "result") {
-          setResult(msg.data);
-          setLoading(false);
-          toast.success("Enhancement complete!");
-        }
+      if (!res.ok || !res.body) {
+        throw new Error("Server error");
+      }
 
-        if (msg.type === "error") {
-          toast.error(msg.message);
-          setLoading(false);
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          if (!line.trim()) continue;
+
+          const msg = JSON.parse(line);
+
+          if (msg.type === "progress") {
+            setProgress(msg.progress);
+          }
+
+          if (msg.type === "result") {
+            setResult(msg.data);
+            setLoading(false);
+            toast.success("Enhancement complete!");
+          }
+
+          if (msg.type === "error") {
+            toast.error(msg.message);
+            setLoading(false);
+          }
         }
       }
+    } catch (err) {
+      console.error(err);
+      toast.error("Enhancement failed");
+      setLoading(false);
     }
-  } catch (err) {
-    console.error(err);
-    toast.error("Enhancement failed");
-    setLoading(false);
-  }
-};
-
+  };
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -257,7 +222,7 @@ export default function Enhancer() {
       <SecurityHeader />
       <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 p-4 md:p-8">
         <div className="max-w-7xl mx-auto space-y-8">
-          
+
           {/* Hero Section */}
           <div className="text-center space-y-4">
             <div className="inline-block bg-blue-100 text-blue-800 font-semibold px-4 py-1 rounded-full text-sm">
@@ -268,7 +233,7 @@ export default function Enhancer() {
               Smart Code Enhancer
             </h1>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Transform your insecure or inefficient code into production-ready, 
+              Transform your insecure or inefficient code into production-ready,
               secure implementations with AI-powered suggestions and multi-model validation.
             </p>
           </div>
@@ -282,7 +247,7 @@ export default function Enhancer() {
                 <div className="h-1 w-0 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
               </CardContent>
             </Card>
-            
+
             <Card className="group border-2 border-green-200 hover:border-green-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
               <CardContent className="p-6 text-center">
                 <div className="text-3xl font-bold text-green-600 mb-2 group-hover:scale-110 transition-transform">99%</div>
@@ -290,7 +255,7 @@ export default function Enhancer() {
                 <div className="h-1 w-0 bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
               </CardContent>
             </Card>
-            
+
             <Card className="group border-2 border-purple-200 hover:border-purple-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
               <CardContent className="p-6 text-center">
                 <div className="text-3xl font-bold text-purple-600 mb-2 group-hover:scale-110 transition-transform">2</div>
@@ -298,7 +263,7 @@ export default function Enhancer() {
                 <div className="h-1 w-0 bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
               </CardContent>
             </Card>
-            
+
             <Card className="group border-2 border-orange-200 hover:border-orange-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
               <CardContent className="p-6 text-center">
                 <div className="text-3xl font-bold text-orange-600 mb-2 group-hover:scale-110 transition-transform">Instant</div>
@@ -309,10 +274,10 @@ export default function Enhancer() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-            
+
             {/* Left Column - Input */}
             <div className="space-y-6">
-              
+
               {/* Language Selection */}
               <Card className="shadow-lg rounded-2xl border-2 border-blue-100">
                 <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
@@ -332,14 +297,10 @@ export default function Enhancer() {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="python">
-                          <span className="flex items-center gap-2">
-                            Python
-                          </span>
+                          <span className="flex items-center gap-2">Python</span>
                         </SelectItem>
                         <SelectItem value="javascript">
-                          <span className="flex items-center gap-2">
-                            JavaScript
-                          </span>
+                          <span className="flex items-center gap-2">JavaScript</span>
                         </SelectItem>
                       </SelectContent>
                     </Select>
@@ -386,8 +347,8 @@ export default function Enhancer() {
                       {isDragging ? "Drop your file here" : "Drag & Drop your code file"}
                     </p>
                     <p className="text-sm text-gray-500 mb-4">or</p>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       onClick={handleBrowseClick}
                       className="border-blue-300 hover:bg-blue-50"
                     >
@@ -442,14 +403,22 @@ export default function Enhancer() {
                       </>
                     )}
                   </Button>
+
+                  {/* FIX: Progress bar moved outside overflow-hidden; pulses while AI is inferring */}
                   {loading && (
-                    <div className="w-full bg-gray-200 rounded-full h-3 mt-4 overflow-hidden">
-                      <div
-                        className="bg-blue-600 h-3 transition-all duration-300"
-                        style={{ width: `${progress}%` }}
-                      />
+                    <div className="mt-2">
+                      <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                        <div
+                          className={`h-3 rounded-full transition-all duration-500 bg-blue-600 ${
+                            progress <= 20 ? "animate-pulse" : ""
+                          }`}
+                          style={{ width: `${Math.max(progress, 15)}%` }}
+                        />
+                      </div>
                       <p className="text-xs text-center mt-1 text-gray-500">
-                        {progress}%
+                        {progress <= 20
+                          ? "Analyzing your code with AI..."
+                          : `${progress}%`}
                       </p>
                     </div>
                   )}
@@ -512,7 +481,6 @@ export default function Enhancer() {
                         </p>
                       </CardHeader>
                       <CardContent className="pt-6 space-y-4">
-                        {/* Tabs */}
                         <div className="flex gap-2 overflow-x-auto pb-2">
                           {result.candidates.map((c, i) => (
                             <Button
@@ -521,8 +489,8 @@ export default function Enhancer() {
                               size="sm"
                               onClick={() => setActiveTab(i)}
                               className={`flex-shrink-0 ${
-                                activeTab === i 
-                                  ? "bg-blue-600 text-white" 
+                                activeTab === i
+                                  ? "bg-blue-600 text-white"
                                   : "hover:bg-blue-50"
                               }`}
                             >
@@ -531,7 +499,6 @@ export default function Enhancer() {
                           ))}
                         </div>
 
-                        {/* Active Tab Content */}
                         <div className="relative">
                           <div className="absolute top-2 right-2 flex gap-2 z-10">
                             <Button

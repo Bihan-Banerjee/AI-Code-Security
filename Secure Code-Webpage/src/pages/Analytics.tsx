@@ -18,6 +18,7 @@ import Footer from "@/components/Footer";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 interface HistoryItem {
   language?: string;
@@ -51,13 +52,14 @@ const fetchHistory = async (): Promise<HistoryItem[]> => {
 
 export default function Analytics() {
   const navigate = useNavigate();
-  const { data: history = [], error } = useQuery<HistoryItem[], AxiosError>({
+  // FIX: Destructure isLoading so we can show a loading state
+  const { data: history = [], error, isLoading } = useQuery<HistoryItem[], AxiosError>({
     queryKey: ["scan-history"],
     queryFn: fetchHistory,
   });
 
   const [groupBy, setGroupBy] = useState<"CWE" | "Severity" | "Timeline">("CWE");
-  const [chartType, setChartType] = useState<
+  const [chartType, setChartType] = useState
     "Line" | "Bar" | "Pie" | "Area" | "Radar" | "Scatter" | "Composed"
   >("Bar");
 
@@ -105,7 +107,10 @@ export default function Analytics() {
       return Object.entries(severityCounts).map(([k, v]) => ({ name: k, value: v }));
 
     if (groupBy === "Timeline")
-      return Object.entries(timelineCounts).map(([date, v]) => ({ name: date, value: v }));
+      // FIX: Sort timeline entries chronologically — Object.entries does not guarantee date order
+      return Object.entries(timelineCounts)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([date, v]) => ({ name: date, value: v }));
 
     return [];
   }, [history, groupBy]);
@@ -264,7 +269,19 @@ export default function Analytics() {
           <CardHeader>
             <CardTitle>{groupBy} Analysis ({chartType} Chart)</CardTitle>
           </CardHeader>
-          <CardContent>{renderChart()}</CardContent>
+          <CardContent>
+            {/* FIX: Show a loading spinner while history is being fetched */}
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center py-16 space-y-3">
+                <div className="p-4 rounded-full bg-blue-100 animate-pulse">
+                  <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                </div>
+                <p className="text-gray-500 font-medium">Loading analytics...</p>
+              </div>
+            ) : (
+              renderChart()
+            )}
+          </CardContent>
         </Card>
       </div>
       <Footer />

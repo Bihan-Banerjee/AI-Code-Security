@@ -73,6 +73,8 @@ function getStoredToken(): string | null {
 function removeStoredToken() {
   localStorage.removeItem("token");
   sessionStorage.removeItem("token");
+  localStorage.removeItem("username");
+  sessionStorage.removeItem("username");
 }
 
 const fetchHistory = async (): Promise<HistoryData> => {

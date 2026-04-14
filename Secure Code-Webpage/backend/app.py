@@ -11,11 +11,9 @@ import json
 import time
 from pymongo import MongoClient
 from routes.reviews import reviews_bp
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+from extensions import limiter
 from datetime import datetime
 from datetime import timedelta
-from bson import ObjectId
 from models.reviews import reviews_collection
 from schemas import ScanRequest
 from pydantic import ValidationError
@@ -26,7 +24,14 @@ load_dotenv()
 
 app = Flask(__name__)
 Compress(app)
-CORS(app)
+
+# FIX: Restrict CORS to known frontend origins instead of allowing all
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+allowed_origins = list({FRONTEND_URL, "http://localhost:5173", "http://localhost:3000"})
+CORS(app, origins=allowed_origins)
+
+# FIX: Limit max upload size to 1 MB to prevent oversized payloads
+app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
 
 # Load environment variables
 env = os.getenv('FLASK_ENV', 'development')
@@ -47,9 +52,7 @@ else:
         "CACHE_DEFAULT_TIMEOUT": 3600
     })
 
-cache.init_app(app)
-
-cache.init_app(app)
+cache.init_app(app)  # FIX: removed the duplicate cache.init_app(app) call that was here
 
 def files_hash(files):
     h = hashlib.sha256()
@@ -75,10 +78,7 @@ scan_history = db["scan_history"]
 
 app.register_blueprint(auth_bp, url_prefix="/api")
 
-limiter = Limiter(
-    key_func=get_remote_address,
-    default_limits=["20 per minute"]
-)
+# FIX: Import limiter from extensions and init with app (single shared instance)
 limiter.init_app(app)
 
 @app.route('/api/scan', methods=['POST'])
@@ -147,7 +147,6 @@ def scan_code():
         return jsonify({"error": str(e)}), 500
 
 
-
 @app.route("/api/health")
 def health():
     return jsonify({"status": "ok"})
@@ -168,10 +167,8 @@ def enhance():
         if not code.strip():
             return jsonify({"error": "No code provided"}), 400
 
-        # 🔹 New format (returns dict)
         result = enhance_code(code, language)
 
-        # Save to history (with candidates + explanations)
         enhance_history.insert_one({
             "username": username,
             "code": code,
@@ -195,11 +192,9 @@ def history():
     try:
         username = get_jwt_identity()
 
-        # Fetch both histories
         enhance_records = list(enhance_history.find({"username": username}).sort("timestamp", -1))
         scan_records = list(scan_history.find({"username": username}).sort("timestamp", -1))
 
-        # Convert ObjectId to string & return only relevant fields
         def clean(record, record_type):
             return {
                 "id": str(record.get("_id")),
@@ -207,8 +202,8 @@ def history():
                 "code": record.get("code"),
                 "enhanced_code": record.get("enhanced_code"),
                 "diff": record.get("diff"),
-                "candidates": record.get("candidates", []),   # ✅ added
-                "explanations": record.get("explanations", []), # ✅ added
+                "candidates": record.get("candidates", []),
+                "explanations": record.get("explanations", []),
                 "result": record.get("result") if record_type == "scan" else None,
                 "timestamp": record.get("timestamp"),
             }
@@ -257,14 +252,17 @@ def submit_review():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
 
+
+# FIX: Added @limiter.limit and history saving; captured username before generator
 @app.route("/api/enhance-stream", methods=["POST"])
+@limiter.limit("5/minute")
 @jwt_required()
 def enhance_stream():
     data = request.get_json()
     code = data.get("code", "")
     language = data.get("language", "python")
+    username = get_jwt_identity()  # FIX: capture before generator runs
 
     if not code.strip():
         return jsonify({"error": "No code"}), 400
@@ -288,6 +286,21 @@ def enhance_stream():
             # 3️⃣ heavy AI call
             result = enhance_code(code, language)
 
+            # FIX: Save to history so it appears in dashboard
+            try:
+                enhance_history.insert_one({
+                    "username": username,
+                    "code": code,
+                    "language": language,
+                    "enhanced_code": result.get("enhanced_code", ""),
+                    "diff": result.get("diff", []),
+                    "candidates": result.get("candidates", []),
+                    "explanations": result.get("explanations", []),
+                    "timestamp": datetime.utcnow().isoformat()
+                })
+            except Exception:
+                pass  # Don't let a DB write failure kill the stream response
+
             # 4️⃣ done
             yield json.dumps({
                 "type": "result",
@@ -304,7 +317,6 @@ def enhance_stream():
         stream_with_context(generate()),
         mimetype="text/plain"
     )
-
 
 
 if __name__ == '__main__':
