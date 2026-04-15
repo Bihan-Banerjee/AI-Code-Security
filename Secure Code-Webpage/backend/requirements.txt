@@ -17,7 +17,8 @@ pydantic>=2.9.2
 
 # AI/ML dependencies
 torch>=2.0.0
-transformers>=4.30.0
+transformers==4.40.2
+tokenizers==0.19.1
 
 # Security scanning tools
 bandit>=1.7.5

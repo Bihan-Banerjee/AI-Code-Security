@@ -39,7 +39,7 @@ print("🔹 Loading models...")
 for name, mtype in MODEL_CONFIGS.items():
     print(f"Loading {name} ...")
 
-    tokenizers[name] = AutoTokenizer.from_pretrained(name)
+    tokenizers[name] = AutoTokenizer.from_pretrained(name, use_fast=False)
 
     if mtype == "seq2seq":
         model = AutoModelForSeq2SeqLM.from_pretrained(name)

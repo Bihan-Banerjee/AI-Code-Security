@@ -9,6 +9,7 @@ import os
 import subprocess
 import json
 import time
+import sys
 from pymongo import MongoClient
 from routes.reviews import reviews_bp
 from extensions import limiter
@@ -27,7 +28,7 @@ Compress(app)
 
 # FIX: Restrict CORS to known frontend origins instead of allowing all
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
-allowed_origins = list({FRONTEND_URL, "http://localhost:5173", "http://localhost:3000"})
+allowed_origins = list({FRONTEND_URL, "http://localhost:5173", "http://localhost:3000", "http://localhost:8080"})
 CORS(app, origins=allowed_origins)
 
 # FIX: Limit max upload size to 1 MB to prevent oversized payloads
@@ -111,9 +112,9 @@ def scan_code():
                     code_file.write(f["content"])
 
             if language == "python":
-                scan_command = ["python", "-m", "bandit", "-r", temp_dir, "-f", "json"]
+                scan_command = [sys.executable, "-m", "bandit", "-r", temp_dir, "-f", "json"]
             elif language == "javascript":
-                scan_command = ["python", "-m", "semgrep", "--config=p/javascript", "--json", temp_dir]
+                scan_command = [sys.executable, "-m", "semgrep", "--config=p/javascript", "--json", temp_dir]
             else:
                 return jsonify({"error": "Unsupported language"}), 400
 
