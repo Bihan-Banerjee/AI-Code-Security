@@ -8,15 +8,12 @@ const SecurityHeader = () => {
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
-    // FIX: Read username on mount and keep in sync via storage events
     const readUsername = () => {
       const storedUser = sessionStorage.getItem("username") || localStorage.getItem("username");
       setUsername(storedUser);
     };
 
     readUsername();
-
-    // Listen for storage changes so header updates on login/logout without full reload
     window.addEventListener("storage", readUsername);
     return () => window.removeEventListener("storage", readUsername);
   }, []);

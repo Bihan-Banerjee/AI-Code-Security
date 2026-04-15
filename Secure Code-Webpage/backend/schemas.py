@@ -17,7 +17,6 @@ class FileModel(BaseModel):
     @field_validator('content')
     @classmethod
     def validate_content(cls, v):
-        # FIX: Enforce per-file content size limit (100 KB)
         if len(v) > 100_000:
             raise ValueError('File content exceeds 100 KB limit. Please split into smaller files.')
         return v
@@ -29,7 +28,6 @@ class ScanRequest(BaseModel):
     @field_validator('files')
     @classmethod
     def validate_files(cls, v):
-        # FIX: Enforce minimum and maximum file counts
         if len(v) == 0:
             raise ValueError('At least one file is required')
         if len(v) > 10:
@@ -39,7 +37,6 @@ class ScanRequest(BaseModel):
     @field_validator('language')
     @classmethod
     def validate_language(cls, v):
-        # FIX: Reject unsupported languages at schema level
         supported = ("python", "javascript")
         if v.lower() not in supported:
             raise ValueError(f'Language must be one of: {", ".join(supported)}')

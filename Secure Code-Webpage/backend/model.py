@@ -6,20 +6,12 @@ from transformers import (
     AutoModelForSeq2SeqLM,
     AutoModelForCausalLM
 )
+import os
 
-# ----------------------------
-# Performance Settings
-# ----------------------------
-
-torch.set_num_threads(2)
+torch.set_num_threads(max(1, os.cpu_count() // 2))
 DEVICE = "cpu"
 
-# FIX: Maximum code length to prevent OOM and silent truncation
 MAX_CODE_CHARS = 8000
-
-# ----------------------------
-# Models and their types
-# ----------------------------
 
 MODEL_CONFIGS = {
     "Salesforce/codet5-base": "seq2seq",        # CodeT5
@@ -27,34 +19,28 @@ MODEL_CONFIGS = {
     "microsoft/CodeGPT-small-py": "causal",     # CodeGPT-small (Python)
 }
 
-# ----------------------------
-# Load tokenizers and models
-# ----------------------------
-
 tokenizers = {}
 models = {}
 
+def load_models():
+    for name, mtype in MODEL_CONFIGS.items():
+        print(f"Loading {name} ...")
+
+        tokenizers[name] = AutoTokenizer.from_pretrained(name, use_fast=False)
+
+        if mtype == "seq2seq":
+            model = AutoModelForSeq2SeqLM.from_pretrained(name)
+        else:
+            model = AutoModelForCausalLM.from_pretrained(name)
+
+        model.to(DEVICE)
+        model.eval()
+        models[name] = model
+        print("✅ All models loaded")
+
 print("🔹 Loading models...")
-
-for name, mtype in MODEL_CONFIGS.items():
-    print(f"Loading {name} ...")
-
-    tokenizers[name] = AutoTokenizer.from_pretrained(name, use_fast=False)
-
-    if mtype == "seq2seq":
-        model = AutoModelForSeq2SeqLM.from_pretrained(name)
-    else:
-        model = AutoModelForCausalLM.from_pretrained(name)
-
-    model.to(DEVICE)
-    model.eval()
-    models[name] = model
-
-print("✅ All models loaded")
-
-# ----------------------------
-# Rule-based fixes — Python (common + general)
-# ----------------------------
+if __name__ != "__main__" or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+    load_models()
 
 SECURE_REPLACEMENTS = {
     # Weak hashing
@@ -83,10 +69,6 @@ SECURE_REPLACEMENTS = {
     "app.run(debug=True":   ("app.run(debug=False",   "Flask debug=True enables the Werkzeug debugger which allows arbitrary code execution."),
 }
 
-# ----------------------------
-# Python-specific extra rules
-# ----------------------------
-
 PYTHON_EXTRA_REPLACEMENTS = {
     # SQL injection helpers
     "% username":           ("# Use parameterised query","String-formatted SQL allows injection; use parameterised queries with ? placeholders."),
@@ -94,10 +76,6 @@ PYTHON_EXTRA_REPLACEMENTS = {
     # Insecure HTTP
     "http://":              ("https://",              "Unencrypted HTTP transmits data in plaintext; upgrade to HTTPS."),
 }
-
-# ----------------------------
-# JavaScript-specific rules
-# ----------------------------
 
 JS_SECURE_REPLACEMENTS = {
     "innerHTML =":              ("textContent =",             "innerHTML enables XSS; use textContent to safely set plain text."),
@@ -109,10 +87,6 @@ JS_SECURE_REPLACEMENTS = {
     "dangerouslySetInnerHTML":  ("// dangerouslySetInnerHTML — review needed","dangerouslySetInnerHTML bypasses React's XSS protection; sanitise input with DOMPurify first."),
     "localStorage.setItem":     ("// Consider sessionStorage —","localStorage persists indefinitely; prefer sessionStorage for sensitive session data."),
 }
-
-# ----------------------------
-# Regex-based hardcoded secret scanner
-# ----------------------------
 
 SECRET_PATTERNS = [
     (
@@ -145,15 +119,10 @@ def scan_secrets(code: str) -> list:
             })
     return findings
 
-# ----------------------------
-# Rule-based patch (now language-aware)
-# ----------------------------
-
 def rule_based_patch(code: str, language: str = "python"):
     explanations = []
     patched = code
 
-    # Apply common replacements (language-agnostic)
     for bad, (good, reason) in SECURE_REPLACEMENTS.items():
         if bad in patched:
             patched = patched.replace(bad, good)
@@ -162,7 +131,6 @@ def rule_based_patch(code: str, language: str = "python"):
                 "reason": reason
             })
 
-    # Apply language-specific replacements
     lang_rules = JS_SECURE_REPLACEMENTS if language == "javascript" else PYTHON_EXTRA_REPLACEMENTS
     for bad, (good, reason) in lang_rules.items():
         if bad in patched:
@@ -172,15 +140,10 @@ def rule_based_patch(code: str, language: str = "python"):
                 "reason": reason
             })
 
-    # Scan for hardcoded secrets (regex, non-destructive — adds warnings only)
     secret_findings = scan_secrets(code)
     explanations.extend(secret_findings)
 
     return patched, explanations
-
-# ----------------------------
-# Structure preservation
-# ----------------------------
 
 def preserve_structure(original: str, enhanced: str):
     final_code = enhanced
@@ -208,10 +171,6 @@ def preserve_structure(original: str, enhanced: str):
             )
 
     return final_code
-
-# ----------------------------
-# Diff creation
-# ----------------------------
 
 def create_diff(original: str, enhanced: str):
     diff_lines = difflib.unified_diff(
@@ -241,10 +200,6 @@ def create_diff(original: str, enhanced: str):
 
     return formatted
 
-# ----------------------------
-# Postprocess output
-# ----------------------------
-
 def postprocess_code(code: str):
     code = re.sub(r'^"""|"""$', '', code.strip())
     lines = code.splitlines()
@@ -252,10 +207,6 @@ def postprocess_code(code: str):
         l.replace("\t", "    ").rstrip()
         for l in lines
     )
-
-# ----------------------------
-# Candidate scoring (FIX: replaces "longest = best" heuristic)
-# ----------------------------
 
 def score_candidate(candidate_code: str, original_code: str) -> int:
     """
@@ -274,10 +225,6 @@ def score_candidate(candidate_code: str, original_code: str) -> int:
     fixed = sum(1 for p in all_bad if p in original_code and p not in candidate_code)
     new_issues = sum(1 for p in all_bad if p not in original_code and p in candidate_code)
     return fixed - new_issues
-
-# ----------------------------
-# Run one model
-# ----------------------------
 
 def run_model(model_name, code, language):
     tokenizer = tokenizers[model_name]
@@ -312,18 +259,13 @@ def run_model(model_name, code, language):
             max_new_tokens=256,
             temperature=0.3,
             top_p=0.95,
-            do_sample=False
+            do_sample=True
         )
 
     return tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-# ----------------------------
-# Main enhancer
-# ----------------------------
-
 def enhance_code(code: str, language: str):
 
-    # FIX: Guard against oversized inputs that OOM or silently truncate
     if len(code) > MAX_CODE_CHARS:
         return {
             "enhanced_code": code,
@@ -337,10 +279,8 @@ def enhance_code(code: str, language: str):
 
     with torch.no_grad():
         try:
-            # 1️⃣ Rule-based fixes (now language-aware)
             patched_code, rule_explanations = rule_based_patch(code, language)
 
-            # 2️⃣ Model ensemble
             candidates = []
 
             for m in MODEL_CONFIGS.keys():
@@ -360,12 +300,10 @@ def enhance_code(code: str, language: str):
                         "code": f"# [!] Failed: {str(e)}"
                     })
 
-            # 3️⃣ FIX: Choose best candidate by security score, not longest output
             valid_candidates = [c for c in candidates if "# [!] Failed" not in c["code"][:80]]
             if valid_candidates:
                 best = max(valid_candidates, key=lambda c: score_candidate(c["code"], code))
             else:
-                # Fallback: if all models failed, use rule-patched original
                 best = {"model": "rule-based", "code": patched_code}
 
             diff = create_diff(code, best["code"])

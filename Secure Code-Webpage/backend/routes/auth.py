@@ -8,7 +8,7 @@ import requests
 from dotenv import load_dotenv
 import secrets
 from datetime import datetime, timedelta
-from extensions import limiter  # FIX: shared limiter instance
+from extensions import limiter  
 
 load_dotenv()
 
@@ -88,7 +88,6 @@ def verify_email_with_api(email):
         print(f"Email validation API error: {str(e)}")
         return validate_email_format(email), None
 
-# FIX: Added rate limiting to prevent account enumeration / spam
 @auth_bp.route("/register", methods=["POST"])
 @limiter.limit("5/minute")
 def register():
@@ -141,7 +140,6 @@ def register():
         "message": "Registration successful!"
     }), 201
 
-# FIX: Added rate limiting to prevent brute-force password attacks
 @auth_bp.route("/login", methods=["POST"])
 @limiter.limit("10/minute")
 def login():
@@ -163,7 +161,6 @@ def login():
     token = create_access_token(identity=username)
     return jsonify({"token": token, "message": "Login successful"})
 
-# FIX: Added rate limiting
 @auth_bp.route("/validate-email", methods=["POST"])
 @limiter.limit("20/minute")
 def validate_email_endpoint():
@@ -301,8 +298,6 @@ def send_reset_email(email, reset_token, username):
         print(f"❌ Email sending error: {str(e)}")
         return False
 
-
-# FIX: Added rate limiting to prevent email bombing
 @auth_bp.route("/forgot-password", methods=["POST"])
 @limiter.limit("3/minute")
 def forgot_password():
@@ -334,7 +329,6 @@ def forgot_password():
         "message": "If an account exists with that email, a password reset link has been sent."
     }), 200
 
-# FIX: Added rate limiting; removed email from response to prevent info leak
 @auth_bp.route("/verify-reset-token", methods=["POST"])
 @limiter.limit("10/minute")
 def verify_reset_token():
@@ -355,10 +349,8 @@ def verify_reset_token():
     if datetime.utcnow() > token_doc["expires_at"]:
         return jsonify({"valid": False, "error": "Token has expired"}), 400
 
-    # FIX: Do not return the email — it was an information leak
     return jsonify({"valid": True}), 200
 
-# FIX: Added rate limiting
 @auth_bp.route("/reset-password", methods=["POST"])
 @limiter.limit("5/minute")
 def reset_password():

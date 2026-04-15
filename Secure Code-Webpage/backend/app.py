@@ -26,15 +26,12 @@ load_dotenv()
 app = Flask(__name__)
 Compress(app)
 
-# FIX: Restrict CORS to known frontend origins instead of allowing all
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 allowed_origins = list({FRONTEND_URL, "http://localhost:5173", "http://localhost:3000", "http://localhost:8080"})
 CORS(app, origins=allowed_origins)
 
-# FIX: Limit max upload size to 1 MB to prevent oversized payloads
 app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
 
-# Load environment variables
 env = os.getenv('FLASK_ENV', 'development')
 if env == 'development':
     load_dotenv('.env.development')
@@ -53,7 +50,7 @@ else:
         "CACHE_DEFAULT_TIMEOUT": 3600
     })
 
-cache.init_app(app)  # FIX: removed the duplicate cache.init_app(app) call that was here
+cache.init_app(app)  
 
 def files_hash(files):
     h = hashlib.sha256()
@@ -79,7 +76,6 @@ scan_history = db["scan_history"]
 
 app.register_blueprint(auth_bp, url_prefix="/api")
 
-# FIX: Import limiter from extensions and init with app (single shared instance)
 limiter.init_app(app)
 
 @app.route('/api/scan', methods=['POST'])
@@ -88,7 +84,6 @@ limiter.init_app(app)
 def scan_code():
     try:
         data = request.get_json()
-        app.logger.info(f"Incoming request: {data}")   
 
         try:
             req = ScanRequest(**data)
@@ -96,11 +91,13 @@ def scan_code():
             app.logger.error(f"Validation error: {e.errors()}")
             return jsonify({"error": e.errors()}), 400
 
-        files = [f.dict() for f in req.files]
+        files = [f.model_dump() for f in req.files]
         language = req.language.lower()
+        app.logger.info(f"Scan request: {len(files)} files, language={language}")
+
         username = get_jwt_identity()
 
-        key = f"scan:{username}:{files_hash(files)}"
+        key = f"scan:{username}:{language}:{files_hash(files)}"
         cached = cache.get(key)
         if cached:
             return jsonify({"result": cached, "cached": True})
@@ -121,13 +118,19 @@ def scan_code():
             app.logger.info(f"Running: {' '.join(scan_command)}")
             result = subprocess.run(scan_command, capture_output=True, text=True)
 
-            app.logger.info(f"stdout: {result.stdout[:500]}")
             app.logger.info(f"stderr: {result.stderr}")
 
             if result.returncode not in (0, 1, 2):
                 return jsonify({"error": result.stderr}), 500
+            
+            app.logger.info("Scan completed successfully")
 
             try:
+                if not result.stdout.strip():
+                    return jsonify({
+                        "error": "Scanner produced no output",
+                        "stderr": result.stderr
+                    }), 500
                 output_json = json.loads(result.stdout)
             except Exception as e:
                 return jsonify({"error": f"JSON parse failed: {str(e)}", "raw": result.stdout}), 500
@@ -255,7 +258,6 @@ def submit_review():
         return jsonify({"error": str(e)}), 500
 
 
-# FIX: Added @limiter.limit and history saving; captured username before generator
 @app.route("/api/enhance-stream", methods=["POST"])
 @limiter.limit("5/minute")
 @jwt_required()
@@ -263,14 +265,13 @@ def enhance_stream():
     data = request.get_json()
     code = data.get("code", "")
     language = data.get("language", "python")
-    username = get_jwt_identity()  # FIX: capture before generator runs
+    username = get_jwt_identity()  
 
     if not code.strip():
         return jsonify({"error": "No code"}), 400
 
     def generate():
         try:
-            # 1️⃣ starting
             yield json.dumps({
                 "type": "progress",
                 "progress": 5
@@ -278,16 +279,13 @@ def enhance_stream():
 
             time.sleep(0.5)
 
-            # 2️⃣ preprocessing
             yield json.dumps({
                 "type": "progress",
                 "progress": 20
             }) + "\n"
 
-            # 3️⃣ heavy AI call
             result = enhance_code(code, language)
 
-            # FIX: Save to history so it appears in dashboard
             try:
                 enhance_history.insert_one({
                     "username": username,
@@ -300,9 +298,8 @@ def enhance_stream():
                     "timestamp": datetime.utcnow().isoformat()
                 })
             except Exception:
-                pass  # Don't let a DB write failure kill the stream response
+                pass  
 
-            # 4️⃣ done
             yield json.dumps({
                 "type": "result",
                 "data": result

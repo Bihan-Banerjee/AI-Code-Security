@@ -5,7 +5,6 @@ import os
 
 reviews_bp = Blueprint("reviews", __name__)
 client = MongoClient(os.getenv("MONGO_URI"))
-# FIX: Use the same database as the rest of the application
 db = client["codewhisperer"]
 reviews_collection = db["reviews"]
 

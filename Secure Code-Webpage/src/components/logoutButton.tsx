@@ -7,7 +7,6 @@ const LogoutButton = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear authentication data
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("username");
     localStorage.removeItem("token");
