@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AxiosError } from "axios";
 import api from "@/lib/api";
 import { toast } from "react-hot-toast";
@@ -60,8 +60,8 @@ interface HistoryItem {
 }
 
 interface HistoryData {
-    enhance: HistoryItem[];
-    scan: HistoryItem[];
+  enhance: HistoryItem[];
+  scan: HistoryItem[];
 }
 
 const ITEMS_PER_PAGE = 5;
@@ -73,17 +73,19 @@ function getStoredToken(): string | null {
 function removeStoredToken() {
   localStorage.removeItem("token");
   sessionStorage.removeItem("token");
+  localStorage.removeItem("username");
+  sessionStorage.removeItem("username");
 }
 
 const fetchHistory = async (): Promise<HistoryData> => {
-    const token = getStoredToken();
-    if (!token) {
-        throw new Error("You must be logged in to view the dashboard.");
-    }
-    const { data } = await api.get("/api/history", {
-        headers: { Authorization: `Bearer ${token}` },
-    });
-    return data;
+  const token = getStoredToken();
+  if (!token) {
+    throw new Error("You must be logged in to view the dashboard.");
+  }
+  const { data } = await api.get("/api/history", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return data;
 };
 
 export default function Dashboard() {
@@ -96,24 +98,26 @@ export default function Dashboard() {
 
   const navigate = useNavigate();
 
-    const { data: history, isLoading, error } = useQuery<HistoryData, AxiosError>({
-        queryKey: ['history'],
-        queryFn: fetchHistory,
-    });
-
-    if (error) {
-        if (error.response?.status === 401) {
-            toast.error("Session expired. Please log in again.");
-            removeStoredToken();
-            navigate("/login");
-        } else {
-            toast.error(
-              typeof error.response?.data === "object" && error.response?.data !== null && "error" in error.response.data
-                ? (error.response.data as { error?: string }).error || "Failed to load history"
-                : "Failed to load history"
-            );
-        }
+  const { data: history, isLoading, error } = useQuery<HistoryData, AxiosError>({
+    queryKey: ["history"],
+    queryFn: fetchHistory,
+  });
+  useEffect(() => {
+    if (!error) return;
+    if (error.response?.status === 401) {
+      toast.error("Session expired. Please log in again.");
+      removeStoredToken();
+      navigate("/login");
+    } else {
+      toast.error(
+        typeof error.response?.data === "object" &&
+        error.response?.data !== null &&
+        "error" in error.response.data
+          ? (error.response.data as { error?: string }).error || "Failed to load history"
+          : "Failed to load history"
+      );
     }
+  }, [error, navigate]);
 
   const handleCopy = (code: string, id: string) => {
     navigator.clipboard.writeText(code || "");
@@ -132,10 +136,7 @@ export default function Dashboard() {
     setSelectedType(null);
   };
 
-  const paginate = (
-    data: HistoryItem[],
-    currentPage: number
-  ): HistoryItem[] => {
+  const paginate = (data: HistoryItem[], currentPage: number): HistoryItem[] => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     return data.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   };
@@ -196,9 +197,9 @@ export default function Dashboard() {
             <p className="text-gray-600 font-medium">Loading your dashboard...</p>
           </div>
         ) : error ? (
-            <div className="text-center text-red-500">
-                <p>{error.message}</p>
-            </div>
+          <div className="text-center text-red-500">
+            <p>{error.message}</p>
+          </div>
         ) : (
           <Tabs defaultValue="enhancer" className="w-full animate-slide-up">
             <TabsList className="grid w-full grid-cols-2 rounded-2xl p-1 bg-white shadow-lg border-2 border-blue-100">
@@ -280,14 +281,15 @@ export default function Dashboard() {
             </DialogTitle>
             <DialogDescription className="text-gray-600 font-medium">
               {selectedItem?.language?.toUpperCase() || "Unknown"} |{" "}
-              {selectedItem?.timestamp ? new Date(selectedItem.timestamp).toLocaleString() : "No time"}
+              {selectedItem?.timestamp
+                ? new Date(selectedItem.timestamp).toLocaleString()
+                : "No time"}
             </DialogDescription>
           </DialogHeader>
 
           {/* Enhancer Details */}
           {selectedType === "enhancer" && selectedItem && (
             <div className="grid gap-8">
-              {/* Original */}
               <CodeBlock
                 title="Original Code"
                 code={selectedItem.code ?? ""}
@@ -297,7 +299,6 @@ export default function Dashboard() {
                 copyId="original-expanded"
               />
 
-              {/* Primary Enhanced */}
               <CodeBlock
                 title="Enhanced Code (Primary)"
                 code={selectedItem.enhanced_code ?? ""}
@@ -329,26 +330,35 @@ export default function Dashboard() {
                 </div>
               )}
 
-              {Array.isArray(selectedItem.explanations) && selectedItem.explanations.length > 0 && (
-                <div className="space-y-2 bg-green-50 p-4 rounded-xl border-2 border-green-200">
-                  <h4 className="font-semibold text-lg flex items-center gap-2">
-                    <ShieldCheck className="w-5 h-5 text-green-600" />
-                    Security Explanations
-                  </h4>
-                  <ul className="list-disc list-inside text-sm text-gray-700 space-y-2">
-                    {selectedItem.explanations.map((exp, i) => (
-                      <li key={i}><strong>{exp.change}:</strong> {exp.reason}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              {Array.isArray(selectedItem.explanations) &&
+                selectedItem.explanations.length > 0 && (
+                  <div className="space-y-2 bg-green-50 p-4 rounded-xl border-2 border-green-200">
+                    <h4 className="font-semibold text-lg flex items-center gap-2">
+                      <ShieldCheck className="w-5 h-5 text-green-600" />
+                      Security Explanations
+                    </h4>
+                    <ul className="list-disc list-inside text-sm text-gray-700 space-y-2">
+                      {selectedItem.explanations.map((exp, i) => (
+                        <li key={i}>
+                          <strong>{exp.change}:</strong> {exp.reason}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
             </div>
           )}
 
           {/* Scanner Details */}
           {selectedType === "scanner" && selectedItem && (
             <div className="rounded-lg bg-white p-4 shadow-md border-2 border-purple-200">
-              <ScanResultsTable issues={Array.isArray(selectedItem.result?.results) ? selectedItem.result.results : []} />
+              <ScanResultsTable
+                issues={
+                  Array.isArray(selectedItem.result?.results)
+                    ? selectedItem.result.results
+                    : []
+                }
+              />
             </div>
           )}
         </DialogContent>
@@ -359,7 +369,17 @@ export default function Dashboard() {
   );
 }
 
-function StatsCard({ icon, title, value, gradient }: { icon: React.ReactNode; title: string; value: number; gradient: string }) {
+function StatsCard({
+  icon,
+  title,
+  value,
+  gradient,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  value: number;
+  gradient: string;
+}) {
   return (
     <Card className="group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-2 border-gray-200 bg-white">
       <CardContent className="p-6 flex items-center justify-between">
@@ -367,7 +387,9 @@ function StatsCard({ icon, title, value, gradient }: { icon: React.ReactNode; ti
           <p className="text-sm font-semibold text-gray-600">{title}</p>
           <p className="text-4xl font-bold text-gray-800">{value}</p>
         </div>
-        <div className={`p-4 rounded-xl bg-gradient-to-r ${gradient} text-white shadow-lg group-hover:scale-110 transition-transform`}>
+        <div
+          className={`p-4 rounded-xl bg-gradient-to-r ${gradient} text-white shadow-lg group-hover:scale-110 transition-transform`}
+        >
           {icon}
         </div>
       </CardContent>
@@ -375,7 +397,15 @@ function StatsCard({ icon, title, value, gradient }: { icon: React.ReactNode; ti
   );
 }
 
-function ListView({ data, type, onOpen }: { data: HistoryItem[]; type: "enhancer" | "scanner"; onOpen: (item: HistoryItem, type: "enhancer" | "scanner") => void }) {
+function ListView({
+  data,
+  type,
+  onOpen,
+}: {
+  data: HistoryItem[];
+  type: "enhancer" | "scanner";
+  onOpen: (item: HistoryItem, type: "enhancer" | "scanner") => void;
+}) {
   return (
     <div className="border-2 border-gray-200 rounded-xl divide-y bg-white shadow-lg overflow-hidden">
       {data.map((item, idx) => (
@@ -385,15 +415,28 @@ function ListView({ data, type, onOpen }: { data: HistoryItem[]; type: "enhancer
           onClick={() => onOpen(item, type)}
         >
           <div className="flex items-center gap-4">
-            <div className={`p-3 rounded-lg bg-gradient-to-r ${type === "enhancer" ? "from-blue-500 to-blue-600" : "from-purple-500 to-purple-600"} shadow-md`}>
-              {type === "enhancer" ? <Sparkles className="w-5 h-5 text-white" /> : <Activity className="w-5 h-5 text-white" />}
+            <div
+              className={`p-3 rounded-lg bg-gradient-to-r ${
+                type === "enhancer"
+                  ? "from-blue-500 to-blue-600"
+                  : "from-purple-500 to-purple-600"
+              } shadow-md`}
+            >
+              {type === "enhancer" ? (
+                <Sparkles className="w-5 h-5 text-white" />
+              ) : (
+                <Activity className="w-5 h-5 text-white" />
+              )}
             </div>
             <div>
               <p className="font-bold text-gray-800">
-                {item.language?.toUpperCase() || "Unknown"} {type === "enhancer" ? "Enhancement" : "Security Scan"}
+                {item.language?.toUpperCase() || "Unknown"}{" "}
+                {type === "enhancer" ? "Enhancement" : "Security Scan"}
               </p>
               <p className="text-sm text-gray-600 font-medium">
-                {item.timestamp ? new Date(item.timestamp).toLocaleString() : "Unknown time"}
+                {item.timestamp
+                  ? new Date(item.timestamp).toLocaleString()
+                  : "Unknown time"}
               </p>
             </div>
           </div>
@@ -436,8 +479,8 @@ function PaginationControls({
           key={p}
           size="sm"
           className={`rounded-full w-10 h-10 font-bold ${
-            p === currentPage 
-              ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg" 
+            p === currentPage
+              ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
               : "bg-white border-2 border-gray-200 text-gray-700 hover:border-blue-300"
           }`}
           onClick={() => setPage(p)}
@@ -458,13 +501,31 @@ function PaginationControls({
   );
 }
 
-function CodeBlock({ title, code, variant, onCopy, copySuccess, copyId }: { title: string; code: string; variant: "original" | "enhanced"; onCopy: (code: string, id: string) => void; copySuccess: string | null; copyId: string }) {
+function CodeBlock({
+  title,
+  code,
+  variant,
+  onCopy,
+  copySuccess,
+  copyId,
+}: {
+  title: string;
+  code: string;
+  variant: "original" | "enhanced";
+  onCopy: (code: string, id: string) => void;
+  copySuccess: string | null;
+  copyId: string;
+}) {
   const isEnhanced = variant === "enhanced";
   return (
     <div className="space-y-3">
       <div className="flex justify-between items-center">
         <h4 className="font-bold text-lg flex items-center gap-2">
-          {isEnhanced ? <Sparkles className="w-5 h-5 text-green-600" /> : <Code2 className="w-5 h-5 text-gray-600" />}
+          {isEnhanced ? (
+            <Sparkles className="w-5 h-5 text-green-600" />
+          ) : (
+            <Code2 className="w-5 h-5 text-gray-600" />
+          )}
           {title}
         </h4>
         <Button
@@ -473,11 +534,21 @@ function CodeBlock({ title, code, variant, onCopy, copySuccess, copyId }: { titl
           onClick={() => onCopy(code, copyId)}
           className="border-2 border-gray-300 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-200 font-semibold"
         >
-          {copySuccess === copyId ? <CheckCircle2 className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+          {copySuccess === copyId ? (
+            <CheckCircle2 className="w-4 h-4 text-green-600" />
+          ) : (
+            <Copy className="w-4 h-4" />
+          )}
           {copySuccess === copyId ? " Copied" : " Copy"}
         </Button>
       </div>
-      <div className={`rounded-xl overflow-hidden border-2 ${isEnhanced ? "border-green-200 bg-green-50" : "border-gray-200 bg-gray-50"}`}>
+      <div
+        className={`rounded-xl overflow-hidden border-2 ${
+          isEnhanced
+            ? "border-green-200 bg-green-50"
+            : "border-gray-200 bg-gray-50"
+        }`}
+      >
         <div className="overflow-y-auto max-h-96 p-6">
           <pre className="text-sm font-mono leading-relaxed whitespace-pre text-gray-800">
             {code || "// No code available"}
@@ -488,11 +559,23 @@ function CodeBlock({ title, code, variant, onCopy, copySuccess, copyId }: { titl
   );
 }
 
-function EmptyState({ icon, title, description, gradient }: { icon: React.ReactNode; title: string; description: string; gradient: string }) {
+function EmptyState({
+  icon,
+  title,
+  description,
+  gradient,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  gradient: string;
+}) {
   return (
     <Card className="border-2 border-gray-200 shadow-xl bg-white">
       <CardContent className="flex flex-col items-center justify-center py-16 text-center space-y-6">
-        <div className={`p-6 rounded-2xl bg-gradient-to-r ${gradient} text-white shadow-lg animate-pulse`}>
+        <div
+          className={`p-6 rounded-2xl bg-gradient-to-r ${gradient} text-white shadow-lg animate-pulse`}
+        >
           {icon}
         </div>
         <div className="space-y-2">
@@ -506,8 +589,12 @@ function EmptyState({ icon, title, description, gradient }: { icon: React.ReactN
 
 function ActivityFeed({ history }: { history: HistoryData | undefined }) {
   const allHistory = [...(history?.enhance || []), ...(history?.scan || [])]
-    .sort((a, b) => (new Date(b.timestamp || "").getTime() - new Date(a.timestamp || "").getTime()))
-    .slice(0, 3); // Limited to 3 items
+    .sort(
+      (a, b) =>
+        new Date(b.timestamp || "").getTime() -
+        new Date(a.timestamp || "").getTime()
+    )
+    .slice(0, 3);
 
   return (
     <Card className="group shadow-lg border-2 border-blue-200 bg-white hover:shadow-2xl hover:-translate-y-1 hover:border-blue-400 transition-all duration-300">
@@ -522,13 +609,31 @@ function ActivityFeed({ history }: { history: HistoryData | undefined }) {
           <p className="text-gray-600 text-sm py-2">No activity yet</p>
         ) : (
           allHistory.map((item, idx) => (
-            <div key={idx} className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-blue-50 transition-all duration-200 hover:scale-105 cursor-pointer">
-              <div className={`p-2 rounded-lg bg-gradient-to-r ${item.enhanced_code ? "from-blue-500 to-blue-600" : "from-purple-500 to-purple-600"} text-white shadow-md`}>
-                {item.enhanced_code ? <Sparkles className="w-4 h-4" /> : <Activity className="w-4 h-4" />}
+            <div
+              key={idx}
+              className="flex items-center gap-3 text-sm p-2 rounded-lg hover:bg-blue-50 transition-all duration-200 hover:scale-105 cursor-pointer"
+            >
+              <div
+                className={`p-2 rounded-lg bg-gradient-to-r ${
+                  item.enhanced_code
+                    ? "from-blue-500 to-blue-600"
+                    : "from-purple-500 to-purple-600"
+                } text-white shadow-md`}
+              >
+                {item.enhanced_code ? (
+                  <Sparkles className="w-4 h-4" />
+                ) : (
+                  <Activity className="w-4 h-4" />
+                )}
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-gray-800">{item.language?.toUpperCase() || "Unknown"} {item.enhanced_code ? "Enhancement" : "Scan"}</p>
-                <p className="text-xs text-gray-600">{new Date(item.timestamp || "").toLocaleString()}</p>
+                <p className="font-semibold text-gray-800">
+                  {item.language?.toUpperCase() || "Unknown"}{" "}
+                  {item.enhanced_code ? "Enhancement" : "Scan"}
+                </p>
+                <p className="text-xs text-gray-600">
+                  {new Date(item.timestamp || "").toLocaleString()}
+                </p>
               </div>
             </div>
           ))
@@ -587,7 +692,8 @@ function QuickActions({ navigate }: { navigate: (path: string) => void }) {
           onClick={() => navigate("/analytics")}
           className="group w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold shadow-md hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
         >
-          <ChartColumn className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" /> Analyze Vulnerabilities
+          <ChartColumn className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />{" "}
+          Analyze Vulnerabilities
         </Button>
       </CardContent>
     </Card>

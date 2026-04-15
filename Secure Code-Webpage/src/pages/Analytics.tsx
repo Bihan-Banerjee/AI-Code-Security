@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import api from "@/lib/api";
@@ -18,6 +18,7 @@ import Footer from "@/components/Footer";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 interface HistoryItem {
   language?: string;
@@ -46,12 +47,13 @@ const fetchHistory = async (): Promise<HistoryItem[]> => {
   const { data } = await api.get<HistoryData>("/api/history", {
     headers: { Authorization: `Bearer ${token}` },
   });
-  return data.scan || [];
+  return Array.isArray(data.scan) ? data.scan : [];
 };
 
 export default function Analytics() {
   const navigate = useNavigate();
-  const { data: history = [], error } = useQuery<HistoryItem[], AxiosError>({
+
+  const { data: history = [], error, isLoading } = useQuery<HistoryItem[], AxiosError>({
     queryKey: ["scan-history"],
     queryFn: fetchHistory,
   });
@@ -61,22 +63,29 @@ export default function Analytics() {
     "Line" | "Bar" | "Pie" | "Area" | "Radar" | "Scatter" | "Composed"
   >("Bar");
 
-  if (error) {
-    if (error.response?.status === 401) {
-      toast.error("Session expired. Please log in again.");
-      navigate("/login");
-    } else {
-      toast.error(error.message || "Failed to fetch history");
+  // ✅ FIX: move error handling out of render
+  useEffect(() => {
+    if (error) {
+      if (error.response?.status === 401) {
+        toast.error("Session expired. Please log in again.");
+        navigate("/login");
+      } else {
+        toast.error(error.message || "Failed to fetch history");
+      }
     }
-  }
+  }, [error, navigate]);
 
   const chartData = useMemo(() => {
+    if (!Array.isArray(history)) return [];
+
     const cweCounts: Record<string, number> = {};
     const severityCounts: Record<string, number> = {};
     const timelineCounts: Record<string, number> = {};
 
     for (const item of history) {
-      const results = item.result?.results || [];
+      const results = Array.isArray(item?.result?.results)
+        ? item.result!.results!
+        : [];
 
       if (groupBy === "CWE") {
         results.forEach((r) => {
@@ -93,7 +102,11 @@ export default function Analytics() {
       }
 
       if (groupBy === "Timeline") {
-        const date = item.timestamp ? new Date(item.timestamp).toISOString().split("T")[0] : "Unknown";
+        const date =
+          item.timestamp && !isNaN(Date.parse(item.timestamp))
+            ? new Date(item.timestamp).toISOString().split("T")[0]
+            : "Unknown";
+
         timelineCounts[date] = (timelineCounts[date] || 0) + results.length;
       }
     }
@@ -105,7 +118,9 @@ export default function Analytics() {
       return Object.entries(severityCounts).map(([k, v]) => ({ name: k, value: v }));
 
     if (groupBy === "Timeline")
-      return Object.entries(timelineCounts).map(([date, v]) => ({ name: date, value: v }));
+      return Object.entries(timelineCounts)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([date, v]) => ({ name: date, value: v }));
 
     return [];
   }, [history, groupBy]);
@@ -130,6 +145,7 @@ export default function Analytics() {
               </LineChart>
             </ResponsiveContainer>
           );
+
         case "Bar":
           return (
             <ResponsiveContainer width="100%" height={400}>
@@ -143,6 +159,7 @@ export default function Analytics() {
               </BarChart>
             </ResponsiveContainer>
           );
+
         case "Pie":
           return (
             <ResponsiveContainer width="100%" height={400}>
@@ -157,6 +174,7 @@ export default function Analytics() {
               </PieChart>
             </ResponsiveContainer>
           );
+
         case "Area":
           return (
             <ResponsiveContainer width="100%" height={400}>
@@ -175,6 +193,7 @@ export default function Analytics() {
               </AreaChart>
             </ResponsiveContainer>
           );
+
         case "Radar":
           return (
             <ResponsiveContainer width="100%" height={400}>
@@ -187,6 +206,7 @@ export default function Analytics() {
               </RadarChart>
             </ResponsiveContainer>
           );
+
         case "Scatter":
           return (
             <ResponsiveContainer width="100%" height={400}>
@@ -199,6 +219,7 @@ export default function Analytics() {
               </ScatterChart>
             </ResponsiveContainer>
           );
+
         case "Composed":
           return (
             <ResponsiveContainer width="100%" height={400}>
@@ -213,6 +234,7 @@ export default function Analytics() {
               </ComposedChart>
             </ResponsiveContainer>
           );
+
         default:
           return null;
       }
@@ -242,6 +264,7 @@ export default function Analytics() {
               <option value="Timeline">Timeline</option>
             </select>
           </div>
+
           <div>
             <label className="block text-sm font-medium mb-1">Chart Type</label>
             <select
@@ -264,7 +287,18 @@ export default function Analytics() {
           <CardHeader>
             <CardTitle>{groupBy} Analysis ({chartType} Chart)</CardTitle>
           </CardHeader>
-          <CardContent>{renderChart()}</CardContent>
+          <CardContent>
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center py-16 space-y-3">
+                <div className="p-4 rounded-full bg-blue-100 animate-pulse">
+                  <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                </div>
+                <p className="text-gray-500 font-medium">Loading analytics...</p>
+              </div>
+            ) : (
+              renderChart()
+            )}
+          </CardContent>
         </Card>
       </div>
       <Footer />

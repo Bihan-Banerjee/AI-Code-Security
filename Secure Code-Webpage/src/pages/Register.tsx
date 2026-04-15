@@ -8,7 +8,6 @@ import { toast } from "react-hot-toast";
 import SecurityHeader from "@/components/SecurityHeader";
 import { Eye, EyeOff, CheckCircle2, XCircle, Loader2, Mail, User, Lock } from "lucide-react";
 
-// Disposable email domains (client-side check for instant feedback)
 const DISPOSABLE_DOMAINS = [
   '10minutemail.com', 'tempmail.com', 'guerrillamail.com', 'mailinator.com',
   'throwaway.email', 'temp-mail.org', 'getnada.com', 'maildrop.cc',
@@ -22,28 +21,24 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isValidatingEmail, setIsValidatingEmail] = useState(false);
-  
-  // Validation states
+
   const [emailValid, setEmailValid] = useState<boolean | null>(null);
   const [emailError, setEmailError] = useState("");
   const [usernameValid, setUsernameValid] = useState<boolean | null>(null);
   const [passwordStrength, setPasswordStrength] = useState<'weak' | 'medium' | 'strong' | null>(null);
-  
+
   const navigate = useNavigate();
 
-  // Email format validation
   const validateEmailFormat = (email: string): boolean => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   };
 
-  // Check if email is disposable
   const isDisposableEmail = (email: string): boolean => {
     const domain = email.split('@')[1]?.toLowerCase();
     return DISPOSABLE_DOMAINS.includes(domain);
   };
 
-  // Real-time email validation with debounce
   useEffect(() => {
     if (!email) {
       setEmailValid(null);
@@ -51,21 +46,18 @@ export default function Register() {
       return;
     }
 
-    // Basic format check (instant)
     if (!validateEmailFormat(email)) {
       setEmailValid(false);
       setEmailError("Invalid email format");
       return;
     }
 
-    // Disposable check (instant)
     if (isDisposableEmail(email)) {
       setEmailValid(false);
       setEmailError("Disposable emails are not allowed");
       return;
     }
 
-    // Debounce API call
     const timeoutId = setTimeout(async () => {
       setIsValidatingEmail(true);
       try {
@@ -78,7 +70,6 @@ export default function Register() {
           setEmailError(response.data.error || "Email validation failed");
         }
       } catch (err: any) {
-        // If validation endpoint doesn't exist, just do format check
         if (err.response?.status === 404) {
           setEmailValid(true);
           setEmailError("");
@@ -89,12 +80,11 @@ export default function Register() {
       } finally {
         setIsValidatingEmail(false);
       }
-    }, 800); // 800ms debounce
+    }, 800);
 
     return () => clearTimeout(timeoutId);
   }, [email]);
 
-  // Username validation
   useEffect(() => {
     if (!username) {
       setUsernameValid(null);
@@ -112,7 +102,6 @@ export default function Register() {
     }
   }, [username]);
 
-  // Password strength check
   useEffect(() => {
     if (!password) {
       setPasswordStrength(null);
@@ -134,7 +123,6 @@ export default function Register() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation
     if (!username || !email || !password) {
       toast.error("Please fill in all fields");
       return;
@@ -191,10 +179,9 @@ export default function Register() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
       <SecurityHeader />
-      
+
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
-          {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
               <User className="w-8 h-8 text-blue-600" />
@@ -207,11 +194,9 @@ export default function Register() {
             </p>
           </div>
 
-          {/* Registration Form */}
           <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6">
             <form onSubmit={handleRegister} className="space-y-5">
-              
-              {/* Username Field */}
+
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                   <User className="w-4 h-4" />
@@ -249,7 +234,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* Email Field */}
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                   <Mail className="w-4 h-4" />
@@ -294,7 +278,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* Password Field */}
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                   <Lock className="w-4 h-4" />
@@ -321,8 +304,7 @@ export default function Register() {
                     )}
                   </button>
                 </div>
-                
-                {/* Password Strength Indicator */}
+
                 {password && (
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
@@ -360,7 +342,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* Submit Button */}
               <Button
                 type="submit"
                 disabled={isLoading || emailValid === false || usernameValid === false}
@@ -377,7 +358,6 @@ export default function Register() {
               </Button>
             </form>
 
-            {/* Login Link */}
             <div className="text-center pt-4 border-t">
               <p className="text-sm text-gray-600">
                 Already have an account?{" "}
@@ -390,14 +370,14 @@ export default function Register() {
               </p>
             </div>
 
-            {/* Terms */}
+            {/* FIX: Corrected route paths from /terms → /terms-and-conditions and /privacy → /privacy-policy */}
             <p className="text-xs text-gray-500 text-center">
               By creating an account, you agree to our{" "}
-              <Link to="/terms" className="text-blue-600 hover:underline">
+              <Link to="/terms-and-conditions" className="text-blue-600 hover:underline">
                 Terms of Service
               </Link>{" "}
               and{" "}
-              <Link to="/privacy" className="text-blue-600 hover:underline">
+              <Link to="/privacy-policy" className="text-blue-600 hover:underline">
                 Privacy Policy
               </Link>
             </p>

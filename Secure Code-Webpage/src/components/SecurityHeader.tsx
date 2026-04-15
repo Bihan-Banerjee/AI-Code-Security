@@ -8,10 +8,14 @@ const SecurityHeader = () => {
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("username");
-    if (storedUser) {
+    const readUsername = () => {
+      const storedUser = sessionStorage.getItem("username") || localStorage.getItem("username");
       setUsername(storedUser);
-    }
+    };
+
+    readUsername();
+    window.addEventListener("storage", readUsername);
+    return () => window.removeEventListener("storage", readUsername);
   }, []);
 
   return (
@@ -20,9 +24,9 @@ const SecurityHeader = () => {
         <div className="flex items-center justify-between">
           {/* Logo with PNG */}
           <Link to="/" className="flex items-center gap-0 group">
-            <img 
-              src="/icon.png" 
-              alt="FortiScan Logo" 
+            <img
+              src="/icon.png"
+              alt="FortiScan Logo"
               className="w-15 h-12 group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
             />
             <div>
@@ -34,36 +38,36 @@ const SecurityHeader = () => {
 
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center space-x-1 ml-8">
-            <Link 
-              to="/scanner" 
+            <Link
+              to="/scanner"
               className="relative text-sm font-semibold text-gray-700 transition-colors group px-4 py-2"
             >
               <span className="relative z-10 group-hover:text-white transition-colors">Scanner</span>
               <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </Link>
-            <Link 
-              to="/enhancer" 
+            <Link
+              to="/enhancer"
               className="relative text-sm font-semibold text-gray-700 transition-colors group px-4 py-2"
             >
               <span className="relative z-10 group-hover:text-white transition-colors">AI Enhancer</span>
               <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </Link>
-            <Link 
-              to="/dashboard" 
+            <Link
+              to="/dashboard"
               className="relative text-sm font-semibold text-gray-700 transition-colors group px-4 py-2"
             >
               <span className="relative z-10 group-hover:text-white transition-colors">Dashboard</span>
               <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </Link>
-            <Link 
-              to="/about" 
+            <Link
+              to="/about"
               className="relative text-sm font-semibold text-gray-700 transition-colors group px-4 py-2"
             >
               <span className="relative z-10 group-hover:text-white transition-colors">About Us</span>
               <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </Link>
-            <Link 
-              to="/reviews" 
+            <Link
+              to="/reviews"
               className="relative text-sm font-semibold text-gray-700 transition-colors group px-4 py-2"
             >
               <span className="relative z-10 group-hover:text-white transition-colors">Reviews</span>
@@ -88,8 +92,8 @@ const SecurityHeader = () => {
             ) : (
               <>
                 <Link to="/login">
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className="font-semibold hover:bg-blue-50 hover:text-blue-600 transition-colors"
                   >
                     Sign In

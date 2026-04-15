@@ -5,7 +5,7 @@ import os
 
 reviews_bp = Blueprint("reviews", __name__)
 client = MongoClient(os.getenv("MONGO_URI"))
-db = client["securecode_ai"]
+db = client["codewhisperer"]
 reviews_collection = db["reviews"]
 
 @reviews_bp.route("/api/reviews", methods=["POST"])

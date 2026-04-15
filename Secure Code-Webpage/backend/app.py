@@ -9,13 +9,12 @@ import os
 import subprocess
 import json
 import time
+import sys
 from pymongo import MongoClient
 from routes.reviews import reviews_bp
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+from extensions import limiter
 from datetime import datetime
 from datetime import timedelta
-from bson import ObjectId
 from models.reviews import reviews_collection
 from schemas import ScanRequest
 from pydantic import ValidationError
@@ -26,9 +25,13 @@ load_dotenv()
 
 app = Flask(__name__)
 Compress(app)
-CORS(app)
 
-# Load environment variables
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+allowed_origins = list({FRONTEND_URL, "http://localhost:5173", "http://localhost:3000", "http://localhost:8080"})
+CORS(app, origins=allowed_origins)
+
+app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
+
 env = os.getenv('FLASK_ENV', 'development')
 if env == 'development':
     load_dotenv('.env.development')
@@ -47,9 +50,7 @@ else:
         "CACHE_DEFAULT_TIMEOUT": 3600
     })
 
-cache.init_app(app)
-
-cache.init_app(app)
+cache.init_app(app)  
 
 def files_hash(files):
     h = hashlib.sha256()
@@ -75,10 +76,6 @@ scan_history = db["scan_history"]
 
 app.register_blueprint(auth_bp, url_prefix="/api")
 
-limiter = Limiter(
-    key_func=get_remote_address,
-    default_limits=["20 per minute"]
-)
 limiter.init_app(app)
 
 @app.route('/api/scan', methods=['POST'])
@@ -87,7 +84,6 @@ limiter.init_app(app)
 def scan_code():
     try:
         data = request.get_json()
-        app.logger.info(f"Incoming request: {data}")   
 
         try:
             req = ScanRequest(**data)
@@ -95,11 +91,13 @@ def scan_code():
             app.logger.error(f"Validation error: {e.errors()}")
             return jsonify({"error": e.errors()}), 400
 
-        files = [f.dict() for f in req.files]
+        files = [f.model_dump() for f in req.files]
         language = req.language.lower()
+        app.logger.info(f"Scan request: {len(files)} files, language={language}")
+
         username = get_jwt_identity()
 
-        key = f"scan:{username}:{files_hash(files)}"
+        key = f"scan:{username}:{language}:{files_hash(files)}"
         cached = cache.get(key)
         if cached:
             return jsonify({"result": cached, "cached": True})
@@ -111,22 +109,28 @@ def scan_code():
                     code_file.write(f["content"])
 
             if language == "python":
-                scan_command = ["python", "-m", "bandit", "-r", temp_dir, "-f", "json"]
+                scan_command = [sys.executable, "-m", "bandit", "-r", temp_dir, "-f", "json"]
             elif language == "javascript":
-                scan_command = ["python", "-m", "semgrep", "--config=p/javascript", "--json", temp_dir]
+                scan_command = [sys.executable, "-m", "semgrep", "--config=p/javascript", "--json", temp_dir]
             else:
                 return jsonify({"error": "Unsupported language"}), 400
 
             app.logger.info(f"Running: {' '.join(scan_command)}")
             result = subprocess.run(scan_command, capture_output=True, text=True)
 
-            app.logger.info(f"stdout: {result.stdout[:500]}")
             app.logger.info(f"stderr: {result.stderr}")
 
             if result.returncode not in (0, 1, 2):
                 return jsonify({"error": result.stderr}), 500
+            
+            app.logger.info("Scan completed successfully")
 
             try:
+                if not result.stdout.strip():
+                    return jsonify({
+                        "error": "Scanner produced no output",
+                        "stderr": result.stderr
+                    }), 500
                 output_json = json.loads(result.stdout)
             except Exception as e:
                 return jsonify({"error": f"JSON parse failed: {str(e)}", "raw": result.stdout}), 500
@@ -145,7 +149,6 @@ def scan_code():
     except Exception as e:
         app.logger.error(f"Unexpected error: {str(e)}")
         return jsonify({"error": str(e)}), 500
-
 
 
 @app.route("/api/health")
@@ -168,10 +171,8 @@ def enhance():
         if not code.strip():
             return jsonify({"error": "No code provided"}), 400
 
-        # 🔹 New format (returns dict)
         result = enhance_code(code, language)
 
-        # Save to history (with candidates + explanations)
         enhance_history.insert_one({
             "username": username,
             "code": code,
@@ -195,11 +196,9 @@ def history():
     try:
         username = get_jwt_identity()
 
-        # Fetch both histories
         enhance_records = list(enhance_history.find({"username": username}).sort("timestamp", -1))
         scan_records = list(scan_history.find({"username": username}).sort("timestamp", -1))
 
-        # Convert ObjectId to string & return only relevant fields
         def clean(record, record_type):
             return {
                 "id": str(record.get("_id")),
@@ -207,8 +206,8 @@ def history():
                 "code": record.get("code"),
                 "enhanced_code": record.get("enhanced_code"),
                 "diff": record.get("diff"),
-                "candidates": record.get("candidates", []),   # ✅ added
-                "explanations": record.get("explanations", []), # ✅ added
+                "candidates": record.get("candidates", []),
+                "explanations": record.get("explanations", []),
                 "result": record.get("result") if record_type == "scan" else None,
                 "timestamp": record.get("timestamp"),
             }
@@ -257,21 +256,22 @@ def submit_review():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
 
 @app.route("/api/enhance-stream", methods=["POST"])
+@limiter.limit("5/minute")
 @jwt_required()
 def enhance_stream():
     data = request.get_json()
     code = data.get("code", "")
     language = data.get("language", "python")
+    username = get_jwt_identity()  
 
     if not code.strip():
         return jsonify({"error": "No code"}), 400
 
     def generate():
         try:
-            # 1️⃣ starting
             yield json.dumps({
                 "type": "progress",
                 "progress": 5
@@ -279,16 +279,27 @@ def enhance_stream():
 
             time.sleep(0.5)
 
-            # 2️⃣ preprocessing
             yield json.dumps({
                 "type": "progress",
                 "progress": 20
             }) + "\n"
 
-            # 3️⃣ heavy AI call
             result = enhance_code(code, language)
 
-            # 4️⃣ done
+            try:
+                enhance_history.insert_one({
+                    "username": username,
+                    "code": code,
+                    "language": language,
+                    "enhanced_code": result.get("enhanced_code", ""),
+                    "diff": result.get("diff", []),
+                    "candidates": result.get("candidates", []),
+                    "explanations": result.get("explanations", []),
+                    "timestamp": datetime.utcnow().isoformat()
+                })
+            except Exception:
+                pass  
+
             yield json.dumps({
                 "type": "result",
                 "data": result
@@ -304,7 +315,6 @@ def enhance_stream():
         stream_with_context(generate()),
         mimetype="text/plain"
     )
-
 
 
 if __name__ == '__main__':

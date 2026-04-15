@@ -76,7 +76,8 @@ temp/
 *.tmp
 
 tmp*/
-
+venv311/
+venv/
 # TypeScript
 *.tsbuildinfo
 **/*.d.ts
