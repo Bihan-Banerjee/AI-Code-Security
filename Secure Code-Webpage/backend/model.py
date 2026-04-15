@@ -36,10 +36,15 @@ def load_models():
         model.to(DEVICE)
         model.eval()
         models[name] = model
-        print("✅ All models loaded")
+
+    print("✅ All models loaded")
 
 print("🔹 Loading models...")
-if __name__ != "__main__" or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+_werkzeug_parent = (
+    os.environ.get("WERKZEUG_RUN_MAIN") is None
+    and os.environ.get("FLASK_DEBUG", "0") in ("1", "true", "True")
+)
+if not _werkzeug_parent:
     load_models()
 
 SECURE_REPLACEMENTS = {
@@ -70,10 +75,8 @@ SECURE_REPLACEMENTS = {
 }
 
 PYTHON_EXTRA_REPLACEMENTS = {
-    # SQL injection helpers
     "% username":           ("# Use parameterised query","String-formatted SQL allows injection; use parameterised queries with ? placeholders."),
     "format(username":      ("# Use parameterised query","String-formatted SQL allows injection; use parameterised queries."),
-    # Insecure HTTP
     "http://":              ("https://",              "Unencrypted HTTP transmits data in plaintext; upgrade to HTTPS."),
 }
 

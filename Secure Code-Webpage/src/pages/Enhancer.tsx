@@ -29,7 +29,7 @@ import {
 type DiffLine = { type: "add" | "remove" | "context"; content: string };
 
 interface EnhanceResult {
-  enhanced: string;
+  enhanced_code: string;
   diff: DiffLine[];
   candidates: Candidate[];
   explanations: Explanation[];
@@ -45,7 +45,6 @@ interface Explanation {
   reason: string;
 }
 
-// FIX: Shared token helper — checks both sessionStorage and localStorage
 function getStoredToken(): string | null {
   return sessionStorage.getItem("token") || localStorage.getItem("token") || null;
 }
@@ -58,6 +57,7 @@ export default function Enhancer() {
   const [loading, setLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
+  const [progress, setProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = async (uploadedFiles: FileList | null) => {
@@ -123,8 +123,6 @@ export default function Enhancer() {
     fileInputRef.current?.click();
   };
 
-  const [progress, setProgress] = useState(0);
-
   const handleEnhance = async () => {
     if (!code.trim()) {
       toast.error("Please provide some code to enhance!");
@@ -136,7 +134,6 @@ export default function Enhancer() {
       setResult(null);
       setProgress(0);
 
-      // FIX: Use shared helper that checks both sessionStorage and localStorage
       const token = getStoredToken();
       if (!token) {
         toast.error("You must be logged in!");
@@ -162,7 +159,6 @@ export default function Enhancer() {
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
-
       let buffer = "";
 
       while (true) {
@@ -206,12 +202,12 @@ export default function Enhancer() {
     toast.success("Copied to clipboard!");
   };
 
-  const downloadCode = (code: string, filename: string) => {
-    const blob = new Blob([code], { type: "text/plain" });
+  const downloadCode = (codeText: string, fname: string) => {
+    const blob = new Blob([codeText], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = filename;
+    a.download = fname;
     a.click();
     URL.revokeObjectURL(url);
     toast.success("File downloaded!");
@@ -404,7 +400,6 @@ export default function Enhancer() {
                     )}
                   </Button>
 
-                  {/* FIX: Progress bar moved outside overflow-hidden; pulses while AI is inferring */}
                   {loading && (
                     <div className="mt-2">
                       <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
@@ -544,7 +539,7 @@ export default function Enhancer() {
                     </CardHeader>
                     <CardContent className="pt-6">
                       <div className="font-mono text-xs border rounded-lg overflow-hidden bg-gray-50">
-                        {result.diff.map((line, i) => (
+                        {(result.diff ?? []).map((line, i) => (
                           <div
                             key={i}
                             className={`px-4 py-1 ${
