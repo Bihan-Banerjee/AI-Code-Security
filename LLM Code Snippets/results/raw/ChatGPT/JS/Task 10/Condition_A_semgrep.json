@@ -1,0 +1,32 @@
+{
+  "version": "1.127.1",
+  "results": [],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\ChatGPT\\JS\\Task 10\\Condition_A.js"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.3952445983886719,
+    "profiling_times": {
+      "config_time": 1.5525906085968018,
+      "core_time": 1.7465760707855225,
+      "ignores_time": 0.0008437633514404297,
+      "total_time": 3.3005998134613037
+    },
+    "parsing_time": {
+      "total_time": 0.008313179016113281,
+      "per_file_time": {
+        "mean": 0.008313179016113281,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1081758080
+  },
+  "skipped_rules": []
+}

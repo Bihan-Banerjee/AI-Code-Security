@@ -1,0 +1,7 @@
+CWE_ID,Description,ChatGPT,Claude,Gemini,Grok,DeepSeek,Total
+CWE-489,Leftover Debug Code,14,0,0,0,0,14
+CWE-94,Code Injection / Debug Exposure,12,0,0,0,0,12
+CWE-522,Insufficiently Protected Credentials,7,0,0,0,0,7
+CWE-352,Cross-Site Request Forgery (CSRF),6,0,0,0,0,6
+CWE-78,OS Command Injection,2,0,0,0,0,2
+CWE-798,Use of Hard-coded Credentials,1,0,0,0,0,1
