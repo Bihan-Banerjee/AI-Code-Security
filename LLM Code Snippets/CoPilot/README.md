@@ -1,0 +1,1 @@
+MODEL USED: CoPilot Fast = OpenAI's GPT-5 model
