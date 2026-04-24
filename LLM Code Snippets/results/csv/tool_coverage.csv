@@ -1,5 +1,5 @@
 Tool,Security,Quality,Total,Coverage_pct,FalseAlarm_pct
-Semgrep,126,0,190,21.72,0.00
-Bandit,46,0,54,7.93,0.00
-SonarQube,415,18427,25014,71.55,73.67
-FortiScan,580,0,—,100.00,0.00
+Semgrep,126,0,190,19.63,0.00
+Bandit,46,0,54,7.17,0.00
+SonarQube,480,18427,25014,74.77,73.67
+FortiScan,642,0,—,100.00,0.00

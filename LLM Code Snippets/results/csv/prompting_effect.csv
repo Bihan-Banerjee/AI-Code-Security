@@ -1,6 +1,6 @@
 LLM,Standard_VPS,Secure_VPS,Reduction_pct
 ChatGPT,2.7000,0.0000,100.00
 Claude,3.4500,2.6000,24.64
-Gemini,4.3000,0.0000,100.00
+Gemini,6.2000,0.0000,100.00
 Grok,0.0000,0.0000,0.00
-DeepSeek,4.4500,3.8000,14.61
+DeepSeek,5.0000,4.4500,11.00
