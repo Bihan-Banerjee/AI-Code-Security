@@ -138,6 +138,8 @@ CWE_DESCRIPTIONS = {
     "CWE-639":  "Authorization Bypass Through User-Controlled Key (IDOR)",
     "CWE-643":  "XPath Injection",
     "CWE-644":  "Improper Neutralization of HTTP Headers",
+    "CWE-668":  "Exposure of Resource to Wrong Sphere",
+    "CWE-673":  "External Influence of Sphere Definition",
     "CWE-693":  "Protection Mechanism Failure (Missing Security Headers)",
     "CWE-732":  "Incorrect Permission Assignment for Critical Resource",
     "CWE-776":  "Improper Restriction of Recursive Entity References (XML Bomb)",
@@ -608,6 +610,7 @@ SONAR_TO_CWE = {
     "python:S2245": "CWE-330",   # Pseudorandom number generator
     "python:S4423": "CWE-326",   # Weak TLS configuration
     "python:S3329": "CWE-329",   # Static / no IV for AES
+    "python:S6779": "CWE-798",   # Hard-coded flask secret key
 
     # Authentication / session / cookies
     "python:S6329": "CWE-306",   # Auth without password
@@ -617,6 +620,8 @@ SONAR_TO_CWE = {
     "python:S2092": "CWE-614",   # Secure cookie flag missing
     "python:S3330": "CWE-1004",  # HttpOnly cookie flag missing
     "python:S4792": "CWE-532",   # Sensitive info in logs
+    "python:S8392": "CWE-605",   # Multiple Binds to the Same Port
+    "python:S2612": "CWE-732",   # Incorrect Permission Assignment for Critical Resource
 
     # Quality only
     "python:S3776": None,
