@@ -1,0 +1,142 @@
+{
+  "version": "1.127.1",
+  "results": [
+    {
+      "check_id": "python.lang.security.dangerous-subprocess-use.dangerous-subprocess-use",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\CoPilot\\Python\\Task 8\\cond_a.py",
+      "start": {
+        "line": 22,
+        "col": 13,
+        "offset": 462
+      },
+      "end": {
+        "line": 22,
+        "col": 34,
+        "offset": 483
+      },
+      "extra": {
+        "message": "Detected subprocess function 'run' with user controlled data. A malicious actor could leverage this to perform command injection. You may consider using 'shlex.escape()'.",
+        "metadata": {
+          "owasp": [
+            "A01:2017 - Injection",
+            "A03:2021 - Injection",
+            "A05:2025 - Injection"
+          ],
+          "cwe": [
+            "CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')"
+          ],
+          "asvs": {
+            "control_id": "5.3.8 OS Command Injection",
+            "control_url": "https://github.com/OWASP/ASVS/blob/master/4.0/en/0x13-V5-Validation-Sanitization-Encoding.md#v53-output-encoding-and-injection-prevention-requirements",
+            "section": "V5: Validation, Sanitization and Encoding Verification Requirements",
+            "version": "4"
+          },
+          "references": [
+            "https://stackoverflow.com/questions/3172470/actual-meaning-of-shell-true-in-subprocess",
+            "https://docs.python.org/3/library/subprocess.html",
+            "https://docs.python.org/3/library/shlex.html",
+            "https://semgrep.dev/docs/cheat-sheets/python-command-injection/"
+          ],
+          "category": "security",
+          "technology": [
+            "python"
+          ],
+          "confidence": "MEDIUM",
+          "cwe2022-top25": true,
+          "cwe2021-top25": true,
+          "subcategory": [
+            "vuln"
+          ],
+          "likelihood": "MEDIUM",
+          "impact": "HIGH",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Command Injection"
+          ],
+          "source": "https://semgrep.dev/r/python.lang.security.dangerous-subprocess-use.dangerous-subprocess-use",
+          "shortlink": "https://sg.run/NWxp"
+        },
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "python.flask.security.audit.debug-enabled.debug-enabled",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\CoPilot\\Python\\Task 8\\cond_a.py",
+      "start": {
+        "line": 32,
+        "col": 5,
+        "offset": 752
+      },
+      "end": {
+        "line": 32,
+        "col": 24,
+        "offset": 771
+      },
+      "extra": {
+        "message": "Detected Flask app with debug=True. Do not deploy to production with this flag enabled as it will leak sensitive information. Instead, consider using Flask configuration variables or setting 'debug' using system environment variables.",
+        "metadata": {
+          "cwe": [
+            "CWE-489: Active Debug Code"
+          ],
+          "owasp": "A06:2017 - Security Misconfiguration",
+          "references": [
+            "https://labs.detectify.com/2015/10/02/how-patreon-got-hacked-publicly-exposed-werkzeug-debugger/"
+          ],
+          "category": "security",
+          "technology": [
+            "flask"
+          ],
+          "subcategory": [
+            "vuln"
+          ],
+          "likelihood": "HIGH",
+          "impact": "MEDIUM",
+          "confidence": "HIGH",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Active Debug Code"
+          ],
+          "source": "https://semgrep.dev/r/python.flask.security.audit.debug-enabled.debug-enabled",
+          "shortlink": "https://sg.run/dKrd"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    }
+  ],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\CoPilot\\Python\\Task 8\\cond_a.py"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.4672346115112305,
+    "profiling_times": {
+      "config_time": 1.6454887390136719,
+      "core_time": 1.8282415866851807,
+      "ignores_time": 0.0008647441864013672,
+      "total_time": 3.4753737449645996
+    },
+    "parsing_time": {
+      "total_time": 0.007004737854003906,
+      "per_file_time": {
+        "mean": 0.007004737854003906,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1082682560
+  },
+  "skipped_rules": []
+}

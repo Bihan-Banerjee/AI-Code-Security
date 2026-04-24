@@ -1,3 +1,5 @@
+import shutil
+print("Scanner path:", shutil.which("sonar-scanner"))
 """
 scan_all.py
 -----------
@@ -48,8 +50,8 @@ SKIP_DIRS = {"results", "scripts", ".git", ".github", ".scannerwork"}
 
 # SonarQube — fill in after: docker run -d -p 9000:9000 sonarqube:community
 SONAR_URL     = "http://localhost:9000"
-SONAR_TOKEN   = "YOUR_SONAR_TOKEN_HERE"   # Admin → My Account → Security → Generate Token
-SONAR_PROJECT = "ai-code-security"
+SONAR_TOKEN   = "sqa_4f6de144c4a095a5f729a122ce2530d342ab36d8"   # Admin → My Account → Security → Generate Token
+SONAR_PROJECT = "fortiscan"
 SONAR_WAIT_S  = 12   # seconds to wait after scanner finishes before API fetch
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -112,7 +114,7 @@ def run_semgrep(filepath: pathlib.Path, out: pathlib.Path):
     result = subprocess.run(
         ["semgrep", "--config", "auto", "--json", "--quiet",
          "--no-git-ignore", str(filepath)],
-        capture_output=True, text=True
+        capture_output=True, text=True, encoding="utf-8", errors="ignore"
     )
     try:
         data = json.loads(result.stdout) if result.stdout.strip() else \
@@ -153,7 +155,7 @@ def run_sonarqube(filepath: pathlib.Path, out: pathlib.Path):
         (tmpdir / "sonar-project.properties").write_text(props)
 
         subprocess.run(
-            ["sonar-scanner", f"-Dsonar.projectBaseDir={tmpdir}"],
+            f"sonar-scanner -Dsonar.projectBaseDir={tmpdir}", shell=True,
             capture_output=True, text=True, cwd=str(tmpdir)
         )
         time.sleep(SONAR_WAIT_S)

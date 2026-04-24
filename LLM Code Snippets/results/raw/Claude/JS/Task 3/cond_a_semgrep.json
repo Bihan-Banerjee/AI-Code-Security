@@ -1,0 +1,83 @@
+{
+  "version": "1.127.1",
+  "results": [
+    {
+      "check_id": "javascript.lang.security.audit.unsafe-formatstring.unsafe-formatstring",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Claude\\JS\\Task 3\\cond_a.js",
+      "start": {
+        "line": 29,
+        "col": 19,
+        "offset": 791
+      },
+      "end": {
+        "line": 29,
+        "col": 54,
+        "offset": 826
+      },
+      "extra": {
+        "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string.",
+        "metadata": {
+          "cwe": [
+            "CWE-134: Use of Externally-Controlled Format String"
+          ],
+          "owasp": [
+            "A01:2021 - Broken Access Control",
+            "A01:2025 - Broken Access Control"
+          ],
+          "category": "security",
+          "technology": [
+            "javascript"
+          ],
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "MEDIUM",
+          "impact": "LOW",
+          "confidence": "LOW",
+          "references": [
+            "https://cwe.mitre.org/data/definitions/134.html"
+          ],
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Improper Validation"
+          ],
+          "source": "https://semgrep.dev/r/javascript.lang.security.audit.unsafe-formatstring.unsafe-formatstring",
+          "shortlink": "https://sg.run/7Y5R"
+        },
+        "severity": "INFO",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    }
+  ],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Claude\\JS\\Task 3\\cond_a.js"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 2.530728578567505,
+    "profiling_times": {
+      "config_time": 2.3963124752044678,
+      "core_time": 3.360868453979492,
+      "ignores_time": 0.0027532577514648438,
+      "total_time": 5.7616705894470215
+    },
+    "parsing_time": {
+      "total_time": 0.016450166702270508,
+      "per_file_time": {
+        "mean": 0.016450166702270508,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1081829760
+  },
+  "skipped_rules": []
+}

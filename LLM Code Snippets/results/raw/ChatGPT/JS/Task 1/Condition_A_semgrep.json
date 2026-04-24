@@ -66,24 +66,24 @@
   },
   "time": {
     "rules": [],
-    "rules_parse_time": 1.4299988746643066,
+    "rules_parse_time": 1.851212739944458,
     "profiling_times": {
-      "config_time": 1.69730806350708,
-      "core_time": 1.7983448505401611,
-      "ignores_time": 0.0009400844573974609,
-      "total_time": 3.4972751140594482
+      "config_time": 2.825536012649536,
+      "core_time": 2.451488971710205,
+      "ignores_time": 0.002226114273071289,
+      "total_time": 5.280238151550293
     },
     "parsing_time": {
-      "total_time": 0.011220216751098633,
+      "total_time": 0.016750335693359375,
       "per_file_time": {
-        "mean": 0.011220216751098633,
+        "mean": 0.016750335693359375,
         "std_dev": 0.0
       },
       "very_slow_files": []
     },
     "targets": [],
     "total_bytes": 0,
-    "max_memory_bytes": 1082348160
+    "max_memory_bytes": 1084733312
   },
   "skipped_rules": []
 }

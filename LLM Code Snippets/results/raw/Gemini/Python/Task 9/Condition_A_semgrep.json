@@ -1,0 +1,32 @@
+{
+  "version": "1.127.1",
+  "results": [],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Gemini\\Python\\Task 9\\Condition_A.py"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.3485996723175049,
+    "profiling_times": {
+      "config_time": 1.4890384674072266,
+      "core_time": 1.6689143180847168,
+      "ignores_time": 0.0008985996246337891,
+      "total_time": 3.1594579219818115
+    },
+    "parsing_time": {
+      "total_time": 0.007478237152099609,
+      "per_file_time": {
+        "mean": 0.007478237152099609,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1080708544
+  },
+  "skipped_rules": []
+}

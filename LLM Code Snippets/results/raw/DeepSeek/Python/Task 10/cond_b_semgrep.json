@@ -1,0 +1,32 @@
+{
+  "version": "1.127.1",
+  "results": [],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 10\\cond_b.py"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.3478167057037354,
+    "profiling_times": {
+      "config_time": 1.480600357055664,
+      "core_time": 1.8576536178588867,
+      "ignores_time": 0.0008380413055419922,
+      "total_time": 3.3397064208984375
+    },
+    "parsing_time": {
+      "total_time": 0.008408069610595703,
+      "per_file_time": {
+        "mean": 0.008408069610595703,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1083334272
+  },
+  "skipped_rules": []
+}

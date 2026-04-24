@@ -1,0 +1,32 @@
+{
+  "version": "1.127.1",
+  "results": [],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Gemini\\JS\\Task 9\\Condition_A.js"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.3970897197723389,
+    "profiling_times": {
+      "config_time": 1.427886962890625,
+      "core_time": 1.6972413063049316,
+      "ignores_time": 0.0008425712585449219,
+      "total_time": 3.126621961593628
+    },
+    "parsing_time": {
+      "total_time": 0.008525609970092773,
+      "per_file_time": {
+        "mean": 0.008525609970092773,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1082802816
+  },
+  "skipped_rules": []
+}

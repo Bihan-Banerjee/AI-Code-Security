@@ -1,0 +1,80 @@
+{
+  "version": "1.127.1",
+  "results": [
+    {
+      "check_id": "python.flask.security.audit.debug-enabled.debug-enabled",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 3\\cond_a.py",
+      "start": {
+        "line": 91,
+        "col": 5,
+        "offset": 2839
+      },
+      "end": {
+        "line": 91,
+        "col": 24,
+        "offset": 2858
+      },
+      "extra": {
+        "message": "Detected Flask app with debug=True. Do not deploy to production with this flag enabled as it will leak sensitive information. Instead, consider using Flask configuration variables or setting 'debug' using system environment variables.",
+        "metadata": {
+          "cwe": [
+            "CWE-489: Active Debug Code"
+          ],
+          "owasp": "A06:2017 - Security Misconfiguration",
+          "references": [
+            "https://labs.detectify.com/2015/10/02/how-patreon-got-hacked-publicly-exposed-werkzeug-debugger/"
+          ],
+          "category": "security",
+          "technology": [
+            "flask"
+          ],
+          "subcategory": [
+            "vuln"
+          ],
+          "likelihood": "HIGH",
+          "impact": "MEDIUM",
+          "confidence": "HIGH",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Active Debug Code"
+          ],
+          "source": "https://semgrep.dev/r/python.flask.security.audit.debug-enabled.debug-enabled",
+          "shortlink": "https://sg.run/dKrd"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    }
+  ],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 3\\cond_a.py"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.3971612453460693,
+    "profiling_times": {
+      "config_time": 2.055506467819214,
+      "core_time": 1.7934308052062988,
+      "ignores_time": 0.0008351802825927734,
+      "total_time": 3.8504245281219482
+    },
+    "parsing_time": {
+      "total_time": 0.007512569427490234,
+      "per_file_time": {
+        "mean": 0.007512569427490234,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1082796672
+  },
+  "skipped_rules": []
+}

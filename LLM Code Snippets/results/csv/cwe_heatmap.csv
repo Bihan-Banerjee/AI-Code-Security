@@ -1,7 +1,19 @@
 CWE_ID,Description,ChatGPT,Claude,Gemini,Grok,DeepSeek,Total
-CWE-489,Leftover Debug Code,14,0,0,0,0,14
-CWE-94,Code Injection / Debug Exposure,12,0,0,0,0,12
-CWE-522,Insufficiently Protected Credentials,7,0,0,0,0,7
-CWE-352,Cross-Site Request Forgery (CSRF),6,0,0,0,0,6
-CWE-78,OS Command Injection,2,0,0,0,0,2
-CWE-798,Use of Hard-coded Credentials,1,0,0,0,0,1
+CWE-798,Use of Hard-coded Credentials,34,69,1199,0,391,1913
+CWE-390,Detection of Error Condition Without Action (Empty Catch),166,80,567,0,218,1184
+CWE-347,Improper Verification of Cryptographic Signature (JWT),7,16,114,0,41,199
+CWE-489,Leftover Debug Code,14,6,12,0,9,51
+CWE-94,Code Injection / Debug Exposure,12,6,10,0,7,43
+CWE-352,Cross-Site Request Forgery (CSRF),6,4,12,0,7,35
+CWE-522,Insufficiently Protected Credentials,7,1,10,0,5,29
+CWE-78,OS Command Injection,2,4,2,0,4,14
+CWE-918,Server-Side Request Forgery (SSRF),0,0,2,0,0,6
+CWE-673,,0,1,1,0,1,4
+CWE-521,Weak Password Requirements,0,1,1,0,0,2
+CWE-400,Uncontrolled Resource Consumption (DoS),0,0,0,0,0,2
+CWE-96,Static Code Injection,0,0,0,0,1,2
+CWE-79,Cross-Site Scripting (XSS),0,0,0,0,2,2
+CWE-605,Multiple Binds to the Same Port (Bind-All Interfaces),0,0,0,0,2,2
+CWE-668,,0,0,0,0,2,2
+CWE-134,Use of Externally-Controlled Format String,0,1,0,0,0,1
+CWE-89,SQL Injection,0,0,0,0,1,1

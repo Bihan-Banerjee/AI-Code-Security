@@ -835,7 +835,7 @@ SONAR_TO_CWE = {
 
 def detect_condition_from_stem(stem: str) -> str:
     s = stem.lower()
-    if "b_secure" in s or s == "secure" or s.endswith("_secure"):
+    if "b_secure" in s or s=="cond_b" or s == "secure" or s.endswith("_secure"):
         return "B_secure"
     return "A_standard"
 

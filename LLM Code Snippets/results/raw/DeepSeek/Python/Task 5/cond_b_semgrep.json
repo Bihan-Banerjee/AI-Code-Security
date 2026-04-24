@@ -1,0 +1,181 @@
+{
+  "version": "1.127.1",
+  "results": [
+    {
+      "check_id": "python.django.security.audit.unvalidated-password.unvalidated-password",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 5\\cond_b.py",
+      "start": {
+        "line": 139,
+        "col": 5,
+        "offset": 4785
+      },
+      "end": {
+        "line": 139,
+        "col": 36,
+        "offset": 4816
+      },
+      "extra": {
+        "message": "The password on 'user' is being set without validating the password. Call django.contrib.auth.password_validation.validate_password() with validation functions before setting the password. See https://docs.djangoproject.com/en/3.0/topics/auth/passwords/ for more information.",
+        "fix": "if django.contrib.auth.password_validation.validate_password(new_password, user=user):\n        user.set_password(new_password)",
+        "metadata": {
+          "cwe": [
+            "CWE-521: Weak Password Requirements"
+          ],
+          "owasp": [
+            "A07:2021 - Identification and Authentication Failures",
+            "A07:2025 - Authentication Failures"
+          ],
+          "references": [
+            "https://docs.djangoproject.com/en/3.0/topics/auth/passwords/#module-django.contrib.auth.password_validation"
+          ],
+          "category": "security",
+          "technology": [
+            "django"
+          ],
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "MEDIUM",
+          "confidence": "LOW",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Improper Authentication"
+          ],
+          "source": "https://semgrep.dev/r/python.django.security.audit.unvalidated-password.unvalidated-password",
+          "shortlink": "https://sg.run/OPBL"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "python.flask.security.audit.render-template-string.render-template-string",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 5\\cond_b.py",
+      "start": {
+        "line": 153,
+        "col": 12,
+        "offset": 5215
+      },
+      "end": {
+        "line": 160,
+        "col": 22,
+        "offset": 5633
+      },
+      "extra": {
+        "message": "Found a template created with string formatting. This is susceptible to server-side template injection and cross-site scripting attacks.",
+        "metadata": {
+          "cwe": [
+            "CWE-96: Improper Neutralization of Directives in Statically Saved Code ('Static Code Injection')"
+          ],
+          "owasp": [
+            "A03:2021 - Injection",
+            "A05:2025 - Injection"
+          ],
+          "references": [
+            "https://nvisium.com/blog/2016/03/09/exploring-ssti-in-flask-jinja2.html"
+          ],
+          "category": "security",
+          "technology": [
+            "flask"
+          ],
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "MEDIUM",
+          "confidence": "LOW",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Code Injection"
+          ],
+          "source": "https://semgrep.dev/r/python.flask.security.audit.render-template-string.render-template-string",
+          "shortlink": "https://sg.run/8yjE"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "python.flask.security.audit.debug-enabled.debug-enabled",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 5\\cond_b.py",
+      "start": {
+        "line": 168,
+        "col": 5,
+        "offset": 5756
+      },
+      "end": {
+        "line": 168,
+        "col": 24,
+        "offset": 5775
+      },
+      "extra": {
+        "message": "Detected Flask app with debug=True. Do not deploy to production with this flag enabled as it will leak sensitive information. Instead, consider using Flask configuration variables or setting 'debug' using system environment variables.",
+        "metadata": {
+          "cwe": [
+            "CWE-489: Active Debug Code"
+          ],
+          "owasp": "A06:2017 - Security Misconfiguration",
+          "references": [
+            "https://labs.detectify.com/2015/10/02/how-patreon-got-hacked-publicly-exposed-werkzeug-debugger/"
+          ],
+          "category": "security",
+          "technology": [
+            "flask"
+          ],
+          "subcategory": [
+            "vuln"
+          ],
+          "likelihood": "HIGH",
+          "impact": "MEDIUM",
+          "confidence": "HIGH",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Active Debug Code"
+          ],
+          "source": "https://semgrep.dev/r/python.flask.security.audit.debug-enabled.debug-enabled",
+          "shortlink": "https://sg.run/dKrd"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    }
+  ],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 5\\cond_b.py"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.3779280185699463,
+    "profiling_times": {
+      "config_time": 1.5959529876708984,
+      "core_time": 1.7553067207336426,
+      "ignores_time": 0.00083160400390625,
+      "total_time": 3.3528099060058594
+    },
+    "parsing_time": {
+      "total_time": 0.008603811264038086,
+      "per_file_time": {
+        "mean": 0.008603811264038086,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1083382720
+  },
+  "skipped_rules": []
+}

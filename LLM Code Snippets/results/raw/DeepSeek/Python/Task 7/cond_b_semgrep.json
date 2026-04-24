@@ -1,0 +1,135 @@
+{
+  "version": "1.127.1",
+  "results": [
+    {
+      "check_id": "python.django.security.audit.unvalidated-password.unvalidated-password",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 7\\cond_b.py",
+      "start": {
+        "line": 178,
+        "col": 13,
+        "offset": 6801
+      },
+      "end": {
+        "line": 178,
+        "col": 40,
+        "offset": 6828
+      },
+      "extra": {
+        "message": "The password on 'user' is being set without validating the password. Call django.contrib.auth.password_validation.validate_password() with validation functions before setting the password. See https://docs.djangoproject.com/en/3.0/topics/auth/passwords/ for more information.",
+        "fix": "if django.contrib.auth.password_validation.validate_password(password, user=user):\n                user.set_password(password)",
+        "metadata": {
+          "cwe": [
+            "CWE-521: Weak Password Requirements"
+          ],
+          "owasp": [
+            "A07:2021 - Identification and Authentication Failures",
+            "A07:2025 - Authentication Failures"
+          ],
+          "references": [
+            "https://docs.djangoproject.com/en/3.0/topics/auth/passwords/#module-django.contrib.auth.password_validation"
+          ],
+          "category": "security",
+          "technology": [
+            "django"
+          ],
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "MEDIUM",
+          "confidence": "LOW",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Improper Authentication"
+          ],
+          "source": "https://semgrep.dev/r/python.django.security.audit.unvalidated-password.unvalidated-password",
+          "shortlink": "https://sg.run/OPBL"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "python.django.security.audit.unvalidated-password.unvalidated-password",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 7\\cond_b.py",
+      "start": {
+        "line": 313,
+        "col": 17,
+        "offset": 11949
+      },
+      "end": {
+        "line": 313,
+        "col": 44,
+        "offset": 11976
+      },
+      "extra": {
+        "message": "The password on 'user' is being set without validating the password. Call django.contrib.auth.password_validation.validate_password() with validation functions before setting the password. See https://docs.djangoproject.com/en/3.0/topics/auth/passwords/ for more information.",
+        "fix": "if django.contrib.auth.password_validation.validate_password(password, user=user):\n                    user.set_password(password)",
+        "metadata": {
+          "cwe": [
+            "CWE-521: Weak Password Requirements"
+          ],
+          "owasp": [
+            "A07:2021 - Identification and Authentication Failures",
+            "A07:2025 - Authentication Failures"
+          ],
+          "references": [
+            "https://docs.djangoproject.com/en/3.0/topics/auth/passwords/#module-django.contrib.auth.password_validation"
+          ],
+          "category": "security",
+          "technology": [
+            "django"
+          ],
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "MEDIUM",
+          "confidence": "LOW",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Improper Authentication"
+          ],
+          "source": "https://semgrep.dev/r/python.django.security.audit.unvalidated-password.unvalidated-password",
+          "shortlink": "https://sg.run/OPBL"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    }
+  ],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 7\\cond_b.py"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.4552931785583496,
+    "profiling_times": {
+      "config_time": 1.4802865982055664,
+      "core_time": 1.9181873798370361,
+      "ignores_time": 0.0009171962738037109,
+      "total_time": 3.4000394344329834
+    },
+    "parsing_time": {
+      "total_time": 0.01131749153137207,
+      "per_file_time": {
+        "mean": 0.01131749153137207,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1084905536
+  },
+  "skipped_rules": []
+}

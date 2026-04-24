@@ -1,0 +1,32 @@
+{
+  "version": "1.127.1",
+  "results": [],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\CoPilot\\JS\\Task 9\\cond_a.js"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.9122889041900635,
+    "profiling_times": {
+      "config_time": 2.110792398452759,
+      "core_time": 2.448650360107422,
+      "ignores_time": 0.002157926559448242,
+      "total_time": 4.5631725788116455
+    },
+    "parsing_time": {
+      "total_time": 0.013910055160522461,
+      "per_file_time": {
+        "mean": 0.013910055160522461,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1082033536
+  },
+  "skipped_rules": []
+}

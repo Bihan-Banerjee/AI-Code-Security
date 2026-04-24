@@ -1,0 +1,32 @@
+{
+  "version": "1.127.1",
+  "results": [],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\CoPilot\\Python\\Task 6\\cond_b.py"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.5872185230255127,
+    "profiling_times": {
+      "config_time": 1.897674322128296,
+      "core_time": 2.129955291748047,
+      "ignores_time": 0.003885030746459961,
+      "total_time": 4.033019781112671
+    },
+    "parsing_time": {
+      "total_time": 0.01120448112487793,
+      "per_file_time": {
+        "mean": 0.01120448112487793,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1082787968
+  },
+  "skipped_rules": []
+}

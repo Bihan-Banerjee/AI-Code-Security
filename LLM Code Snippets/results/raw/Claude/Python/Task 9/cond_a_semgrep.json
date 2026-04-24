@@ -1,0 +1,32 @@
+{
+  "version": "1.127.1",
+  "results": [],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Claude\\Python\\Task 9\\cond_a.py"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.9768257141113281,
+    "profiling_times": {
+      "config_time": 2.261948347091675,
+      "core_time": 2.7430717945098877,
+      "ignores_time": 0.002624988555908203,
+      "total_time": 5.0104615688323975
+    },
+    "parsing_time": {
+      "total_time": 0.013129234313964844,
+      "per_file_time": {
+        "mean": 0.013129234313964844,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1082211520
+  },
+  "skipped_rules": []
+}

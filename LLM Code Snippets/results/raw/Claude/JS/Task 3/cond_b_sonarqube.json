@@ -1,0 +1,2853 @@
+{
+  "total": 50,
+  "p": 1,
+  "ps": 500,
+  "paging": {
+    "pageIndex": 1,
+    "pageSize": 500,
+    "total": 50
+  },
+  "effortTotal": 753,
+  "issues": [
+    {
+      "key": "edcefbff-ffde-4c18-9f7f-ea21692f1077",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "claude-js-task-3-cond-b:cond_b.js",
+      "project": "claude-js-task-3-cond-b",
+      "line": 21,
+      "hash": "038e588539a77dba4145d1fb20c23b73",
+      "textRange": {
+        "startLine": 21,
+        "endLine": 21,
+        "startOffset": 17,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-04-23T20:54:37+0000",
+      "updateDate": "2026-04-23T20:54:37+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "5201d8a4-ee42-4b13-9afe-d66a3d78d4f7",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "claude-js-task-3-cond-a:cond_a.js",
+      "project": "claude-js-task-3-cond-a",
+      "line": 9,
+      "hash": "ee288e233c381a6ea508e03e3b0afe80",
+      "textRange": {
+        "startLine": 9,
+        "endLine": 9,
+        "startOffset": 26,
+        "endOffset": 34
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-04-23T20:53:44+0000",
+      "updateDate": "2026-04-23T20:53:44+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "e45d2fdd-6769-45c0-8789-e4dbae073332",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "claude-js-task-3-cond-a:cond_a.js",
+      "project": "claude-js-task-3-cond-a",
+      "line": 9,
+      "hash": "ee288e233c381a6ea508e03e3b0afe80",
+      "textRange": {
+        "startLine": 9,
+        "endLine": 9,
+        "startOffset": 13,
+        "endOffset": 18
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.isNaN` over `isNaN`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-04-23T20:53:44+0000",
+      "updateDate": "2026-04-23T20:53:44+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "db751912-ec25-4f72-9bae-31b20ca7ef3a",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "claude-js-task-3-cond-a:cond_a.js",
+      "project": "claude-js-task-3-cond-a",
+      "line": 18,
+      "hash": "8bb6338ef630e923308c0f27cda17e04",
+      "textRange": {
+        "startLine": 18,
+        "endLine": 18,
+        "startOffset": 70,
+        "endOffset": 78
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-04-23T20:53:44+0000",
+      "updateDate": "2026-04-23T20:53:44+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "3df7706a-e872-4b43-9021-e4ee3bd32c5a",
+      "rule": "javascript:S6353",
+      "severity": "MINOR",
+      "component": "claude-js-task-1-cond-a:cond_a.js",
+      "project": "claude-js-task-1-cond-a",
+      "line": 43,
+      "hash": "d0b206668637af8c3a8bed2db7d7229e",
+      "textRange": {
+        "startLine": 43,
+        "endLine": 43,
+        "startOffset": 14,
+        "endOffset": 19
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Use concise character class syntax '\\d' instead of '[0-9]'.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "regex",
+        "type-dependent"
+      ],
+      "creationDate": "2026-04-23T20:50:24+0000",
+      "updateDate": "2026-04-23T20:50:24+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "be6a70e0-eb41-4ec8-b0c3-be5ac9ba19ca",
+      "rule": "python:S1192",
+      "severity": "CRITICAL",
+      "component": "chatgpt-python-task-7-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-7-condition-a",
+      "line": 73,
+      "hash": "633b3a1ddd86875fea1762d9aeabe602",
+      "textRange": {
+        "startLine": 73,
+        "endLine": 73,
+        "startOffset": 25,
+        "endOffset": 41
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "chatgpt-python-task-7-condition-a:Condition_A.py",
+              "textRange": {
+                "startLine": 89,
+                "endLine": 89,
+                "startOffset": 25,
+                "endOffset": 41
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "chatgpt-python-task-7-condition-a:Condition_A.py",
+              "textRange": {
+                "startLine": 114,
+                "endLine": 114,
+                "startOffset": 25,
+                "endOffset": 41
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Define a constant instead of duplicating this literal \"User not found\" 3 times.",
+      "effort": "6min",
+      "debt": "6min",
+      "author": "",
+      "tags": [
+        "design"
+      ],
+      "creationDate": "2026-04-23T20:46:25+0000",
+      "updateDate": "2026-04-23T20:46:25+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "DISTINCT",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "279a9d31-e568-407b-a062-4c2795063eeb",
+      "rule": "python:S5659",
+      "severity": "CRITICAL",
+      "component": "chatgpt-python-task-6-condition-b:Condition_B.py",
+      "project": "chatgpt-python-task-6-condition-b",
+      "line": 36,
+      "hash": "f2737dbb16419971e7e2dccaed0a1c00",
+      "textRange": {
+        "startLine": 36,
+        "endLine": 36,
+        "startOffset": 58,
+        "endOffset": 63
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Don't use a JWT token without verifying its signature.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe",
+        "privacy"
+      ],
+      "creationDate": "2026-04-23T20:45:46+0000",
+      "updateDate": "2026-04-23T20:45:46+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "23f1358e-0619-4fc0-87dc-03c45071aa16",
+      "rule": "python:S6965",
+      "severity": "MAJOR",
+      "component": "chatgpt-python-task-6-condition-b:Condition_B.py",
+      "project": "chatgpt-python-task-6-condition-b",
+      "line": 79,
+      "hash": "f98291e1a2d0a909b0b4e910ce29a5aa",
+      "textRange": {
+        "startLine": 79,
+        "endLine": 79,
+        "startOffset": 0,
+        "endOffset": 15
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Specify the HTTP methods this route should accept.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "flask"
+      ],
+      "creationDate": "2026-04-23T20:45:46+0000",
+      "updateDate": "2026-04-23T20:45:46+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "6c28a615-4cce-468e-b5c6-8cb06eb1cef3",
+      "rule": "python:S2068",
+      "severity": "MAJOR",
+      "component": "chatgpt-python-task-6-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-6-condition-a",
+      "line": 9,
+      "hash": "edc484a21e4a49a33b0403990da34b5f",
+      "textRange": {
+        "startLine": 9,
+        "endLine": 9,
+        "startOffset": 11,
+        "endOffset": 23
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "\"SECRET_KEY\" detected here, review this potentially hard-coded credential.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-04-23T20:45:07+0000",
+      "updateDate": "2026-04-23T20:45:07+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "9a84f9dc-4b45-4bae-a678-40fab9dc95d3",
+      "rule": "python:S6779",
+      "severity": "BLOCKER",
+      "component": "chatgpt-python-task-6-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-6-condition-a",
+      "line": 9,
+      "hash": "edc484a21e4a49a33b0403990da34b5f",
+      "textRange": {
+        "startLine": 9,
+        "endLine": 9,
+        "startOffset": 27,
+        "endOffset": 57
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "chatgpt-python-task-6-condition-a:Condition_A.py",
+              "textRange": {
+                "startLine": 9,
+                "endLine": 9,
+                "startOffset": 0,
+                "endOffset": 24
+              },
+              "msg": "Assignment to sensitive property.",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Don't disclose \"Flask\" secret keys.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe",
+        "flask"
+      ],
+      "creationDate": "2026-04-23T20:45:07+0000",
+      "updateDate": "2026-04-23T20:45:07+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "1732c079-4c2b-4eb3-9c79-c1267fc77255",
+      "rule": "python:S6903",
+      "severity": "CRITICAL",
+      "component": "chatgpt-python-task-6-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-6-condition-a",
+      "line": 25,
+      "hash": "e1848e5331fa0f05b15a237566f41dfa",
+      "textRange": {
+        "startLine": 25,
+        "endLine": 25,
+        "startOffset": 15,
+        "endOffset": 41
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Don't use `datetime.datetime.utcnow` to create this datetime object.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "datetime",
+        "pitfall"
+      ],
+      "creationDate": "2026-04-23T20:45:07+0000",
+      "updateDate": "2026-04-23T20:45:07+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "d58feb6b-dd5e-4eac-8529-020051e9d9ea",
+      "rule": "python:S6903",
+      "severity": "CRITICAL",
+      "component": "chatgpt-python-task-6-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-6-condition-a",
+      "line": 26,
+      "hash": "46b57b2cbaee2ec91cf9956406ce61a3",
+      "textRange": {
+        "startLine": 26,
+        "endLine": 26,
+        "startOffset": 15,
+        "endOffset": 41
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Don't use `datetime.datetime.utcnow` to create this datetime object.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "datetime",
+        "pitfall"
+      ],
+      "creationDate": "2026-04-23T20:45:07+0000",
+      "updateDate": "2026-04-23T20:45:07+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "e62f66b3-408c-4c41-9fb6-9e222b2c66dc",
+      "rule": "python:S6903",
+      "severity": "CRITICAL",
+      "component": "chatgpt-python-task-5-condition-b:Condition_B.py",
+      "project": "chatgpt-python-task-5-condition-b",
+      "line": 61,
+      "hash": "ae2d6d66b4370fe2c0e8365fec464db2",
+      "textRange": {
+        "startLine": 61,
+        "endLine": 61,
+        "startOffset": 21,
+        "endOffset": 38
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Don't use `datetime.datetime.utcnow` to create this datetime object.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "datetime",
+        "pitfall"
+      ],
+      "creationDate": "2026-04-23T20:44:23+0000",
+      "updateDate": "2026-04-23T20:44:23+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "1d66632d-885a-47a8-b7cf-29ca9488d49b",
+      "rule": "python:S6903",
+      "severity": "CRITICAL",
+      "component": "chatgpt-python-task-5-condition-b:Condition_B.py",
+      "project": "chatgpt-python-task-5-condition-b",
+      "line": 109,
+      "hash": "d54e966b72c7dd6dd21ad099e22c8738",
+      "textRange": {
+        "startLine": 109,
+        "endLine": 109,
+        "startOffset": 7,
+        "endOffset": 24
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Don't use `datetime.datetime.utcnow` to create this datetime object.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "datetime",
+        "pitfall"
+      ],
+      "creationDate": "2026-04-23T20:44:23+0000",
+      "updateDate": "2026-04-23T20:44:23+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "870619d5-4216-4e19-b308-be39bf0e2d4a",
+      "rule": "python:S2068",
+      "severity": "MAJOR",
+      "component": "chatgpt-python-task-5-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-5-condition-a",
+      "line": 15,
+      "hash": "9f6be133012192a692389f68cb0a5b0e",
+      "textRange": {
+        "startLine": 15,
+        "endLine": 15,
+        "startOffset": 11,
+        "endOffset": 23
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "\"SECRET_KEY\" detected here, review this potentially hard-coded credential.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-04-23T20:43:42+0000",
+      "updateDate": "2026-04-23T20:43:42+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "c9675164-98cf-4ab9-a35b-86f4e40fe916",
+      "rule": "python:S6779",
+      "severity": "BLOCKER",
+      "component": "chatgpt-python-task-5-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-5-condition-a",
+      "line": 15,
+      "hash": "9f6be133012192a692389f68cb0a5b0e",
+      "textRange": {
+        "startLine": 15,
+        "endLine": 15,
+        "startOffset": 27,
+        "endOffset": 45
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "chatgpt-python-task-5-condition-a:Condition_A.py",
+              "textRange": {
+                "startLine": 15,
+                "endLine": 15,
+                "startOffset": 0,
+                "endOffset": 24
+              },
+              "msg": "Assignment to sensitive property.",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Don't disclose \"Flask\" secret keys.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe",
+        "flask"
+      ],
+      "creationDate": "2026-04-23T20:43:42+0000",
+      "updateDate": "2026-04-23T20:43:42+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "4003de6d-dddd-4b8d-9978-80bfe2191497",
+      "rule": "python:S6903",
+      "severity": "CRITICAL",
+      "component": "chatgpt-python-task-5-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-5-condition-a",
+      "line": 90,
+      "hash": "50698308de516fa2a069c906b8ed8843",
+      "textRange": {
+        "startLine": 90,
+        "endLine": 90,
+        "startOffset": 19,
+        "endOffset": 36
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Don't use `datetime.datetime.utcnow` to create this datetime object.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "datetime",
+        "pitfall"
+      ],
+      "creationDate": "2026-04-23T20:43:42+0000",
+      "updateDate": "2026-04-23T20:43:42+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "b1d1d4a2-e8b6-4841-8a2b-6f7fd9cb9e76",
+      "rule": "python:S6903",
+      "severity": "CRITICAL",
+      "component": "chatgpt-python-task-5-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-5-condition-a",
+      "line": 128,
+      "hash": "18f82bda806342b4a4632e3b6e442057",
+      "textRange": {
+        "startLine": 128,
+        "endLine": 128,
+        "startOffset": 32,
+        "endOffset": 49
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Don't use `datetime.datetime.utcnow` to create this datetime object.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "datetime",
+        "pitfall"
+      ],
+      "creationDate": "2026-04-23T20:43:42+0000",
+      "updateDate": "2026-04-23T20:43:42+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "b46c4c4b-572a-4307-aea4-7a12f398dccb",
+      "rule": "python:S1481",
+      "severity": "MINOR",
+      "component": "chatgpt-python-task-4-condition-b:Condition_B.py",
+      "project": "chatgpt-python-task-4-condition-b",
+      "line": 90,
+      "hash": "5e11fcffc5ca1f600d0bf53d38f19ae7",
+      "textRange": {
+        "startLine": 90,
+        "endLine": 90,
+        "startOffset": 24,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove the unused local variable \"e\".",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "unused"
+      ],
+      "creationDate": "2026-04-23T20:43:06+0000",
+      "updateDate": "2026-04-23T20:43:06+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "687383c5-b2bf-4c32-a709-a52fbca38925",
+      "rule": "python:S6779",
+      "severity": "BLOCKER",
+      "component": "chatgpt-python-task-2-condition-b:Condition_B.py",
+      "project": "chatgpt-python-task-2-condition-b",
+      "line": 8,
+      "hash": "859a57db2b68fac3e0af7c7f68adfd00",
+      "textRange": {
+        "startLine": 8,
+        "endLine": 8,
+        "startOffset": 17,
+        "endOffset": 35
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "chatgpt-python-task-2-condition-b:Condition_B.py",
+              "textRange": {
+                "startLine": 8,
+                "endLine": 8,
+                "startOffset": 0,
+                "endOffset": 14
+              },
+              "msg": "Assignment to sensitive property.",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Don't disclose \"Flask\" secret keys.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe",
+        "flask"
+      ],
+      "creationDate": "2026-04-23T20:40:47+0000",
+      "updateDate": "2026-04-23T20:40:47+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "5cee36c1-c53f-4544-b1e2-fcf48f124321",
+      "rule": "python:S6437",
+      "severity": "BLOCKER",
+      "component": "chatgpt-python-task-2-condition-b:Condition_B.py",
+      "project": "chatgpt-python-task-2-condition-b",
+      "line": 81,
+      "hash": "841b70df6d71e81bfdac8f297cffaf64",
+      "textRange": {
+        "startLine": 81,
+        "endLine": 81,
+        "startOffset": 36,
+        "endOffset": 53
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Revoke and change this password, as it is compromised.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-04-23T20:40:47+0000",
+      "updateDate": "2026-04-23T20:40:47+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "13a3a529-1f74-4fc2-a9ca-5f6380dcc0d9",
+      "rule": "python:S6779",
+      "severity": "BLOCKER",
+      "component": "chatgpt-python-task-2-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-2-condition-a",
+      "line": 7,
+      "hash": "3f7396142c0ed3e0c7d872f933b93473",
+      "textRange": {
+        "startLine": 7,
+        "endLine": 7,
+        "startOffset": 17,
+        "endOffset": 39
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "chatgpt-python-task-2-condition-a:Condition_A.py",
+              "textRange": {
+                "startLine": 7,
+                "endLine": 7,
+                "startOffset": 0,
+                "endOffset": 14
+              },
+              "msg": "Assignment to sensitive property.",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Don't disclose \"Flask\" secret keys.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe",
+        "flask"
+      ],
+      "creationDate": "2026-04-23T20:40:12+0000",
+      "updateDate": "2026-04-23T20:40:12+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "bd681de9-75ee-407e-b488-c6047f79c248",
+      "rule": "python:S6353",
+      "severity": "MINOR",
+      "component": "chatgpt-python-task-2-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-2-condition-a",
+      "line": 27,
+      "hash": "22983959d6bbc864d07edea902327bb9",
+      "textRange": {
+        "startLine": 27,
+        "endLine": 27,
+        "startOffset": 23,
+        "endOffset": 35
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Use concise character class syntax '\\w' instead of '[a-zA-Z0-9_]'.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "regex"
+      ],
+      "creationDate": "2026-04-23T20:40:12+0000",
+      "updateDate": "2026-04-23T20:40:12+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "2d147173-bc36-46cd-b210-e67350b34baa",
+      "rule": "python:S1481",
+      "severity": "MINOR",
+      "component": "chatgpt-python-task-2-condition-a:Condition_A.py",
+      "project": "chatgpt-python-task-2-condition-a",
+      "line": 73,
+      "hash": "5e11fcffc5ca1f600d0bf53d38f19ae7",
+      "textRange": {
+        "startLine": 73,
+        "endLine": 73,
+        "startOffset": 24,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove the unused local variable \"e\".",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "unused"
+      ],
+      "creationDate": "2026-04-23T20:40:12+0000",
+      "updateDate": "2026-04-23T20:40:12+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "bfa019a5-23e5-4716-9316-29d866cd0510",
+      "rule": "python:S6353",
+      "severity": "MINOR",
+      "component": "chatgpt-python-task-1-condition-b:Condition_B.py",
+      "project": "chatgpt-python-task-1-condition-b",
+      "line": 43,
+      "hash": "287dbbad7f71b5377bf9f6bfdae288e6",
+      "textRange": {
+        "startLine": 43,
+        "endLine": 43,
+        "startOffset": 19,
+        "endOffset": 31
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Use concise character class syntax '\\w' instead of '[a-zA-Z0-9_]'.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "regex"
+      ],
+      "creationDate": "2026-04-23T20:37:48+0000",
+      "updateDate": "2026-04-23T20:37:48+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "285aca1a-926d-4dd9-9f6e-7a6bcc74b68b",
+      "rule": "python:S1192",
+      "severity": "CRITICAL",
+      "component": "chatgpt-python-task-1-condition-b:Condition_B.py",
+      "project": "chatgpt-python-task-1-condition-b",
+      "line": 65,
+      "hash": "e89daa71653df957581ec6834cfc8461",
+      "textRange": {
+        "startLine": 65,
+        "endLine": 65,
+        "startOffset": 33,
+        "endOffset": 48
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "chatgpt-python-task-1-condition-b:Condition_B.py",
+              "textRange": {
+                "startLine": 73,
+                "endLine": 73,
+                "startOffset": 33,
+                "endOffset": 48
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "chatgpt-python-task-1-condition-b:Condition_B.py",
+              "textRange": {
+                "startLine": 76,
+                "endLine": 76,
+                "startOffset": 33,
+                "endOffset": 48
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Define a constant instead of duplicating this literal \"Invalid input\" 3 times.",
+      "effort": "6min",
+      "debt": "6min",
+      "author": "",
+      "tags": [
+        "design"
+      ],
+      "creationDate": "2026-04-23T20:37:48+0000",
+      "updateDate": "2026-04-23T20:37:48+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "DISTINCT",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "856c8a3a-5751-424d-af78-80682622325d",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-9-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-9-condition-b",
+      "line": 1,
+      "hash": "c830f6c4155a5cbeef0f28771e61ed4d",
+      "textRange": {
+        "startLine": 1,
+        "endLine": 1,
+        "startOffset": 23,
+        "endOffset": 31
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:crypto` over `crypto`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-04-23T20:36:58+0000",
+      "updateDate": "2026-04-23T20:36:58+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "b39b1079-0500-449d-87ad-20619d35fcf2",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-9-condition-a:Condition_A.js",
+      "project": "chatgpt-js-task-9-condition-a",
+      "line": 1,
+      "hash": "c830f6c4155a5cbeef0f28771e61ed4d",
+      "textRange": {
+        "startLine": 1,
+        "endLine": 1,
+        "startOffset": 23,
+        "endOffset": 31
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:crypto` over `crypto`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-04-23T20:36:19+0000",
+      "updateDate": "2026-04-23T20:36:19+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "e81b7e4a-36b0-4c0e-bac8-36c62bd5b430",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-8-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-8-condition-b",
+      "line": 3,
+      "hash": "971249a8fa762650a1b9c5c516db2b45",
+      "textRange": {
+        "startLine": 3,
+        "endLine": 3,
+        "startOffset": 29,
+        "endOffset": 44
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:child_process` over `child_process`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-04-23T20:35:40+0000",
+      "updateDate": "2026-04-23T20:35:40+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "78c25aa0-1d22-4fe5-9042-c384debb1085",
+      "rule": "javascript:S7781",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-8-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-8-condition-b",
+      "line": 26,
+      "hash": "3d68a0e733e1bb5eb5fbe18bae67d5b4",
+      "textRange": {
+        "startLine": 26,
+        "endLine": 26,
+        "startOffset": 21,
+        "endOffset": 28
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `String#replaceAll()` over `String#replace()`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "readability",
+        "es2021"
+      ],
+      "creationDate": "2026-04-23T20:35:40+0000",
+      "updateDate": "2026-04-23T20:35:40+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "8753e661-ab6c-4c97-8d63-5ced91594627",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-8-condition-a:Condition_A.js",
+      "project": "chatgpt-js-task-8-condition-a",
+      "line": 2,
+      "hash": "971249a8fa762650a1b9c5c516db2b45",
+      "textRange": {
+        "startLine": 2,
+        "endLine": 2,
+        "startOffset": 29,
+        "endOffset": 44
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:child_process` over `child_process`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-04-23T20:34:58+0000",
+      "updateDate": "2026-04-23T20:34:58+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "e130e82b-2bef-474c-8739-b5a73958acd8",
+      "rule": "javascript:S6582",
+      "severity": "MAJOR",
+      "component": "chatgpt-js-task-6-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-6-condition-b",
+      "line": 13,
+      "hash": "b95d92c73e979619da523a9373e89e4e",
+      "textRange": {
+        "startLine": 13,
+        "endLine": 13,
+        "startOffset": 12,
+        "endOffset": 60
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer using an optional chain expression instead, as it's more concise and easier to read.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "type-dependent"
+      ],
+      "creationDate": "2026-04-23T20:34:20+0000",
+      "updateDate": "2026-04-23T20:34:20+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "33a84919-03db-4267-a1d2-fa55eef55199",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-6-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-6-condition-b",
+      "line": 41,
+      "hash": "9dcd66fc3d98a347c205c43e822e7ebd",
+      "textRange": {
+        "startLine": 41,
+        "endLine": 44,
+        "startOffset": 6,
+        "endOffset": 5
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception or don't catch it at all.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-04-23T20:34:20+0000",
+      "updateDate": "2026-04-23T20:34:20+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "4fccccdf-a7aa-41a3-b29c-80ca14151719",
+      "rule": "javascript:S6582",
+      "severity": "MAJOR",
+      "component": "chatgpt-js-task-6-condition-a:Condition_A.js",
+      "project": "chatgpt-js-task-6-condition-a",
+      "line": 12,
+      "hash": "b95d92c73e979619da523a9373e89e4e",
+      "textRange": {
+        "startLine": 12,
+        "endLine": 12,
+        "startOffset": 12,
+        "endOffset": 60
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer using an optional chain expression instead, as it's more concise and easier to read.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "type-dependent"
+      ],
+      "creationDate": "2026-04-23T20:33:35+0000",
+      "updateDate": "2026-04-23T20:33:35+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "c06a8acd-608a-4f9c-b920-839b63a9580f",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-5-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-5-condition-b",
+      "line": 2,
+      "hash": "c830f6c4155a5cbeef0f28771e61ed4d",
+      "textRange": {
+        "startLine": 2,
+        "endLine": 2,
+        "startOffset": 23,
+        "endOffset": 31
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:crypto` over `crypto`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-04-23T20:32:51+0000",
+      "updateDate": "2026-04-23T20:32:51+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "90d1a86a-dcef-44f7-a7ad-6584889829a4",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-5-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-5-condition-b",
+      "line": 128,
+      "hash": "9dcd66fc3d98a347c205c43e822e7ebd",
+      "textRange": {
+        "startLine": 128,
+        "endLine": 130,
+        "startOffset": 8,
+        "endOffset": 7
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception or don't catch it at all.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-04-23T20:32:51+0000",
+      "updateDate": "2026-04-23T20:32:51+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "0353c150-5259-4866-adbb-de42bfd68cd8",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-5-condition-a:Condition_A.js",
+      "project": "chatgpt-js-task-5-condition-a",
+      "line": 4,
+      "hash": "21a3cd5d7ada3044037a1a06f56e6916",
+      "textRange": {
+        "startLine": 4,
+        "endLine": 4,
+        "startOffset": 23,
+        "endOffset": 31
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:crypto` over `crypto`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-04-23T20:32:08+0000",
+      "updateDate": "2026-04-23T20:32:08+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "efc68f4c-0eb1-4c71-b954-51bb19e50a37",
+      "rule": "javascript:S4158",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-5-condition-a:Condition_A.js",
+      "project": "chatgpt-js-task-5-condition-a",
+      "line": 43,
+      "hash": "1f03169644299dc77d925ca486bb3faf",
+      "textRange": {
+        "startLine": 43,
+        "endLine": 43,
+        "startOffset": 17,
+        "endOffset": 22
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Review this usage of \"users\" as it can only be empty here.",
+      "effort": "15min",
+      "debt": "15min",
+      "author": "",
+      "tags": [],
+      "creationDate": "2026-04-23T20:32:08+0000",
+      "updateDate": "2026-04-23T20:32:08+0000",
+      "type": "BUG",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "b0ceb32e-1f49-4bfd-8404-dbb3cbd5b501",
+      "rule": "javascript:S4158",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-5-condition-a:Condition_A.js",
+      "project": "chatgpt-js-task-5-condition-a",
+      "line": 86,
+      "hash": "1f03169644299dc77d925ca486bb3faf",
+      "textRange": {
+        "startLine": 86,
+        "endLine": 86,
+        "startOffset": 17,
+        "endOffset": 22
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Review this usage of \"users\" as it can only be empty here.",
+      "effort": "15min",
+      "debt": "15min",
+      "author": "",
+      "tags": [],
+      "creationDate": "2026-04-23T20:32:08+0000",
+      "updateDate": "2026-04-23T20:32:08+0000",
+      "type": "BUG",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "44bf33c6-fd83-47e3-923e-b257b7be3e4f",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-4-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-4-condition-b",
+      "line": 3,
+      "hash": "85968f5b9f570a82c65709eacc211a09",
+      "textRange": {
+        "startLine": 3,
+        "endLine": 3,
+        "startOffset": 21,
+        "endOffset": 27
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:path` over `path`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-04-23T20:12:53+0000",
+      "updateDate": "2026-04-23T20:12:53+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "af54b011-958d-4fa6-8e33-03f152213396",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-4-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-4-condition-b",
+      "line": 5,
+      "hash": "44f9b15d3b1641faca5561b190d8261a",
+      "textRange": {
+        "startLine": 5,
+        "endLine": 5,
+        "startOffset": 19,
+        "endOffset": 23
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:fs` over `fs`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-04-23T20:12:53+0000",
+      "updateDate": "2026-04-23T20:12:53+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "3471edd1-c93d-40b3-b8d9-802a8ab0058b",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-4-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-4-condition-b",
+      "line": 80,
+      "hash": "9dcd66fc3d98a347c205c43e822e7ebd",
+      "textRange": {
+        "startLine": 80,
+        "endLine": 82,
+        "startOffset": 6,
+        "endOffset": 5
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception or don't catch it at all.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-04-23T20:12:53+0000",
+      "updateDate": "2026-04-23T20:12:53+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "6dd4c0cb-c43e-409e-91b8-4bd39fbb4786",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-4-condition-a:Condition_A.js",
+      "project": "chatgpt-js-task-4-condition-a",
+      "line": 3,
+      "hash": "85968f5b9f570a82c65709eacc211a09",
+      "textRange": {
+        "startLine": 3,
+        "endLine": 3,
+        "startOffset": 21,
+        "endOffset": 27
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:path` over `path`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-04-23T20:11:57+0000",
+      "updateDate": "2026-04-23T20:11:57+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "f13e15d6-0f56-4859-9819-3f75c9dd816e",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-3-condition-a:Condition_A.js",
+      "project": "chatgpt-js-task-3-condition-a",
+      "line": 20,
+      "hash": "038e588539a77dba4145d1fb20c23b73",
+      "textRange": {
+        "startLine": 20,
+        "endLine": 20,
+        "startOffset": 19,
+        "endOffset": 27
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-04-23T20:11:18+0000",
+      "updateDate": "2026-04-23T20:11:18+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "94ffa425-6f2f-4015-80c8-3bc55157f75c",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-3-condition-a:Condition_A.js",
+      "project": "chatgpt-js-task-3-condition-a",
+      "line": 23,
+      "hash": "9838be22ea0d19f1c5b305e177060396",
+      "textRange": {
+        "startLine": 23,
+        "endLine": 23,
+        "startOffset": 8,
+        "endOffset": 13
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.isNaN` over `isNaN`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-04-23T20:11:18+0000",
+      "updateDate": "2026-04-23T20:11:18+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "40d44917-bde4-4010-9f87-8787f2a081ef",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-3-condition.b:Condition.B.js",
+      "project": "chatgpt-js-task-3-condition.b",
+      "line": 11,
+      "hash": "038e588539a77dba4145d1fb20c23b73",
+      "textRange": {
+        "startLine": 11,
+        "endLine": 11,
+        "startOffset": 19,
+        "endOffset": 27
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-04-23T20:10:36+0000",
+      "updateDate": "2026-04-23T20:10:36+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "140e52a5-52b2-42b4-9cd9-ddaad6eeabdc",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-3-condition.b:Condition.B.js",
+      "project": "chatgpt-js-task-3-condition.b",
+      "line": 12,
+      "hash": "9838be22ea0d19f1c5b305e177060396",
+      "textRange": {
+        "startLine": 12,
+        "endLine": 12,
+        "startOffset": 8,
+        "endOffset": 13
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.isNaN` over `isNaN`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-04-23T20:10:36+0000",
+      "updateDate": "2026-04-23T20:10:36+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "19b02276-218c-46f7-9674-504d70199bf5",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-10-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-10-condition-b",
+      "line": 78,
+      "hash": "161b8313784081f5965c2da97df48970",
+      "textRange": {
+        "startLine": 78,
+        "endLine": 86,
+        "startOffset": 4,
+        "endOffset": 3
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception or don't catch it at all.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-04-23T20:08:20+0000",
+      "updateDate": "2026-04-23T20:08:20+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "d1e68637-4f13-4461-9da5-f167e1554060",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-1-condition-b:Condition_B.js",
+      "project": "chatgpt-js-task-1-condition-b",
+      "line": 90,
+      "hash": "161b8313784081f5965c2da97df48970",
+      "textRange": {
+        "startLine": 90,
+        "endLine": 96,
+        "startOffset": 4,
+        "endOffset": 3
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception or don't catch it at all.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-04-23T20:07:21+0000",
+      "updateDate": "2026-04-23T20:07:21+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "979c1d68-73b1-4fed-8f7e-a9e7669be61a",
+      "rule": "javascript:S6353",
+      "severity": "MINOR",
+      "component": "chatgpt-js-task-1-condition-a:Condition_A.js",
+      "project": "chatgpt-js-task-1-condition-a",
+      "line": 29,
+      "hash": "73de60ac250c22dfa594472e3e054e5f",
+      "textRange": {
+        "startLine": 29,
+        "endLine": 29,
+        "startOffset": 5,
+        "endOffset": 10
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Use concise character class syntax '\\d' instead of '[0-9]'.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "regex",
+        "type-dependent"
+      ],
+      "creationDate": "2026-04-23T20:06:47+0000",
+      "updateDate": "2026-04-23T20:06:47+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ],
+  "components": [
+    {
+      "key": "chatgpt-js-task-9-condition-a:Condition_A.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_A.js",
+      "longName": "Condition_A.js",
+      "path": "Condition_A.js"
+    },
+    {
+      "key": "chatgpt-js-task-5-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-5-condition-b",
+      "longName": "chatgpt-js-task-5-condition-b"
+    },
+    {
+      "key": "chatgpt-python-task-2-condition-b:Condition_B.py",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.py",
+      "longName": "Condition_B.py",
+      "path": "Condition_B.py"
+    },
+    {
+      "key": "chatgpt-python-task-7-condition-a:Condition_A.py",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_A.py",
+      "longName": "Condition_A.py",
+      "path": "Condition_A.py"
+    },
+    {
+      "key": "chatgpt-python-task-6-condition-b:Condition_B.py",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.py",
+      "longName": "Condition_B.py",
+      "path": "Condition_B.py"
+    },
+    {
+      "key": "chatgpt-js-task-6-condition-a:Condition_A.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_A.js",
+      "longName": "Condition_A.js",
+      "path": "Condition_A.js"
+    },
+    {
+      "key": "chatgpt-js-task-5-condition-b:Condition_B.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.js",
+      "longName": "Condition_B.js",
+      "path": "Condition_B.js"
+    },
+    {
+      "key": "chatgpt-python-task-4-condition-b:Condition_B.py",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.py",
+      "longName": "Condition_B.py",
+      "path": "Condition_B.py"
+    },
+    {
+      "key": "chatgpt-js-task-4-condition-b:Condition_B.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.js",
+      "longName": "Condition_B.js",
+      "path": "Condition_B.js"
+    },
+    {
+      "key": "chatgpt-js-task-1-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-1-condition-b",
+      "longName": "chatgpt-js-task-1-condition-b"
+    },
+    {
+      "key": "chatgpt-python-task-1-condition-b:Condition_B.py",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.py",
+      "longName": "Condition_B.py",
+      "path": "Condition_B.py"
+    },
+    {
+      "key": "chatgpt-python-task-2-condition-a:Condition_A.py",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_A.py",
+      "longName": "Condition_A.py",
+      "path": "Condition_A.py"
+    },
+    {
+      "key": "chatgpt-js-task-1-condition-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-1-condition-a",
+      "longName": "chatgpt-js-task-1-condition-a"
+    },
+    {
+      "key": "chatgpt-python-task-5-condition-a:Condition_A.py",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_A.py",
+      "longName": "Condition_A.py",
+      "path": "Condition_A.py"
+    },
+    {
+      "key": "chatgpt-js-task-4-condition-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-4-condition-a",
+      "longName": "chatgpt-js-task-4-condition-a"
+    },
+    {
+      "key": "chatgpt-python-task-7-condition-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-python-task-7-condition-a",
+      "longName": "chatgpt-python-task-7-condition-a"
+    },
+    {
+      "key": "chatgpt-python-task-6-condition-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-python-task-6-condition-a",
+      "longName": "chatgpt-python-task-6-condition-a"
+    },
+    {
+      "key": "chatgpt-python-task-5-condition-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-python-task-5-condition-a",
+      "longName": "chatgpt-python-task-5-condition-a"
+    },
+    {
+      "key": "chatgpt-python-task-1-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-python-task-1-condition-b",
+      "longName": "chatgpt-python-task-1-condition-b"
+    },
+    {
+      "key": "chatgpt-js-task-1-condition-a:Condition_A.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_A.js",
+      "longName": "Condition_A.js",
+      "path": "Condition_A.js"
+    },
+    {
+      "key": "chatgpt-js-task-9-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-9-condition-b",
+      "longName": "chatgpt-js-task-9-condition-b"
+    },
+    {
+      "key": "chatgpt-js-task-10-condition-b:Condition_B.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.js",
+      "longName": "Condition_B.js",
+      "path": "Condition_B.js"
+    },
+    {
+      "key": "claude-js-task-3-cond-b:cond_b.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "cond_b.js",
+      "longName": "cond_b.js",
+      "path": "cond_b.js"
+    },
+    {
+      "key": "chatgpt-js-task-3-condition-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-3-condition-a",
+      "longName": "chatgpt-js-task-3-condition-a"
+    },
+    {
+      "key": "chatgpt-js-task-9-condition-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-9-condition-a",
+      "longName": "chatgpt-js-task-9-condition-a"
+    },
+    {
+      "key": "chatgpt-js-task-6-condition-b:Condition_B.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.js",
+      "longName": "Condition_B.js",
+      "path": "Condition_B.js"
+    },
+    {
+      "key": "chatgpt-js-task-3-condition-a:Condition_A.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_A.js",
+      "longName": "Condition_A.js",
+      "path": "Condition_A.js"
+    },
+    {
+      "key": "chatgpt-js-task-5-condition-a:Condition_A.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_A.js",
+      "longName": "Condition_A.js",
+      "path": "Condition_A.js"
+    },
+    {
+      "key": "chatgpt-python-task-5-condition-b:Condition_B.py",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.py",
+      "longName": "Condition_B.py",
+      "path": "Condition_B.py"
+    },
+    {
+      "key": "chatgpt-js-task-8-condition-a:Condition_A.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_A.js",
+      "longName": "Condition_A.js",
+      "path": "Condition_A.js"
+    },
+    {
+      "key": "chatgpt-js-task-4-condition-a:Condition_A.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_A.js",
+      "longName": "Condition_A.js",
+      "path": "Condition_A.js"
+    },
+    {
+      "key": "chatgpt-python-task-6-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-python-task-6-condition-b",
+      "longName": "chatgpt-python-task-6-condition-b"
+    },
+    {
+      "key": "claude-js-task-3-cond-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "claude-js-task-3-cond-b",
+      "longName": "claude-js-task-3-cond-b"
+    },
+    {
+      "key": "chatgpt-js-task-5-condition-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-5-condition-a",
+      "longName": "chatgpt-js-task-5-condition-a"
+    },
+    {
+      "key": "chatgpt-python-task-6-condition-a:Condition_A.py",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_A.py",
+      "longName": "Condition_A.py",
+      "path": "Condition_A.py"
+    },
+    {
+      "key": "chatgpt-js-task-9-condition-b:Condition_B.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.js",
+      "longName": "Condition_B.js",
+      "path": "Condition_B.js"
+    },
+    {
+      "key": "chatgpt-js-task-1-condition-b:Condition_B.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.js",
+      "longName": "Condition_B.js",
+      "path": "Condition_B.js"
+    },
+    {
+      "key": "chatgpt-python-task-4-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-python-task-4-condition-b",
+      "longName": "chatgpt-python-task-4-condition-b"
+    },
+    {
+      "key": "claude-js-task-1-cond-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "claude-js-task-1-cond-a",
+      "longName": "claude-js-task-1-cond-a"
+    },
+    {
+      "key": "chatgpt-python-task-2-condition-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-python-task-2-condition-a",
+      "longName": "chatgpt-python-task-2-condition-a"
+    },
+    {
+      "key": "claude-js-task-3-cond-a:cond_a.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "cond_a.js",
+      "longName": "cond_a.js",
+      "path": "cond_a.js"
+    },
+    {
+      "key": "chatgpt-js-task-8-condition-b:Condition_B.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition_B.js",
+      "longName": "Condition_B.js",
+      "path": "Condition_B.js"
+    },
+    {
+      "key": "chatgpt-python-task-5-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-python-task-5-condition-b",
+      "longName": "chatgpt-python-task-5-condition-b"
+    },
+    {
+      "key": "chatgpt-js-task-10-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-10-condition-b",
+      "longName": "chatgpt-js-task-10-condition-b"
+    },
+    {
+      "key": "chatgpt-js-task-6-condition-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-6-condition-a",
+      "longName": "chatgpt-js-task-6-condition-a"
+    },
+    {
+      "key": "chatgpt-js-task-4-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-4-condition-b",
+      "longName": "chatgpt-js-task-4-condition-b"
+    },
+    {
+      "key": "chatgpt-js-task-3-condition.b:Condition.B.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Condition.B.js",
+      "longName": "Condition.B.js",
+      "path": "Condition.B.js"
+    },
+    {
+      "key": "claude-js-task-3-cond-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "claude-js-task-3-cond-a",
+      "longName": "claude-js-task-3-cond-a"
+    },
+    {
+      "key": "chatgpt-js-task-6-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-6-condition-b",
+      "longName": "chatgpt-js-task-6-condition-b"
+    },
+    {
+      "key": "chatgpt-js-task-8-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-8-condition-b",
+      "longName": "chatgpt-js-task-8-condition-b"
+    },
+    {
+      "key": "chatgpt-python-task-2-condition-b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-python-task-2-condition-b",
+      "longName": "chatgpt-python-task-2-condition-b"
+    },
+    {
+      "key": "claude-js-task-1-cond-a:cond_a.js",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "cond_a.js",
+      "longName": "cond_a.js",
+      "path": "cond_a.js"
+    },
+    {
+      "key": "chatgpt-js-task-3-condition.b",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-3-condition.b",
+      "longName": "chatgpt-js-task-3-condition.b"
+    },
+    {
+      "key": "chatgpt-js-task-8-condition-a",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "chatgpt-js-task-8-condition-a",
+      "longName": "chatgpt-js-task-8-condition-a"
+    }
+  ],
+  "facets": []
+}

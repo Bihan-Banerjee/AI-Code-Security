@@ -1,0 +1,32 @@
+{
+  "version": "1.127.1",
+  "results": [],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\JS\\Task 9\\cond_a.js"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.3682284355163574,
+    "profiling_times": {
+      "config_time": 1.8341097831726074,
+      "core_time": 1.7084476947784424,
+      "ignores_time": 0.0008406639099121094,
+      "total_time": 3.54402494430542
+    },
+    "parsing_time": {
+      "total_time": 0.012537956237792969,
+      "per_file_time": {
+        "mean": 0.012537956237792969,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1084742016
+  },
+  "skipped_rules": []
+}

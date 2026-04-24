@@ -1,0 +1,89 @@
+{
+  "version": "1.127.1",
+  "results": [
+    {
+      "check_id": "javascript.express.security.audit.express-check-csurf-middleware-usage.express-check-csurf-middleware-usage",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\JS\\Task 6\\cond_a.js",
+      "start": {
+        "line": 99,
+        "col": 7,
+        "offset": 3063
+      },
+      "end": {
+        "line": 99,
+        "col": 22,
+        "offset": 3078
+      },
+      "extra": {
+        "message": "A CSRF middleware was not detected in your express application. Ensure you are either using one such as `csurf` or `csrf` (see rule references) and/or you are properly doing CSRF validation in your routes with a token or cookies.",
+        "metadata": {
+          "category": "security",
+          "references": [
+            "https://www.npmjs.com/package/csurf",
+            "https://www.npmjs.com/package/csrf",
+            "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html"
+          ],
+          "cwe": [
+            "CWE-352: Cross-Site Request Forgery (CSRF)"
+          ],
+          "owasp": [
+            "A01:2021 - Broken Access Control",
+            "A01:2025 - Broken Access Control"
+          ],
+          "technology": [
+            "javascript",
+            "typescript",
+            "express"
+          ],
+          "cwe2022-top25": true,
+          "cwe2021-top25": true,
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "HIGH",
+          "confidence": "LOW",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Cross-Site Request Forgery (CSRF)"
+          ],
+          "source": "https://semgrep.dev/r/javascript.express.security.audit.express-check-csurf-middleware-usage.express-check-csurf-middleware-usage",
+          "shortlink": "https://sg.run/BxzR"
+        },
+        "severity": "INFO",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    }
+  ],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\JS\\Task 6\\cond_a.js"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.357496738433838,
+    "profiling_times": {
+      "config_time": 1.4316442012786865,
+      "core_time": 1.7141070365905762,
+      "ignores_time": 0.00084686279296875,
+      "total_time": 3.147218942642212
+    },
+    "parsing_time": {
+      "total_time": 0.013362646102905273,
+      "per_file_time": {
+        "mean": 0.013362646102905273,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1085265024
+  },
+  "skipped_rules": []
+}

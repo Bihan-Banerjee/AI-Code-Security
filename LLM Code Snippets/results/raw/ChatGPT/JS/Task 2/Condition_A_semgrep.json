@@ -15,7 +15,7 @@
         "offset": 1120
       },
       "extra": {
-        "message": "Don\u00e2\u20ac\u2122t use the default session cookie name Using the default session cookie name can open your app to attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to fingerprint the server and target attacks accordingly.",
+        "message": "Don\u2019t use the default session cookie name Using the default session cookie name can open your app to attacks. The security issue posed is similar to X-Powered-By: a potential attacker can use it to fingerprint the server and target attacks accordingly.",
         "metadata": {
           "cwe": [
             "CWE-522: Insufficiently Protected Credentials"
@@ -275,24 +275,24 @@
   },
   "time": {
     "rules": [],
-    "rules_parse_time": 1.615192174911499,
+    "rules_parse_time": 1.823286771774292,
     "profiling_times": {
-      "config_time": 1.5778818130493164,
-      "core_time": 2.060988426208496,
-      "ignores_time": 0.0008599758148193359,
-      "total_time": 3.640378475189209
+      "config_time": 2.1531577110290527,
+      "core_time": 2.6433935165405273,
+      "ignores_time": 0.002861499786376953,
+      "total_time": 4.801421642303467
     },
     "parsing_time": {
-      "total_time": 0.011138439178466797,
+      "total_time": 0.016270160675048828,
       "per_file_time": {
-        "mean": 0.011138439178466797,
+        "mean": 0.016270160675048828,
         "std_dev": 0.0
       },
       "very_slow_files": []
     },
     "targets": [],
     "total_bytes": 0,
-    "max_memory_bytes": 1082838208
+    "max_memory_bytes": 1085214976
   },
   "skipped_rules": []
 }

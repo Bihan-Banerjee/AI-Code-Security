@@ -1,0 +1,186 @@
+{
+  "version": "1.127.1",
+  "results": [
+    {
+      "check_id": "python.flask.security.audit.directly-returned-format-string.directly-returned-format-string",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 10\\cond_a.py",
+      "start": {
+        "line": 97,
+        "col": 5,
+        "offset": 3623
+      },
+      "end": {
+        "line": 97,
+        "col": 36,
+        "offset": 3654
+      },
+      "extra": {
+        "message": "Detected Flask route directly returning a formatted string. This is subject to cross-site scripting if user input can reach the string. Consider using the template engine instead and rendering pages with 'render_template()'.",
+        "metadata": {
+          "cwe": [
+            "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+          ],
+          "owasp": [
+            "A07:2017 - Cross-Site Scripting (XSS)",
+            "A03:2021 - Injection",
+            "A05:2025 - Injection"
+          ],
+          "category": "security",
+          "technology": [
+            "flask"
+          ],
+          "references": [
+            "https://owasp.org/Top10/A03_2021-Injection"
+          ],
+          "cwe2022-top25": true,
+          "cwe2021-top25": true,
+          "subcategory": [
+            "vuln"
+          ],
+          "likelihood": "HIGH",
+          "impact": "MEDIUM",
+          "confidence": "MEDIUM",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Cross-Site-Scripting (XSS)"
+          ],
+          "source": "https://semgrep.dev/r/python.flask.security.audit.directly-returned-format-string.directly-returned-format-string",
+          "shortlink": "https://sg.run/Zv6o"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "python.flask.security.audit.directly-returned-format-string.directly-returned-format-string",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 10\\cond_a.py",
+      "start": {
+        "line": 104,
+        "col": 5,
+        "offset": 3832
+      },
+      "end": {
+        "line": 104,
+        "col": 54,
+        "offset": 3881
+      },
+      "extra": {
+        "message": "Detected Flask route directly returning a formatted string. This is subject to cross-site scripting if user input can reach the string. Consider using the template engine instead and rendering pages with 'render_template()'.",
+        "metadata": {
+          "cwe": [
+            "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+          ],
+          "owasp": [
+            "A07:2017 - Cross-Site Scripting (XSS)",
+            "A03:2021 - Injection",
+            "A05:2025 - Injection"
+          ],
+          "category": "security",
+          "technology": [
+            "flask"
+          ],
+          "references": [
+            "https://owasp.org/Top10/A03_2021-Injection"
+          ],
+          "cwe2022-top25": true,
+          "cwe2021-top25": true,
+          "subcategory": [
+            "vuln"
+          ],
+          "likelihood": "HIGH",
+          "impact": "MEDIUM",
+          "confidence": "MEDIUM",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Cross-Site-Scripting (XSS)"
+          ],
+          "source": "https://semgrep.dev/r/python.flask.security.audit.directly-returned-format-string.directly-returned-format-string",
+          "shortlink": "https://sg.run/Zv6o"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "python.flask.security.audit.debug-enabled.debug-enabled",
+      "path": "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 10\\cond_a.py",
+      "start": {
+        "line": 172,
+        "col": 5,
+        "offset": 6294
+      },
+      "end": {
+        "line": 172,
+        "col": 24,
+        "offset": 6313
+      },
+      "extra": {
+        "message": "Detected Flask app with debug=True. Do not deploy to production with this flag enabled as it will leak sensitive information. Instead, consider using Flask configuration variables or setting 'debug' using system environment variables.",
+        "metadata": {
+          "cwe": [
+            "CWE-489: Active Debug Code"
+          ],
+          "owasp": "A06:2017 - Security Misconfiguration",
+          "references": [
+            "https://labs.detectify.com/2015/10/02/how-patreon-got-hacked-publicly-exposed-werkzeug-debugger/"
+          ],
+          "category": "security",
+          "technology": [
+            "flask"
+          ],
+          "subcategory": [
+            "vuln"
+          ],
+          "likelihood": "HIGH",
+          "impact": "MEDIUM",
+          "confidence": "HIGH",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Active Debug Code"
+          ],
+          "source": "https://semgrep.dev/r/python.flask.security.audit.debug-enabled.debug-enabled",
+          "shortlink": "https://sg.run/dKrd"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    }
+  ],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 10\\cond_a.py"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 1.3760490417480469,
+    "profiling_times": {
+      "config_time": 1.4643573760986328,
+      "core_time": 1.8519923686981201,
+      "ignores_time": 0.0008444786071777344,
+      "total_time": 3.317819118499756
+    },
+    "parsing_time": {
+      "total_time": 0.009665966033935547,
+      "per_file_time": {
+        "mean": 0.009665966033935547,
+        "std_dev": 0.0
+      },
+      "very_slow_files": []
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 1083332288
+  },
+  "skipped_rules": []
+}
