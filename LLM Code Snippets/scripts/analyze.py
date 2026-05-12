@@ -41,7 +41,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 # Update this to match your actual task count
 SNIPPETS_PER_CELL = 10
 
-LLMS  = ["ChatGPT", "Claude", "Gemini", "Grok", "DeepSeek"]
+LLMS  = ["ChatGPT", "Claude", "Gemini", "Grok", "DeepSeek", "CoPilot", "Grok"]
 LANGS = ["Python", "JS"]
 
 
