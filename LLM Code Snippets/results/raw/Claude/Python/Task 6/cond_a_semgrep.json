@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.jwt.security.jwt-hardcode.jwt-python-hardcoded-secret",
@@ -101,32 +100,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Claude\\Python\\Task 6\\cond_a.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 2.0231716632843018,
-    "profiling_times": {
-      "config_time": 2.574916124343872,
-      "core_time": 2.718012571334839,
-      "ignores_time": 0.0019006729125976562,
-      "total_time": 5.296642303466797
-    },
-    "parsing_time": {
-      "total_time": 0.015344381332397461,
-      "per_file_time": {
-        "mean": 0.015344381332397461,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1082360256
-  },
-  "skipped_rules": []
+  "errors": []
 }

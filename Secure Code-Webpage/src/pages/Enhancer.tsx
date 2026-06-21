@@ -1,52 +1,26 @@
 import { useState, useRef } from "react";
-import api from "@/lib/api";
-import { Textarea } from "@/components/ui/textarea";
+import { getToken } from "@/lib/auth";
+import { getApiBaseURL } from "@/lib/api";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { toast } from "react-hot-toast";
-import {
-  Loader2,
-  Sparkles,
-  Upload,
-  FileCode,
-  CheckCircle2,
-  AlertCircle,
-  Copy,
-  Download
-} from "lucide-react";
-import SecurityHeader from "@/components/SecurityHeader";
+import Header from "@/components/layout/Header";
 import Footer from "@/components/Footer";
+import CodeMirrorEditor from "@/components/CodeMirrorEditor";
+import Reveal from "@/components/effects/Reveal";
+import { toast } from "sonner";
+import { Loader2, Sparkles, Upload, FileCode, CheckCircle2, AlertCircle, Copy, Download } from "lucide-react";
 import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
+  Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from "@/components/ui/select";
 
 type DiffLine = { type: "add" | "remove" | "context"; content: string };
-
+interface Candidate { model: string; code: string }
+interface Explanation { change: string; reason: string }
 interface EnhanceResult {
   enhanced_code: string;
   diff: DiffLine[];
   candidates: Candidate[];
   explanations: Explanation[];
-}
-
-interface Candidate {
-  model: string;
-  code: string;
-}
-
-interface Explanation {
-  change: string;
-  reason: string;
-}
-
-function getStoredToken(): string | null {
-  return sessionStorage.getItem("token") || localStorage.getItem("token") || null;
 }
 
 export default function Enhancer() {
@@ -60,67 +34,30 @@ export default function Enhancer() {
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileUpload = async (uploadedFiles: FileList | null) => {
-    if (!uploadedFiles || uploadedFiles.length === 0) return;
-
-    const file = uploadedFiles[0];
-    const extension = file.name.substring(file.name.lastIndexOf("."));
-
-    const validExtensions = language === "python"
-      ? [".py", ".pyw"]
-      : [".js", ".jsx", ".ts", ".tsx", ".mjs"];
-
-    if (!validExtensions.includes(extension.toLowerCase())) {
-      toast.error(`Invalid file type. Please upload ${language} files only.`);
-      return;
-    }
-
-    try {
-      const content = await readFileContent(file);
-      setCode(content);
-      setFilename(file.name);
-      toast.success(`File "${file.name}" loaded successfully!`);
-    } catch (error) {
-      toast.error("Failed to read file");
-      console.error(error);
-    }
-  };
-
-  const readFileContent = (file: Blob): Promise<string> => {
-    return new Promise((resolve, reject) => {
+  const readFileContent = (file: Blob): Promise<string> =>
+    new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => resolve(e.target?.result as string);
       reader.onerror = reject;
       reader.readAsText(file);
     });
-  };
 
-  const handleDragEnter = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    handleFileUpload(e.dataTransfer.files);
-  };
-
-  const handleBrowseClick = () => {
-    fileInputRef.current?.click();
+  const handleFileUpload = async (uploadedFiles: FileList | null) => {
+    if (!uploadedFiles || uploadedFiles.length === 0) return;
+    const file = uploadedFiles[0];
+    const ext = file.name.substring(file.name.lastIndexOf("."));
+    const valid = language === "python" ? [".py", ".pyw"] : [".js", ".jsx", ".ts", ".tsx", ".mjs"];
+    if (!valid.includes(ext.toLowerCase())) {
+      toast.error(`Invalid file type. Please upload ${language} files only.`);
+      return;
+    }
+    try {
+      setCode(await readFileContent(file));
+      setFilename(file.name);
+      toast.success(`File "${file.name}" loaded!`);
+    } catch {
+      toast.error("Failed to read file");
+    }
   };
 
   const handleEnhance = async () => {
@@ -128,62 +65,40 @@ export default function Enhancer() {
       toast.error("Please provide some code to enhance!");
       return;
     }
-
+    const token = getToken();
+    if (!token) {
+      toast.error("You must be logged in!");
+      return;
+    }
     try {
       setLoading(true);
       setResult(null);
       setProgress(0);
-
-      const token = getStoredToken();
-      if (!token) {
-        toast.error("You must be logged in!");
-        setLoading(false);
-        return;
-      }
-
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/enhance-stream`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ code, language }),
-        }
-      );
-
-      if (!res.ok || !res.body) {
-        throw new Error("Server error");
-      }
+      const res = await fetch(`${getApiBaseURL()}/api/enhance-stream`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ code, language }),
+      });
+      if (!res.ok || !res.body) throw new Error("Server error");
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
-
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-
         buffer += decoder.decode(value, { stream: true });
         const lines = buffer.split("\n");
         buffer = lines.pop() || "";
-
         for (const line of lines) {
           if (!line.trim()) continue;
-
           const msg = JSON.parse(line);
-
-          if (msg.type === "progress") {
-            setProgress(msg.progress);
-          }
-
+          if (msg.type === "progress") setProgress(msg.progress);
           if (msg.type === "result") {
             setResult(msg.data);
             setLoading(false);
             toast.success("Enhancement complete!");
           }
-
           if (msg.type === "error") {
             toast.error(msg.message);
             setLoading(false);
@@ -201,10 +116,8 @@ export default function Enhancer() {
     navigator.clipboard.writeText(text);
     toast.success("Copied to clipboard!");
   };
-
-  const downloadCode = (codeText: string, fname: string) => {
-    const blob = new Blob([codeText], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
+  const downloadCode = (text: string, fname: string) => {
+    const url = URL.createObjectURL(new Blob([text], { type: "text/plain" }));
     const a = document.createElement("a");
     a.href = url;
     a.download = fname;
@@ -214,357 +127,193 @@ export default function Enhancer() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <SecurityHeader />
-      <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 p-4 md:p-8">
-        <div className="max-w-7xl mx-auto space-y-8">
+    <div className="relative min-h-screen bg-background bg-grid">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <Header />
+      <main className="relative mx-auto max-w-7xl px-4 py-12">
+        <Reveal className="mb-10 text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-semibold text-accent">
+            <Sparkles className="h-4 w-4" /> AI Enhancer
+          </span>
+          <h1 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
+            Turn insecure code <span className="text-gradient">secure</span>
+          </h1>
+          <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+            Deterministic fixes for known-insecure patterns, with a clear diff and an explanation for every change.
+          </p>
+        </Reveal>
 
-          {/* Hero Section */}
-          <div className="text-center space-y-4">
-            <div className="inline-block bg-blue-100 text-blue-800 font-semibold px-4 py-1 rounded-full text-sm">
-              AI-Powered Code Enhancement
-            </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 flex items-center justify-center gap-3">
-              <Sparkles className="w-8 h-8 text-blue-600" />
-              Smart Code Enhancer
-            </h1>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Transform your insecure or inefficient code into production-ready,
-              secure implementations with AI-powered suggestions and multi-model validation.
-            </p>
-          </div>
-
-          {/* Stats Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <Card className="group border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">3+</div>
-                <div className="text-sm text-gray-600 font-medium">AI Models</div>
-                <div className="h-1 w-0 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
-              </CardContent>
-            </Card>
-
-            <Card className="group border-2 border-green-200 hover:border-green-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-green-600 mb-2 group-hover:scale-110 transition-transform">99%</div>
-                <div className="text-sm text-gray-600 font-medium">Success Rate</div>
-                <div className="h-1 w-0 bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
-              </CardContent>
-            </Card>
-
-            <Card className="group border-2 border-purple-200 hover:border-purple-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-purple-600 mb-2 group-hover:scale-110 transition-transform">2</div>
-                <div className="text-sm text-gray-600 font-medium">Languages</div>
-                <div className="h-1 w-0 bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
-              </CardContent>
-            </Card>
-
-            <Card className="group border-2 border-orange-200 hover:border-orange-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-orange-600 mb-2 group-hover:scale-110 transition-transform">Instant</div>
-                <div className="text-sm text-gray-600 font-medium">Results</div>
-                <div className="h-1 w-0 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-
-            {/* Left Column - Input */}
-            <div className="space-y-6">
-
-              {/* Language Selection */}
-              <Card className="shadow-lg rounded-2xl border-2 border-blue-100">
-                <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
-                  <CardTitle className="flex items-center gap-2 text-blue-900">
-                    <FileCode className="w-5 h-5" />
-                    Configuration
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4 pt-6">
-                  <div className="space-y-2">
-                    <Label className="text-sm font-semibold text-gray-700">
-                      Programming Language
-                    </Label>
-                    <Select onValueChange={setLanguage} defaultValue="python">
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select language" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="python">
-                          <span className="flex items-center gap-2">Python</span>
-                        </SelectItem>
-                        <SelectItem value="javascript">
-                          <span className="flex items-center gap-2">JavaScript</span>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label className="text-sm font-semibold text-gray-700">
-                      Filename (Optional)
-                    </Label>
-                    <Input
-                      value={filename}
-                      onChange={(e) => setFilename(e.target.value)}
-                      placeholder="code.py"
-                      className="font-mono text-sm"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Drag & Drop Zone */}
-              <Card className="shadow-lg rounded-2xl border-2 border-blue-100">
-                <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
-                  <CardTitle className="flex items-center gap-2 text-blue-900">
-                    <Upload className="w-5 h-5" />
-                    Upload Code File
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <div
-                    onDragEnter={handleDragEnter}
-                    onDragOver={handleDragOver}
-                    onDragLeave={handleDragLeave}
-                    onDrop={handleDrop}
-                    className={`border-2 border-dashed rounded-lg p-8 text-center transition-all ${
-                      isDragging
-                        ? "border-blue-500 bg-blue-50 scale-105"
-                        : "border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50"
-                    }`}
-                  >
-                    <Upload className={`mx-auto h-12 w-12 mb-4 transition-colors ${
-                      isDragging ? "text-blue-600" : "text-gray-400"
-                    }`} />
-                    <p className="text-lg font-medium text-gray-700 mb-2">
-                      {isDragging ? "Drop your file here" : "Drag & Drop your code file"}
-                    </p>
-                    <p className="text-sm text-gray-500 mb-4">or</p>
-                    <Button
-                      variant="outline"
-                      onClick={handleBrowseClick}
-                      className="border-blue-300 hover:bg-blue-50"
-                    >
-                      <FileCode className="mr-2 h-4 w-4" />
-                      Browse Files
-                    </Button>
-                    <p className="text-xs text-gray-400 mt-4">
-                      Supported: {language === "python" ? ".py, .pyw" : ".js, .jsx, .ts, .tsx, .mjs"}
-                    </p>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept={language === "python" ? ".py,.pyw" : ".js,.jsx,.ts,.tsx,.mjs"}
-                      onChange={(e) => handleFileUpload(e.target.files)}
-                      className="hidden"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Code Input */}
-              <Card className="shadow-lg rounded-2xl border-2 border-blue-100">
-                <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
-                  <CardTitle className="flex items-center gap-2 text-blue-900">
-                    <FileCode className="w-5 h-5" />
-                    Your Code
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4 pt-6">
-                  <Textarea
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    placeholder="Paste your insecure or inefficient code here..."
-                    rows={14}
-                    className="font-mono text-sm resize-none"
-                  />
-
-                  <Button
-                    onClick={handleEnhance}
-                    disabled={loading || !code.trim()}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
-                  >
-                    {loading ? (
-                      <>
-                        <Loader2 className="animate-spin w-5 h-5 mr-2" />
-                        Enhancing with AI...
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="w-5 h-5 mr-2" />
-                        Enhance Code Now
-                      </>
-                    )}
-                  </Button>
-
-                  {loading && (
-                    <div className="mt-2">
-                      <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                        <div
-                          className={`h-3 rounded-full transition-all duration-500 bg-blue-600 ${
-                            progress <= 20 ? "animate-pulse" : ""
-                          }`}
-                          style={{ width: `${Math.max(progress, 15)}%` }}
-                        />
-                      </div>
-                      <p className="text-xs text-center mt-1 text-gray-500">
-                        {progress <= 20
-                          ? "Analyzing your code with AI..."
-                          : `${progress}%`}
-                      </p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+        <div className="grid gap-8 lg:grid-cols-2">
+          {/* Input */}
+          <div className="space-y-6">
+            <div className="glass grid gap-4 rounded-2xl p-6 sm:grid-cols-2">
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-foreground/80">Language</label>
+                <Select onValueChange={setLanguage} defaultValue="python">
+                  <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="python">Python</SelectItem>
+                    <SelectItem value="javascript">JavaScript</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-foreground/80">Filename</label>
+                <Input value={filename} onChange={(e) => setFilename(e.target.value)} className="font-mono text-sm" />
+              </div>
             </div>
 
-            {/* Right Column - Results */}
-            <div className="space-y-6">
-              {!result ? (
-                <Card className="shadow-lg rounded-2xl border-2 border-blue-100 h-full flex items-center justify-center min-h-[600px]">
-                  <CardContent className="text-center py-12">
-                    <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Sparkles className="w-10 h-10 text-blue-600" />
-                    </div>
-                    <p className="text-gray-500 text-lg mb-2">No results yet</p>
-                    <p className="text-gray-400 text-sm max-w-sm mx-auto">
-                      Upload a file or paste your code, then click "Enhance Code" to see AI-powered improvements
-                    </p>
-                  </CardContent>
-                </Card>
+            <div
+              onDragEnter={(e) => { e.preventDefault(); setIsDragging(true); }}
+              onDragOver={(e) => e.preventDefault()}
+              onDragLeave={(e) => { e.preventDefault(); setIsDragging(false); }}
+              onDrop={(e) => { e.preventDefault(); setIsDragging(false); handleFileUpload(e.dataTransfer.files); }}
+              className={`rounded-2xl border-2 border-dashed p-6 text-center transition-all ${
+                isDragging ? "border-primary bg-primary/10" : "border-border/60 bg-card/30 hover:border-primary/50"
+              }`}
+            >
+              <Upload className={`mx-auto mb-2 h-8 w-8 ${isDragging ? "text-primary" : "text-muted-foreground"}`} />
+              <Button variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+                <FileCode className="mr-2 h-4 w-4" /> Browse File
+              </Button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept={language === "python" ? ".py,.pyw" : ".js,.jsx,.ts,.tsx,.mjs"}
+                onChange={(e) => handleFileUpload(e.target.files)}
+                className="hidden"
+              />
+            </div>
+
+            <div className="glass rounded-2xl p-4">
+              <CodeMirrorEditor
+                value={code}
+                onChange={setCode}
+                language={language}
+                placeholder="Paste your insecure or inefficient code here..."
+                height="360px"
+              />
+            </div>
+
+            <Button
+              onClick={handleEnhance}
+              disabled={loading || !code.trim()}
+              className="h-14 w-full bg-gradient-primary text-base font-semibold text-primary-foreground shadow-glow transition-shadow hover:shadow-glow-accent"
+            >
+              {loading ? (
+                <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Enhancing...</>
               ) : (
-                <>
-                  {/* Explanations */}
-                  <Card className="shadow-lg rounded-2xl border-2 border-green-100">
-                    <CardHeader className="bg-gradient-to-r from-green-50 to-white">
-                      <CardTitle className="flex items-center gap-2 text-green-900">
-                        <CheckCircle2 className="w-5 h-5" />
-                        What Changed & Why
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="pt-6">
-                      {result.explanations?.length > 0 ? (
-                        <ul className="space-y-3">
-                          {result.explanations.map((ex, i) => (
-                            <li key={i} className="flex gap-3 items-start">
-                              <AlertCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                              <div className="text-sm">
-                                <strong className="text-gray-900">{ex.change}:</strong>
-                                <p className="text-gray-600 mt-1">{ex.reason}</p>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-gray-500 text-sm">No specific explanations provided.</p>
-                      )}
-                    </CardContent>
-                  </Card>
-
-                  {/* Candidate Models Tabs */}
-                  {result.candidates?.length > 0 && (
-                    <Card className="shadow-lg rounded-2xl border-2 border-blue-100">
-                      <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
-                        <CardTitle className="text-blue-900">
-                          AI Model Suggestions
-                        </CardTitle>
-                        <p className="text-sm text-gray-600 mt-1">
-                          Compare outputs from {result.candidates.length} different AI models
-                        </p>
-                      </CardHeader>
-                      <CardContent className="pt-6 space-y-4">
-                        <div className="flex gap-2 overflow-x-auto pb-2">
-                          {result.candidates.map((c, i) => (
-                            <Button
-                              key={i}
-                              variant={activeTab === i ? "default" : "outline"}
-                              size="sm"
-                              onClick={() => setActiveTab(i)}
-                              className={`flex-shrink-0 ${
-                                activeTab === i
-                                  ? "bg-blue-600 text-white"
-                                  : "hover:bg-blue-50"
-                              }`}
-                            >
-                              {c.model}
-                            </Button>
-                          ))}
-                        </div>
-
-                        <div className="relative">
-                          <div className="absolute top-2 right-2 flex gap-2 z-10">
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              onClick={() => copyToClipboard(result.candidates[activeTab].code)}
-                              className="bg-white/80 hover:bg-white"
-                            >
-                              <Copy className="w-4 h-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              onClick={() => downloadCode(
-                                result.candidates[activeTab].code,
-                                `enhanced_${result.candidates[activeTab].model}_${filename}`
-                              )}
-                              className="bg-white/80 hover:bg-white"
-                            >
-                              <Download className="w-4 h-4" />
-                            </Button>
-                          </div>
-                          <Textarea
-                            value={result.candidates[activeTab].code}
-                            readOnly
-                            rows={14}
-                            className="font-mono text-sm resize-none pr-24"
-                          />
-                        </div>
-                      </CardContent>
-                    </Card>
-                  )}
-
-                  {/* Final Diff */}
-                  <Card className="shadow-lg rounded-2xl border-2 border-purple-100">
-                    <CardHeader className="bg-gradient-to-r from-purple-50 to-white">
-                      <CardTitle className="text-purple-900">
-                        Code Changes (Diff View)
-                      </CardTitle>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Red lines removed • Green lines added
-                      </p>
-                    </CardHeader>
-                    <CardContent className="pt-6">
-                      <div className="font-mono text-xs border rounded-lg overflow-hidden bg-gray-50">
-                        {(result.diff ?? []).map((line, i) => (
-                          <div
-                            key={i}
-                            className={`px-4 py-1 ${
-                              line.type === "add"
-                                ? "bg-green-50 text-green-900 border-l-4 border-green-500"
-                                : line.type === "remove"
-                                ? "bg-red-50 text-red-900 border-l-4 border-red-500"
-                                : "text-gray-700"
-                            }`}
-                          >
-                            <span className="select-none mr-2 text-gray-400">
-                              {line.type === "add" ? "+" : line.type === "remove" ? "-" : " "}
-                            </span>
-                            <span>{line.content}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </>
+                <><Sparkles className="mr-2 h-5 w-5" /> Enhance Code</>
               )}
-            </div>
+            </Button>
+            {loading && (
+              <div>
+                <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
+                  <div className="h-full rounded-full bg-gradient-primary transition-all duration-500" style={{ width: `${Math.max(progress, 12)}%` }} />
+                </div>
+                <p className="mt-1 text-center text-xs text-muted-foreground">
+                  {progress <= 20 ? "Analyzing your code..." : `${progress}%`}
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Results */}
+          <div className="space-y-6">
+            {!result ? (
+              <div className="glass flex min-h-[600px] items-center justify-center rounded-2xl p-12 text-center">
+                <div>
+                  <div className="mx-auto mb-4 grid h-20 w-20 place-items-center rounded-full bg-accent/10">
+                    <Sparkles className="h-10 w-10 text-accent" />
+                  </div>
+                  <p className="text-lg text-muted-foreground">No results yet</p>
+                  <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground/70">
+                    Paste code and click Enhance to see AI-powered improvements.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="glass rounded-2xl p-6">
+                  <div className="mb-4 flex items-center gap-2 font-display text-lg font-bold">
+                    <CheckCircle2 className="h-5 w-5 text-success" /> What changed &amp; why
+                  </div>
+                  {result.explanations?.length ? (
+                    <ul className="space-y-3">
+                      {result.explanations.map((ex, i) => (
+                        <li key={i} className="flex gap-3">
+                          <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-success" />
+                          <div className="text-sm">
+                            <strong>{ex.change}:</strong>{" "}
+                            <span className="text-muted-foreground">{ex.reason}</span>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">No specific explanations provided.</p>
+                  )}
+                </div>
+
+                {result.candidates?.length > 0 && (
+                  <div className="glass rounded-2xl p-6">
+                    <div className="mb-4 font-display text-lg font-bold">AI model suggestions</div>
+                    <div className="mb-4 flex gap-2 overflow-x-auto pb-2">
+                      {result.candidates.map((c, i) => (
+                        <Button
+                          key={i}
+                          variant={activeTab === i ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => setActiveTab(i)}
+                          className={activeTab === i ? "flex-shrink-0 bg-primary text-primary-foreground" : "flex-shrink-0"}
+                        >
+                          {c.model}
+                        </Button>
+                      ))}
+                    </div>
+                    <div className="relative">
+                      <div className="absolute right-2 top-2 z-10 flex gap-2">
+                        <Button size="icon" variant="ghost" className="h-8 w-8 bg-background/60" onClick={() => copyToClipboard(result.candidates[activeTab].code)}>
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                        <Button size="icon" variant="ghost" className="h-8 w-8 bg-background/60"
+                          onClick={() => downloadCode(result.candidates[activeTab].code, `enhanced_${result.candidates[activeTab].model}_${filename}`)}>
+                          <Download className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <CodeMirrorEditor value={result.candidates[activeTab].code} language={language} readOnly height="320px" />
+                    </div>
+                  </div>
+                )}
+
+                <div className="glass rounded-2xl p-6">
+                  <div className="mb-1 font-display text-lg font-bold">Code changes (diff)</div>
+                  <p className="mb-4 text-sm text-muted-foreground">Red removed · green added</p>
+                  <div className="overflow-hidden rounded-xl border border-border/60 font-mono text-xs">
+                    {(result.diff ?? []).map((line, i) => (
+                      <div
+                        key={i}
+                        className={`px-4 py-1 ${
+                          line.type === "add"
+                            ? "border-l-2 border-success bg-success/10 text-success"
+                            : line.type === "remove"
+                            ? "border-l-2 border-destructive bg-destructive/10 text-destructive"
+                            : "text-muted-foreground"
+                        }`}
+                      >
+                        <span className="mr-2 select-none opacity-50">
+                          {line.type === "add" ? "+" : line.type === "remove" ? "-" : " "}
+                        </span>
+                        {line.content}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

@@ -1,7 +1,4 @@
-from pymongo import MongoClient
-from datetime import datetime
-import os
+# Re-export from the central db module so all code shares one database.
+from db import reviews_collection
 
-client = MongoClient(os.getenv("MONGO_URI", "mongodb://localhost:27017"))
-db = client["securecode"]  
-reviews_collection = db["reviews"]
+__all__ = ["reviews_collection"]

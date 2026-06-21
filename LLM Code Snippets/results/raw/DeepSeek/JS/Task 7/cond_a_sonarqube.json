@@ -1,0 +1,186 @@
+{
+  "issues": [
+    {
+      "key": "48d18b20-e98c-4b4d-bd98-5aaf8a13566d",
+      "rule": "javascript:S6535",
+      "severity": "MAJOR",
+      "component": "fortiscan-deepseek-js:Task 7/cond_a.js",
+      "project": "fortiscan-deepseek-js",
+      "line": 88,
+      "hash": "8a94d3f479b65f90d37ffc0284f4ba00",
+      "textRange": {
+        "startLine": 88,
+        "endLine": 88,
+        "startOffset": 19,
+        "endOffset": 20
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Unnecessary escape character: \\..",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [],
+      "creationDate": "2026-06-21T15:35:19+0000",
+      "updateDate": "2026-06-21T15:35:19+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "c925c419-771d-4744-ae5b-2e155b480abc",
+      "rule": "javascript:S6535",
+      "severity": "MAJOR",
+      "component": "fortiscan-deepseek-js:Task 7/cond_a.js",
+      "project": "fortiscan-deepseek-js",
+      "line": 88,
+      "hash": "8a94d3f479b65f90d37ffc0284f4ba00",
+      "textRange": {
+        "startLine": 88,
+        "endLine": 88,
+        "startOffset": 35,
+        "endOffset": 36
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Unnecessary escape character: \\..",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [],
+      "creationDate": "2026-06-21T15:35:19+0000",
+      "updateDate": "2026-06-21T15:35:19+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "27343e94-a2ee-4ff9-8977-ccb5c9de71ea",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-deepseek-js:Task 7/cond_a.js",
+      "project": "fortiscan-deepseek-js",
+      "line": 175,
+      "hash": "069f384cf4390c4c34c039de52d0623e",
+      "textRange": {
+        "startLine": 175,
+        "endLine": 175,
+        "startOffset": 12,
+        "endOffset": 20
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:35:19+0000",
+      "updateDate": "2026-06-21T15:35:19+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "85396012-7821-4212-984e-54f5f6588edb",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-deepseek-js:Task 7/cond_a.js",
+      "project": "fortiscan-deepseek-js",
+      "line": 176,
+      "hash": "b633760b1781038a5aaae4404f02ea78",
+      "textRange": {
+        "startLine": 176,
+        "endLine": 176,
+        "startOffset": 13,
+        "endOffset": 21
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:35:19+0000",
+      "updateDate": "2026-06-21T15:35:19+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

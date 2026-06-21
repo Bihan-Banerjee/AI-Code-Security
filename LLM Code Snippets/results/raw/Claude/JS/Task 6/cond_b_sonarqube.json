@@ -1,0 +1,92 @@
+{
+  "issues": [
+    {
+      "key": "9fc47b5e-24b6-4761-90e0-8f3c86cefa7d",
+      "rule": "javascript:S6582",
+      "severity": "MAJOR",
+      "component": "fortiscan-claude-js:Task 6/cond_b.js",
+      "project": "fortiscan-claude-js",
+      "line": 36,
+      "hash": "b95d92c73e979619da523a9373e89e4e",
+      "textRange": {
+        "startLine": 36,
+        "endLine": 36,
+        "startOffset": 6,
+        "endOffset": 54
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer using an optional chain expression instead, as it's more concise and easier to read.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "type-dependent"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "51a7e6b6-e31e-43ce-a617-a0c2453d7e15",
+      "rule": "javascript:S6653",
+      "severity": "MINOR",
+      "component": "fortiscan-claude-js:Task 6/cond_b.js",
+      "project": "fortiscan-claude-js",
+      "line": 81,
+      "hash": "fea17c905da97b39dfd37fab252eeec7",
+      "textRange": {
+        "startLine": 81,
+        "endLine": 81,
+        "startOffset": 8,
+        "endOffset": 58
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Use 'Object.hasOwn()' instead of 'Object.prototype.hasOwnProperty.call()'.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "es2022"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

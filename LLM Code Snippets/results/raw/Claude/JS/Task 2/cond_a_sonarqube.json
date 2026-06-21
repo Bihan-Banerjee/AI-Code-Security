@@ -1,0 +1,136 @@
+{
+  "issues": [
+    {
+      "key": "079da2c8-0c8b-4fec-a8fe-07d5182f04c8",
+      "rule": "javascript:S2068",
+      "severity": "MAJOR",
+      "component": "fortiscan-claude-js:Task 2/cond_a.js",
+      "project": "fortiscan-claude-js",
+      "line": 75,
+      "hash": "69301b1865a547cdba245dbfd01543ed",
+      "textRange": {
+        "startLine": 75,
+        "endLine": 75,
+        "startOffset": 18,
+        "endOffset": 80
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Review this potentially hard-coded password.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "a872ddbc-59f1-4f34-a453-4ab7892935a3",
+      "rule": "javascript:S2068",
+      "severity": "MAJOR",
+      "component": "fortiscan-claude-js:Task 2/cond_a.js",
+      "project": "fortiscan-claude-js",
+      "line": 82,
+      "hash": "69301b1865a547cdba245dbfd01543ed",
+      "textRange": {
+        "startLine": 82,
+        "endLine": 82,
+        "startOffset": 18,
+        "endOffset": 80
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Review this potentially hard-coded password.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "ca70ec83-0eed-4a15-881d-e8784e8cc800",
+      "rule": "javascript:S6582",
+      "severity": "MAJOR",
+      "component": "fortiscan-claude-js:Task 2/cond_a.js",
+      "project": "fortiscan-claude-js",
+      "line": 295,
+      "hash": "41859ed62ba267a36a022b13361aa70b",
+      "textRange": {
+        "startLine": 295,
+        "endLine": 295,
+        "startOffset": 6,
+        "endOffset": 37
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer using an optional chain expression instead, as it's more concise and easier to read.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "type-dependent"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

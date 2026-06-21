@@ -1,0 +1,94 @@
+{
+  "issues": [
+    {
+      "key": "09cc6f54-959b-40f8-8328-a26532643efc",
+      "rule": "javascript:S6522",
+      "severity": "MAJOR",
+      "component": "fortiscan-gemini-js:Task 7/cond_b.js",
+      "project": "fortiscan-gemini-js",
+      "line": 7,
+      "hash": "bcbd02e3f5523d4dc402fd74114fa1d8",
+      "textRange": {
+        "startLine": 7,
+        "endLine": 7,
+        "startOffset": 6,
+        "endOffset": 10
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "'pool' is read-only.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "es2015",
+        "bad-practice",
+        "confusing"
+      ],
+      "creationDate": "2026-06-21T15:36:50+0000",
+      "updateDate": "2026-06-21T15:36:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "9fe60de5-c7fe-451d-af6e-e0aa0ab3ab8d",
+      "rule": "javascript:S2814",
+      "severity": "MAJOR",
+      "component": "fortiscan-gemini-js:Task 7/cond_b.js",
+      "project": "fortiscan-gemini-js",
+      "line": 21,
+      "hash": "3ae1cf5dc108fea64ae261674dc9a7b9",
+      "textRange": {
+        "startLine": 21,
+        "endLine": 21,
+        "startOffset": 7,
+        "endOffset": 11
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "'pool' is already defined.",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "",
+      "tags": [
+        "confusing"
+      ],
+      "creationDate": "2026-06-21T15:36:50+0000",
+      "updateDate": "2026-06-21T15:36:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

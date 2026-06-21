@@ -1,4 +1,48 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "f165a54f-b51d-424c-9e6e-f10c08ee2dc1",
+      "rule": "python:S1481",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-python:Task 3/cond_a.py",
+      "project": "fortiscan-grok-python",
+      "line": 51,
+      "hash": "5e11fcffc5ca1f600d0bf53d38f19ae7",
+      "textRange": {
+        "startLine": 51,
+        "endLine": 51,
+        "startOffset": 24,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove the unused local variable \"e\".",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

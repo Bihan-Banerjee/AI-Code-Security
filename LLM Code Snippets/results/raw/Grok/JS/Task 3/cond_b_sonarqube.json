@@ -1,4 +1,102 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "d502158c-fd74-4329-80cf-08daa986a326",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 3/cond_b.js",
+      "project": "fortiscan-grok-js",
+      "line": 16,
+      "hash": "e0fea9b313f3ddc735f7f5ddbf955bd2",
+      "textRange": {
+        "startLine": 16,
+        "endLine": 16,
+        "startOffset": 19,
+        "endOffset": 27
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "eb70c819-8b03-4aac-859a-ee8fe6dde89b",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 3/cond_b.js",
+      "project": "fortiscan-grok-js",
+      "line": 17,
+      "hash": "9838be22ea0d19f1c5b305e177060396",
+      "textRange": {
+        "startLine": 17,
+        "endLine": 17,
+        "startOffset": 8,
+        "endOffset": 13
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.isNaN` over `isNaN`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

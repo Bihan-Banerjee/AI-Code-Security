@@ -27,6 +27,14 @@ import sys
 import pathlib
 from collections import defaultdict
 
+# Windows consoles default to cp1252, which can't print the box-drawing /
+# star characters used in the tables below. Force UTF-8 so the script runs
+# anywhere without a UnicodeEncodeError.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except (AttributeError, ValueError):
+    pass
+
 # scripts/ is one level inside LLM Code Snippets/, so parent.parent = LLM Code Snippets/
 ROOT     = pathlib.Path(__file__).resolve().parent.parent
 CSV_DIR  = ROOT / "results" / "csv"    # LLM Code Snippets/results/csv/
@@ -41,7 +49,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 # Update this to match your actual task count
 SNIPPETS_PER_CELL = 10
 
-LLMS  = ["ChatGPT", "Claude", "Gemini", "Grok", "DeepSeek", "CoPilot", "Grok"]
+LLMS  = ["ChatGPT", "Claude", "Gemini", "Grok", "DeepSeek", "CoPilot"]
 LANGS = ["Python", "JS"]
 
 
@@ -192,13 +200,14 @@ def table_c(rows):
 
     universal = [c for c in sorted_cwes if all(matrix[c][l] > 0 for l in LLMS)]
     if universal:
-        print(f"\n  ★ Universal (all 5 LLMs): {', '.join(universal)}")
+        print(f"\n  ★ Universal (all {len(LLMS)} LLMs): {', '.join(universal)}")
 
     near_universal = [c for c in sorted_cwes
-                      if sum(1 for l in LLMS if matrix[c][l] > 0) == 4
+                      if sum(1 for l in LLMS if matrix[c][l] > 0) == len(LLMS) - 1
                       and c not in universal]
     if near_universal:
-        print(f"  ✦ Near-universal (4/5 LLMs): {', '.join(near_universal)}")
+        print(f"  ✦ Near-universal ({len(LLMS) - 1}/{len(LLMS)} LLMs): "
+              f"{', '.join(near_universal)}")
 
     out = CSV_DIR / "cwe_heatmap.csv"
     with open(out, "w", newline="", encoding="utf-8") as f:
@@ -295,25 +304,30 @@ def table_e(rows):
         all_sec |= tool_sec[t]
     total_unique = len(all_sec)
 
-    print(f"\n  Total unique security instances (union): {total_unique}\n")
-    print(f"{'Tool':<14} {'Security':>10} {'Quality':>9} {'Total':>8} {'Coverage':>10} {'FalseAlarmRate':>16}")
+    print(f"\n  Total unique security instances (union of all tools): {total_unique}")
+    print("  Coverage   = a tool's unique security instances ÷ union total.")
+    print("  NonSec_pct = share of a tool's raw output that is quality/non-security")
+    print("               (NOT a false-positive rate; needs manual validation).\n")
+    print(f"{'Tool':<16} {'Security':>10} {'Quality':>9} {'Total':>8} {'Coverage':>10} {'NonSec_pct':>12}")
     print("-" * 72)
 
     saved = CSV_DIR / "tool_coverage.csv"
     with open(saved, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["Tool", "Security", "Quality", "Total", "Coverage_pct", "FalseAlarm_pct"])
+        w.writerow(["Tool", "Security", "Quality", "Total", "Coverage_pct", "NonSecurity_pct"])
         for tool in tools:
             sec  = len(tool_sec[tool])
             qual = tool_qual[tool]
             tot  = tool_total[tool]
             cov  = sec  / total_unique * 100 if total_unique else 0
-            fa   = qual / tot          * 100 if tot          else 0
-            print(f"{tool:<14} {sec:>10} {qual:>9} {tot:>8} {cov:>9.1f}%  {fa:>15.1f}%")
-            w.writerow([tool, sec, qual, tot, f"{cov:.2f}", f"{fa:.2f}"])
+            ns   = qual / tot          * 100 if tot          else 0
+            print(f"{tool:<16} {sec:>10} {qual:>9} {tot:>8} {cov:>9.1f}%  {ns:>11.1f}%")
+            w.writerow([tool, sec, qual, tot, f"{cov:.2f}", f"{ns:.2f}"])
 
-        print(f"{'FortiScan':<14} {total_unique:>10} {'0':>9} {'—':>8} {'100.0':>9}%  {'0.0':>15}%")
-        w.writerow(["FortiScan", total_unique, 0, "—", "100.00", "0.00"])
+        # The aggregate is the UNION of the three tools — 100% by construction,
+        # not an independent detector. Labelled as such to avoid a circular claim.
+        print(f"{'Union (all 3)':<16} {total_unique:>10} {'—':>9} {'—':>8} {'100.0':>9}%  {'—':>11}")
+        w.writerow(["Union_all_tools", total_unique, "", "", "100.00", ""])
 
     only = {}
     for t in tools:
@@ -369,17 +383,18 @@ def summary(rows):
         if r["cwe_id"] not in ("UNKNOWN", "QUALITY_ONLY", ""):
             llm_per_cwe[r["cwe_id"]].add(r["llm"])
 
+    n_llms = len(LLMS)
     universal = sorted(
-        [c for c, lset in llm_per_cwe.items() if len(lset) == 5],
+        [c for c, lset in llm_per_cwe.items() if len(lset) == n_llms],
         key=lambda c: -len(llm_per_cwe[c])
     )
-    print(f"\n  CWEs present in ALL 5 LLMs: {universal if universal else 'None yet'}")
+    print(f"\n  CWEs present in ALL {n_llms} LLMs: {universal if universal else 'None yet'}")
 
     near_univ = sorted(
-        [c for c, lset in llm_per_cwe.items() if len(lset) == 4],
+        [c for c, lset in llm_per_cwe.items() if len(lset) == n_llms - 1],
         key=lambda c: -len(llm_per_cwe[c])
     )
-    print(f"  CWEs present in 4/5 LLMs:  {near_univ[:6]}")
+    print(f"  CWEs present in {n_llms - 1}/{n_llms} LLMs:  {near_univ[:6]}")
 
 
 # ─────────────────────────────────────────────────────────────────────────────

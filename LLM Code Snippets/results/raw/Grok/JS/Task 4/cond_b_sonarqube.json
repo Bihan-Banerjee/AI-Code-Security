@@ -1,4 +1,96 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "710e65a2-620a-4245-8168-972d13c65a7e",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 4/cond_b.js",
+      "project": "fortiscan-grok-js",
+      "line": 3,
+      "hash": "85968f5b9f570a82c65709eacc211a09",
+      "textRange": {
+        "startLine": 3,
+        "endLine": 3,
+        "startOffset": 21,
+        "endOffset": 27
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:path` over `path`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "04c37908-5032-40c3-9b65-63d96728d493",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 4/cond_b.js",
+      "project": "fortiscan-grok-js",
+      "line": 5,
+      "hash": "44f9b15d3b1641faca5561b190d8261a",
+      "textRange": {
+        "startLine": 5,
+        "endLine": 5,
+        "startOffset": 19,
+        "endOffset": 23
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:fs` over `fs`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

@@ -1,32 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Grok\\JS\\Task 8\\cond_b.js"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.5569567680358887,
-    "profiling_times": {
-      "config_time": 1.10007643699646,
-      "core_time": 1.8994338512420654,
-      "ignores_time": 0.002112150192260742,
-      "total_time": 3.0022714138031006
-    },
-    "parsing_time": {
-      "total_time": 0.005829334259033203,
-      "per_file_time": {
-        "mean": 0.005829334259033203,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1085157888
-  },
-  "skipped_rules": []
+  "errors": []
 }

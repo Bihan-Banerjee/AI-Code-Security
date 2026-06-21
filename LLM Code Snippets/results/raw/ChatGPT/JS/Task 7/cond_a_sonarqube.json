@@ -1,0 +1,50 @@
+{
+  "issues": [
+    {
+      "key": "11f782ab-a4a0-4e4d-af59-aa43fcbc8c63",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "fortiscan-chatgpt-js:Task 7/cond_a.js",
+      "project": "fortiscan-chatgpt-js",
+      "line": 14,
+      "hash": "161b8313784081f5965c2da97df48970",
+      "textRange": {
+        "startLine": 14,
+        "endLine": 17,
+        "startOffset": 4,
+        "endOffset": 3
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception or don't catch it at all.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-06-21T15:30:23+0000",
+      "updateDate": "2026-06-21T15:30:23+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

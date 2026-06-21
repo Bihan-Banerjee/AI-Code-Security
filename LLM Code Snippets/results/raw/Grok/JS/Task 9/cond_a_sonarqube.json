@@ -1,4 +1,201 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "3221868c-c589-46f9-8b31-969c9a77aa4c",
+      "rule": "javascript:S7758",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 9/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 13,
+      "hash": "1cd1df3e09b2c6b7963850112e9fba0d",
+      "textRange": {
+        "startLine": 13,
+        "endLine": 13,
+        "startOffset": 28,
+        "endOffset": 40
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `String.fromCodePoint()` over `String.fromCharCode()`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "internationalization",
+        "es2015",
+        "unicode"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "7a412d09-beb3-44ab-8cd2-8a0f38c4f35c",
+      "rule": "javascript:S7781",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 9/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 14,
+      "hash": "975359c721f065ea6d380023df502f53",
+      "textRange": {
+        "startLine": 14,
+        "endLine": 14,
+        "startOffset": 9,
+        "endOffset": 16
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `String#replaceAll()` over `String#replace()`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "readability",
+        "es2021"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "ce2cd0fc-62bb-4357-8004-5e65da0dedd5",
+      "rule": "javascript:S7781",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 9/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 15,
+      "hash": "af4ecb0ad43c24a20e05a6aedcad9891",
+      "textRange": {
+        "startLine": 15,
+        "endLine": 15,
+        "startOffset": 9,
+        "endOffset": 16
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `String#replaceAll()` over `String#replace()`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "readability",
+        "es2021"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "bb92d16b-8c6b-4953-9548-12483e10bf46",
+      "rule": "javascript:S7781",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 9/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 16,
+      "hash": "f59be3fc7bc8091b1b0c11a99b427721",
+      "textRange": {
+        "startLine": 16,
+        "endLine": 16,
+        "startOffset": 9,
+        "endOffset": 16
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `String#replaceAll()` over `String#replace()`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "readability",
+        "es2021"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

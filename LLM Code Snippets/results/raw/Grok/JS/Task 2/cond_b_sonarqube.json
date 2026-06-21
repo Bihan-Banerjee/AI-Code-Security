@@ -1,4 +1,48 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "5c466d56-8253-4b35-85ac-b39d12b80995",
+      "rule": "javascript:S6582",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-js:Task 2/cond_b.js",
+      "project": "fortiscan-grok-js",
+      "line": 53,
+      "hash": "dfef13f5999bd758fdbb2038577fb1e7",
+      "textRange": {
+        "startLine": 53,
+        "endLine": 53,
+        "startOffset": 8,
+        "endOffset": 35
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer using an optional chain expression instead, as it's more concise and easier to read.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "type-dependent"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

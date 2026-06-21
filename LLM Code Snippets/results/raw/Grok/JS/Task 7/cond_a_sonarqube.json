@@ -1,0 +1,282 @@
+{
+  "issues": [
+    {
+      "key": "326b0957-e564-4310-956a-1548199fd0c0",
+      "rule": "javascript:S6522",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-js:Task 7/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 9,
+      "hash": "bcbd02e3f5523d4dc402fd74114fa1d8",
+      "textRange": {
+        "startLine": 9,
+        "endLine": 9,
+        "startOffset": 6,
+        "endOffset": 10
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "'pool' is read-only.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "es2015",
+        "bad-practice",
+        "confusing"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "5b5beb2a-b745-4984-b64c-a5b880bf6240",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 7/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 14,
+      "hash": "644a088d0607a2076ba309927a7d6b35",
+      "textRange": {
+        "startLine": 14,
+        "endLine": 14,
+        "startOffset": 8,
+        "endOffset": 16
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "e0353ba8-37cd-4f0e-8d83-15601d4c3836",
+      "rule": "javascript:S2814",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-js:Task 7/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 34,
+      "hash": "406e35071485afb2e5f500243c50a6e0",
+      "textRange": {
+        "startLine": 34,
+        "endLine": 34,
+        "startOffset": 7,
+        "endOffset": 11
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "'pool' is already defined.",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "",
+      "tags": [
+        "confusing"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "48fff619-c1a0-429d-b76f-1dbf390fa37b",
+      "rule": "javascript:S6522",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-js:Task 7/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 40,
+      "hash": "2c36df9f1ebe596c712120bb7c29a5f3",
+      "textRange": {
+        "startLine": 40,
+        "endLine": 40,
+        "startOffset": 6,
+        "endOffset": 10
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "'User' is read-only.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "es2015",
+        "bad-practice",
+        "confusing"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "9ae34381-620f-493b-95fa-f345d638c132",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 7/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 136,
+      "hash": "75aaa719d1d99e24356e1f4e0b0905bc",
+      "textRange": {
+        "startLine": 136,
+        "endLine": 136,
+        "startOffset": 11,
+        "endOffset": 19
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "4cd0a075-b296-4407-8ffc-ac516937c32f",
+      "rule": "javascript:S2814",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-js:Task 7/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 145,
+      "hash": "05174650662c29a97befff1933c441b0",
+      "textRange": {
+        "startLine": 145,
+        "endLine": 145,
+        "startOffset": 7,
+        "endOffset": 11
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "'User' is already defined.",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "",
+      "tags": [
+        "confusing"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

@@ -1,4 +1,274 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "2bef6410-7db3-4d6d-aec1-d2fb24cf6ffd",
+      "rule": "python:S3776",
+      "severity": "CRITICAL",
+      "component": "fortiscan-grok-python:Task 10/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 45,
+      "hash": "7aa34b581b17948730798cde52eefa83",
+      "textRange": {
+        "startLine": 45,
+        "endLine": 45,
+        "startOffset": 4,
+        "endOffset": 21
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 62,
+                "endLine": 62,
+                "startOffset": 4,
+                "endOffset": 6
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 73,
+                "endLine": 73,
+                "startOffset": 4,
+                "endOffset": 6
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 75,
+                "endLine": 75,
+                "startOffset": 8,
+                "endOffset": 10
+              },
+              "msg": "+2 (incl 1 for nesting)",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 78,
+                "endLine": 78,
+                "startOffset": 4,
+                "endOffset": 8
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 87,
+                "endLine": 87,
+                "startOffset": 27,
+                "endOffset": 29
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 90,
+                "endLine": 90,
+                "startOffset": 4,
+                "endOffset": 6
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 92,
+                "endLine": 92,
+                "startOffset": 4,
+                "endOffset": 6
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 97,
+                "endLine": 97,
+                "startOffset": 4,
+                "endOffset": 6
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 98,
+                "endLine": 98,
+                "startOffset": 39,
+                "endOffset": 41
+              },
+              "msg": "+2 (incl 1 for nesting)",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 101,
+                "endLine": 101,
+                "startOffset": 4,
+                "endOffset": 8
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 110,
+                "endLine": 110,
+                "startOffset": 8,
+                "endOffset": 14
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 120,
+                "endLine": 120,
+                "startOffset": 4,
+                "endOffset": 10
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 127,
+                "endLine": 127,
+                "startOffset": 4,
+                "endOffset": 10
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 134,
+                "endLine": 134,
+                "startOffset": 4,
+                "endOffset": 10
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 10/cond_b.py",
+              "textRange": {
+                "startLine": 143,
+                "endLine": 143,
+                "startOffset": 4,
+                "endOffset": 10
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Refactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.",
+      "effort": "7min",
+      "debt": "7min",
+      "author": "",
+      "tags": [
+        "brain-overload"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "FOCUSED",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

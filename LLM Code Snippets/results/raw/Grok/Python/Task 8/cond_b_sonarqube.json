@@ -1,4 +1,180 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "0a66893e-b303-4645-a6d3-b789c3ae006d",
+      "rule": "python:S6353",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-python:Task 8/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 25,
+      "hash": "b9d3839f786a9e5fd75d36b3c64081d1",
+      "textRange": {
+        "startLine": 25,
+        "endLine": 25,
+        "startOffset": 30,
+        "endOffset": 35
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Use concise character class syntax '\\d' instead of '[0-9]'.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "regex"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "11c968e2-2dd6-45ca-9c2a-c0f6bde10e97",
+      "rule": "python:S6353",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-python:Task 8/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 25,
+      "hash": "b9d3839f786a9e5fd75d36b3c64081d1",
+      "textRange": {
+        "startLine": 25,
+        "endLine": 25,
+        "startOffset": 46,
+        "endOffset": 51
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Use concise character class syntax '\\d' instead of '[0-9]'.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "regex"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "dadc3c97-df2a-4d3c-b37c-2930273b58c7",
+      "rule": "python:S8370",
+      "severity": "CRITICAL",
+      "component": "fortiscan-grok-python:Task 8/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 88,
+      "hash": "743df3ce561aadaac3471e7bbbc49073",
+      "textRange": {
+        "startLine": 88,
+        "endLine": 88,
+        "startOffset": 55,
+        "endOffset": 67
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Do not use query parameters with POST requests; use path parameters or request body instead.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "flask"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "77ea42a7-bd8d-4ebe-9d97-2b9df5f23d7a",
+      "rule": "python:S1481",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-python:Task 8/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 113,
+      "hash": "5e11fcffc5ca1f600d0bf53d38f19ae7",
+      "textRange": {
+        "startLine": 113,
+        "endLine": 113,
+        "startOffset": 24,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove the unused local variable \"e\".",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

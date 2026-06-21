@@ -1,5 +1,6 @@
+import os
 from pydantic import BaseModel, field_validator
-from typing import List, Optional
+from typing import List
 
 class FileModel(BaseModel):
     filename: str
@@ -12,6 +13,15 @@ class FileModel(BaseModel):
             raise ValueError('Filename cannot be empty')
         if len(v) > 255:
             raise ValueError('Filename must be 255 characters or less')
+        # Reject path traversal: null bytes, separators, absolute / parent paths.
+        if '\x00' in v:
+            raise ValueError('Filename contains a null byte')
+        if '/' in v or '\\' in v:
+            raise ValueError('Filename must not contain path separators')
+        if v in ('.', '..') or v.startswith('..'):
+            raise ValueError('Invalid filename')
+        if os.path.basename(v) != v:
+            raise ValueError('Invalid filename')
         return v
 
     @field_validator('content')

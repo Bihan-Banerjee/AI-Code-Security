@@ -1,0 +1,22 @@
+# Secrets / local config
+.env
+.env.*
+!.env.example
+
+# Claude Code / AI assistant harness artifacts
+.claude/
+CLAUDE.md
+.cursor/
+.aider*
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# SonarQube scanner working dir
+.scannerwork/

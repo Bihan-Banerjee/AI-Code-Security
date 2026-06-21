@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.flask.security.audit.debug-enabled.debug-enabled",
@@ -49,32 +48,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Gemini\\Python\\Task 7\\Condition_A.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.3752045631408691,
-    "profiling_times": {
-      "config_time": 1.4868805408477783,
-      "core_time": 1.7365038394927979,
-      "ignores_time": 0.0008227825164794922,
-      "total_time": 3.224898099899292
-    },
-    "parsing_time": {
-      "total_time": 0.007321357727050781,
-      "per_file_time": {
-        "mean": 0.007321357727050781,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1082860096
-  },
-  "skipped_rules": []
+  "errors": []
 }

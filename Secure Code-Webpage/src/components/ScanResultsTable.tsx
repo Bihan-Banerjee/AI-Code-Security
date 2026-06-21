@@ -1,54 +1,61 @@
 // src/components/ScanResultsTable.tsx
-import React from "react";
 import { z } from "zod";
 import { BanditItem } from "@/lib/schemas";
+import { CheckCircle2 } from "lucide-react";
 
 type Issue = z.infer<typeof BanditItem>;
 
-function getSeverityColor(severity?: string) {
+function severityClass(severity?: string) {
   switch (severity?.toLowerCase()) {
     case "high":
-      return "text-red-600 font-semibold";
+      return "bg-destructive/15 text-destructive";
     case "medium":
-      return "text-yellow-600 font-semibold";
+      return "bg-warning/15 text-warning";
     case "low":
-      return "text-green-600 font-semibold";
+      return "bg-success/15 text-success";
     default:
-      return "text-gray-700";
+      return "bg-muted text-muted-foreground";
   }
 }
 
 export default function ScanResultsTable({ issues }: { issues: Issue[] }) {
   if (!issues || issues.length === 0) {
-    return <p className="mt-4 text-green-700">No vulnerabilities found. Your code is secure!</p>;
+    return (
+      <div className="flex items-center gap-2 rounded-xl border border-success/30 bg-success/10 p-4 text-success">
+        <CheckCircle2 className="h-5 w-5" />
+        <span className="font-medium">No vulnerabilities found. Your code is secure!</span>
+      </div>
+    );
   }
 
   return (
-    <div className="mt-4 overflow-x-auto">
-      <table className="w-full text-sm border border-gray-300">
-        <thead className="bg-gray-100">
+    <div className="overflow-x-auto rounded-xl border border-border/60">
+      <table className="w-full text-sm">
+        <thead className="bg-secondary/40 text-left">
           <tr>
-            <th className="p-2 border">File</th>
-            <th className="p-2 border">Line</th>
-            <th className="p-2 border">Severity</th>
-            <th className="p-2 border">Description</th>
-            <th className="p-2 border">CWE</th>
+            {["File", "Line", "Severity", "Description", "CWE"].map((h) => (
+              <th key={h} className="p-3 font-semibold text-muted-foreground">
+                {h}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
           {issues.map((issue, idx) => (
-            <tr key={idx} className="border-t">
-              <td className="p-2 border">{issue.filename?.split("\\").pop() || "-"}</td>
-              <td className="p-2 border">{issue.line_number || "-"}</td>
-              <td className={`p-2 border ${getSeverityColor(issue.issue_severity)}`}>
-                {issue.issue_severity || "-"}
+            <tr key={idx} className="border-t border-border/50 hover:bg-secondary/20">
+              <td className="p-3 font-mono text-xs">{issue.filename?.split("\\").pop() || "-"}</td>
+              <td className="p-3 font-mono text-xs">{issue.line_number || "-"}</td>
+              <td className="p-3">
+                <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${severityClass(issue.issue_severity)}`}>
+                  {issue.issue_severity || "-"}
+                </span>
               </td>
-              <td className="p-2 border">{issue.issue_text || "-"}</td>
-              <td className="p-2 border">
+              <td className="p-3 text-foreground/80">{issue.issue_text || "-"}</td>
+              <td className="p-3">
                 {issue.issue_cwe?.id ? (
                   <a
                     href={issue.issue_cwe.link}
-                    className="text-blue-600 underline"
+                    className="font-medium text-primary underline-offset-2 hover:underline"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

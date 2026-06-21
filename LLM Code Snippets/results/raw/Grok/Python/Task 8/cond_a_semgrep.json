@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.lang.security.dangerous-subprocess-use.dangerous-subprocess-use",
@@ -64,32 +63,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Grok\\Python\\Task 8\\cond_a.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.3908641338348389,
-    "profiling_times": {
-      "config_time": 1.1693356037139893,
-      "core_time": 1.7676753997802734,
-      "ignores_time": 0.0036878585815429688,
-      "total_time": 2.941453695297241
-    },
-    "parsing_time": {
-      "total_time": 0.008193492889404297,
-      "per_file_time": {
-        "mean": 0.008193492889404297,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1089205632
-  },
-  "skipped_rules": []
+  "errors": []
 }

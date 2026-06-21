@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "javascript.lang.security.audit.unsafe-formatstring.unsafe-formatstring",
@@ -52,32 +51,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Claude\\JS\\Task 3\\cond_b.js"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 2.537729263305664,
-    "profiling_times": {
-      "config_time": 2.795982837677002,
-      "core_time": 3.4420430660247803,
-      "ignores_time": 0.0030345916748046875,
-      "total_time": 6.2437498569488525
-    },
-    "parsing_time": {
-      "total_time": 0.01953721046447754,
-      "per_file_time": {
-        "mean": 0.01953721046447754,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1082781056
-  },
-  "skipped_rules": []
+  "errors": []
 }

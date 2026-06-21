@@ -1,10 +1,15 @@
-import shutil
-print("Scanner path:", shutil.which("sonar-scanner"))
 """
 scan_all.py
 -----------
-Walks the "LLM Code Snippets" directory tree and runs Semgrep, Bandit
-(Python only), and SonarQube against every code file it finds.
+Runs Semgrep, Bandit (Python only), and SonarQube over the whole
+"LLM Code Snippets" corpus and writes one JSON per (snippet, tool) under
+results/raw/, mirroring the snippet path.
+
+PERFORMANCE: tools are run in BATCH, not once per file. Launching Semgrep or
+SonarQube per-file made each file take ~1 minute (ruleset re-download / fresh
+JVM per file) -> ~10 hours for the corpus. Batching runs Semgrep once, Bandit
+once, and SonarQube once per (model, language), then splits the results back
+into the same per-file JSONs the parser expects -> minutes instead of hours.
 
 Directory layout (scripts/ and results/ live INSIDE LLM Code Snippets/):
     LLM Code Snippets/
@@ -30,12 +35,14 @@ Condition is detected automatically from the filename:
 
 import os
 import json
+import shutil
 import subprocess
 import pathlib
 import time
 import urllib.request
 import urllib.parse
 import base64
+from collections import defaultdict
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CONFIG
@@ -48,9 +55,37 @@ RAW_DIR      = ROOT / "results" / "raw"   # LLM Code Snippets/results/raw/
 # Folders inside SNIPPETS_DIR that are NOT LLM snippet folders — skip them
 SKIP_DIRS = {"results", "scripts", ".git", ".github", ".scannerwork"}
 
-# SonarQube — fill in after: docker run -d -p 9000:9000 sonarqube:community
-SONAR_URL     = "http://localhost:9000"
-SONAR_TOKEN   = "sqa_4f6de144c4a095a5f729a122ce2530d342ab36d8"   # Admin → My Account → Security → Generate Token
+
+def _load_dotenv():
+    """Minimal .env loader (no third-party dependency).
+
+    Looks for a .env in the project root (parent of 'LLM Code Snippets/') and
+    in the current working directory. Existing environment variables win, so an
+    explicitly exported SONAR_TOKEN overrides the file.
+    """
+    candidates = [ROOT.parent / ".env", pathlib.Path.cwd() / ".env"]
+    for env_path in candidates:
+        if not env_path.is_file():
+            continue
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, val = line.partition("=")
+            key, val = key.strip(), val.strip().strip('"').strip("'")
+            os.environ.setdefault(key, val)
+
+
+_load_dotenv()
+
+# SonarQube — start with: docker run -d -p 9000:9000 sonarqube:community
+# The token is read from the SONAR_TOKEN environment variable (or a .env file in
+# the project root) so it is never committed to git. Generate one at:
+# Admin -> My Account -> Security -> Generate Token
+#   PowerShell:  $env:SONAR_TOKEN = "sqa_xxx"
+#   bash:        export SONAR_TOKEN=sqa_xxx
+SONAR_URL     = os.environ.get("SONAR_URL", "http://localhost:9000")
+SONAR_TOKEN   = os.environ.get("SONAR_TOKEN", "")
 SONAR_PROJECT = "fortiscan"
 SONAR_WAIT_S  = 12   # seconds to wait after scanner finishes before API fetch
 # ─────────────────────────────────────────────────────────────────────────────
@@ -91,94 +126,169 @@ def out_path_for(filepath: pathlib.Path, tool: str) -> pathlib.Path:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# TOOL RUNNERS
+# BATCHED TOOL RUNNERS
+# Each tool runs over the whole corpus (or per model/language for SonarQube);
+# results are then split back into per-file JSONs via out_path_for().
 # ─────────────────────────────────────────────────────────────────────────────
 
-def run_bandit(filepath: pathlib.Path, out: pathlib.Path):
-    """Bandit — Python only. Saves full JSON output."""
-    result = subprocess.run(
-        ["bandit", "-f", "json", "-ll", "--recursive", str(filepath)],
-        capture_output=True, text=True
-    )
+def _write(out: pathlib.Path, payload: dict):
+    out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+
+def _parse_json_stdout(text: str, fallback: dict) -> dict:
+    """Parse JSON from a tool's stdout, tolerating leading noise.
+
+    Some tools print a progress banner before the JSON (e.g. Bandit emits
+    'Working... 100%' to stdout on large scans), which breaks a naive
+    json.loads. We slice from the first '{' to the last '}'.
+    """
+    if not text or not text.strip():
+        return dict(fallback)
+    start, end = text.find("{"), text.rfind("}")
+    if start == -1 or end == -1 or end < start:
+        return {**fallback, "errors": [text[:500]]}
     try:
-        data = json.loads(result.stdout) if result.stdout.strip() else \
-               {"results": [], "errors": [], "metrics": {}}
+        return json.loads(text[start:end + 1])
     except json.JSONDecodeError:
-        data = {"results": [], "errors": [result.stdout[:500]], "metrics": {}}
-    with open(out, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+        return {**fallback, "errors": [text[:500]]}
 
 
-def run_semgrep(filepath: pathlib.Path, out: pathlib.Path):
-    """Semgrep — runs the full 'auto' security ruleset."""
+def llm_dirs():
+    return [d for d in sorted(SNIPPETS_DIR.iterdir())
+            if d.is_dir() and d.name not in SKIP_DIRS]
+
+
+def run_semgrep_batch(entries):
+    """One Semgrep run over all model folders; split results per file."""
+    targets = [str(d) for d in llm_dirs()]
+    print(f"[semgrep] one pass over {len(targets)} model folders ...", flush=True)
     result = subprocess.run(
         ["semgrep", "--config", "auto", "--json", "--quiet",
-         "--no-git-ignore", str(filepath)],
-        capture_output=True, text=True, encoding="utf-8", errors="ignore"
+         "--no-git-ignore", *targets],
+        capture_output=True, text=True, encoding="utf-8", errors="ignore",
     )
-    try:
-        data = json.loads(result.stdout) if result.stdout.strip() else \
-               {"results": [], "errors": []}
-    except json.JSONDecodeError:
-        data = {"results": [], "errors": [result.stdout[:500]]}
-    with open(out, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+    data = _parse_json_stdout(result.stdout, {"results": []})
+
+    by_path = defaultdict(list)
+    for res in data.get("results", []):
+        by_path[pathlib.Path(res.get("path", "")).resolve()].append(res)
+
+    for filepath, *_ in entries:
+        _write(out_path_for(filepath, "semgrep"),
+               {"results": by_path.get(filepath.resolve(), []), "errors": []})
+    print(f"[semgrep] {sum(len(v) for v in by_path.values())} findings", flush=True)
 
 
-def run_sonarqube(filepath: pathlib.Path, out: pathlib.Path):
-    """
-    SonarQube — copies snippet to a temp project, scans, fetches results.
-    Requires sonar-scanner CLI on PATH.
-    """
-    import shutil, tempfile
+def run_bandit_batch(entries):
+    """One recursive Bandit run over all model folders (Python only)."""
+    targets = [str(d) for d in llm_dirs()]
+    print("[bandit] one recursive pass (Python) ...", flush=True)
+    result = subprocess.run(
+        ["bandit", "-f", "json", "-ll", "--recursive", *targets],
+        capture_output=True, text=True,
+    )
+    data = _parse_json_stdout(result.stdout, {"results": []})
 
-    rel   = filepath.relative_to(SNIPPETS_DIR)
-    parts = list(rel.parts)
-    key   = "-".join(parts[:-1] + [filepath.stem]).lower()
-    key   = key.replace(" ", "-").replace("_", "-")[:200]
-    lang  = "py" if filepath.suffix == ".py" else "js"
+    by_path = defaultdict(list)
+    for res in data.get("results", []):
+        by_path[pathlib.Path(res.get("filename", "")).resolve()].append(res)
 
-    with tempfile.TemporaryDirectory() as tmpdir:
-        tmpdir = pathlib.Path(tmpdir)
-        shutil.copy(filepath, tmpdir / filepath.name)
+    for filepath, *_ in entries:
+        if filepath.suffix != ".py":
+            continue
+        _write(out_path_for(filepath, "bandit"),
+               {"results": by_path.get(filepath.resolve(), []),
+                "errors": [], "metrics": {}})
+    print(f"[bandit] {sum(len(v) for v in by_path.values())} findings", flush=True)
 
-        props = (
-            f"sonar.projectKey={key}\n"
-            f"sonar.projectName={key}\n"
-            f"sonar.sources=.\n"
-            f"sonar.language={lang}\n"
-            f"sonar.host.url={SONAR_URL}\n"
-            f"sonar.login={SONAR_TOKEN}\n"
-            f"sonar.scm.disabled=true\n"
-            f"sonar.sourceEncoding=UTF-8\n"
-        )
-        (tmpdir / "sonar-project.properties").write_text(props)
 
-        subprocess.run(
-            f"sonar-scanner -Dsonar.projectBaseDir={tmpdir}", shell=True,
-            capture_output=True, text=True, cwd=str(tmpdir)
-        )
-        time.sleep(SONAR_WAIT_S)
+def _sonar_api(path, params):
+    qs = urllib.parse.urlencode(params)
+    req = urllib.request.Request(f"{SONAR_URL}{path}?{qs}")
+    creds = base64.b64encode(f"{SONAR_TOKEN}:".encode()).decode()
+    req.add_header("Authorization", f"Basic {creds}")
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        return json.loads(resp.read())
 
-        params = urllib.parse.urlencode({
-            "componentKey": key,
-            "resolved": "false",
-            "ps": 500,
-            "types": "BUG,VULNERABILITY,CODE_SMELL",
-        })
-        url = f"{SONAR_URL}/api/issues/search?{params}"
-        req = urllib.request.Request(url)
-        creds = base64.b64encode(f"{SONAR_TOKEN}:".encode()).decode()
-        req.add_header("Authorization", f"Basic {creds}")
 
+def _wait_for_ce(key, timeout=180):
+    """Poll the Compute Engine until this project's analysis is processed."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
         try:
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                data = json.loads(resp.read())
-        except Exception as e:
-            data = {"issues": [], "error": str(e)}
+            act = _sonar_api("/api/ce/activity",
+                             {"component": key, "onlyCurrents": "true"})
+            tasks = act.get("tasks", [])
+            if tasks and all(t.get("status") in ("SUCCESS", "FAILED", "CANCELED")
+                             for t in tasks):
+                return
+        except Exception:
+            pass
+        time.sleep(3)
 
-    with open(out, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+
+def run_sonar_batch(entries):
+    """One SonarQube project per (model, language); split issues per file."""
+    if not SONAR_TOKEN:
+        print("[sonar] SKIPPED (set the SONAR_TOKEN env var / .env)", flush=True)
+        for filepath, *_ in entries:
+            _write(out_path_for(filepath, "sonarqube"),
+                   {"issues": [], "error": "skipped: no token"})
+        return
+    if not shutil.which("sonar-scanner"):
+        print("[sonar] SKIPPED (sonar-scanner not on PATH)", flush=True)
+        return
+
+    groups = defaultdict(list)
+    for entry in entries:
+        groups[(entry[1], entry[2])].append(entry)  # (llm, lang)
+
+    for (llm, lang), items in sorted(groups.items()):
+        src_dir = SNIPPETS_DIR / llm / lang
+        key = f"fortiscan-{llm}-{lang}".lower().replace(" ", "-").replace("_", "-")
+        print(f"[sonar] {llm}/{lang}: {len(items)} files (project {key}) ...",
+              flush=True)
+
+        cmd = (
+            f"sonar-scanner -Dsonar.projectKey={key} -Dsonar.projectName={key} "
+            f"-Dsonar.sources=. -Dsonar.host.url={SONAR_URL} "
+            f"-Dsonar.token={SONAR_TOKEN} -Dsonar.scm.disabled=true "
+            f"-Dsonar.sourceEncoding=UTF-8 -Dsonar.projectBaseDir=."
+        )
+        proc = subprocess.run(cmd, shell=True, capture_output=True, text=True,
+                              cwd=str(src_dir))
+        if "EXECUTION SUCCESS" not in (proc.stdout or ""):
+            print(f"[sonar]   scanner warning for {key}: "
+                  f"{(proc.stdout or proc.stderr)[-200:]}", flush=True)
+        _wait_for_ce(key)
+
+        # Fetch every issue (paginated; SonarQube caps p*ps at 10000).
+        issues, p = [], 1
+        while True:
+            try:
+                data = _sonar_api("/api/issues/search", {
+                    "componentKeys": key, "resolved": "false", "ps": 500, "p": p,
+                    "types": "BUG,VULNERABILITY,CODE_SMELL",
+                })
+            except Exception as e:
+                print(f"[sonar]   API error for {key}: {e}", flush=True)
+                break
+            batch = data.get("issues", [])
+            issues.extend(batch)
+            if not batch or p * 500 >= min(data.get("total", 0), 10000):
+                break
+            p += 1
+
+        by_path = defaultdict(list)
+        for iss in issues:
+            comp = iss.get("component", "")
+            relpath = comp.split(":", 1)[1] if ":" in comp else comp
+            by_path[(src_dir / relpath).resolve()].append(iss)
+
+        for filepath, *_ in items:
+            _write(out_path_for(filepath, "sonarqube"),
+                   {"issues": by_path.get(filepath.resolve(), [])})
+        print(f"[sonar] {llm}/{lang}: {len(issues)} issues", flush=True)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -212,6 +322,19 @@ def collect_files():
                     if f.is_file() and f.suffix in VALID_EXTENSIONS
                 ]
 
+                # Warn about code hidden in sub-folders: this scanner only reads
+                # files directly inside a Task folder, so multi-file conditions
+                # would be silently skipped. Run combine_multifile_tasks.py first.
+                nested = [
+                    f for f in task_dir.rglob("*")
+                    if f.is_file() and f.suffix in VALID_EXTENSIONS
+                    and f.parent != task_dir
+                ]
+                if nested:
+                    print(f"  WARNING: {llm}/{lang}/{task_name} has {len(nested)} "
+                          f"code file(s) in sub-folders that will be SKIPPED. "
+                          f"Run: python combine_multifile_tasks.py --apply")
+
                 for filepath in code_files:
                     condition = detect_condition(filepath, code_files)
                     entries.append((filepath, llm, lang, task_name, condition))
@@ -233,41 +356,13 @@ def scan_all():
 
     print(f"Snippets root : {SNIPPETS_DIR}")
     print(f"Results root  : {RAW_DIR}")
-    print(f"Found {total} files to scan\n")
+    print(f"Found {total} snippet files\n", flush=True)
 
-    for i, (filepath, llm, lang, task_name, condition) in enumerate(entries, 1):
-        label = f"{llm}/{lang}/{task_name}/{filepath.name}"
-        print(f"[{i:3d}/{total}] {label}")
-
-        # ── Semgrep ──────────────────────────────────────────────────────────
-        sg_out = out_path_for(filepath, "semgrep")
-        if sg_out.exists():
-            print("           semgrep (cached)")
-        else:
-            run_semgrep(filepath, sg_out)
-            print("           semgrep ✓")
-
-        # ── Bandit (Python only) ──────────────────────────────────────────────
-        if filepath.suffix == ".py":
-            bd_out = out_path_for(filepath, "bandit")
-            if bd_out.exists():
-                print("           bandit  (cached)")
-            else:
-                run_bandit(filepath, bd_out)
-                print("           bandit  ✓")
-
-        # ── SonarQube ─────────────────────────────────────────────────────────
-        sq_out = out_path_for(filepath, "sonarqube")
-        if sq_out.exists():
-            print("           sonar   (cached)")
-        else:
-            if SONAR_TOKEN == "YOUR_SONAR_TOKEN_HERE":
-                print("           sonar   SKIPPED (set SONAR_TOKEN in script)")
-            else:
-                run_sonarqube(filepath, sq_out)
-                print("           sonar   ✓")
-
-    print(f"\nAll done. Raw results → {RAW_DIR}")
+    t0 = time.time()
+    run_semgrep_batch(entries)
+    run_bandit_batch(entries)
+    run_sonar_batch(entries)
+    print(f"\nAll done in {time.time() - t0:.0f}s. Raw results → {RAW_DIR}", flush=True)
 
 
 if __name__ == "__main__":

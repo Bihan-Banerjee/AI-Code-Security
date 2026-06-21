@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.flask.security.audit.debug-enabled.debug-enabled",
@@ -49,32 +48,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\CoPilot\\Python\\Task 1\\cond_a.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 2.149556875228882,
-    "profiling_times": {
-      "config_time": 7.3523781299591064,
-      "core_time": 2.926378011703491,
-      "ignores_time": 0.0021500587463378906,
-      "total_time": 10.285269021987915
-    },
-    "parsing_time": {
-      "total_time": 0.016588687896728516,
-      "per_file_time": {
-        "mean": 0.016588687896728516,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1081804736
-  },
-  "skipped_rules": []
+  "errors": []
 }

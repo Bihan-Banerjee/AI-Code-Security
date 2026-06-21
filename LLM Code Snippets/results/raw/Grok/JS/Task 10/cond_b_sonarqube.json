@@ -1,4 +1,142 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "8d7fcdde-1bed-4c51-9153-8378ee102858",
+      "rule": "javascript:S1854",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-js:Task 10/cond_b.js",
+      "project": "fortiscan-grok-js",
+      "line": 36,
+      "hash": "76d34fbd79106ab67f35d9af0e061164",
+      "textRange": {
+        "startLine": 36,
+        "endLine": 36,
+        "startOffset": 24,
+        "endOffset": 34
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove this useless assignment to variable \"pathParams\".",
+      "effort": "1min",
+      "debt": "1min",
+      "author": "",
+      "tags": [
+        "cwe",
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "a8b022ee-960f-4e2e-9eb9-392928916683",
+      "rule": "javascript:S1481",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 10/cond_b.js",
+      "project": "fortiscan-grok-js",
+      "line": 36,
+      "hash": "76d34fbd79106ab67f35d9af0e061164",
+      "textRange": {
+        "startLine": 36,
+        "endLine": 36,
+        "startOffset": 24,
+        "endOffset": 34
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove the declaration of the unused 'pathParams' variable.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "7886319a-d666-49b1-abbd-d40b76eb7c4d",
+      "rule": "javascript:S7781",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 10/cond_b.js",
+      "project": "fortiscan-grok-js",
+      "line": 57,
+      "hash": "f9f19697f981198394c18b1636c196ac",
+      "textRange": {
+        "startLine": 57,
+        "endLine": 57,
+        "startOffset": 49,
+        "endOffset": 56
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `String#replaceAll()` over `String#replace()`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "readability",
+        "es2021"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

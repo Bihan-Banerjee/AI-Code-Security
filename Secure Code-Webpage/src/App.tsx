@@ -1,11 +1,15 @@
-import { Toaster } from 'react-hot-toast';
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { Suspense } from "react";
 import ViewDemo from "./pages/viewDemo";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
+import { ThemeProvider } from "@/components/theme-provider";
+import Layout from "@/components/layout/Layout";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import PageLoader from "@/components/effects/PageLoader";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const Index = React.lazy(() => import("./pages/Index"));
 const NotFound = React.lazy(() => import("./pages/NotFound"));
@@ -25,34 +29,42 @@ const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <VercelAnalytics />
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/scanner" element={<CodeScanner />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/enhancer" element={<Enhancer />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/reviews" element={<Reviews />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/demo" element={<ViewDemo />} />
-            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <VercelAnalytics />
+        <Sonner richColors position="top-right" />
+        <BrowserRouter>
+          <Layout>
+            <ErrorBoundary>
+              <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/reviews" element={<Reviews />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/demo" element={<ViewDemo />} />
+                <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+
+                {/* Protected */}
+                <Route path="/scanner" element={<ProtectedRoute><CodeScanner /></ProtectedRoute>} />
+                <Route path="/enhancer" element={<ProtectedRoute><Enhancer /></ProtectedRoute>} />
+                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              </Suspense>
+            </ErrorBoundary>
+          </Layout>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ThemeProvider>
 );
 
 export default App;

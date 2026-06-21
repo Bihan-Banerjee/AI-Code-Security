@@ -1,78 +1,81 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const SecurityFooter = () => {
   return (
-    <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+    <footer className="relative mt-20 border-t border-border/50 bg-card/40">
+      {/* animated top border */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-primary opacity-70" />
+      <div className="container mx-auto px-4 py-14">
+        <div className="mb-10 grid gap-10 md:grid-cols-4">
           {/* Brand */}
           <div className="col-span-2">
-            <Link to="/" className="flex items-center gap-0 group">
-              <img 
-                src="/icon.png" 
-                alt="FortiScan" 
-                className="w-13 h-8 group-hover:scale-110 transition-transform duration-300"
-              />
-              <span className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                FortiScan
-              </span>
+            <Link to="/" className="group flex items-center gap-2">
+              <img src="/icon.png" alt="FortiScan" className="h-9 w-9 transition-transform group-hover:scale-110" />
+              <span className="font-display text-xl font-bold text-gradient">FortiScan</span>
             </Link>
-            <p className="text-gray-400 max-w-md leading-relaxed">
-              Advanced AI-powered security analysis platform that helps developers write secure code
-              and protect applications from vulnerabilities.
+            <p className="mt-4 max-w-md leading-relaxed text-muted-foreground">
+              AI-assisted code security platform — scan for vulnerabilities, understand the risk, and apply
+              secure fixes, all in one place.
             </p>
+            <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-border/60 bg-secondary/40 px-3 py-1.5 text-xs font-medium text-muted-foreground">
+              <ShieldCheck className="h-4 w-4 text-primary" />
+              Powered by Bandit &amp; Semgrep
+            </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-bold text-lg mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              <li><Link to="/dashboard" className="text-gray-400 hover:text-white transition-colors">Dashboard</Link></li>
-              <li><Link to="/scanner" className="text-gray-400 hover:text-white transition-colors">Scanner</Link></li>
-              <li><Link to="/enhancer" className="text-gray-400 hover:text-white transition-colors">Enhancer</Link></li>
-              <li><Link to="/#demo" className="text-gray-400 hover:text-white transition-colors">Demo</Link></li>
+            <h4 className="mb-4 font-display text-lg font-bold">Quick Links</h4>
+            <ul className="space-y-2 text-sm">
+              {[
+                { to: "/dashboard", label: "Dashboard" },
+                { to: "/scanner", label: "Scanner" },
+                { to: "/enhancer", label: "Enhancer" },
+                { to: "/#demo", label: "Demo" },
+              ].map((l) => (
+                <li key={l.label}>
+                  <Link to={l.to} className="text-muted-foreground transition-colors hover:text-primary">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Connect */}
           <div>
-            <h4 className="font-bold text-lg mb-4">Connect</h4>
+            <h4 className="mb-4 font-display text-lg font-bold">Connect</h4>
             <div className="flex gap-3">
-              <a 
-                href="https://github.com/Bihan-Banerjee/AI-Code-Security/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-              <a 
-                href="https://linktr.ee/bihanbanerjee26" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a 
-                href="mailto:contact@example.com"
-                className="bg-gray-800 p-3 rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                <Mail className="w-5 h-5" />
-              </a>
+              {[
+                { href: "https://github.com/Bihan-Banerjee/AI-Code-Security/", Icon: Github, label: "GitHub" },
+                { href: "https://linktr.ee/bihanbanerjee26", Icon: Linkedin, label: "Links" },
+                { href: "mailto:bihanbanerjee26@gmail.com", Icon: Mail, label: "Email" },
+              ].map(({ href, Icon, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="grid h-11 w-11 place-items-center rounded-xl border border-border/60 bg-secondary/40 text-foreground transition-all hover:-translate-y-1 hover:border-primary/60 hover:text-primary hover:shadow-glow-sm"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-400 text-sm">
-            © 2025 FortiScan. All rights reserved.
-          </p>
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-border/50 pt-8 md:flex-row">
+          <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} FortiScan. All rights reserved.</p>
           <div className="flex gap-6 text-sm">
-            <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="/terms-and-conditions" className="text-gray-400 hover:text-white transition-colors">Terms of Service</Link>
+            <Link to="/privacy-policy" className="text-muted-foreground transition-colors hover:text-primary">
+              Privacy Policy
+            </Link>
+            <Link to="/terms-and-conditions" className="text-muted-foreground transition-colors hover:text-primary">
+              Terms of Service
+            </Link>
           </div>
         </div>
       </div>

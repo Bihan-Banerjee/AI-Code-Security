@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.flask.security.injection.subprocess-injection.subprocess-injection",
@@ -117,32 +116,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 8\\cond_b.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.397026777267456,
-    "profiling_times": {
-      "config_time": 1.4916892051696777,
-      "core_time": 1.888110637664795,
-      "ignores_time": 0.0008294582366943359,
-      "total_time": 3.381335735321045
-    },
-    "parsing_time": {
-      "total_time": 0.008043050765991211,
-      "per_file_time": {
-        "mean": 0.008043050765991211,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1083279808
-  },
-  "skipped_rules": []
+  "errors": []
 }

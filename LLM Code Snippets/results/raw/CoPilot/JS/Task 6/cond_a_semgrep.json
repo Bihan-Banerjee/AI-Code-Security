@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "javascript.express.security.audit.express-check-csurf-middleware-usage.express-check-csurf-middleware-usage",
@@ -58,32 +57,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\CoPilot\\JS\\Task 6\\cond_a.js"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 2.4459340572357178,
-    "profiling_times": {
-      "config_time": 2.8364009857177734,
-      "core_time": 3.364093065261841,
-      "ignores_time": 0.002751588821411133,
-      "total_time": 6.207201957702637
-    },
-    "parsing_time": {
-      "total_time": 0.01813197135925293,
-      "per_file_time": {
-        "mean": 0.01813197135925293,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1082260544
-  },
-  "skipped_rules": []
+  "errors": []
 }

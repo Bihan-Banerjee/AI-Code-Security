@@ -1,203 +1,120 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { AxiosError } from "axios";
 import api from "@/lib/api";
+import { getErrorMessage } from "@/lib/errors";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import SecurityHeader from "@/components/SecurityHeader";
+import Header from "@/components/layout/Header";
 import Footer from "@/components/Footer";
+import CodeMirrorEditor from "@/components/CodeMirrorEditor";
+import Reveal from "@/components/effects/Reveal";
 import { useMutation } from "@tanstack/react-query";
 import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
+  Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from "@/components/ui/select";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { z } from "zod";
 import { BanditResponse, BanditItem } from "@/lib/schemas";
-import { 
-  Upload, 
-  FileCode, 
-  X, 
-  Shield, 
-  Loader2, 
-  AlertTriangle,
-  CheckCircle2,
-  XCircle,
-  AlertCircle
+import {
+  Upload, FileCode, X, Shield, Loader2, AlertTriangle, CheckCircle2, XCircle, AlertCircle,
 } from "lucide-react";
-const MAX_FILE_SIZE_BYTES = 500 * 1024; 
-const MAX_FILE_COUNT = 10;
-type File = {
-  filename: string;
-  content: string;
-};
 
+const MAX_FILE_SIZE_BYTES = 500 * 1024;
+const MAX_FILE_COUNT = 10;
+
+type CodeFile = { filename: string; content: string };
 type ScanResult = z.infer<typeof BanditResponse>;
+type Issue = z.infer<typeof BanditItem>;
+type Filter = "all" | "high" | "medium" | "low";
+
+const baseName = (p?: string) => (p ? p.split(/[\\/]/).pop() || p : "");
 
 export default function CodeScanner() {
-  const [files, setFiles] = useState<File[]>([{ filename: "app.py", content: "" }]);
+  const [files, setFiles] = useState<CodeFile[]>([{ filename: "app.py", content: "" }]);
   const [language, setLanguage] = useState("python");
-  const [issues, setIssues] = useState<z.infer<typeof BanditItem>[]>([]);
+  const [issues, setIssues] = useState<Issue[]>([]);
   const [scanComplete, setScanComplete] = useState(false);
-  const [score, setScore] = useState("A+");
+  const [score, setScore] = useState("");
+  const [filter, setFilter] = useState<Filter>("all");
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (index: number, field: keyof File, value: string) => {
-    const updated = [...files];
-    updated[index][field] = value;
-    setFiles(updated);
+  const handleFileChange = (index: number, field: keyof CodeFile, value: string) => {
+    setFiles((prev) => prev.map((f, i) => (i === index ? { ...f, [field]: value } : f)));
   };
+  const addFile = () =>
+    setFiles((prev) => [...prev, { filename: `file${prev.length + 1}.${language === "python" ? "py" : "js"}`, content: "" }]);
+  const deleteFile = (index: number) => setFiles((prev) => prev.filter((_, i) => i !== index));
 
-  const addFile = () => {
-    setFiles([...files, { filename: `file${files.length + 1}.py`, content: "" }]);
-  };
-
-  const deleteFile = (index: number) => {
-    const updated = files.filter((_, i) => i !== index);
-    setFiles(updated);
-  };
+  const readFileContent = (file: Blob): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target?.result as string);
+      reader.onerror = reject;
+      reader.readAsText(file);
+    });
 
   const handleFileUpload = async (uploadedFiles: FileList | null) => {
     if (!uploadedFiles || uploadedFiles.length === 0) return;
-
-    const newFiles: File[] = [];
     const fileArray = Array.from(uploadedFiles);
-
-    const validExtensions = language === "python" 
-      ? [".py", ".pyw"] 
-      : [".js", ".jsx", ".ts", ".tsx", ".mjs"];
-    
-    const totalAfterUpload = files.filter(f => f.content.trim() !== "").length + fileArray.length;
-    if (totalAfterUpload > MAX_FILE_COUNT) {
+    const validExtensions = language === "python" ? [".py", ".pyw"] : [".js", ".jsx", ".ts", ".tsx", ".mjs"];
+    if (files.filter((f) => f.content.trim() !== "").length + fileArray.length > MAX_FILE_COUNT) {
       toast.error(`Maximum ${MAX_FILE_COUNT} files allowed per scan.`);
       return;
     }
-
+    const newFiles: CodeFile[] = [];
     for (const file of fileArray) {
-      const extension = file.name.substring(file.name.lastIndexOf("."));
-      
-      if (!validExtensions.includes(extension.toLowerCase())) {
-        toast.error(`Invalid file type: ${file.name}. Please upload ${language} files only.`);
+      const ext = file.name.substring(file.name.lastIndexOf("."));
+      if (!validExtensions.includes(ext.toLowerCase())) {
+        toast.error(`Invalid file type: ${file.name}.`);
         continue;
       }
-      
       if (file.size > MAX_FILE_SIZE_BYTES) {
-        toast.error(`${file.name} exceeds 500 KB limit. Please split into smaller files.`);
+        toast.error(`${file.name} exceeds 500 KB limit.`);
         continue;
       }
-
       try {
-        const content = await readFileContent(file);
-        newFiles.push({
-          filename: file.name,
-          content: content,
-        });
-      } catch (error) {
+        newFiles.push({ filename: file.name, content: await readFileContent(file) });
+      } catch {
         toast.error(`Failed to read file: ${file.name}`);
-        console.error(error);
       }
     }
-
     if (newFiles.length > 0) {
-      if (files.length === 1 && files[0].content === "") {
-        setFiles(newFiles);
-      } else {
-        setFiles([...files, ...newFiles]);
-      }
-      toast.success(`${newFiles.length} file(s) uploaded successfully!`);
+      setFiles((prev) => (prev.length === 1 && prev[0].content === "" ? newFiles : [...prev, ...newFiles]));
+      toast.success(`${newFiles.length} file(s) uploaded!`);
     }
-  };
-
-  const readFileContent = (file: Blob): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const content = e.target?.result as string;
-        resolve(content);
-      };
-      reader.onerror = (error) => reject(error);
-      reader.readAsText(file);
-    });
-  };
-
-  const handleDragEnter = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-
-    const droppedFiles = e.dataTransfer.files;
-    handleFileUpload(droppedFiles);
+    handleFileUpload(e.dataTransfer.files);
   };
 
-  const handleBrowseClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const scanMutation = useMutation<any, AxiosError, { files: File[], language: string }>({
-    mutationFn: (newScan: { files: File[], language: string }) => {
-      const token = sessionStorage.getItem("token");
-      if (!token) {
-        throw new Error("You must be logged in to scan code.");
-      }
-      return api.post("/api/scan", newScan, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  const scanMutation = useMutation<ScanResult, AxiosError, { files: CodeFile[]; language: string }>({
+    mutationFn: async (payload) => {
+      const res = await api.post("/api/scan", payload);
+      return res.data.result || {};
     },
-    onSuccess: (res) => {
-      const parsed: ScanResult = res.data.result || JSON.parse(res.data.output || "{}");
+    onSuccess: (parsed) => {
       const resultIssues = Array.isArray(parsed.results) ? parsed.results : [];
-
       setIssues(resultIssues);
       setScanComplete(true);
-
-      let numericScore = 100;
-      resultIssues.forEach((issue: z.infer<typeof BanditItem>) => {
-        const severity = issue.issue_severity?.toLowerCase();
-        if (severity === "high") numericScore -= 10;
-        else if (severity === "medium") numericScore -= 5;
-        else if (severity === "low") numericScore -= 2;
+      let n = 100;
+      resultIssues.forEach((i) => {
+        const s = i.issue_severity?.toLowerCase();
+        if (s === "high") n -= 10;
+        else if (s === "medium") n -= 5;
+        else if (s === "low") n -= 2;
       });
-
-      numericScore = Math.max(0, numericScore);
-
-      let grade = "F";
-      if (numericScore >= 95) grade = "A+";
-      else if (numericScore >= 85) grade = "A";
-      else if (numericScore >= 75) grade = "B";
-      else if (numericScore >= 65) grade = "C";
-      else if (numericScore >= 50) grade = "D";
-
-      setScore(`${numericScore} (${grade})`);
+      n = Math.max(0, n);
+      const grade = n >= 95 ? "A+" : n >= 85 ? "A" : n >= 75 ? "B" : n >= 65 ? "C" : n >= 50 ? "D" : "F";
+      setScore(`${n} (${grade})`);
       toast.success("Scan complete!");
     },
-    onError: (err: any) => {
-      console.error(err);
-      toast.error(err.response?.data?.error || "Scan failed");
+    onError: (err) => {
+      toast.error(getErrorMessage(err, "Scan failed"));
       setIssues([]);
       setScanComplete(true);
       setScore("N/A");
@@ -205,390 +122,224 @@ export default function CodeScanner() {
   });
 
   const handleScan = () => {
-    const hasContent = files.some(file => file.content.trim() !== "");
-    if (!hasContent) {
+    if (!files.some((f) => f.content.trim() !== "")) {
       toast.error("Please add some code or upload files before scanning.");
       return;
     }
+    setFilter("all");
     scanMutation.mutate({ files, language });
   };
 
-  const getSeverityColor = (severity?: string) => {
-    switch (severity?.toLowerCase()) {
-      case "high":
-        return "text-red-600 font-semibold";
-      case "medium":
-        return "text-yellow-600 font-semibold";
-      case "low":
-        return "text-green-600 font-semibold";
-      default:
-        return "text-gray-700";
-    }
-  };
+  const counts = useMemo(() => ({
+    high: issues.filter((i) => i.issue_severity?.toLowerCase() === "high").length,
+    medium: issues.filter((i) => i.issue_severity?.toLowerCase() === "medium").length,
+    low: issues.filter((i) => i.issue_severity?.toLowerCase() === "low").length,
+  }), [issues]);
 
-  const getSeverityIcon = (severity?: string) => {
-    switch (severity?.toLowerCase()) {
-      case "high":
-        return <XCircle className="w-4 h-4 text-red-600" />;
-      case "medium":
-        return <AlertTriangle className="w-4 h-4 text-yellow-600" />;
-      case "low":
-        return <AlertCircle className="w-4 h-4 text-green-600" />;
-      default:
-        return null;
-    }
+  const filteredIssues = filter === "all" ? issues : issues.filter((i) => i.issue_severity?.toLowerCase() === filter);
+
+  const highlightFor = (filename: string) =>
+    issues.filter((i) => baseName(i.filename) === baseName(filename) && i.line_number).map((i) => i.line_number as number);
+
+  const sevBadge = (s?: string) => {
+    const k = s?.toLowerCase();
+    if (k === "high") return "bg-destructive/15 text-destructive";
+    if (k === "medium") return "bg-warning/15 text-warning";
+    if (k === "low") return "bg-success/15 text-success";
+    return "bg-muted text-muted-foreground";
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <SecurityHeader />
-      <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 p-4 md:p-8">
-        <div className="max-w-7xl mx-auto space-y-8">
-          
-          {/* Hero Section */}
-          <div className="text-center space-y-4">
-            <div className="inline-block bg-blue-100 text-blue-800 font-semibold px-4 py-1 rounded-full text-sm">
-              AI-Powered Security Scanner
+    <div className="relative min-h-screen bg-background bg-grid">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <Header />
+      <main className="relative mx-auto max-w-7xl px-4 py-12">
+        <Reveal className="mb-10 text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
+            <Shield className="h-4 w-4" /> Security Scanner
+          </span>
+          <h1 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
+            Scan your code for <span className="text-gradient">vulnerabilities</span>
+          </h1>
+          <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+            Powered by Bandit (Python) and Semgrep (JavaScript). Findings are mapped to CWEs and scored A–F.
+          </p>
+        </Reveal>
+
+        <div className="grid gap-8 lg:grid-cols-2">
+          {/* Input column */}
+          <div className="space-y-6">
+            <div className="glass rounded-2xl p-6">
+              <label className="mb-2 block text-sm font-semibold text-foreground/80">Language</label>
+              <Select onValueChange={setLanguage} defaultValue="python">
+                <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="python">Python</SelectItem>
+                  <SelectItem value="javascript">JavaScript</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 flex items-center justify-center gap-3">
-              <Shield className="w-8 h-8 text-blue-600" />
-              Code Scanner with <span className="text-blue-600 ml-2">AI Intelligence</span>
-            </h1>
-            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-              Our AI-powered scanner analyzes your source code to detect weaknesses and insecure patterns 
-              across 2 major languages. It highlights issues with severity levels, provides clear descriptions 
-              and helps you understand where your code might be at risk, all in a matter of seconds.
-            </p>
-          </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <Card className="group border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">99.8%</div>
-                <div className="text-sm text-gray-600 font-medium">Accuracy Rate</div>
-                <div className="h-1 w-0 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
-              </CardContent>
-            </Card>
-            
-            <Card className="group border-2 border-purple-200 hover:border-purple-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-purple-600 mb-2 group-hover:scale-110 transition-transform">50+</div>
-                <div className="text-sm text-gray-600 font-medium">Vulnerability Types</div>
-                <div className="h-1 w-0 bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
-              </CardContent>
-            </Card>
-            
-            <Card className="group border-2 border-green-200 hover:border-green-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-green-600 mb-2 group-hover:scale-110 transition-transform">2</div>
-                <div className="text-sm text-gray-600 font-medium">Languages</div>
-                <div className="h-1 w-0 bg-gradient-to-r from-green-500 to-emerald-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
-              </CardContent>
-            </Card>
-            
-            <Card className="group border-2 border-orange-200 hover:border-orange-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-orange-600 mb-2 group-hover:scale-110 transition-transform">Instant</div>
-                <div className="text-sm text-gray-600 font-medium">Results</div>
-                <div className="h-1 w-0 bg-gradient-to-r from-orange-500 to-red-500 group-hover:w-full transition-all duration-500 mt-2 rounded-full mx-auto"></div>
-              </CardContent>
-            </Card>
-          </div>
+            {/* Drop zone */}
+            <div
+              onDragEnter={(e) => { e.preventDefault(); setIsDragging(true); }}
+              onDragOver={(e) => e.preventDefault()}
+              onDragLeave={(e) => { e.preventDefault(); setIsDragging(false); }}
+              onDrop={handleDrop}
+              className={`rounded-2xl border-2 border-dashed p-8 text-center transition-all ${
+                isDragging ? "border-primary bg-primary/10 scale-[1.01]" : "border-border/60 bg-card/30 hover:border-primary/50"
+              }`}
+            >
+              <Upload className={`mx-auto mb-3 h-10 w-10 ${isDragging ? "text-primary" : "text-muted-foreground"}`} />
+              <p className="mb-3 font-medium">{isDragging ? "Drop files here" : "Drag & drop your code files"}</p>
+              <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
+                <FileCode className="mr-2 h-4 w-4" /> Browse Files
+              </Button>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Supported: {language === "python" ? ".py, .pyw" : ".js, .jsx, .ts, .tsx, .mjs"}
+              </p>
+              <input
+                ref={fileInputRef}
+                type="file"
+                multiple
+                accept={language === "python" ? ".py,.pyw" : ".js,.jsx,.ts,.tsx,.mjs"}
+                onChange={(e) => handleFileUpload(e.target.files)}
+                className="hidden"
+              />
+            </div>
 
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            
-            {/* Left Column - Input */}
-            <div className="space-y-6">
-              
-              {/* Language Selection */}
-              <Card className="shadow-lg rounded-2xl border-2 border-blue-100">
-                <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
-                  <CardTitle className="flex items-center gap-2 text-blue-900">
-                    <FileCode className="w-5 h-5" />
-                    Configuration
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4 pt-6">
-                  <div className="space-y-2">
-                    <Label className="text-sm font-semibold text-gray-700">
-                      Programming Language
-                    </Label>
-                    <Select onValueChange={setLanguage} defaultValue="python">
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select language" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="python">
-                          <span className="flex items-center gap-2">
-                            Python
-                          </span>
-                        </SelectItem>
-                        <SelectItem value="javascript">
-                          <span className="flex items-center gap-2">
-                            JavaScript
-                          </span>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Drag & Drop Zone */}
-              <Card className="shadow-lg rounded-2xl border-2 border-blue-100">
-                <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
-                  <CardTitle className="flex items-center gap-2 text-blue-900">
-                    <Upload className="w-5 h-5" />
-                    Upload Code Files
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <div
-                    onDragEnter={handleDragEnter}
-                    onDragOver={handleDragOver}
-                    onDragLeave={handleDragLeave}
-                    onDrop={handleDrop}
-                    className={`border-2 border-dashed rounded-lg p-8 text-center transition-all ${
-                      isDragging
-                        ? "border-blue-500 bg-blue-50 scale-105"
-                        : "border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50"
-                    }`}
-                  >
-                    <Upload className={`mx-auto h-12 w-12 mb-4 transition-colors ${
-                      isDragging ? "text-blue-600" : "text-gray-400"
-                    }`} />
-                    <p className="text-lg font-medium text-gray-700 mb-2">
-                      {isDragging ? "Drop your files here" : "Drag & Drop your code files"}
-                    </p>
-                    <p className="text-sm text-gray-500 mb-4">or</p>
-                    <Button 
-                      variant="outline" 
-                      onClick={handleBrowseClick}
-                      className="border-blue-300 hover:bg-blue-50"
-                    >
-                      <FileCode className="mr-2 h-4 w-4" />
-                      Browse Files
-                    </Button>
-                    <p className="text-xs text-gray-400 mt-4">
-                      Supported: {language === "python" ? ".py, .pyw" : ".js, .jsx, .ts, .tsx, .mjs"}
-                    </p>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      multiple
-                      accept={language === "python" ? ".py,.pyw" : ".js,.jsx,.ts,.tsx,.mjs"}
-                      onChange={(e) => handleFileUpload(e.target.files)}
-                      className="hidden"
+            {/* Editors */}
+            <div className="space-y-4">
+              {files.map((file, index) => (
+                <div key={index} className="glass rounded-2xl p-4">
+                  <div className="mb-3 flex items-center gap-3">
+                    <Input
+                      value={file.filename}
+                      onChange={(e) => handleFileChange(index, "filename", e.target.value)}
+                      className="flex-1 font-mono text-sm"
                     />
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Manual Code Input */}
-              <Card className="shadow-lg rounded-2xl border-2 border-blue-100">
-                <CardHeader className="bg-gradient-to-r from-blue-50 to-white">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2 text-blue-900">
-                      <FileCode className="w-5 h-5" />
-                      Or Enter Code Manually
-                    </CardTitle>
-                    <Button variant="outline" size="sm" onClick={addFile}>
-                      + Add File
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4 pt-6">
-                  {files.map((file, index) => (
-                    <div
-                      key={index}
-                      className="space-y-3 p-4 rounded-lg border-2 border-blue-100 bg-white"
-                    >
-                      <div className="flex items-center gap-4">
-                        <Label className="text-sm font-semibold text-gray-700 w-20">
-                          Filename:
-                        </Label>
-                        <Input
-                          value={file.filename}
-                          onChange={(e) => handleFileChange(index, "filename", e.target.value)}
-                          className="flex-1 font-mono text-sm"
-                        />
-                        {files.length > 1 && (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => deleteFile(index)}
-                            className="hover:bg-red-50 hover:text-red-600"
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
-                      <Textarea
-                        rows={8}
-                        value={file.content}
-                        onChange={(e) => handleFileChange(index, "content", e.target.value)}
-                        placeholder="Paste your code here..."
-                        className="font-mono text-sm resize-none"
-                      />
-                    </div>
-                  ))}
-
-                  {/* Scan Button - Prominent Position */}
-                  <Button
-                    onClick={handleScan}
-                    disabled={scanMutation.isPending}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
-                  >
-                    {scanMutation.isPending ? (
-                      <>
-                        <Loader2 className="animate-spin w-5 h-5 mr-2" />
-                        Scanning for Vulnerabilities...
-                      </>
-                    ) : (
-                      <>
-                        <Shield className="w-5 h-5 mr-2" />
-                        Start Security Scan
-                      </>
+                    {files.length > 1 && (
+                      <Button variant="ghost" size="sm" onClick={() => deleteFile(index)} className="text-destructive hover:bg-destructive/10">
+                        <X className="h-4 w-4" />
+                      </Button>
                     )}
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+                  </div>
+                  <CodeMirrorEditor
+                    value={file.content}
+                    onChange={(v) => handleFileChange(index, "content", v)}
+                    language={language}
+                    highlight={scanComplete ? highlightFor(file.filename) : []}
+                    placeholder="Paste your code here..."
+                    height="260px"
+                  />
+                </div>
+              ))}
+              <Button variant="outline" onClick={addFile} className="w-full">+ Add File</Button>
 
-            {/* Right Column - Results */}
-            <div className="space-y-6">
-              {!scanComplete ? (
-                <Card className="shadow-lg rounded-2xl border-2 border-blue-100 h-full flex items-center justify-center min-h-[600px]">
-                  <CardContent className="text-center py-12">
-                    <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Shield className="w-10 h-10 text-blue-600" />
+              <Button
+                onClick={handleScan}
+                disabled={scanMutation.isPending}
+                className="h-14 w-full bg-gradient-primary text-base font-semibold text-primary-foreground shadow-glow transition-shadow hover:shadow-glow-accent"
+              >
+                {scanMutation.isPending ? (
+                  <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Scanning...</>
+                ) : (
+                  <><Shield className="mr-2 h-5 w-5" /> Start Security Scan</>
+                )}
+              </Button>
+            </div>
+          </div>
+
+          {/* Results column */}
+          <div className="space-y-6">
+            {!scanComplete ? (
+              <div className="glass flex min-h-[600px] items-center justify-center rounded-2xl p-12 text-center">
+                <div>
+                  <div className="mx-auto mb-4 grid h-20 w-20 place-items-center rounded-full bg-primary/10">
+                    <Shield className="h-10 w-10 text-primary" />
+                  </div>
+                  <p className="text-lg text-muted-foreground">No scan results yet</p>
+                  <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground/70">
+                    Add code or upload files, then start a scan to see vulnerabilities here.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="glass rounded-2xl p-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 font-display text-lg font-bold">
+                      <CheckCircle2 className="h-5 w-5 text-success" /> Scan complete
                     </div>
-                    <p className="text-gray-500 text-lg mb-2">No scan results yet</p>
-                    <p className="text-gray-400 text-sm max-w-sm mx-auto">
-                      Upload files or paste your code, then click "Start Security Scan" to analyze your code for vulnerabilities
-                    </p>
-                  </CardContent>
-                </Card>
-              ) : (
-                <>
-                  {/* Score Card */}
-                  <Card className="shadow-lg rounded-2xl border-2 border-green-100">
-                    <CardHeader className="bg-gradient-to-r from-green-50 to-white">
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="flex items-center gap-2 text-green-900">
-                          <CheckCircle2 className="w-5 h-5" />
-                          Scan Complete
-                        </CardTitle>
-                        <div className="text-right">
-                          <p className="text-sm text-gray-600">Security Score</p>
-                          <p className="text-2xl font-bold text-green-600">{score}</p>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="pt-6">
-                      {issues.length === 0 ? (
-                        <div className="text-center py-8">
-                          <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                          <p className="text-lg font-semibold text-green-700">
-                            No vulnerabilities found!
-                          </p>
-                          <p className="text-sm text-gray-600 mt-2">
-                            Your code passed all security checks. Great job!
-                          </p>
-                        </div>
-                      ) : (
-                        <div className="space-y-2">
-                          <p className="text-sm text-gray-600">
-                            Found <span className="font-bold text-red-600">{issues.length}</span> security {issues.length === 1 ? 'issue' : 'issues'}
-                          </p>
-                          <div className="flex gap-4 text-xs">
-                            <div className="flex items-center gap-1">
-                              <div className="w-3 h-3 bg-red-500 rounded"></div>
-                              <span>{issues.filter(i => i.issue_severity?.toLowerCase() === 'high').length} High</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <div className="w-3 h-3 bg-yellow-500 rounded"></div>
-                              <span>{issues.filter(i => i.issue_severity?.toLowerCase() === 'medium').length} Medium</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <div className="w-3 h-3 bg-green-500 rounded"></div>
-                              <span>{issues.filter(i => i.issue_severity?.toLowerCase() === 'low').length} Low</span>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-
-                  {/* Vulnerabilities Table */}
-                  {issues.length > 0 && (
-                    <Card className="shadow-lg rounded-2xl border-2 border-red-100">
-                      <CardHeader className="bg-gradient-to-r from-red-50 to-white">
-                        <CardTitle className="flex items-center gap-2 text-red-900">
-                          <AlertTriangle className="w-5 h-5" />
-                          Detected Vulnerabilities
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-6">
-                        <div className="overflow-x-auto">
-                          <table className="w-full text-sm">
-                            <thead>
-                              <tr className="border-b-2 border-gray-200">
-                                <th className="text-left p-3 font-semibold text-gray-700">File</th>
-                                <th className="text-left p-3 font-semibold text-gray-700">Line</th>
-                                <th className="text-left p-3 font-semibold text-gray-700">Severity</th>
-                                <th className="text-left p-3 font-semibold text-gray-700">Description</th>
-                                <th className="text-left p-3 font-semibold text-gray-700">CWE</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {issues.map((issue, idx) => (
-                                <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
-                                  <td className="p-3 font-mono text-xs">
-                                    {issue.filename?.split("\\").pop() || "-"}
-                                  </td>
-                                  <td className="p-3 font-mono text-xs">
-                                    {issue.line_number || "-"}
-                                  </td>
-                                  <td className={`p-3 ${getSeverityColor(issue.issue_severity)}`}>
-                                    <div className="flex items-center gap-2">
-                                      {getSeverityIcon(issue.issue_severity)}
-                                      <span>{issue.issue_severity || "-"}</span>
-                                    </div>
-                                  </td>
-                                  <td className="p-3 text-gray-700 text-xs">
-                                    {issue.issue_text || "-"}
-                                  </td>
-                                  <td className="p-3">
-                                    {issue.issue_cwe?.id ? (
-                                      <a
-                                        href={issue.issue_cwe.link}
-                                        className="text-blue-600 hover:text-blue-800 underline text-xs font-medium"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                      >
-                                        CWE-{issue.issue_cwe.id}
-                                      </a>
-                                    ) : (
-                                      "-"
-                                    )}
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    <div className="text-right">
+                      <p className="text-sm text-muted-foreground">Security score</p>
+                      <p className="text-2xl font-bold text-gradient">{score}</p>
+                    </div>
+                  </div>
+                  {issues.length === 0 ? (
+                    <div className="mt-6 text-center">
+                      <CheckCircle2 className="mx-auto mb-3 h-14 w-14 text-success" />
+                      <p className="text-lg font-semibold text-success">No vulnerabilities found!</p>
+                    </div>
+                  ) : (
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {(["all", "high", "medium", "low"] as Filter[]).map((f) => (
+                        <button
+                          key={f}
+                          onClick={() => setFilter(f)}
+                          className={`rounded-full px-3 py-1.5 text-xs font-semibold capitalize transition-colors ${
+                            filter === f ? "bg-primary text-primary-foreground" : "bg-secondary/50 text-muted-foreground hover:text-foreground"
+                          }`}
+                        >
+                          {f === "all" ? `All (${issues.length})` : `${f} (${counts[f]})`}
+                        </button>
+                      ))}
+                    </div>
                   )}
-                </>
-              )}
-            </div>
+                </div>
+
+                {filteredIssues.length > 0 && (
+                  <div className="glass space-y-3 rounded-2xl p-6">
+                    <div className="flex items-center gap-2 font-display text-lg font-bold">
+                      <AlertTriangle className="h-5 w-5 text-warning" /> Detected vulnerabilities
+                    </div>
+                    {filteredIssues.map((issue, idx) => (
+                      <Reveal key={idx} delay={Math.min(idx * 0.04, 0.3)} direction="up">
+                        <div className="rounded-xl border border-border/60 bg-card/40 p-4">
+                          <div className="mb-2 flex items-center justify-between gap-3">
+                            <div className="flex items-center gap-2">
+                              {issue.issue_severity?.toLowerCase() === "high" ? (
+                                <XCircle className="h-4 w-4 text-destructive" />
+                              ) : issue.issue_severity?.toLowerCase() === "medium" ? (
+                                <AlertTriangle className="h-4 w-4 text-warning" />
+                              ) : (
+                                <AlertCircle className="h-4 w-4 text-success" />
+                              )}
+                              <span className="font-mono text-xs text-muted-foreground">
+                                {baseName(issue.filename)}:{issue.line_number || "?"}
+                              </span>
+                            </div>
+                            <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${sevBadge(issue.issue_severity)}`}>
+                              {issue.issue_severity || "-"}
+                            </span>
+                          </div>
+                          <p className="text-sm text-foreground/80">{issue.issue_text || "-"}</p>
+                          {issue.issue_cwe?.id && (
+                            <a href={issue.issue_cwe.link} target="_blank" rel="noopener noreferrer"
+                              className="mt-2 inline-block text-xs font-medium text-primary hover:underline">
+                              CWE-{issue.issue_cwe.id}
+                            </a>
+                          )}
+                        </div>
+                      </Reveal>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

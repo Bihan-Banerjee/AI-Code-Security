@@ -1,0 +1,97 @@
+{
+  "issues": [
+    {
+      "key": "5a3150f4-ce9e-44de-be9d-1bb0c1f95c2b",
+      "rule": "javascript:S7772",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 5/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 4,
+      "hash": "c830f6c4155a5cbeef0f28771e61ed4d",
+      "textRange": {
+        "startLine": 4,
+        "endLine": 4,
+        "startOffset": 23,
+        "endOffset": 31
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `node:crypto` over `crypto`.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "convention",
+        "import",
+        "nodejs"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "bf8d4959-cecc-4752-ae7e-d5b7554d1fd6",
+      "rule": "javascript:S7785",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-js:Task 5/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 183,
+      "hash": "ef522093b88d65fa7a00a134430dff1d",
+      "textRange": {
+        "startLine": 183,
+        "endLine": 183,
+        "startOffset": 3,
+        "endOffset": 8
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer top-level await over using a promise chain.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "async",
+        "es2022",
+        "esm-only",
+        "modernize"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

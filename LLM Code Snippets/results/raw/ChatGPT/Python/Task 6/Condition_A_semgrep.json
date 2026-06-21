@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.flask.security.audit.hardcoded-config.avoid_hardcoded_config_SECRET_KEY",
@@ -101,32 +100,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\ChatGPT\\Python\\Task 6\\Condition_A.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 2.613680839538574,
-    "profiling_times": {
-      "config_time": 2.6435530185699463,
-      "core_time": 3.6187877655029297,
-      "ignores_time": 0.0020618438720703125,
-      "total_time": 6.2664172649383545
-    },
-    "parsing_time": {
-      "total_time": 0.014404058456420898,
-      "per_file_time": {
-        "mean": 0.014404058456420898,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1081961088
-  },
-  "skipped_rules": []
+  "errors": []
 }

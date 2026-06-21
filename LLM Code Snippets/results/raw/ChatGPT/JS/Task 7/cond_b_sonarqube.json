@@ -1,0 +1,285 @@
+{
+  "issues": [
+    {
+      "key": "3f44498c-6f92-4988-a08d-50a9aa8bca79",
+      "rule": "javascript:S905",
+      "severity": "MAJOR",
+      "component": "fortiscan-chatgpt-js:Task 7/cond_b.js",
+      "project": "fortiscan-chatgpt-js",
+      "line": 3,
+      "hash": "bab13235521fe34f6f480c7a939e7a8e",
+      "textRange": {
+        "startLine": 3,
+        "endLine": 3,
+        "startOffset": 0,
+        "endOffset": 13
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Expected an assignment or function call and instead saw an expression.",
+      "effort": "10min",
+      "debt": "10min",
+      "author": "",
+      "tags": [
+        "cwe",
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:30:23+0000",
+      "updateDate": "2026-06-21T15:30:23+0000",
+      "type": "BUG",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "2edd291b-8edc-497c-bb47-54df140df791",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-chatgpt-js:Task 7/cond_b.js",
+      "project": "fortiscan-chatgpt-js",
+      "line": 12,
+      "hash": "d52b3ccfdd9ee1c57ff768d73701ad3e",
+      "textRange": {
+        "startLine": 12,
+        "endLine": 12,
+        "startOffset": 8,
+        "endOffset": 16
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:30:23+0000",
+      "updateDate": "2026-06-21T15:30:23+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "2f131f3e-9b11-4289-b410-323e4d66d8f9",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-chatgpt-js:Task 7/cond_b.js",
+      "project": "fortiscan-chatgpt-js",
+      "line": 31,
+      "hash": "9aac49e0dcea823f4f437b0e2c3d3874",
+      "textRange": {
+        "startLine": 31,
+        "endLine": 31,
+        "startOffset": 35,
+        "endOffset": 40
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.isNaN` over `isNaN`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:30:23+0000",
+      "updateDate": "2026-06-21T15:30:23+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "112b0674-b8ef-47b5-8c4a-04db44d2d09f",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "fortiscan-chatgpt-js:Task 7/cond_b.js",
+      "project": "fortiscan-chatgpt-js",
+      "line": 71,
+      "hash": "161b8313784081f5965c2da97df48970",
+      "textRange": {
+        "startLine": 71,
+        "endLine": 74,
+        "startOffset": 4,
+        "endOffset": 3
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception or don't catch it at all.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-06-21T15:30:23+0000",
+      "updateDate": "2026-06-21T15:30:23+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "1ad4dd90-1bf6-48b9-ad38-6447da64a1a4",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "fortiscan-chatgpt-js:Task 7/cond_b.js",
+      "project": "fortiscan-chatgpt-js",
+      "line": 154,
+      "hash": "161b8313784081f5965c2da97df48970",
+      "textRange": {
+        "startLine": 154,
+        "endLine": 157,
+        "startOffset": 4,
+        "endOffset": 3
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception or don't catch it at all.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-06-21T15:30:23+0000",
+      "updateDate": "2026-06-21T15:30:23+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "372924e3-2d84-4075-8d7b-457d9d4f35b1",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "fortiscan-chatgpt-js:Task 7/cond_b.js",
+      "project": "fortiscan-chatgpt-js",
+      "line": 182,
+      "hash": "161b8313784081f5965c2da97df48970",
+      "textRange": {
+        "startLine": 182,
+        "endLine": 185,
+        "startOffset": 4,
+        "endOffset": 3
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception or don't catch it at all.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-06-21T15:30:23+0000",
+      "updateDate": "2026-06-21T15:30:23+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

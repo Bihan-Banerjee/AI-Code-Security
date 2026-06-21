@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.django.security.injection.ssrf.ssrf-injection-requests.ssrf-injection-requests",
@@ -257,32 +256,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\CoPilot\\Python\\Task 10\\cond_a.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 2.0738613605499268,
-    "profiling_times": {
-      "config_time": 4.104188442230225,
-      "core_time": 2.9141454696655273,
-      "ignores_time": 0.004257917404174805,
-      "total_time": 7.024117708206177
-    },
-    "parsing_time": {
-      "total_time": 0.010420083999633789,
-      "per_file_time": {
-        "mean": 0.010420083999633789,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1082767488
-  },
-  "skipped_rules": []
+  "errors": []
 }

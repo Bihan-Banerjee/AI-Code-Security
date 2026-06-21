@@ -1,0 +1,323 @@
+{
+  "issues": [
+    {
+      "key": "23b682dc-40e5-4a98-89a1-facb770ac7a8",
+      "rule": "python:S1192",
+      "severity": "CRITICAL",
+      "component": "fortiscan-claude-python:Task 6/cond_b.py",
+      "project": "fortiscan-claude-python",
+      "line": 86,
+      "hash": "cb14e510d271221f204e77415dfb2441",
+      "textRange": {
+        "startLine": 86,
+        "endLine": 86,
+        "startOffset": 38,
+        "endOffset": 47
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 90,
+                "endLine": 90,
+                "startOffset": 32,
+                "endOffset": 41
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 250,
+                "endLine": 250,
+                "startOffset": 70,
+                "endOffset": 79
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Define a constant instead of duplicating this literal \"Bearer \" 3 times.",
+      "effort": "6min",
+      "debt": "6min",
+      "author": "",
+      "tags": [
+        "design"
+      ],
+      "creationDate": "2026-06-21T15:33:10+0000",
+      "updateDate": "2026-06-21T15:33:10+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "DISTINCT",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "3525dc7c-1d04-4e18-94d8-d18cb45bc986",
+      "rule": "python:S8392",
+      "severity": "BLOCKER",
+      "component": "fortiscan-claude-python:Task 6/cond_b.py",
+      "project": "fortiscan-claude-python",
+      "line": 167,
+      "hash": "c8cc7f56b08ec2ff2dcc895fe0aa4917",
+      "textRange": {
+        "startLine": 167,
+        "endLine": 167,
+        "startOffset": 4,
+        "endOffset": 11
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Avoid binding the application to all network interfaces.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "fastapi",
+        "least-privilege",
+        "uvicorn",
+        "flask",
+        "deployment",
+        "network"
+      ],
+      "creationDate": "2026-06-21T15:33:10+0000",
+      "updateDate": "2026-06-21T15:33:10+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "BLOCKER"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "5b53cfe4-ab75-421f-8efd-47b4d23a573e",
+      "rule": "python:S1192",
+      "severity": "CRITICAL",
+      "component": "fortiscan-claude-python:Task 6/cond_b.py",
+      "project": "fortiscan-claude-python",
+      "line": 235,
+      "hash": "ce5c4a8033ff9b3a1dd4b62e992a1b36",
+      "textRange": {
+        "startLine": 235,
+        "endLine": 235,
+        "startOffset": 26,
+        "endOffset": 42
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 241,
+                "endLine": 241,
+                "startOffset": 26,
+                "endOffset": 42
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 246,
+                "endLine": 246,
+                "startOffset": 26,
+                "endOffset": 42
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 250,
+                "endLine": 250,
+                "startOffset": 26,
+                "endOffset": 42
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 255,
+                "endLine": 255,
+                "startOffset": 26,
+                "endOffset": 42
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 260,
+                "endLine": 260,
+                "startOffset": 26,
+                "endOffset": 42
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 265,
+                "endLine": 265,
+                "startOffset": 26,
+                "endOffset": 42
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 270,
+                "endLine": 270,
+                "startOffset": 26,
+                "endOffset": 42
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 288,
+                "endLine": 288,
+                "startOffset": 26,
+                "endOffset": 42
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 295,
+                "endLine": 295,
+                "startOffset": 26,
+                "endOffset": 42
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 6/cond_b.py",
+              "textRange": {
+                "startLine": 301,
+                "endLine": 301,
+                "startOffset": 26,
+                "endOffset": 42
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Define a constant instead of duplicating this literal \"/api/protected\" 11 times.",
+      "effort": "22min",
+      "debt": "22min",
+      "author": "",
+      "tags": [
+        "design"
+      ],
+      "creationDate": "2026-06-21T15:33:10+0000",
+      "updateDate": "2026-06-21T15:33:10+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "DISTINCT",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

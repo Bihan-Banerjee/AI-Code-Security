@@ -1,28 +1,22 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token
 import bcrypt
-from pymongo import MongoClient
 import os
 import re
 import requests
 from dotenv import load_dotenv
 import secrets
 from datetime import datetime, timedelta
-from extensions import limiter  
+from extensions import limiter
+from db import users, reset_tokens
 
 load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI")
 ABSTRACT_API_KEY = os.getenv("ABSTRACT_API_KEY", "")
 RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 BREVO_API_KEY = os.getenv("BREVO_API_KEY", "")
 auth_bp = Blueprint('auth', __name__)
-
-client = MongoClient(MONGO_URI)
-db = client["codewhisperer"]
-users = db["users"]
-reset_tokens = db["reset_tokens"]
 
 DISPOSABLE_DOMAINS = {
     '10minutemail.com', 'tempmail.com', 'guerrillamail.com', 'mailinator.com',
@@ -91,11 +85,13 @@ def verify_email_with_api(email):
 @auth_bp.route("/register", methods=["POST"])
 @limiter.limit("5/minute")
 def register():
-    data = request.json
+    data = request.get_json(silent=True) or {}
 
-    username = data.get("username", "").strip()
-    email = data.get("email", "").strip().lower()
+    username = str(data.get("username", "")).strip()
+    email = str(data.get("email", "")).strip().lower()
     password = data.get("password", "")
+    if not isinstance(password, str):
+        return jsonify({"error": "Invalid password"}), 400
 
     if not username or not email or not password:
         return jsonify({"error": "All fields are required"}), 400
@@ -108,6 +104,9 @@ def register():
 
     if len(password) < 8:
         return jsonify({"error": "Password must be at least 8 characters"}), 400
+
+    if len(password.encode("utf-8")) > 72:
+        return jsonify({"error": "Password is too long (max 72 bytes)"}), 400
 
     if not validate_email_format(email):
         return jsonify({"error": "Invalid email format"}), 400
@@ -143,9 +142,11 @@ def register():
 @auth_bp.route("/login", methods=["POST"])
 @limiter.limit("10/minute")
 def login():
-    data = request.json
-    username = data.get("username", "").strip()
+    data = request.get_json(silent=True) or {}
+    username = str(data.get("username", "")).strip()
     password = data.get("password", "")
+    if not isinstance(password, str):
+        return jsonify({"error": "Invalid credentials"}), 401
 
     if not username or not password:
         return jsonify({"error": "Username and password are required"}), 400
@@ -164,8 +165,8 @@ def login():
 @auth_bp.route("/validate-email", methods=["POST"])
 @limiter.limit("20/minute")
 def validate_email_endpoint():
-    data = request.json
-    email = data.get("email", "").strip().lower()
+    data = request.get_json(silent=True) or {}
+    email = str(data.get("email", "")).strip().lower()
 
     if not email:
         return jsonify({"valid": False, "error": "Email is required"}), 400
@@ -301,8 +302,8 @@ def send_reset_email(email, reset_token, username):
 @auth_bp.route("/forgot-password", methods=["POST"])
 @limiter.limit("3/minute")
 def forgot_password():
-    data = request.json
-    email = data.get("email", "").strip().lower()
+    data = request.get_json(silent=True) or {}
+    email = str(data.get("email", "")).strip().lower()
 
     if not email:
         return jsonify({"error": "Email is required"}), 400
@@ -313,6 +314,9 @@ def forgot_password():
     user = users.find_one({"email": email})
 
     if user:
+        # Invalidate any earlier unused tokens so only the newest link works.
+        reset_tokens.update_many({"email": email, "used": False}, {"$set": {"used": True}})
+
         reset_token = secrets.token_urlsafe(32)
 
         reset_tokens.insert_one({
@@ -332,8 +336,8 @@ def forgot_password():
 @auth_bp.route("/verify-reset-token", methods=["POST"])
 @limiter.limit("10/minute")
 def verify_reset_token():
-    data = request.json
-    token = data.get("token", "")
+    data = request.get_json(silent=True) or {}
+    token = str(data.get("token", ""))
 
     if not token:
         return jsonify({"valid": False, "error": "Token is required"}), 400
@@ -354,15 +358,20 @@ def verify_reset_token():
 @auth_bp.route("/reset-password", methods=["POST"])
 @limiter.limit("5/minute")
 def reset_password():
-    data = request.json
-    token = data.get("token", "")
+    data = request.get_json(silent=True) or {}
+    token = str(data.get("token", ""))
     new_password = data.get("password", "")
+    if not isinstance(new_password, str):
+        return jsonify({"error": "Invalid password"}), 400
 
     if not token or not new_password:
         return jsonify({"error": "Token and new password are required"}), 400
 
     if len(new_password) < 8:
         return jsonify({"error": "Password must be at least 8 characters"}), 400
+
+    if len(new_password.encode("utf-8")) > 72:
+        return jsonify({"error": "Password is too long (max 72 bytes)"}), 400
 
     token_doc = reset_tokens.find_one({
         "token": token,
@@ -382,8 +391,9 @@ def reset_password():
         {"$set": {"password": hashed_pw, "updated_at": datetime.utcnow()}}
     )
 
-    reset_tokens.update_one(
-        {"_id": token_doc["_id"]},
+    # Burn this and any other outstanding tokens for the account.
+    reset_tokens.update_many(
+        {"email": token_doc["email"], "used": False},
         {"$set": {"used": True, "used_at": datetime.utcnow()}}
     )
 

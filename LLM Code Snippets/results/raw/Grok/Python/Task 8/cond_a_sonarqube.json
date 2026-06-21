@@ -1,4 +1,48 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "03d78979-1a76-44b1-a27b-7b8238ebd459",
+      "rule": "python:S8370",
+      "severity": "CRITICAL",
+      "component": "fortiscan-grok-python:Task 8/cond_a.py",
+      "project": "fortiscan-grok-python",
+      "line": 16,
+      "hash": "e5ec4c2abb217054f3873e7183a9b08d",
+      "textRange": {
+        "startLine": 16,
+        "endLine": 16,
+        "startOffset": 64,
+        "endOffset": 76
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Do not use query parameters with POST requests; use path parameters or request body instead.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "flask"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

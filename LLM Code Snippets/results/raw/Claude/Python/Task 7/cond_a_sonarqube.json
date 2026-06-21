@@ -1,0 +1,438 @@
+{
+  "issues": [
+    {
+      "key": "60d91a42-d389-4878-8ae2-78019b508d72",
+      "rule": "python:S2068",
+      "severity": "MAJOR",
+      "component": "fortiscan-claude-python:Task 7/cond_a.py",
+      "project": "fortiscan-claude-python",
+      "line": 220,
+      "hash": "fb4d24c08fda1ed40b8ea0aaad4de0bd",
+      "textRange": {
+        "startLine": 220,
+        "endLine": 220,
+        "startOffset": 40,
+        "endOffset": 57
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "\"password\" detected here, review this potentially hard-coded credential.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-06-21T15:33:10+0000",
+      "updateDate": "2026-06-21T15:33:10+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "76fbe22e-5a3c-4914-853c-88c972fdcd9e",
+      "rule": "python:S1192",
+      "severity": "CRITICAL",
+      "component": "fortiscan-claude-python:Task 7/cond_a.py",
+      "project": "fortiscan-claude-python",
+      "line": 389,
+      "hash": "93e748617b08e28e719fd1beb099f3cc",
+      "textRange": {
+        "startLine": 389,
+        "endLine": 389,
+        "startOffset": 29,
+        "endOffset": 58
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 430,
+                "endLine": 430,
+                "startOffset": 29,
+                "endOffset": 58
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 537,
+                "endLine": 537,
+                "startOffset": 33,
+                "endOffset": 62
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Define a constant instead of duplicating this literal \"username must not be empty.\" 3 times.",
+      "effort": "6min",
+      "debt": "6min",
+      "author": "",
+      "tags": [
+        "design"
+      ],
+      "creationDate": "2026-06-21T15:33:10+0000",
+      "updateDate": "2026-06-21T15:33:10+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "DISTINCT",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "c0eb165c-95c1-4a6d-bf06-d4544e9b9f0e",
+      "rule": "python:S1192",
+      "severity": "CRITICAL",
+      "component": "fortiscan-claude-python:Task 7/cond_a.py",
+      "project": "fortiscan-claude-python",
+      "line": 393,
+      "hash": "c65671a60462681eb6a3ad05564553d0",
+      "textRange": {
+        "startLine": 393,
+        "endLine": 393,
+        "startOffset": 29,
+        "endOffset": 55
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 439,
+                "endLine": 439,
+                "startOffset": 29,
+                "endOffset": 55
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 545,
+                "endLine": 545,
+                "startOffset": 33,
+                "endOffset": 59
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Define a constant instead of duplicating this literal \"email must not be empty.\" 3 times.",
+      "effort": "6min",
+      "debt": "6min",
+      "author": "",
+      "tags": [
+        "design"
+      ],
+      "creationDate": "2026-06-21T15:33:10+0000",
+      "updateDate": "2026-06-21T15:33:10+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "DISTINCT",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "8fb2ecf3-63c1-4079-b21d-fbbe2d231d9f",
+      "rule": "python:S3776",
+      "severity": "CRITICAL",
+      "component": "fortiscan-claude-python:Task 7/cond_a.py",
+      "project": "fortiscan-claude-python",
+      "line": 504,
+      "hash": "ff4f037cab9b394bce93254b2ca83684",
+      "textRange": {
+        "startLine": 504,
+        "endLine": 504,
+        "startOffset": 8,
+        "endOffset": 14
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 526,
+                "endLine": 526,
+                "startOffset": 8,
+                "endOffset": 10
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 531,
+                "endLine": 531,
+                "startOffset": 8,
+                "endOffset": 10
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 534,
+                "endLine": 534,
+                "startOffset": 8,
+                "endOffset": 10
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 536,
+                "endLine": 536,
+                "startOffset": 12,
+                "endOffset": 14
+              },
+              "msg": "+2 (incl 1 for nesting)",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 538,
+                "endLine": 538,
+                "startOffset": 12,
+                "endOffset": 14
+              },
+              "msg": "+2 (incl 1 for nesting)",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 542,
+                "endLine": 542,
+                "startOffset": 8,
+                "endOffset": 10
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 544,
+                "endLine": 544,
+                "startOffset": 12,
+                "endOffset": 14
+              },
+              "msg": "+2 (incl 1 for nesting)",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 546,
+                "endLine": 546,
+                "startOffset": 12,
+                "endOffset": 14
+              },
+              "msg": "+2 (incl 1 for nesting)",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 550,
+                "endLine": 550,
+                "startOffset": 8,
+                "endOffset": 10
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 553,
+                "endLine": 553,
+                "startOffset": 8,
+                "endOffset": 10
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 554,
+                "endLine": 554,
+                "startOffset": 12,
+                "endOffset": 14
+              },
+              "msg": "+2 (incl 1 for nesting)",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 561,
+                "endLine": 561,
+                "startOffset": 8,
+                "endOffset": 14
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-claude-python:Task 7/cond_a.py",
+              "textRange": {
+                "startLine": 566,
+                "endLine": 566,
+                "startOffset": 8,
+                "endOffset": 14
+              },
+              "msg": "+1",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.",
+      "effort": "8min",
+      "debt": "8min",
+      "author": "",
+      "tags": [
+        "brain-overload"
+      ],
+      "creationDate": "2026-06-21T15:33:10+0000",
+      "updateDate": "2026-06-21T15:33:10+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "FOCUSED",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

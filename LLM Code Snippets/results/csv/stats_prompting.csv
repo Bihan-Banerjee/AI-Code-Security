@@ -1,0 +1,8 @@
+LLM,n_pairs,n_nonzero,median_A,median_B,W,p_value,rank_biserial,effect_magnitude,significant
+ChatGPT,20,8,1.00,1.00,23.0,0.23524,0.2778,small,no
+Claude,20,13,1.50,0.00,88.0,0.00126,0.9341,large,yes
+Gemini,20,13,2.00,0.00,83.0,0.00373,0.8242,large,yes
+Grok,20,10,1.00,0.00,46.5,0.02208,0.6909,large,yes
+DeepSeek,20,15,1.50,1.00,104.0,0.00544,0.7333,large,yes
+CoPilot,20,10,2.00,1.00,47.5,0.01943,0.7273,large,yes
+ALL (pooled),120,69,1.00,0.00,2105.0,0.00000,0.7433,large,yes

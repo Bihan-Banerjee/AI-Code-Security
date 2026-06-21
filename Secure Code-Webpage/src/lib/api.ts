@@ -1,36 +1,19 @@
 import axios, { AxiosInstance, AxiosError } from "axios";
+import { getToken, clearAuth } from "@/lib/auth";
 
-const getApiBaseURL = (): string => {
-  // Priority 1: Environment variable from .env files
-  if (import.meta.env.VITE_API_BASE) {
-    return import.meta.env.VITE_API_BASE;
-  }
-  
+// Base URL never includes the `/api` segment — every call site adds `/api/...`.
+export const getApiBaseURL = (): string => {
   if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
+    return import.meta.env.VITE_API_URL.replace(/\/+$/, "");
   }
-  
-  // Priority 2: Auto-detect based on current hostname
+
   const hostname = window.location.hostname;
-  
   if (hostname === "localhost" || hostname === "127.0.0.1") {
-    // Development mode - point to local backend
-    return "http://localhost:5000/api";
+    return "http://localhost:5000";
   }
-  
-  // Priority 3: Production fallback
-  // If frontend and backend are on same domain, use relative path
-  if (window.location.origin.includes("your-domain.com")) {
-    return "/api";
-  }
-  
-  // If backend is on different domain, specify full URL
+
   return "https://darthbihan-ai-code-security-backend.hf.space";
 };
-
-function getToken(): string | null {
-  return sessionStorage.getItem("token") ?? localStorage.getItem("token") ?? null;
-}
 
 const api: AxiosInstance = axios.create({
   baseURL: getApiBaseURL(),
@@ -78,9 +61,8 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       // Unauthorized - clear tokens and redirect to login
       console.warn("[API] Unauthorized - clearing tokens");
-      sessionStorage.removeItem("token");
-      localStorage.removeItem("token");
-      
+      clearAuth();
+
       // Don't redirect if already on login/register page
       if (!window.location.pathname.includes("/login") && 
           !window.location.pathname.includes("/register")) {

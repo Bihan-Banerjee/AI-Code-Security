@@ -1,0 +1,45 @@
+# ===== cond_a/app.py =====
+# ── app.py ─────────────────────────────────────────────────────────────────
+from flask import Flask
+from models import db
+from routes import users_bp
+
+def create_app():
+    app = Flask(__name__)
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    db.init_app(app)
+    app.register_blueprint(users_bp)
+
+    with app.app_context():
+        db.create_all()          # creates users.db + table on first run
+
+    return app
+
+if __name__ == "__main__":
+    create_app().run(debug=True)
+
+# ===== cond_a/models.py =====
+# ── models.py ──────────────────────────────────────────────────────────────
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
+
+class User(db.Model):
+    __tablename__ = "users"
+
+    id       = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email    = db.Column(db.String(120), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    def to_dict(self):
+        return {
+            "id":         self.id,
+            "username":   self.username,
+            "email":      self.email,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+        }
+
+# ===== cond_a/routes.py =====

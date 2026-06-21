@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.lang.security.dangerous-subprocess-use.dangerous-subprocess-use",
@@ -111,32 +110,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\ChatGPT\\Python\\Task 8\\Condition_A.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 2.3087832927703857,
-    "profiling_times": {
-      "config_time": 2.7622101306915283,
-      "core_time": 2.988326072692871,
-      "ignores_time": 0.0028922557830810547,
-      "total_time": 5.755146503448486
-    },
-    "parsing_time": {
-      "total_time": 0.014461517333984375,
-      "per_file_time": {
-        "mean": 0.014461517333984375,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1081434560
-  },
-  "skipped_rules": []
+  "errors": []
 }

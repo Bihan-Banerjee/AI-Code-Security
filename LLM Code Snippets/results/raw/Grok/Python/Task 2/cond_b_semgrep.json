@@ -1,32 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Grok\\Python\\Task 2\\cond_b.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.545572280883789,
-    "profiling_times": {
-      "config_time": 1.3377580642700195,
-      "core_time": 1.9126169681549072,
-      "ignores_time": 0.001840353012084961,
-      "total_time": 3.2530224323272705
-    },
-    "parsing_time": {
-      "total_time": 0.009390830993652344,
-      "per_file_time": {
-        "mean": 0.009390830993652344,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1089335808
-  },
-  "skipped_rules": []
+  "errors": []
 }

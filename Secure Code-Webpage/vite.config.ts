@@ -29,4 +29,16 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  optimizeDeps: {
+    include: [
+      "framer-motion",
+      "animejs",
+      "lenis",
+      "recharts",
+      "@uiw/react-codemirror",
+      "@codemirror/lang-python",
+      "@codemirror/lang-javascript",
+      "@uiw/codemirror-theme-tokyo-night",
+    ],
+  },
 }));

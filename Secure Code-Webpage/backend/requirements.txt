@@ -9,6 +9,7 @@ python-dotenv==1.0.0
 pymongo==4.5.0
 
 pydantic>=2.9.2
+libcst>=1.1.0
 
 
 torch>=2.0.0

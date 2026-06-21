@@ -1,0 +1,334 @@
+{
+  "issues": [
+    {
+      "key": "2836d0ac-4ebe-4291-bd49-0f6ec743f39a",
+      "rule": "javascript:S905",
+      "severity": "MAJOR",
+      "component": "fortiscan-claude-js:Task 7/cond_b.js",
+      "project": "fortiscan-claude-js",
+      "line": 13,
+      "hash": "bab13235521fe34f6f480c7a939e7a8e",
+      "textRange": {
+        "startLine": 13,
+        "endLine": 13,
+        "startOffset": 0,
+        "endOffset": 13
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Expected an assignment or function call and instead saw an expression.",
+      "effort": "10min",
+      "debt": "10min",
+      "author": "",
+      "tags": [
+        "cwe",
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "BUG",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "420ea509-4d82-4806-8fc1-0b28783a6bc1",
+      "rule": "javascript:S2068",
+      "severity": "MAJOR",
+      "component": "fortiscan-claude-js:Task 7/cond_b.js",
+      "project": "fortiscan-claude-js",
+      "line": 271,
+      "hash": "cc08fde7cc671d4c84cefe3d754e1b13",
+      "textRange": {
+        "startLine": 271,
+        "endLine": 271,
+        "startOffset": 45,
+        "endOffset": 60
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Review this potentially hard-coded password.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "0fb0a66e-9fcc-4204-848c-e58e5235b663",
+      "rule": "javascript:S905",
+      "severity": "MAJOR",
+      "component": "fortiscan-claude-js:Task 7/cond_b.js",
+      "project": "fortiscan-claude-js",
+      "line": 316,
+      "hash": "bab13235521fe34f6f480c7a939e7a8e",
+      "textRange": {
+        "startLine": 316,
+        "endLine": 316,
+        "startOffset": 0,
+        "endOffset": 13
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Expected an assignment or function call and instead saw an expression.",
+      "effort": "10min",
+      "debt": "10min",
+      "author": "",
+      "tags": [
+        "cwe",
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "BUG",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "c8efb506-4c64-4a28-881f-d9728b799b93",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-claude-js:Task 7/cond_b.js",
+      "project": "fortiscan-claude-js",
+      "line": 333,
+      "hash": "5d0da5a951f7bcc77471467bdeb022d3",
+      "textRange": {
+        "startLine": 333,
+        "endLine": 333,
+        "startOffset": 24,
+        "endOffset": 32
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "e925ca26-bdf5-4e04-ab64-9d3ed539a922",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-claude-js:Task 7/cond_b.js",
+      "project": "fortiscan-claude-js",
+      "line": 337,
+      "hash": "f51e5c75da304a35fa1ebcaa92bb5fb0",
+      "textRange": {
+        "startLine": 337,
+        "endLine": 337,
+        "startOffset": 24,
+        "endOffset": 32
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "ec1b37fa-5afb-4a6f-853f-19d000a318d6",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-claude-js:Task 7/cond_b.js",
+      "project": "fortiscan-claude-js",
+      "line": 338,
+      "hash": "d07fa0f7bb05cd030eea7780ae95ef40",
+      "textRange": {
+        "startLine": 338,
+        "endLine": 338,
+        "startOffset": 24,
+        "endOffset": 32
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "72c7cb72-bbf9-49ae-8c7c-7761afccae02",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-claude-js:Task 7/cond_b.js",
+      "project": "fortiscan-claude-js",
+      "line": 339,
+      "hash": "c9d59ff4d2a34c38e17f1c094995ed85",
+      "textRange": {
+        "startLine": 339,
+        "endLine": 339,
+        "startOffset": 29,
+        "endOffset": 37
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

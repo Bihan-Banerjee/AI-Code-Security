@@ -1,0 +1,243 @@
+{
+  "issues": [
+    {
+      "key": "69d7bf0d-ec44-4322-8b81-88506d59b00d",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-gemini-js:Task 7/cond_a.js",
+      "project": "fortiscan-gemini-js",
+      "line": 27,
+      "hash": "2123c75908c9775baa62aa07be5d8335",
+      "textRange": {
+        "startLine": 27,
+        "endLine": 27,
+        "startOffset": 17,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:36:50+0000",
+      "updateDate": "2026-06-21T15:36:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "5547aaa4-2c81-4589-8923-f75e469e1bfa",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-gemini-js:Task 7/cond_a.js",
+      "project": "fortiscan-gemini-js",
+      "line": 36,
+      "hash": "2123c75908c9775baa62aa07be5d8335",
+      "textRange": {
+        "startLine": 36,
+        "endLine": 36,
+        "startOffset": 17,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:36:50+0000",
+      "updateDate": "2026-06-21T15:36:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "2353bfbd-d9b9-4323-820c-530ecd1197e6",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-gemini-js:Task 7/cond_a.js",
+      "project": "fortiscan-gemini-js",
+      "line": 46,
+      "hash": "2123c75908c9775baa62aa07be5d8335",
+      "textRange": {
+        "startLine": 46,
+        "endLine": 46,
+        "startOffset": 17,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:36:50+0000",
+      "updateDate": "2026-06-21T15:36:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "b7e4a8f6-be90-4e59-8551-8d78dda9d7ef",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "fortiscan-gemini-js:Task 7/cond_a.js",
+      "project": "fortiscan-gemini-js",
+      "line": 77,
+      "hash": "161b8313784081f5965c2da97df48970",
+      "textRange": {
+        "startLine": 77,
+        "endLine": 79,
+        "startOffset": 4,
+        "endOffset": 3
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception or don't catch it at all.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-06-21T15:36:50+0000",
+      "updateDate": "2026-06-21T15:36:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "0393f90a-1ba1-4c4f-a2e7-4e5592d8443c",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "fortiscan-gemini-js:Task 7/cond_a.js",
+      "project": "fortiscan-gemini-js",
+      "line": 87,
+      "hash": "161b8313784081f5965c2da97df48970",
+      "textRange": {
+        "startLine": 87,
+        "endLine": 89,
+        "startOffset": 4,
+        "endOffset": 3
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception or don't catch it at all.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-06-21T15:36:50+0000",
+      "updateDate": "2026-06-21T15:36:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

@@ -1,4 +1,92 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "a45b2561-8c22-4198-b30f-acb07b4f8f97",
+      "rule": "python:S1481",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-python:Task 4/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 84,
+      "hash": "5e11fcffc5ca1f600d0bf53d38f19ae7",
+      "textRange": {
+        "startLine": 84,
+        "endLine": 84,
+        "startOffset": 24,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove the unused local variable \"e\".",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "aeb59c6d-82d8-41f9-9b35-b383509bf425",
+      "rule": "python:S6965",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-python:Task 4/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 98,
+      "hash": "f7484c3354bed8657b9c7d6370c6c9d0",
+      "textRange": {
+        "startLine": 98,
+        "endLine": 98,
+        "startOffset": 0,
+        "endOffset": 21
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Specify the HTTP methods this route should accept.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "flask"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

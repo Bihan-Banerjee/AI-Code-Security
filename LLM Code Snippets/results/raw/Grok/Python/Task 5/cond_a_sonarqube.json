@@ -1,0 +1,53 @@
+{
+  "issues": [
+    {
+      "key": "16ff86f1-b740-474d-a7b6-4f9a28e7923f",
+      "rule": "python:S6903",
+      "severity": "CRITICAL",
+      "component": "fortiscan-grok-python:Task 5/cond_a.py",
+      "project": "fortiscan-grok-python",
+      "line": 115,
+      "hash": "589772d476fb5ccd90a4abab086543f0",
+      "textRange": {
+        "startLine": 115,
+        "endLine": 115,
+        "startOffset": 22,
+        "endOffset": 39
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Don't use `datetime.datetime.utcnow` to create this datetime object.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "datetime",
+        "pitfall"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

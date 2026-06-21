@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.flask.security.audit.debug-enabled.debug-enabled",
@@ -49,32 +48,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\ChatGPT\\Python\\Task 2\\Condition_B.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.7901029586791992,
-    "profiling_times": {
-      "config_time": 2.2679576873779297,
-      "core_time": 2.382073402404785,
-      "ignores_time": 0.0016160011291503906,
-      "total_time": 4.653012990951538
-    },
-    "parsing_time": {
-      "total_time": 0.011729717254638672,
-      "per_file_time": {
-        "mean": 0.011729717254638672,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1081716672
-  },
-  "skipped_rules": []
+  "errors": []
 }

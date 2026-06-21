@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
@@ -267,32 +266,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\ChatGPT\\JS\\Task 2\\Condition_A.js"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.823286771774292,
-    "profiling_times": {
-      "config_time": 2.1531577110290527,
-      "core_time": 2.6433935165405273,
-      "ignores_time": 0.002861499786376953,
-      "total_time": 4.801421642303467
-    },
-    "parsing_time": {
-      "total_time": 0.016270160675048828,
-      "per_file_time": {
-        "mean": 0.016270160675048828,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1085214976
-  },
-  "skipped_rules": []
+  "errors": []
 }

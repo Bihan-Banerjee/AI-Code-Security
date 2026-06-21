@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "javascript.express.security.audit.express-check-csurf-middleware-usage.express-check-csurf-middleware-usage",
@@ -58,32 +57,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Gemini\\JS\\Task 4\\Condition_B.js"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.414259433746338,
-    "profiling_times": {
-      "config_time": 2.5830109119415283,
-      "core_time": 1.7853367328643799,
-      "ignores_time": 0.000865936279296875,
-      "total_time": 4.369888782501221
-    },
-    "parsing_time": {
-      "total_time": 0.00943756103515625,
-      "per_file_time": {
-        "mean": 0.00943756103515625,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1083176000
-  },
-  "skipped_rules": []
+  "errors": []
 }

@@ -1,4 +1,167 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "b32b3dc2-4557-4fc5-985a-7bd2b27d3051",
+      "rule": "python:S1172",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-python:Task 2/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 15,
+      "hash": "e3148f94d50e96b2eab1bd4a347cade0",
+      "textRange": {
+        "startLine": 15,
+        "endLine": 15,
+        "startOffset": 25,
+        "endOffset": 33
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove the unused function parameter \"username\".",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "91f67b74-f670-46f7-8cba-9a64d8566e23",
+      "rule": "python:S1192",
+      "severity": "CRITICAL",
+      "component": "fortiscan-grok-python:Task 2/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 68,
+      "hash": "a84b0324b868067cfe39783d9cecf3a4",
+      "textRange": {
+        "startLine": 68,
+        "endLine": 68,
+        "startOffset": 53,
+        "endOffset": 74
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 2/cond_b.py",
+              "textRange": {
+                "startLine": 74,
+                "endLine": 74,
+                "startOffset": 23,
+                "endOffset": 44
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 2/cond_b.py",
+              "textRange": {
+                "startLine": 114,
+                "endLine": 114,
+                "startOffset": 23,
+                "endOffset": 44
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Define a constant instead of duplicating this literal \"Invalid credentials\" 3 times.",
+      "effort": "6min",
+      "debt": "6min",
+      "author": "",
+      "tags": [
+        "design"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "DISTINCT",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "55d29210-758b-4d03-9115-298962d1f3a4",
+      "rule": "python:S125",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-python:Task 2/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 129,
+      "hash": "d7ef7076734ae84447992034ead7723d",
+      "textRange": {
+        "startLine": 129,
+        "endLine": 135,
+        "startOffset": 0,
+        "endOffset": 3
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove this commented out code.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

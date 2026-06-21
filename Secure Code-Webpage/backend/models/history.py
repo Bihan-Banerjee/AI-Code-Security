@@ -1,10 +1,4 @@
-from pymongo import MongoClient
-import os
-from dotenv import load_dotenv
-load_dotenv()
+# Re-export from the central db module so all code shares one database.
+from db import enhance_history, scan_history
 
-client = MongoClient(os.getenv("MONGO_URI"))
-db = client["codewhisperer"]
-
-enhance_history = db["enhance_history"]
-scan_history = db["scan_history"]
+__all__ = ["enhance_history", "scan_history"]

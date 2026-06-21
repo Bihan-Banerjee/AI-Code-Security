@@ -631,6 +631,7 @@ SONAR_TO_CWE = {
     "python:S1172": None,
     "python:S1481": None,
     "python:S1854": None,
+    "python:S905":  None,   # expression statement with no effect — quality
 
     # =========================================================================
     # JAVASCRIPT
@@ -686,6 +687,7 @@ SONAR_TO_CWE = {
     "javascript:S6582": None,
     "javascript:S3504": None,
     "javascript:S1116": None,
+    "javascript:S905":  None,   # "expected assignment/function call" — quality
 
     # =========================================================================
     # TYPESCRIPT
@@ -839,9 +841,28 @@ SONAR_TO_CWE = {
 # =============================================================================
 
 def detect_condition_from_stem(stem: str) -> str:
-    s = stem.lower()
-    if "b_secure" in s or s=="cond_b" or s == "secure" or s.endswith("_secure"):
+    """
+    Map a snippet filename stem to its prompt condition.
+
+    Handles every naming variant present in the corpus:
+        cond_a / cond_b            (Claude, CoPilot, DeepSeek, Grok)
+        condition_a / condition_b  (Gemini)
+        condtion_a / condtion_b    (typo: ChatGPT, Gemini)
+        condition.b / cond-b       (stray separators)
+        a_standard / b_secure / secure / standard
+    Normalises '-', '.', and ' ' to '_' first so the suffix checks are reliable.
+    Anything that is not clearly a B/secure file defaults to A_standard.
+    """
+    s = stem.lower().replace("-", "_").replace(".", "_").replace(" ", "_")
+
+    # --- B / secure indicators (checked first) ---
+    if ("b_secure" in s or "secure" in s
+            or s == "cond_b" or s == "b"
+            or "cond_b" in s or "condtion_b" in s or "condition_b" in s
+            or s.endswith("_b") or s.endswith("_secure")):
         return "B_secure"
+
+    # --- everything else is the standard / A condition ---
     return "A_standard"
 
 
@@ -954,24 +975,31 @@ def extract_sonarqube(json_path, llm, lang, task_name, condition):
         tags    = issue.get("tags", [])
         impacts = issue.get("impacts", [])
 
-        # 1. Look up our table
+        # 1. Look up our table. A rule explicitly mapped to None is a known
+        #    quality / reliability rule (not a security finding).
+        rule_in_table = rule_id in SONAR_TO_CWE
         cwe_id = SONAR_TO_CWE.get(rule_id)
+        rule_is_quality = rule_in_table and cwe_id is None
 
-        # 2. Fall back to CWE tag on the issue (e.g. "cwe89", "cwe-89")
-        if cwe_id is None:
+        # 2. Fall back to a NUMERIC CWE tag on the issue (e.g. "cwe89", "cwe-89").
+        #    Note: SonarQube also emits a bare "cwe" tag with no number on some
+        #    quality rules (e.g. S1854, S905); that must NOT be treated as a CWE.
+        if cwe_id is None and not rule_is_quality:
             for tag in tags:
                 m = re.search(r"cwe[- _]?(\d+)", tag, re.IGNORECASE)
                 if m:
                     cwe_id = f"CWE-{m.group(1)}"
                     break
 
-        # 3. Classify security vs. quality
+        # 3. Classify security vs. quality.
+        #    Security iff we resolved a real security CWE, OR SonarQube marks a
+        #    SECURITY software-quality impact. Everything else is quality-only.
         has_security_impact = any(
             i.get("softwareQuality") == "SECURITY" for i in impacts
         )
-        has_cwe_tag = any("cwe" in t.lower() for t in tags)
-        is_quality  = cwe_id is None and not has_security_impact and not has_cwe_tag
-        is_sec      = not is_quality and cwe_id not in QUALITY_ONLY_CWES
+        has_real_cwe = cwe_id is not None and cwe_id not in QUALITY_ONLY_CWES
+        is_sec      = (has_real_cwe or has_security_impact) and not rule_is_quality
+        is_quality  = not is_sec
         sev         = SEVERITY_MAP.get(issue.get("severity", "MINOR").upper(), "LOW")
 
         rows.append({

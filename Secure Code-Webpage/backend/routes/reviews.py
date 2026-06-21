@@ -1,31 +1,68 @@
+import re
 from flask import Blueprint, request, jsonify
-from pymongo import MongoClient
 from datetime import datetime
-import os
+from db import reviews_collection
+from extensions import limiter
 
 reviews_bp = Blueprint("reviews", __name__)
-client = MongoClient(os.getenv("MONGO_URI"))
-db = client["codewhisperer"]
-reviews_collection = db["reviews"]
+
+EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+
+@reviews_bp.route("/api/reviews", methods=["GET"])
+@limiter.limit("30/minute")
+def list_reviews():
+    try:
+        docs = list(reviews_collection.find().sort("date", -1).limit(50))
+        reviews = [
+            {
+                "id": str(d.get("_id")),
+                "name": d.get("name"),
+                "rating": d.get("rating"),
+                "review": d.get("review"),
+                "date": d.get("date"),
+            }
+            for d in docs
+        ]
+        return jsonify({"reviews": reviews})
+    except Exception:
+        return jsonify({"error": "Internal server error"}), 500
+
 
 @reviews_bp.route("/api/reviews", methods=["POST"])
+@limiter.limit("5/minute")
 def submit_review():
     try:
-        data = request.get_json()
-        required_fields = ["name", "email", "rating", "review"]
-        if not all(field in data and data[field] for field in required_fields):
+        data = request.get_json(silent=True) or {}
+        name = str(data.get("name", "")).strip()
+        email = str(data.get("email", "")).strip()
+        review = str(data.get("review", "")).strip()
+        rating = data.get("rating")
+
+        if not name or not email or not review or rating is None:
             return jsonify({"error": "All fields are required"}), 400
 
-        new_review = {
-            "name": data["name"],
-            "email": data["email"],
-            "rating": data["rating"],
-            "review": data["review"],
-            "date": datetime.utcnow().isoformat()
-        }
+        try:
+            rating = int(rating)
+        except (TypeError, ValueError):
+            return jsonify({"error": "Rating must be a number"}), 400
+        if rating < 1 or rating > 5:
+            return jsonify({"error": "Rating must be between 1 and 5"}), 400
 
-        reviews_collection.insert_one(new_review)
-        return jsonify({"message": "Review submitted successfully!"}), 201
+        if len(name) > 80 or len(email) > 120 or len(review) > 2000:
+            return jsonify({"error": "One or more fields are too long"}), 400
+        if not EMAIL_RE.match(email):
+            return jsonify({"error": "Invalid email"}), 400
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        result = reviews_collection.insert_one(
+            {
+                "name": name,
+                "email": email,
+                "rating": rating,
+                "review": review,
+                "date": datetime.utcnow().isoformat(),
+            }
+        )
+        return jsonify({"message": "Review submitted successfully!", "id": str(result.inserted_id)}), 201
+    except Exception:
+        return jsonify({"error": "Internal server error"}), 500

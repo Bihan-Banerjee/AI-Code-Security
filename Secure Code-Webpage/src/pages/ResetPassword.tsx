@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
-import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import SecurityHeader from "@/components/SecurityHeader";
+import { toast } from "sonner";
+import AuthShell from "@/components/layout/AuthShell";
+import { getErrorMessage } from "@/lib/errors";
 import { Lock, Eye, EyeOff, CheckCircle2, Loader2, XCircle, AlertCircle } from "lucide-react";
+
+type Strength = "weak" | "medium" | "strong" | null;
 
 export default function ResetPassword() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  
+
   const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,330 +22,208 @@ export default function ResetPassword() {
   const [isLoading, setIsLoading] = useState(false);
   const [isVerifying, setIsVerifying] = useState(true);
   const [tokenValid, setTokenValid] = useState(false);
-  const [passwordStrength, setPasswordStrength] = useState<'weak' | 'medium' | 'strong' | null>(null);
+  const [passwordStrength, setPasswordStrength] = useState<Strength>(null);
 
-  // Verify token on mount
   useEffect(() => {
     const tokenParam = searchParams.get("token");
-    
     if (!tokenParam) {
       toast.error("Invalid reset link");
       navigate("/login");
       return;
     }
-    
     setToken(tokenParam);
-    verifyToken(tokenParam);
+    (async () => {
+      setIsVerifying(true);
+      try {
+        const res = await api.post("/api/verify-reset-token", { token: tokenParam });
+        if (res.data.valid) setTokenValid(true);
+        else {
+          toast.error(res.data.error || "Invalid or expired reset link");
+          setTimeout(() => navigate("/forgot-password"), 2000);
+        }
+      } catch {
+        toast.error("Invalid or expired reset link");
+        setTimeout(() => navigate("/forgot-password"), 2000);
+      } finally {
+        setIsVerifying(false);
+      }
+    })();
   }, [searchParams, navigate]);
 
-  const verifyToken = async (tokenToVerify: string) => {
-    setIsVerifying(true);
-    try {
-      const res = await api.post("/api/verify-reset-token", { token: tokenToVerify });
-      if (res.data.valid) {
-        setTokenValid(true);
-      } else {
-        toast.error(res.data.error || "Invalid or expired reset link");
-        setTimeout(() => navigate("/forgot-password"), 2000);
-      }
-    } catch (err: any) {
-      toast.error("Invalid or expired reset link");
-      setTimeout(() => navigate("/forgot-password"), 2000);
-    } finally {
-      setIsVerifying(false);
-    }
-  };
-
-  // Password strength check
   useEffect(() => {
-    if (!password) {
-      setPasswordStrength(null);
-      return;
-    }
-
-    let strength = 0;
-    if (password.length >= 8) strength++;
-    if (password.length >= 12) strength++;
-    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
-    if (/\d/.test(password)) strength++;
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength++;
-
-    if (strength <= 2) setPasswordStrength('weak');
-    else if (strength <= 3) setPasswordStrength('medium');
-    else setPasswordStrength('strong');
+    if (!password) return setPasswordStrength(null);
+    let s = 0;
+    if (password.length >= 8) s++;
+    if (password.length >= 12) s++;
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) s++;
+    if (/\d/.test(password)) s++;
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) s++;
+    setPasswordStrength(s <= 2 ? "weak" : s <= 3 ? "medium" : "strong");
   }, [password]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!password || !confirmPassword) {
-      toast.error("Please fill in all fields");
-      return;
-    }
-
-    if (password.length < 8) {
-      toast.error("Password must be at least 8 characters");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-
+    if (!password || !confirmPassword) return toast.error("Please fill in all fields");
+    if (password.length < 8) return toast.error("Password must be at least 8 characters");
+    if (password !== confirmPassword) return toast.error("Passwords do not match");
     setIsLoading(true);
-
     try {
-      await api.post("/api/reset-password", {
-        token,
-        password,
-      });
-
+      await api.post("/api/reset-password", { token, password });
       toast.success("Password reset successfully! Please login.");
       navigate("/login");
-    } catch (err: any) {
-      toast.error(err.response?.data?.error || "Failed to reset password");
+    } catch (err) {
+      toast.error(getErrorMessage(err, "Failed to reset password"));
     } finally {
       setIsLoading(false);
     }
   };
 
-  const getPasswordStrengthColor = () => {
-    if (passwordStrength === 'weak') return 'bg-red-500';
-    if (passwordStrength === 'medium') return 'bg-yellow-500';
-    if (passwordStrength === 'strong') return 'bg-green-500';
-    return 'bg-gray-300';
-  };
-
-  const getPasswordStrengthText = () => {
-    if (passwordStrength === 'weak') return 'Weak';
-    if (passwordStrength === 'medium') return 'Medium';
-    if (passwordStrength === 'strong') return 'Strong';
-    return '';
-  };
+  const strengthColor = passwordStrength === "weak" ? "bg-destructive" : passwordStrength === "medium" ? "bg-warning" : "bg-success";
+  const strengthWidth = passwordStrength === "weak" ? "33%" : passwordStrength === "medium" ? "66%" : passwordStrength === "strong" ? "100%" : "0%";
+  const strengthText = passwordStrength === "weak" ? "text-destructive" : passwordStrength === "medium" ? "text-warning" : "text-success";
 
   if (isVerifying) {
     return (
-      <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
-        <SecurityHeader />
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-            <p className="text-gray-600">Verifying reset link...</p>
-          </div>
+      <AuthShell>
+        <div className="glass-strong rounded-2xl p-10 text-center">
+          <Loader2 className="mx-auto mb-4 h-12 w-12 animate-spin text-primary" />
+          <p className="text-muted-foreground">Verifying reset link...</p>
         </div>
-        <Footer />
-      </div>
+      </AuthShell>
     );
   }
 
   if (!tokenValid) {
     return (
-      <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
-        <SecurityHeader />
-        <div className="flex-1 flex items-center justify-center px-4">
-          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
-              <XCircle className="w-8 h-8 text-red-600" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Invalid Reset Link</h2>
-            <p className="text-gray-600 mb-6">
-              This password reset link is invalid or has expired.
-            </p>
-            <Link to="/forgot-password">
-              <Button className="w-full">Request New Reset Link</Button>
-            </Link>
+      <AuthShell>
+        <div className="glass-strong rounded-2xl p-8 text-center">
+          <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-full bg-destructive/15">
+            <XCircle className="h-8 w-8 text-destructive" />
           </div>
+          <h2 className="font-display text-2xl font-bold">Invalid reset link</h2>
+          <p className="mt-2 text-muted-foreground">This password reset link is invalid or has expired.</p>
+          <Link to="/forgot-password" className="mt-6 block">
+            <Button className="w-full bg-gradient-primary text-primary-foreground">Request new reset link</Button>
+          </Link>
         </div>
-        <Footer />
-      </div>
+      </AuthShell>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
-      <SecurityHeader />
-
-      <div className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-              <Lock className="w-8 h-8 text-blue-600" />
-            </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Reset Your Password
-            </h1>
-            <p className="text-gray-600">
-              Enter your new password below
-            </p>
-          </div>
-
-          {/* Form Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-5">
-              
-              {/* New Password Field */}
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                  <Lock className="w-4 h-4" />
-                  New Password
-                </label>
-                <div className="relative">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Create a strong password"
-                    className="h-12 pr-10"
-                    disabled={isLoading}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                  >
-                    {showPassword ? (
-                      <EyeOff className="w-5 h-5" />
-                    ) : (
-                      <Eye className="w-5 h-5" />
-                    )}
-                  </button>
-                </div>
-                
-                {/* Password Strength Indicator */}
-                {password && (
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                        <div
-                          className={`h-full transition-all duration-300 ${getPasswordStrengthColor()}`}
-                          style={{
-                            width:
-                              passwordStrength === 'weak'
-                                ? '33%'
-                                : passwordStrength === 'medium'
-                                ? '66%'
-                                : passwordStrength === 'strong'
-                                ? '100%'
-                                : '0%',
-                          }}
-                        />
-                      </div>
-                      <span
-                        className={`text-xs font-medium ${
-                          passwordStrength === 'weak'
-                            ? 'text-red-600'
-                            : passwordStrength === 'medium'
-                            ? 'text-yellow-600'
-                            : 'text-green-600'
-                        }`}
-                      >
-                        {getPasswordStrengthText()}
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-500">
-                      Use 8+ characters with uppercase, lowercase, numbers & symbols
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Confirm Password Field */}
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                  <Lock className="w-4 h-4" />
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <Input
-                    type={showConfirmPassword ? "text" : "password"}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Re-enter your password"
-                    className="h-12 pr-10"
-                    disabled={isLoading}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff className="w-5 h-5" />
-                    ) : (
-                      <Eye className="w-5 h-5" />
-                    )}
-                  </button>
-                </div>
-                {confirmPassword && password !== confirmPassword && (
-                  <p className="text-xs text-red-600 flex items-center gap-1">
-                    <XCircle className="w-3 h-3" />
-                    Passwords do not match
-                  </p>
-                )}
-                {confirmPassword && password === confirmPassword && (
-                  <p className="text-xs text-green-600 flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" />
-                    Passwords match
-                  </p>
-                )}
-              </div>
-
-              {/* Security Notice */}
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <div className="flex gap-3">
-                  <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <div className="text-sm text-blue-900">
-                    <p className="font-semibold mb-1">Security Tips</p>
-                    <ul className="text-blue-700 space-y-1 text-xs">
-                      <li>• Use a unique password you haven't used before</li>
-                      <li>• Include uppercase, lowercase, numbers, and symbols</li>
-                      <li>• Avoid common words and personal information</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                disabled={isLoading || password !== confirmPassword || !password}
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                    Resetting Password...
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle2 className="w-5 h-5 mr-2" />
-                    Reset Password
-                  </>
-                )}
-              </Button>
-            </form>
-
-            {/* Login Link */}
-            <div className="text-center pt-4 border-t">
-              <p className="text-sm text-gray-600">
-                Remember your password?{" "}
-                <Link
-                  to="/login"
-                  className="text-blue-600 hover:text-blue-700 font-semibold"
-                >
-                  Sign In
-                </Link>
-              </p>
-            </div>
-          </div>
+    <AuthShell>
+      <div className="mb-8 text-center">
+        <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-primary shadow-glow">
+          <Lock className="h-8 w-8 text-primary-foreground" />
         </div>
+        <h1 className="font-display text-3xl font-bold">Reset your password</h1>
+        <p className="mt-1 text-muted-foreground">Enter your new password below</p>
       </div>
 
-      <Footer />
-    </div>
+      <div className="glass-strong space-y-6 rounded-2xl p-8">
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
+              <Lock className="h-4 w-4" /> New Password
+            </label>
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Create a strong password"
+                className="h-12 pr-10"
+                disabled={isLoading}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              >
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
+            {password && (
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-secondary">
+                    <div className={`h-full transition-all duration-300 ${strengthColor}`} style={{ width: strengthWidth }} />
+                  </div>
+                  <span className={`text-xs font-medium capitalize ${strengthText}`}>{passwordStrength}</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Use 8+ chars with upper, lower, numbers &amp; symbols</p>
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
+              <Lock className="h-4 w-4" /> Confirm Password
+            </label>
+            <div className="relative">
+              <Input
+                type={showConfirmPassword ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Re-enter your password"
+                className="h-12 pr-10"
+                disabled={isLoading}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              >
+                {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
+            {confirmPassword && (
+              <p className={`flex items-center gap-1 text-xs ${password === confirmPassword ? "text-success" : "text-destructive"}`}>
+                {password === confirmPassword ? <CheckCircle2 className="h-3 w-3" /> : <XCircle className="h-3 w-3" />}
+                {password === confirmPassword ? "Passwords match" : "Passwords do not match"}
+              </p>
+            )}
+          </div>
+
+          <div className="flex gap-3 rounded-xl border border-primary/20 bg-primary/10 p-4 text-sm">
+            <AlertCircle className="h-5 w-5 flex-shrink-0 text-primary" />
+            <div className="text-foreground/80">
+              <p className="mb-1 font-semibold text-foreground">Security tips</p>
+              <ul className="space-y-1 text-xs text-foreground/70">
+                <li>• Use a unique password you haven't used before</li>
+                <li>• Mix uppercase, lowercase, numbers, and symbols</li>
+              </ul>
+            </div>
+          </div>
+
+          <Button
+            type="submit"
+            disabled={isLoading || password !== confirmPassword || !password}
+            className="h-12 w-full bg-gradient-primary font-semibold text-primary-foreground shadow-glow"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Resetting...
+              </>
+            ) : (
+              <>
+                <CheckCircle2 className="mr-2 h-5 w-5" /> Reset Password
+              </>
+            )}
+          </Button>
+        </form>
+
+        <div className="border-t border-border/50 pt-4 text-center">
+          <p className="text-sm text-muted-foreground">
+            Remember your password?{" "}
+            <Link to="/login" className="font-semibold text-primary hover:underline">
+              Sign In
+            </Link>
+          </p>
+        </div>
+      </div>
+    </AuthShell>
   );
 }

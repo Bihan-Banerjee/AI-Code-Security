@@ -1,10 +1,4 @@
-from pymongo import MongoClient
-from dotenv import load_dotenv
-import os
+# Re-export from the central db module so all code shares one database.
+from db import users
 
-load_dotenv()
-MONGO_URI = os.getenv("MONGO_URI")
-
-client = MongoClient(MONGO_URI)
-db = client["codewhisperer"]
-users = db["users"]
+__all__ = ["users"]

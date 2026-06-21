@@ -1,0 +1,291 @@
+{
+  "issues": [
+    {
+      "key": "5cb5bb96-8266-4578-a384-b32a4b449926",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-claude-js:Task 7/cond_a.js",
+      "project": "fortiscan-claude-js",
+      "line": 23,
+      "hash": "1523a8acb9fc1858d64376491d1e00e0",
+      "textRange": {
+        "startLine": 23,
+        "endLine": 23,
+        "startOffset": 8,
+        "endOffset": 16
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "b0821863-ff8d-4a6c-8045-728bac8fbe67",
+      "rule": "javascript:S1481",
+      "severity": "MINOR",
+      "component": "fortiscan-claude-js:Task 7/cond_a.js",
+      "project": "fortiscan-claude-js",
+      "line": 81,
+      "hash": "9039a039045be8c1a08bec0375ae0e1e",
+      "textRange": {
+        "startLine": 81,
+        "endLine": 81,
+        "startOffset": 20,
+        "endOffset": 23
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove the declaration of the unused '_pw' variable.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "81df5221-000e-4ff4-b063-e935096df923",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-claude-js:Task 7/cond_a.js",
+      "project": "fortiscan-claude-js",
+      "line": 135,
+      "hash": "a30a5008941472dd4049f9f281ea8aa7",
+      "textRange": {
+        "startLine": 135,
+        "endLine": 135,
+        "startOffset": 11,
+        "endOffset": 19
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "74b2487f-22f0-4dd7-8744-5b3aa37e8d98",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-claude-js:Task 7/cond_a.js",
+      "project": "fortiscan-claude-js",
+      "line": 309,
+      "hash": "4f674c3ea2424f109c6fa6893d363019",
+      "textRange": {
+        "startLine": 309,
+        "endLine": 309,
+        "startOffset": 27,
+        "endOffset": 35
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "dfa90137-3cbf-4b98-bef8-7d64e0e8c2ba",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "fortiscan-claude-js:Task 7/cond_a.js",
+      "project": "fortiscan-claude-js",
+      "line": 310,
+      "hash": "1b741da6ca7da9962c7012af38817757",
+      "textRange": {
+        "startLine": 310,
+        "endLine": 310,
+        "startOffset": 19,
+        "endOffset": 27
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "",
+      "tags": [
+        "convention",
+        "es2015"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": true,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "5f8096ec-c2bc-4081-b582-80f82a4762ee",
+      "rule": "javascript:S7785",
+      "severity": "MAJOR",
+      "component": "fortiscan-claude-js:Task 7/cond_a.js",
+      "project": "fortiscan-claude-js",
+      "line": 442,
+      "hash": "f006c5b5796111e124711d1d49a5e3b3",
+      "textRange": {
+        "startLine": 442,
+        "endLine": 442,
+        "startOffset": 8,
+        "endOffset": 13
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer top-level await over using a promise chain.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "async",
+        "es2022",
+        "esm-only",
+        "modernize"
+      ],
+      "creationDate": "2026-06-21T15:32:03+0000",
+      "updateDate": "2026-06-21T15:32:03+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

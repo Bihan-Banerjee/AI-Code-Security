@@ -1,4 +1,146 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "9f339214-dfb2-4109-b251-14dd28a700c0",
+      "rule": "python:S2068",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-python:Task 6/cond_a.py",
+      "project": "fortiscan-grok-python",
+      "line": 10,
+      "hash": "1196ba3fe207cb5524f11a17df6b8faa",
+      "textRange": {
+        "startLine": 10,
+        "endLine": 10,
+        "startOffset": 11,
+        "endOffset": 23
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "\"SECRET_KEY\" detected here, review this potentially hard-coded credential.",
+      "effort": "30min",
+      "debt": "30min",
+      "author": "",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "VULNERABILITY",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "a8dee4f3-0ff2-49bb-9cf4-3e966650bd7c",
+      "rule": "python:S6903",
+      "severity": "CRITICAL",
+      "component": "fortiscan-grok-python:Task 6/cond_a.py",
+      "project": "fortiscan-grok-python",
+      "line": 77,
+      "hash": "ad629a19d5859605fd087aac72be3d53",
+      "textRange": {
+        "startLine": 77,
+        "endLine": 77,
+        "startOffset": 19,
+        "endOffset": 36
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Don't use `datetime.datetime.utcnow` to create this datetime object.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "datetime",
+        "pitfall"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "b77be429-efb1-4dce-9778-12de6282bbc8",
+      "rule": "python:S6903",
+      "severity": "CRITICAL",
+      "component": "fortiscan-grok-python:Task 6/cond_a.py",
+      "project": "fortiscan-grok-python",
+      "line": 78,
+      "hash": "e7070120ea348e87a8ea7c2ffc207fbd",
+      "textRange": {
+        "startLine": 78,
+        "endLine": 78,
+        "startOffset": 19,
+        "endOffset": 36
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Don't use `datetime.datetime.utcnow` to create this datetime object.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "datetime",
+        "pitfall"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

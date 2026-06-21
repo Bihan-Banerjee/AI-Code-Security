@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.django.security.audit.unvalidated-password.unvalidated-password",
@@ -104,32 +103,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 7\\cond_b.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.4552931785583496,
-    "profiling_times": {
-      "config_time": 1.4802865982055664,
-      "core_time": 1.9181873798370361,
-      "ignores_time": 0.0009171962738037109,
-      "total_time": 3.4000394344329834
-    },
-    "parsing_time": {
-      "total_time": 0.01131749153137207,
-      "per_file_time": {
-        "mean": 0.01131749153137207,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1084905536
-  },
-  "skipped_rules": []
+  "errors": []
 }

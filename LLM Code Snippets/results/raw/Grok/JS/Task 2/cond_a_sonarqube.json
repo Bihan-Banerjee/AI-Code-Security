@@ -1,0 +1,93 @@
+{
+  "issues": [
+    {
+      "key": "145ccba7-7c5c-4f3b-82dc-3491e197e8b4",
+      "rule": "javascript:S1481",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-js:Task 2/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 5,
+      "hash": "7484c67177bf1db42f2d6f15ebd43e60",
+      "textRange": {
+        "startLine": 5,
+        "endLine": 5,
+        "startOffset": 6,
+        "endOffset": 13
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove the declaration of the unused 'session' variable.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "7ab91e68-cfa1-4349-b995-3f3a538e8960",
+      "rule": "javascript:S1854",
+      "severity": "MAJOR",
+      "component": "fortiscan-grok-js:Task 2/cond_a.js",
+      "project": "fortiscan-grok-js",
+      "line": 5,
+      "hash": "7484c67177bf1db42f2d6f15ebd43e60",
+      "textRange": {
+        "startLine": 5,
+        "endLine": 5,
+        "startOffset": 6,
+        "endOffset": 13
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove this useless assignment to variable \"session\".",
+      "effort": "1min",
+      "debt": "1min",
+      "author": "",
+      "tags": [
+        "cwe",
+        "unused"
+      ],
+      "creationDate": "2026-06-21T15:38:11+0000",
+      "updateDate": "2026-06-21T15:38:11+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
+}

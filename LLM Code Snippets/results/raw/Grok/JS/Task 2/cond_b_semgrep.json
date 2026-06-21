@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "javascript.express.security.audit.express-cookie-settings.express-cookie-session-default-name",
@@ -323,32 +322,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\Grok\\JS\\Task 2\\cond_b.js"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.4223418235778809,
-    "profiling_times": {
-      "config_time": 1.5698108673095703,
-      "core_time": 1.907740592956543,
-      "ignores_time": 0.0009570121765136719,
-      "total_time": 3.4795243740081787
-    },
-    "parsing_time": {
-      "total_time": 0.018308401107788086,
-      "per_file_time": {
-        "mean": 0.018308401107788086,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1092010176
-  },
-  "skipped_rules": []
+  "errors": []
 }

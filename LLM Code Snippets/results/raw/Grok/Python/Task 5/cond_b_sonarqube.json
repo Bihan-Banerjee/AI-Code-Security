@@ -1,4 +1,79 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "6171baab-3fec-4a5f-af4a-8eb524abb81c",
+      "rule": "python:S1192",
+      "severity": "CRITICAL",
+      "component": "fortiscan-grok-python:Task 5/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 131,
+      "hash": "4dace8dcae04727f7ea4da9529132b10",
+      "textRange": {
+        "startLine": 131,
+        "endLine": 131,
+        "startOffset": 33,
+        "endOffset": 59
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 5/cond_b.py",
+              "textRange": {
+                "startLine": 136,
+                "endLine": 136,
+                "startOffset": 33,
+                "endOffset": 59
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 5/cond_b.py",
+              "textRange": {
+                "startLine": 144,
+                "endLine": 144,
+                "startOffset": 33,
+                "endOffset": 59
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Define a constant instead of duplicating this literal \"Invalid or expired token\" 3 times.",
+      "effort": "6min",
+      "debt": "6min",
+      "author": "",
+      "tags": [
+        "design"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "DISTINCT",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

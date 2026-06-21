@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.flask.security.audit.hardcoded-config.avoid_hardcoded_config_SECRET_KEY",
@@ -101,32 +100,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\CoPilot\\Python\\Task 6\\cond_a.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.9757566452026367,
-    "profiling_times": {
-      "config_time": 2.4053118228912354,
-      "core_time": 2.638056516647339,
-      "ignores_time": 0.002289295196533203,
-      "total_time": 5.0475053787231445
-    },
-    "parsing_time": {
-      "total_time": 0.014371156692504883,
-      "per_file_time": {
-        "mean": 0.014371156692504883,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1082822848
-  },
-  "skipped_rules": []
+  "errors": []
 }

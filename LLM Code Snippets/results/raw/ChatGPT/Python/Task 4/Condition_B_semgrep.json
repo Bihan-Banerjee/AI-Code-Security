@@ -1,32 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\ChatGPT\\Python\\Task 4\\Condition_B.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.8733210563659668,
-    "profiling_times": {
-      "config_time": 2.1698315143585205,
-      "core_time": 2.46364688873291,
-      "ignores_time": 0.0016503334045410156,
-      "total_time": 4.636595726013184
-    },
-    "parsing_time": {
-      "total_time": 0.010947942733764648,
-      "per_file_time": {
-        "mean": 0.010947942733764648,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1081777792
-  },
-  "skipped_rules": []
+  "errors": []
 }

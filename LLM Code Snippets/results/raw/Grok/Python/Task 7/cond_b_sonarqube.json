@@ -1,4 +1,79 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "c608813a-a6d6-4991-b669-97cbfc742f64",
+      "rule": "python:S1192",
+      "severity": "CRITICAL",
+      "component": "fortiscan-grok-python:Task 7/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 146,
+      "hash": "077d819bce4f664014bff8949a0a143a",
+      "textRange": {
+        "startLine": 146,
+        "endLine": 146,
+        "startOffset": 24,
+        "endOffset": 60
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 7/cond_b.py",
+              "textRange": {
+                "startLine": 185,
+                "endLine": 185,
+                "startOffset": 24,
+                "endOffset": 60
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 7/cond_b.py",
+              "textRange": {
+                "startLine": 210,
+                "endLine": 210,
+                "startOffset": 24,
+                "endOffset": 60
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Define a constant instead of duplicating this literal \"user_id must be a positive integer\" 3 times.",
+      "effort": "6min",
+      "debt": "6min",
+      "author": "",
+      "tags": [
+        "design"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "DISTINCT",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

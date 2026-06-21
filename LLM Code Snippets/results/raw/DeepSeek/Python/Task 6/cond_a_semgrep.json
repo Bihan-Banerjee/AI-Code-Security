@@ -1,5 +1,4 @@
 {
-  "version": "1.127.1",
   "results": [
     {
       "check_id": "python.flask.security.audit.app-run-param-config.avoid_app_run_with_bad_host",
@@ -99,32 +98,5 @@
       }
     }
   ],
-  "errors": [],
-  "paths": {
-    "scanned": [
-      "D:\\COLLEGE\\research\\AI-Code-Security-Paper\\LLM Code Snippets\\DeepSeek\\Python\\Task 6\\cond_a.py"
-    ]
-  },
-  "time": {
-    "rules": [],
-    "rules_parse_time": 1.353548526763916,
-    "profiling_times": {
-      "config_time": 1.4383721351623535,
-      "core_time": 1.8073692321777344,
-      "ignores_time": 0.0008351802825927734,
-      "total_time": 3.247264862060547
-    },
-    "parsing_time": {
-      "total_time": 0.010488748550415039,
-      "per_file_time": {
-        "mean": 0.010488748550415039,
-        "std_dev": 0.0
-      },
-      "very_slow_files": []
-    },
-    "targets": [],
-    "total_bytes": 0,
-    "max_memory_bytes": 1083326592
-  },
-  "skipped_rules": []
+  "errors": []
 }

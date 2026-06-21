@@ -1,4 +1,123 @@
 {
-  "issues": [],
-  "error": "HTTP Error 401: "
+  "issues": [
+    {
+      "key": "9ebf536d-1283-479a-8590-a064354f07cf",
+      "rule": "python:S6353",
+      "severity": "MINOR",
+      "component": "fortiscan-grok-python:Task 1/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 15,
+      "hash": "3490b54e57c0aa2144df5e98ee7990c1",
+      "textRange": {
+        "startLine": 15,
+        "endLine": 15,
+        "startOffset": 23,
+        "endOffset": 28
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Use concise character class syntax '\\d' instead of '[0-9]'.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "",
+      "tags": [
+        "regex"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    },
+    {
+      "key": "ee1e9450-73da-4e5e-bfbf-99c6474b70b3",
+      "rule": "python:S1192",
+      "severity": "CRITICAL",
+      "component": "fortiscan-grok-python:Task 1/cond_b.py",
+      "project": "fortiscan-grok-python",
+      "line": 65,
+      "hash": "dc61dabe1cfdeb56fe2376a21eb4c0af",
+      "textRange": {
+        "startLine": 65,
+        "endLine": 65,
+        "startOffset": 36,
+        "endOffset": 59
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 1/cond_b.py",
+              "textRange": {
+                "startLine": 89,
+                "endLine": 89,
+                "startOffset": 36,
+                "endOffset": 59
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        },
+        {
+          "locations": [
+            {
+              "component": "fortiscan-grok-python:Task 1/cond_b.py",
+              "textRange": {
+                "startLine": 93,
+                "endLine": 93,
+                "startOffset": 32,
+                "endOffset": 55
+              },
+              "msg": "Duplication",
+              "msgFormattings": []
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Define a constant instead of duplicating this literal \"Internal server error\" 3 times.",
+      "effort": "6min",
+      "debt": "6min",
+      "author": "",
+      "tags": [
+        "design"
+      ],
+      "creationDate": "2026-06-21T15:38:50+0000",
+      "updateDate": "2026-06-21T15:38:50+0000",
+      "type": "CODE_SMELL",
+      "scope": "MAIN",
+      "quickFixAvailable": false,
+      "messageFormattings": [],
+      "codeVariants": [],
+      "cleanCodeAttribute": "DISTINCT",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "prioritizedRule": false,
+      "fromSonarQubeUpdate": false,
+      "internalTags": [],
+      "linkedTicketStatus": "NOT_LINKED"
+    }
+  ]
 }

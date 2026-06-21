@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import demoVideo from "@/assets/demovideo.mp4";
 import Footer from "@/components/Footer";
-import SecurityHeader from "@/components/SecurityHeader";
+import Header from "@/components/layout/Header";
+import Reveal from "@/components/effects/Reveal";
 
 const ViewDemo = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -12,161 +13,86 @@ const ViewDemo = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
+    if (!videoRef.current) return;
+    if (isPlaying) videoRef.current.pause();
+    else videoRef.current.play();
+    setIsPlaying(!isPlaying);
   };
-
   const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
+    if (!videoRef.current) return;
+    videoRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
   };
+  const toggleFullscreen = () => videoRef.current?.requestFullscreen();
 
-  const toggleFullscreen = () => {
-    if (videoRef.current) {
-      videoRef.current.requestFullscreen();
-    }
-  };
+  const cards = [
+    { Icon: Shield, title: "User friendly", text: "Get started in minutes with an intuitive interface and easy onboarding." },
+    { Icon: Zap, title: "Powerful features", text: "Scan, enhance, and secure your code with AI-assisted precision." },
+    { Icon: Rocket, title: "Launch fast", text: "Scan and enhance with one click and ship secure applications faster." },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-purple-50">
-      <SecurityHeader />
-      
-      {/* Main Content */}
-      <main className="container mx-auto px-6 py-8">
-        <div className="max-w-6xl mx-auto space-y-6">
-          {/* Back Button */}
-          <Link to="/">
-            <Button 
-              variant="ghost" 
-              className="group font-semibold hover:bg-blue-50 hover:text-blue-600 transition-all"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Back to Home
-            </Button>
-          </Link>
+    <div className="relative min-h-screen bg-background bg-grid">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <Header />
+      <main className="relative mx-auto max-w-6xl space-y-6 px-6 py-10">
+        <Link to="/">
+          <Button variant="ghost" className="group font-semibold hover:text-primary">
+            <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" /> Back to Home
+          </Button>
+        </Link>
 
-          {/* Title Section */}
-          <div className="text-center space-y-3">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Watch Our Demo
-            </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              See how our platform works in action. This quick walkthrough will show you all the key features.
-            </p>
-          </div>
+        <Reveal className="space-y-3 text-center">
+          <h1 className="font-display text-4xl font-bold sm:text-5xl">
+            Watch our <span className="text-gradient">demo</span>
+          </h1>
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+            See how the platform works in action — a quick walkthrough of the key features.
+          </p>
+        </Reveal>
 
-          {/* Video Container */}
-          <div className="relative group rounded-2xl overflow-hidden border-2 border-blue-200 shadow-2xl bg-white">
-            {/* Video Element */}
-            <video
-              ref={videoRef}
-              className="w-full aspect-video bg-gray-900"
-              poster="/placeholder.svg"
-              onEnded={() => setIsPlaying(false)}
-            >
+        <Reveal direction="up">
+          <div className="group relative overflow-hidden rounded-2xl border border-border/60 shadow-glow">
+            <video ref={videoRef} className="aspect-video w-full bg-black" poster="/placeholder.svg" onEnded={() => setIsPlaying(false)}>
               <source src={demoVideo} type="video/mp4" />
-              Your browser does not support the video tag.
             </video>
-
-            {/* Custom Controls Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {/* Center Play Button */}
-              <button
-                onClick={togglePlay}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <div className="w-24 h-24 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 backdrop-blur-sm flex items-center justify-center transform hover:scale-110 transition-all duration-200 shadow-2xl">
-                  {isPlaying ? (
-                    <Pause className="h-10 w-10 text-white" />
-                  ) : (
-                    <Play className="h-10 w-10 text-white ml-1" />
-                  )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <button onClick={togglePlay} className="absolute inset-0 flex items-center justify-center">
+                <div className="grid h-24 w-24 place-items-center rounded-full bg-gradient-primary shadow-glow transition-transform hover:scale-110">
+                  {isPlaying ? <Pause className="h-10 w-10 text-primary-foreground" /> : <Play className="ml-1 h-10 w-10 text-primary-foreground" />}
                 </div>
               </button>
-
-              {/* Bottom Controls */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 flex items-center justify-between bg-gradient-to-t from-black/60 to-transparent">
+              <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between bg-gradient-to-t from-black/60 to-transparent p-6">
                 <div className="flex items-center gap-3">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={togglePlay}
-                    className="text-white hover:bg-white/20 hover:scale-110 transition-all"
-                  >
-                    {isPlaying ? (
-                      <Pause className="h-5 w-5" />
-                    ) : (
-                      <Play className="h-5 w-5" />
-                    )}
+                  <Button variant="ghost" size="icon" onClick={togglePlay} className="text-white hover:bg-white/20">
+                    {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
                   </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={toggleMute}
-                    className="text-white hover:bg-white/20 hover:scale-110 transition-all"
-                  >
-                    {isMuted ? (
-                      <VolumeX className="h-5 w-5" />
-                    ) : (
-                      <Volume2 className="h-5 w-5" />
-                    )}
+                  <Button variant="ghost" size="icon" onClick={toggleMute} className="text-white hover:bg-white/20">
+                    {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
                   </Button>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={toggleFullscreen}
-                  className="text-white hover:bg-white/20 hover:scale-110 transition-all"
-                >
+                <Button variant="ghost" size="icon" onClick={toggleFullscreen} className="text-white hover:bg-white/20">
                   <Maximize className="h-5 w-5" />
                 </Button>
               </div>
             </div>
           </div>
+        </Reveal>
 
-          {/* Description Cards */}
-          <div className="grid md:grid-cols-3 gap-6 pt-6">
-            <div className="group p-6 rounded-xl bg-white border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                <Shield className="h-6 w-6 text-white" />
+        <div className="grid gap-6 pt-6 md:grid-cols-3">
+          {cards.map(({ Icon, title, text }, i) => (
+            <Reveal key={title} delay={i * 0.1} direction="up">
+              <div className="group h-full space-y-3 rounded-2xl border border-border/60 bg-card/40 p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-glow">
+                <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-primary shadow-glow transition-transform group-hover:scale-110">
+                  <Icon className="h-6 w-6 text-primary-foreground" />
+                </div>
+                <h3 className="font-display text-xl font-bold">{title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{text}</p>
               </div>
-              <h3 className="font-bold text-xl text-gray-800">User Friendly</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                Get started in minutes with our intuitive onboarding process and easy-to-use interface.
-              </p>
-            </div>
-
-            <div className="group p-6 rounded-xl bg-white border-2 border-purple-200 hover:border-purple-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                <Zap className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="font-bold text-xl text-gray-800">Powerful Features</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                Access all the tools you need to scan, enhance, and secure your code with AI precision.
-              </p>
-            </div>
-
-            <div className="group p-6 rounded-xl bg-white border-2 border-green-200 hover:border-green-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                <Rocket className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="font-bold text-xl text-gray-800">Launch Fast</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                Scan and enhance your code with one click and deploy secure applications faster.
-              </p>
-            </div>
-          </div>
+            </Reveal>
+          ))}
         </div>
       </main>
-      
       <Footer />
     </div>
   );

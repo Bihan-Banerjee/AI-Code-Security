@@ -1,157 +1,103 @@
 import { FileText, ChevronRight, Scale, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import SecurityHeader from "@/components/SecurityHeader";
+import Header from "@/components/layout/Header";
 import Footer from "@/components/Footer";
+import Reveal from "@/components/effects/Reveal";
 import { useNavigate } from "react-router-dom";
+
+const highlights = [
+  { Icon: Scale, title: "Legal agreement", text: "Binding terms between you and the project." },
+  { Icon: Shield, title: "Your rights", text: "Understanding your obligations and protections." },
+  { Icon: FileText, title: "Service use", text: "Guidelines for using the platform safely." },
+];
+
+const sections = [
+  {
+    title: "Interpretation and definitions",
+    body: "Words with an initial capital letter have meanings defined under the following conditions. These definitions have the same meaning whether they appear in singular or plural.",
+  },
+  {
+    title: "Acknowledgment",
+    body: "These are the Terms and Conditions governing the use of this Service and the agreement that operates between you and the project. They set out the rights and obligations of all users regarding the use of the Service.",
+  },
+  {
+    title: "Limitation of liability",
+    body: "To the maximum extent permitted by law, in no event shall the project or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever arising out of or related to the use of or inability to use the Service.",
+  },
+  {
+    title: '"As is" and "as available" disclaimer',
+    body: 'The Service is provided "AS IS" and "AS AVAILABLE" with all faults and without warranty of any kind. To the maximum extent permitted by law, the project disclaims all warranties, whether express, implied, or statutory, including merchantability, fitness for a particular purpose, and non-infringement.',
+  },
+];
 
 const TermsAndConditions = () => {
   const navigate = useNavigate();
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-purple-50">
-      <SecurityHeader />
+    <div className="relative min-h-screen bg-background bg-grid">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <Header />
 
-      {/* Enhanced Hero Section */}
-      <section className="relative py-24 px-4 overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
-        </div>
-        
-        <div className="container mx-auto relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            {/* Icon Badge */}
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 mb-6 shadow-lg animate-pulse">
-              <FileText className="h-8 w-8 text-white" />
-            </div>
-
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
-              Terms and Conditions
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto">
-              Please read these terms and conditions carefully before using Our Service.
-            </p>
-
-            {/* Key Points Grid */}
-            <div className="grid md:grid-cols-3 gap-6 mt-12">
-              <div className="group bg-white border-2 border-blue-200 rounded-xl p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 mb-4 group-hover:scale-110 transition-transform">
-                  <Scale className="h-6 w-6 text-white" />
-                </div>
-                <h3 className="font-bold text-lg mb-2 text-gray-800">Legal Agreement</h3>
-                <p className="text-sm text-gray-600">
-                  Binding terms between you and our company
-                </p>
-              </div>
-
-              <div className="group bg-white border-2 border-purple-200 rounded-xl p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-r from-purple-500 to-purple-600 mb-4 group-hover:scale-110 transition-transform">
-                  <Shield className="h-6 w-6 text-white" />
-                </div>
-                <h3 className="font-bold text-lg mb-2 text-gray-800">Your Rights</h3>
-                <p className="text-sm text-gray-600">
-                  Understanding your obligations and protections
-                </p>
-              </div>
-
-              <div className="group bg-white border-2 border-green-200 rounded-xl p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-r from-green-500 to-green-600 mb-4 group-hover:scale-110 transition-transform">
-                  <FileText className="h-6 w-6 text-white" />
-                </div>
-                <h3 className="font-bold text-lg mb-2 text-gray-800">Service Use</h3>
-                <p className="text-sm text-gray-600">
-                  Guidelines for using our platform safely
-                </p>
-              </div>
-            </div>
-
-            {/* Last Updated Badge */}
-            <div className="mt-12 inline-flex items-center gap-2 px-6 py-3 bg-white border-2 border-blue-200 rounded-full text-sm text-gray-700 font-semibold shadow-md">
-              <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
-              Last updated: December 2025
-            </div>
+      <section className="relative px-4 py-20">
+        <Reveal className="mx-auto max-w-4xl text-center">
+          <div className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-primary shadow-glow">
+            <FileText className="h-8 w-8 text-primary-foreground" />
           </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronRight className="h-6 w-6 text-gray-400 rotate-90" />
-        </div>
-      </section>
-
-      {/* Terms and Conditions Content Section */}
-      <section className="py-16 px-4 bg-white">
-        <div className="container mx-auto max-w-4xl">
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-8 md:p-12 space-y-12 shadow-xl">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Interpretation and Definitions
-              </h2>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Acknowledgment
-              </h2>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                These are the Terms and Conditions governing the use of this Service and the agreement that operates between You and the Company. These Terms and Conditions set out the rights and obligations of all users regarding the use of the Service.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Limitation of Liability
-              </h2>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                To the maximum extent permitted by applicable law, in no event shall the Company or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever (including, but not limited to, damages for loss of profits, for loss of data or other information, for business interruption, for personal injury, for loss of privacy arising out of or in any way related to the use of or inability to use the Service, third-party software and/or third-party hardware used with the Service, or otherwise in connection with any provision of this Terms), even if the Company or any supplier has been advised of the possibility of such damages and even if the remedy fails of its essential purpose.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                "AS IS" and "AS AVAILABLE" Disclaimer
-              </h2>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                The Service is provided to You "AS IS" and "AS AVAILABLE" and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, the Company, on its own behalf and on behalf of its Affiliates and its and their respective licensors and service providers, expressly disclaims all warranties, whether express, implied, statutory or otherwise, with respect to the Service, including all implied warranties of merchantability, fitness for a particular purpose, title and non-infringement, and warranties that may arise out of course of dealing, course of performance, usage or trade practice.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="py-20 px-4 text-center bg-gradient-to-r from-blue-600 to-purple-600">
-        <div className="container mx-auto max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Questions?</h2>
-          <p className="text-lg text-blue-100 mb-8">
-            If you have any questions about our Terms and Conditions, do not hesitate to contact us.
+          <h1 className="font-display text-5xl font-bold sm:text-6xl">
+            Terms &amp; <span className="text-gradient">Conditions</span>
+          </h1>
+          <p className="mx-auto mt-6 max-w-3xl text-xl text-muted-foreground">
+            Please read these terms and conditions carefully before using our service.
           </p>
-          <Button 
-            size="lg" 
-            className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105" 
-            onClick={() => navigate("/about")}
-          >
-            Contact Us <ChevronRight className="ml-2 h-5 w-5" />
-          </Button>
-        </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {highlights.map(({ Icon, title, text }, i) => (
+              <Reveal key={title} delay={i * 0.1} direction="up">
+                <div className="group h-full rounded-2xl border border-border/60 bg-card/40 p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-glow">
+                  <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-gradient-primary shadow-glow transition-transform group-hover:scale-110">
+                    <Icon className="h-6 w-6 text-primary-foreground" />
+                  </div>
+                  <h3 className="mb-1 font-display text-lg font-bold">{title}</h3>
+                  <p className="text-sm text-muted-foreground">{text}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <div className="mt-12 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-6 py-3 text-sm font-semibold text-muted-foreground">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
+            Last updated: December 2025
+          </div>
+        </Reveal>
+      </section>
+
+      <section className="px-4 py-16">
+        <Reveal className="mx-auto max-w-4xl">
+          <div className="glass space-y-10 rounded-2xl p-8 md:p-12">
+            {sections.map((s) => (
+              <div key={s.title}>
+                <h2 className="mb-4 font-display text-2xl font-bold sm:text-3xl text-gradient">{s.title}</h2>
+                <p className="text-lg leading-relaxed text-muted-foreground">{s.body}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+
+      <section className="px-4 py-16">
+        <Reveal direction="scale" className="mx-auto max-w-3xl">
+          <div className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-aurora p-12 text-center">
+            <div className="pointer-events-none absolute inset-0 bg-grid bg-grid-fade opacity-50" />
+            <div className="relative">
+              <h2 className="font-display text-3xl font-bold">Questions?</h2>
+              <p className="mt-3 text-lg text-muted-foreground">If you have any questions about these terms, reach out.</p>
+              <Button size="lg" onClick={() => navigate("/about")}
+                className="mt-6 bg-gradient-primary px-8 py-6 font-bold text-primary-foreground shadow-glow transition-transform hover:scale-105">
+                Contact Us <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+        </Reveal>
       </section>
 
       <Footer />
-
-      <style>{`
-        @keyframes blob {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-        .animate-blob { animation: blob 7s infinite; }
-        .animation-delay-2000 { animation-delay: 2s; }
-      `}</style>
     </div>
   );
 };
