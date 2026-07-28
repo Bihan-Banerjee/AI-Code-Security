@@ -37,12 +37,12 @@ export default function ParticleField({ className = "" }: { className?: string }
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.min(90, Math.floor((w * h) / 16000));
+      const count = Math.min(140, Math.floor((w * h) / 10000));
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
       }));
       hsl = readHsl();
     };
@@ -73,9 +73,9 @@ export default function ParticleField({ className = "" }: { className?: string }
           const a = particles[i];
           const b = particles[j];
           const dist = Math.hypot(a.x - b.x, a.y - b.y);
-          if (dist < 130) {
-            ctx.strokeStyle = `hsl(${hsl} / ${0.14 * (1 - dist / 130)})`;
-            ctx.lineWidth = 1;
+          if (dist < 150) {
+            ctx.strokeStyle = `hsl(${hsl} / ${0.3 * (1 - dist / 150)})`;
+            ctx.lineWidth = 1.1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
@@ -83,13 +83,16 @@ export default function ParticleField({ className = "" }: { className?: string }
           }
         }
       }
-      // nodes
-      ctx.fillStyle = `hsl(${hsl} / 0.7)`;
+      // nodes (with a soft glow)
+      ctx.fillStyle = `hsl(${hsl} / 0.95)`;
+      ctx.shadowColor = `hsl(${hsl} / 0.8)`;
+      ctx.shadowBlur = 6;
       for (const p of particles) {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, 2.1, 0, Math.PI * 2);
         ctx.fill();
       }
+      ctx.shadowBlur = 0;
 
       raf = requestAnimationFrame(tick);
     };

@@ -12,10 +12,10 @@ const SecurityFooter = () => {
           <div className="col-span-2">
             <Link to="/" className="group flex items-center gap-2">
               <img src="/icon.png" alt="FortiScan" className="h-9 w-9 transition-transform group-hover:scale-110" />
-              <span className="font-display text-xl font-bold text-gradient">FortiScan</span>
+              <span className="font-display text-xl font-medium text-gradient">FortiScan</span>
             </Link>
             <p className="mt-4 max-w-md leading-relaxed text-muted-foreground">
-              AI-assisted code security platform — scan for vulnerabilities, understand the risk, and apply
+              AI-assisted code security platform. Scan for vulnerabilities, understand the risk, and apply
               secure fixes, all in one place.
             </p>
             <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-border/60 bg-secondary/40 px-3 py-1.5 text-xs font-medium text-muted-foreground">
@@ -26,7 +26,7 @@ const SecurityFooter = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="mb-4 font-display text-lg font-bold">Quick Links</h4>
+            <h4 className="mb-4 font-display text-lg font-medium">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               {[
                 { to: "/dashboard", label: "Dashboard" },
@@ -45,7 +45,7 @@ const SecurityFooter = () => {
 
           {/* Connect */}
           <div>
-            <h4 className="mb-4 font-display text-lg font-bold">Connect</h4>
+            <h4 className="mb-4 font-display text-lg font-medium">Connect</h4>
             <div className="flex gap-3">
               {[
                 { href: "https://github.com/Bihan-Banerjee/AI-Code-Security/", Icon: Github, label: "GitHub" },

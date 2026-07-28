@@ -34,7 +34,7 @@ export default function ScanResultsTable({ issues }: { issues: Issue[] }) {
         <thead className="bg-secondary/40 text-left">
           <tr>
             {["File", "Line", "Severity", "Description", "CWE"].map((h) => (
-              <th key={h} className="p-3 font-semibold text-muted-foreground">
+              <th key={h} className="p-3 font-medium text-muted-foreground">
                 {h}
               </th>
             ))}
@@ -46,7 +46,7 @@ export default function ScanResultsTable({ issues }: { issues: Issue[] }) {
               <td className="p-3 font-mono text-xs">{issue.filename?.split("\\").pop() || "-"}</td>
               <td className="p-3 font-mono text-xs">{issue.line_number || "-"}</td>
               <td className="p-3">
-                <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${severityClass(issue.issue_severity)}`}>
+                <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${severityClass(issue.issue_severity)}`}>
                   {issue.issue_severity || "-"}
                 </span>
               </td>

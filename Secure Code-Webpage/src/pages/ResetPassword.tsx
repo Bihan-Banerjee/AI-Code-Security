@@ -100,7 +100,7 @@ export default function ResetPassword() {
           <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-full bg-destructive/15">
             <XCircle className="h-8 w-8 text-destructive" />
           </div>
-          <h2 className="font-display text-2xl font-bold">Invalid reset link</h2>
+          <h2 className="font-display text-2xl font-medium">Invalid reset link</h2>
           <p className="mt-2 text-muted-foreground">This password reset link is invalid or has expired.</p>
           <Link to="/forgot-password" className="mt-6 block">
             <Button className="w-full bg-gradient-primary text-primary-foreground">Request new reset link</Button>
@@ -116,14 +116,14 @@ export default function ResetPassword() {
         <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-primary shadow-glow">
           <Lock className="h-8 w-8 text-primary-foreground" />
         </div>
-        <h1 className="font-display text-3xl font-bold">Reset your password</h1>
+        <h1 className="font-display text-3xl font-medium">Reset your password</h1>
         <p className="mt-1 text-muted-foreground">Enter your new password below</p>
       </div>
 
       <div className="glass-strong space-y-6 rounded-2xl p-8">
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
+            <label className="flex items-center gap-2 text-sm font-medium text-foreground/80">
               <Lock className="h-4 w-4" /> New Password
             </label>
             <div className="relative">
@@ -158,7 +158,7 @@ export default function ResetPassword() {
           </div>
 
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
+            <label className="flex items-center gap-2 text-sm font-medium text-foreground/80">
               <Lock className="h-4 w-4" /> Confirm Password
             </label>
             <div className="relative">
@@ -190,7 +190,7 @@ export default function ResetPassword() {
           <div className="flex gap-3 rounded-xl border border-primary/20 bg-primary/10 p-4 text-sm">
             <AlertCircle className="h-5 w-5 flex-shrink-0 text-primary" />
             <div className="text-foreground/80">
-              <p className="mb-1 font-semibold text-foreground">Security tips</p>
+              <p className="mb-1 font-medium text-foreground">Security tips</p>
               <ul className="space-y-1 text-xs text-foreground/70">
                 <li>• Use a unique password you haven't used before</li>
                 <li>• Mix uppercase, lowercase, numbers, and symbols</li>
@@ -201,7 +201,7 @@ export default function ResetPassword() {
           <Button
             type="submit"
             disabled={isLoading || password !== confirmPassword || !password}
-            className="h-12 w-full bg-gradient-primary font-semibold text-primary-foreground shadow-glow"
+            className="h-12 w-full bg-gradient-primary font-medium text-primary-foreground shadow-glow"
           >
             {isLoading ? (
               <>
@@ -218,7 +218,7 @@ export default function ResetPassword() {
         <div className="border-t border-border/50 pt-4 text-center">
           <p className="text-sm text-muted-foreground">
             Remember your password?{" "}
-            <Link to="/login" className="font-semibold text-primary hover:underline">
+            <Link to="/login" className="font-medium text-primary hover:underline">
               Sign In
             </Link>
           </p>

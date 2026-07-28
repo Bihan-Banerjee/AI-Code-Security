@@ -3,7 +3,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { Suspense } from "react";
-import ViewDemo from "./pages/viewDemo";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/theme-provider";
 import Layout from "@/components/layout/Layout";
@@ -45,7 +44,6 @@ const App = () => (
                 <Route path="/about" element={<About />} />
                 <Route path="/reviews" element={<Reviews />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="/demo" element={<ViewDemo />} />
                 <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />

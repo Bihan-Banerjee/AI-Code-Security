@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { getToken } from "@/lib/auth";
 import { getApiBaseURL } from "@/lib/api";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,10 @@ import Footer from "@/components/Footer";
 import CodeMirrorEditor from "@/components/CodeMirrorEditor";
 import Reveal from "@/components/effects/Reveal";
 import { toast } from "sonner";
-import { Loader2, Sparkles, Upload, FileCode, CheckCircle2, AlertCircle, Copy, Download } from "lucide-react";
+import {
+  Loader2, Sparkles, Upload, FileCode, CheckCircle2, AlertCircle, Copy, Download,
+  Cpu, Bot, Plug, XCircle,
+} from "lucide-react";
 import {
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from "@/components/ui/select";
@@ -21,7 +24,20 @@ interface EnhanceResult {
   diff: DiffLine[];
   candidates: Candidate[];
   explanations: Explanation[];
+  engine_used?: string;
 }
+
+type Engine = "deterministic" | "ai";
+type LlmStatus = "idle" | "testing" | "ok" | "fail";
+
+const PROVIDERS: Record<string, { label: string; needsKey: boolean; defaultModel: string; baseUrl?: string }> = {
+  openai: { label: "OpenAI", needsKey: true, defaultModel: "gpt-4o-mini" },
+  anthropic: { label: "Anthropic (Claude)", needsKey: true, defaultModel: "claude-haiku-4-5-20251001" },
+  gemini: { label: "Google Gemini", needsKey: true, defaultModel: "gemini-1.5-flash" },
+  deepseek: { label: "DeepSeek", needsKey: true, defaultModel: "deepseek-chat" },
+  openrouter: { label: "OpenRouter", needsKey: true, defaultModel: "openai/gpt-4o-mini" },
+  ollama: { label: "Ollama (local)", needsKey: false, defaultModel: "llama3.2", baseUrl: "http://localhost:11434/v1" },
+};
 
 export default function Enhancer() {
   const [code, setCode] = useState("");
@@ -33,6 +49,72 @@ export default function Enhancer() {
   const [activeTab, setActiveTab] = useState(0);
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // --- Engine / AI-provider config -----------------------------------------
+  const [engine, setEngine] = useState<Engine>("deterministic");
+  const [provider, setProvider] = useState("openai");
+  const [apiKey, setApiKey] = useState("");
+  const [model, setModel] = useState("");
+  const [baseUrl, setBaseUrl] = useState("");
+  const [llmStatus, setLlmStatus] = useState<LlmStatus>("idle");
+  const [llmMessage, setLlmMessage] = useState("");
+
+  // Restore saved config (kept in this browser only).
+  useEffect(() => {
+    try {
+      const s = JSON.parse(localStorage.getItem("fortiscan_llm") || "{}");
+      if (s.engine) setEngine(s.engine);
+      if (s.provider) setProvider(s.provider);
+      if (typeof s.apiKey === "string") setApiKey(s.apiKey);
+      if (typeof s.model === "string") setModel(s.model);
+      if (typeof s.baseUrl === "string") setBaseUrl(s.baseUrl);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("fortiscan_llm", JSON.stringify({ engine, provider, apiKey, model, baseUrl }));
+  }, [engine, provider, apiKey, model, baseUrl]);
+
+  // Any config change invalidates a previous "live" check.
+  useEffect(() => {
+    setLlmStatus("idle");
+    setLlmMessage("");
+  }, [provider, apiKey, model, baseUrl]);
+
+  const testConnection = async () => {
+    const token = getToken();
+    if (!token) {
+      toast.error("You must be logged in!");
+      return;
+    }
+    if (PROVIDERS[provider].needsKey && !apiKey.trim()) {
+      toast.error("Enter an API key first.");
+      return;
+    }
+    setLlmStatus("testing");
+    setLlmMessage("");
+    try {
+      const res = await fetch(`${getApiBaseURL()}/api/test-llm`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ provider, api_key: apiKey, model, base_url: baseUrl }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setLlmStatus("ok");
+        setLlmMessage(data.message || "Provider is live.");
+        toast.success("Provider is live!");
+      } else {
+        setLlmStatus("fail");
+        setLlmMessage(data.message || data.error || "Connection failed.");
+      }
+    } catch {
+      setLlmStatus("fail");
+      setLlmMessage("Could not reach the server.");
+    }
+  };
 
   const readFileContent = (file: Blob): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -70,6 +152,10 @@ export default function Enhancer() {
       toast.error("You must be logged in!");
       return;
     }
+    if (engine === "ai" && llmStatus !== "ok") {
+      toast.error("Test the AI connection first — it must be live before enhancing.");
+      return;
+    }
     try {
       setLoading(true);
       setResult(null);
@@ -77,7 +163,12 @@ export default function Enhancer() {
       const res = await fetch(`${getApiBaseURL()}/api/enhance-stream`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ code, language }),
+        body: JSON.stringify({
+          code,
+          language,
+          engine,
+          ...(engine === "ai" ? { llm: { provider, api_key: apiKey, model, base_url: baseUrl } } : {}),
+        }),
       });
       if (!res.ok || !res.body) throw new Error("Server error");
 
@@ -128,14 +219,14 @@ export default function Enhancer() {
 
   return (
     <div className="relative min-h-screen bg-background bg-grid">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-twilight" />
       <Header />
       <main className="relative mx-auto max-w-7xl px-4 py-12">
         <Reveal className="mb-10 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-semibold text-accent">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent">
             <Sparkles className="h-4 w-4" /> AI Enhancer
           </span>
-          <h1 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
+          <h1 className="mt-4 font-display text-3xl font-medium sm:text-4xl">
             Turn insecure code <span className="text-gradient">secure</span>
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
@@ -146,9 +237,121 @@ export default function Enhancer() {
         <div className="grid gap-8 lg:grid-cols-2">
           {/* Input */}
           <div className="space-y-6">
+            {/* Engine picker */}
+            <div className="glass space-y-4 rounded-2xl p-6">
+              <div className="font-display text-lg font-medium">Enhancement engine</div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <button
+                  type="button"
+                  onClick={() => setEngine("deterministic")}
+                  className={`rounded-xl border p-4 text-left transition-all ${
+                    engine === "deterministic"
+                      ? "border-primary bg-primary/10 shadow-glow-sm"
+                      : "border-border/60 bg-card/30 hover:border-primary/50"
+                  }`}
+                >
+                  <div className="mb-1 flex items-center gap-2 font-medium">
+                    <Cpu className="h-4 w-4 text-primary" /> Deterministic
+                  </div>
+                  <p className="text-xs text-muted-foreground">Rule-based AST fixes. Instant, offline, always valid code. Recommended.</p>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEngine("ai")}
+                  className={`rounded-xl border p-4 text-left transition-all ${
+                    engine === "ai"
+                      ? "border-accent bg-accent/10 shadow-glow-sm"
+                      : "border-border/60 bg-card/30 hover:border-accent/50"
+                  }`}
+                >
+                  <div className="mb-1 flex items-center gap-2 font-medium">
+                    <Bot className="h-4 w-4 text-accent" /> AI model
+                  </div>
+                  <p className="text-xs text-muted-foreground">Full rewrite by your own LLM. Bring a key and test it live first.</p>
+                </button>
+              </div>
+
+              {engine === "ai" && (
+                <div className="space-y-3 rounded-xl border border-border/60 bg-card/40 p-4">
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-foreground/80">Provider</label>
+                      <Select value={provider} onValueChange={setProvider}>
+                        <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          {Object.entries(PROVIDERS).map(([key, p]) => (
+                            <SelectItem key={key} value={key}>{p.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-foreground/80">
+                        Model <span className="opacity-60">(optional)</span>
+                      </label>
+                      <Input
+                        value={model}
+                        onChange={(e) => setModel(e.target.value)}
+                        placeholder={PROVIDERS[provider].defaultModel}
+                        className="font-mono text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  {PROVIDERS[provider].needsKey ? (
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-foreground/80">API key</label>
+                      <Input
+                        type="password"
+                        value={apiKey}
+                        onChange={(e) => setApiKey(e.target.value)}
+                        placeholder="Paste your provider API key"
+                        className="font-mono text-sm"
+                        autoComplete="off"
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-foreground/80">Ollama base URL</label>
+                      <Input
+                        value={baseUrl}
+                        onChange={(e) => setBaseUrl(e.target.value)}
+                        placeholder={PROVIDERS[provider].baseUrl}
+                        className="font-mono text-sm"
+                      />
+                    </div>
+                  )}
+
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Button variant="outline" size="sm" onClick={testConnection} disabled={llmStatus === "testing"}>
+                      {llmStatus === "testing" ? (
+                        <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Testing...</>
+                      ) : (
+                        <><Plug className="mr-2 h-4 w-4" /> Test connection</>
+                      )}
+                    </Button>
+                    {llmStatus === "ok" && (
+                      <span className="inline-flex items-center gap-1.5 text-sm text-success">
+                        <CheckCircle2 className="h-4 w-4" /> {llmMessage}
+                      </span>
+                    )}
+                    {llmStatus === "fail" && (
+                      <span className="inline-flex items-center gap-1.5 text-sm text-destructive">
+                        <XCircle className="h-4 w-4" /> {llmMessage}
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="text-xs text-muted-foreground">
+                    Your key is used only to run this request and is kept in this browser. It is never stored on our servers.
+                  </p>
+                </div>
+              )}
+            </div>
+
             <div className="glass grid gap-4 rounded-2xl p-6 sm:grid-cols-2">
               <div>
-                <label className="mb-2 block text-sm font-semibold text-foreground/80">Language</label>
+                <label className="mb-2 block text-sm font-medium text-foreground/80">Language</label>
                 <Select onValueChange={setLanguage} defaultValue="python">
                   <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -158,7 +361,7 @@ export default function Enhancer() {
                 </Select>
               </div>
               <div>
-                <label className="mb-2 block text-sm font-semibold text-foreground/80">Filename</label>
+                <label className="mb-2 block text-sm font-medium text-foreground/80">Filename</label>
                 <Input value={filename} onChange={(e) => setFilename(e.target.value)} className="font-mono text-sm" />
               </div>
             </div>
@@ -197,15 +400,22 @@ export default function Enhancer() {
 
             <Button
               onClick={handleEnhance}
-              disabled={loading || !code.trim()}
-              className="h-14 w-full bg-gradient-primary text-base font-semibold text-primary-foreground shadow-glow transition-shadow hover:shadow-glow-accent"
+              disabled={loading || !code.trim() || (engine === "ai" && llmStatus !== "ok")}
+              className="h-14 w-full bg-gradient-primary text-base font-medium text-primary-foreground shadow-glow transition-shadow hover:shadow-glow-accent"
             >
               {loading ? (
                 <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Enhancing...</>
+              ) : engine === "ai" ? (
+                <><Bot className="mr-2 h-5 w-5" /> Enhance with AI</>
               ) : (
                 <><Sparkles className="mr-2 h-5 w-5" /> Enhance Code</>
               )}
             </Button>
+            {engine === "ai" && llmStatus !== "ok" && (
+              <p className="text-center text-xs text-muted-foreground">
+                Test your AI provider connection above to enable enhancing.
+              </p>
+            )}
             {loading && (
               <div>
                 <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
@@ -235,7 +445,7 @@ export default function Enhancer() {
             ) : (
               <>
                 <div className="glass rounded-2xl p-6">
-                  <div className="mb-4 flex items-center gap-2 font-display text-lg font-bold">
+                  <div className="mb-4 flex items-center gap-2 font-display text-lg font-medium">
                     <CheckCircle2 className="h-5 w-5 text-success" /> What changed &amp; why
                   </div>
                   {result.explanations?.length ? (
@@ -257,7 +467,9 @@ export default function Enhancer() {
 
                 {result.candidates?.length > 0 && (
                   <div className="glass rounded-2xl p-6">
-                    <div className="mb-4 font-display text-lg font-bold">AI model suggestions</div>
+                    <div className="mb-4 font-display text-lg font-medium">
+                      {result.candidates.length > 1 ? "Suggested fixes" : "Secure code"}
+                    </div>
                     <div className="mb-4 flex gap-2 overflow-x-auto pb-2">
                       {result.candidates.map((c, i) => (
                         <Button
@@ -287,7 +499,7 @@ export default function Enhancer() {
                 )}
 
                 <div className="glass rounded-2xl p-6">
-                  <div className="mb-1 font-display text-lg font-bold">Code changes (diff)</div>
+                  <div className="mb-1 font-display text-lg font-medium">Code changes (diff)</div>
                   <p className="mb-4 text-sm text-muted-foreground">Red removed · green added</p>
                   <div className="overflow-hidden rounded-xl border border-border/60 font-mono text-xs">
                     {(result.diff ?? []).map((line, i) => (

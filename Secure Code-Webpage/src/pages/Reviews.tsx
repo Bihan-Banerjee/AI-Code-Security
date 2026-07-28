@@ -22,7 +22,7 @@ const reviews = [
   { id: 7, name: "Ravi Kumar", role: "DevOps Engineer", company: "InfoSec Labs", rating: 5, review: "The AI-enhancer fixed insecure code instantly. A must-have for developers who care about secure coding!", avatar: "RK", featured: true },
   { id: 8, name: "Emily Carter", role: "Blockchain Developer", company: "CryptoChain Labs", rating: 3, review: "Good tool but I'd love deeper integration for smart contract vulnerability detection.", avatar: "EC", featured: false },
   { id: 9, name: "Omar Ahmed", role: "Security Researcher", company: "DataSafe Org", rating: 4, review: "Great for catching OWASP Top 10 vulnerabilities quickly!", avatar: "OA", featured: false },
-  { id: 10, name: "Sophia Miller", role: "Software Engineer", company: "MicroApps Inc", rating: 5, review: "Loved the automated enhancement suggestions — it makes production code much more secure effortlessly.", avatar: "SM", featured: false },
+  { id: 10, name: "Sophia Miller", role: "Software Engineer", company: "MicroApps Inc", rating: 5, review: "Loved the automated enhancement suggestions. It makes production code much more secure, effortlessly.", avatar: "SM", featured: false },
 ];
 
 export default function Reviews() {
@@ -73,14 +73,14 @@ export default function Reviews() {
 
   return (
     <div className="relative min-h-screen bg-background bg-grid">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-twilight" />
       <Header />
       <main className="relative mx-auto max-w-7xl px-4 py-16">
         <Reveal className="mb-16 text-center">
           <div className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-primary shadow-glow">
             <Quote className="h-8 w-8 text-primary-foreground" />
           </div>
-          <h1 className="font-display text-4xl font-bold sm:text-5xl">
+          <h1 className="font-display text-4xl font-medium sm:text-5xl">
             What our <span className="text-gradient">users</span> say
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
@@ -92,18 +92,18 @@ export default function Reviews() {
           {reviews.map((review, i) => (
             <Reveal key={review.id} delay={Math.min(i * 0.05, 0.4)} direction="up">
               <div className={`group relative h-full rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-glow ${
-                review.featured ? "border-primary/40 bg-gradient-aurora" : "border-border/60 bg-card/40 hover:border-primary/40"
+                review.featured ? "border-primary/40 bg-gradient-twilight" : "border-border/60 bg-card/40 hover:border-primary/40"
               }`}>
                 {review.featured && (
-                  <span className="absolute -right-2 -top-2 rounded-full bg-gradient-primary px-3 py-1 text-xs font-semibold text-primary-foreground shadow-glow">
+                  <span className="absolute -right-2 -top-2 rounded-full bg-gradient-primary px-3 py-1 text-xs font-medium text-primary-foreground shadow-glow">
                     ⭐ Featured
                   </span>
                 )}
                 <div className="mb-4 flex items-center gap-4">
-                  <div className="grid h-12 w-12 place-items-center rounded-full bg-gradient-primary font-bold text-primary-foreground">{review.avatar}</div>
+                  <div className="grid h-12 w-12 place-items-center rounded-full bg-gradient-primary font-medium text-primary-foreground">{review.avatar}</div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="font-bold">{review.name}</h3>
+                      <h3 className="font-medium">{review.name}</h3>
                       <CheckCircle className="h-4 w-4 text-success" />
                     </div>
                     <p className="text-sm text-muted-foreground">{review.role}</p>
@@ -120,7 +120,7 @@ export default function Reviews() {
         {communityReviews.length > 0 && (
           <div className="mb-16">
             <Reveal className="mb-8 text-center">
-              <h2 className="font-display text-2xl font-bold">
+              <h2 className="font-display text-2xl font-medium">
                 From our <span className="text-gradient">community</span>
               </h2>
             </Reveal>
@@ -129,11 +129,11 @@ export default function Reviews() {
                 <Reveal key={r.id} delay={Math.min(i * 0.05, 0.4)} direction="up">
                   <div className="h-full rounded-2xl border border-border/60 bg-card/40 p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/40 hover:shadow-glow">
                     <div className="mb-4 flex items-center gap-4">
-                      <div className="grid h-12 w-12 place-items-center rounded-full bg-gradient-primary font-bold text-primary-foreground">
+                      <div className="grid h-12 w-12 place-items-center rounded-full bg-gradient-primary font-medium text-primary-foreground">
                         {initials(r.name)}
                       </div>
                       <div>
-                        <h3 className="font-bold">{r.name}</h3>
+                        <h3 className="font-medium">{r.name}</h3>
                         <p className="text-xs text-muted-foreground/70">
                           {r.date ? new Date(r.date).toLocaleDateString() : "Verified user"}
                         </p>
@@ -151,31 +151,31 @@ export default function Reviews() {
         <Reveal direction="up">
           <div className="glass-strong mx-auto max-w-2xl rounded-2xl p-8">
             <div className="mb-8 text-center">
-              <h2 className="font-display text-2xl font-bold text-gradient">Share your experience</h2>
+              <h2 className="font-display text-2xl font-medium text-gradient">Share your experience</h2>
               <p className="mt-1 text-muted-foreground">Help others by sharing your thoughts about FortiScan</p>
             </div>
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label className="mb-2 block font-semibold text-foreground/80">Name</label>
+                <label className="mb-2 block font-medium text-foreground/80">Name</label>
                 <input type="text" className="w-full rounded-xl border border-border/60 bg-card/60 p-3 text-foreground transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="Your name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
               </div>
               <div>
-                <label className="mb-2 block font-semibold text-foreground/80">Email</label>
+                <label className="mb-2 block font-medium text-foreground/80">Email</label>
                 <input type="email" className="w-full rounded-xl border border-border/60 bg-card/60 p-3 text-foreground transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="your.email@example.com" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required />
               </div>
               <div>
-                <label className="mb-2 block font-semibold text-foreground/80">Rating</label>
+                <label className="mb-2 block font-medium text-foreground/80">Rating</label>
                 <div className="flex gap-2">{renderStars(formData.rating, true)}</div>
               </div>
               <div>
-                <label className="mb-2 block font-semibold text-foreground/80">Your Review</label>
+                <label className="mb-2 block font-medium text-foreground/80">Your Review</label>
                 <textarea className="w-full resize-none rounded-xl border border-border/60 bg-card/60 p-3 text-foreground transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
                   rows={4} placeholder="Share your experience with FortiScan..." value={formData.review} onChange={(e) => setFormData({ ...formData, review: e.target.value })} required />
               </div>
               <Button type="submit" size="lg" disabled={mutation.isPending}
-                className="w-full bg-gradient-primary py-6 font-semibold text-primary-foreground shadow-glow transition-shadow hover:shadow-glow-accent disabled:opacity-50">
+                className="w-full bg-gradient-primary py-6 font-medium text-primary-foreground shadow-glow transition-shadow hover:shadow-glow-accent disabled:opacity-50">
                 {mutation.isPending ? "Submitting..." : "Submit Review"}
               </Button>
             </form>

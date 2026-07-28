@@ -77,11 +77,11 @@ export default function Dashboard() {
 
   return (
     <div className="relative min-h-screen bg-background bg-grid">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-twilight" />
       <Header />
       <main className="relative mx-auto max-w-6xl px-4 py-12">
         <Reveal className="mb-10 text-center">
-          <h1 className="font-display text-4xl font-bold sm:text-5xl">
+          <h1 className="font-display text-4xl font-medium sm:text-5xl">
             Your <span className="text-gradient">security dashboard</span>
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
@@ -162,7 +162,7 @@ export default function Dashboard() {
               <CodeBlock title="Enhanced code" code={selectedItem.enhanced_code ?? ""} language={selectedItem.language} onCopy={handleCopy} copySuccess={copySuccess} copyId="enh" />
               {Array.isArray(selectedItem.explanations) && selectedItem.explanations.length > 0 && (
                 <div className="rounded-xl border border-success/30 bg-success/10 p-4">
-                  <h4 className="mb-2 flex items-center gap-2 font-semibold"><ShieldCheck className="h-5 w-5 text-success" /> Security explanations</h4>
+                  <h4 className="mb-2 flex items-center gap-2 font-medium"><ShieldCheck className="h-5 w-5 text-success" /> Security explanations</h4>
                   <ul className="list-inside list-disc space-y-1 text-sm text-muted-foreground">
                     {selectedItem.explanations.map((ex, i) => (<li key={i}><strong className="text-foreground">{ex.change}:</strong> {ex.reason}</li>))}
                   </ul>
@@ -187,8 +187,8 @@ function StatsCard({ icon, title, value }: { icon: React.ReactNode; title: strin
     <Card className="group border-border/60 bg-card/40 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-glow">
       <CardContent className="flex items-center justify-between p-6">
         <div>
-          <p className="text-sm font-semibold text-muted-foreground">{title}</p>
-          <p className="font-display text-4xl font-bold">{value}</p>
+          <p className="text-sm font-medium text-muted-foreground">{title}</p>
+          <p className="font-display text-4xl font-medium">{value}</p>
         </div>
         <div className="grid h-14 w-14 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-glow transition-transform group-hover:scale-110">
           {icon}
@@ -208,11 +208,11 @@ function ListView({ data, type, onOpen }: { data: HistoryItem[]; type: "enhancer
               {type === "enhancer" ? <Sparkles className="h-5 w-5" /> : <Activity className="h-5 w-5" />}
             </div>
             <div>
-              <p className="font-bold">{item.language?.toUpperCase() || "Unknown"} {type === "enhancer" ? "Enhancement" : "Scan"}</p>
+              <p className="font-medium">{item.language?.toUpperCase() || "Unknown"} {type === "enhancer" ? "Enhancement" : "Scan"}</p>
               <p className="text-sm text-muted-foreground">{item.timestamp ? new Date(item.timestamp).toLocaleString() : "Unknown time"}</p>
             </div>
           </div>
-          <span className="text-sm font-semibold text-primary">View details →</span>
+          <span className="text-sm font-medium text-primary">View details →</span>
         </button>
       ))}
     </div>
@@ -240,7 +240,7 @@ function CodeBlock({ title, code, language, onCopy, copySuccess, copyId }: { tit
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h4 className="flex items-center gap-2 font-display text-lg font-bold"><Code2 className="h-5 w-5 text-primary" /> {title}</h4>
+        <h4 className="flex items-center gap-2 font-display text-lg font-medium"><Code2 className="h-5 w-5 text-primary" /> {title}</h4>
         <Button variant="outline" size="sm" onClick={() => onCopy(code, copyId)}>
           {copySuccess === copyId ? <CheckCircle2 className="mr-1 h-4 w-4 text-success" /> : <Copy className="mr-1 h-4 w-4" />}
           {copySuccess === copyId ? "Copied" : "Copy"}
@@ -256,7 +256,7 @@ function EmptyState({ icon, title, description }: { icon: React.ReactNode; title
     <Card className="border-border/60 bg-card/40">
       <CardContent className="flex flex-col items-center justify-center py-16 text-center">
         <div className="mb-5 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-primary text-primary-foreground shadow-glow">{icon}</div>
-        <h3 className="font-display text-2xl font-bold">{title}</h3>
+        <h3 className="font-display text-2xl font-medium">{title}</h3>
         <p className="mt-2 max-w-md text-muted-foreground">{description}</p>
       </CardContent>
     </Card>
@@ -279,7 +279,7 @@ function ActivityFeed({ history }: { history: HistoryData | undefined }) {
               {item.enhanced_code ? <Sparkles className="h-4 w-4" /> : <Activity className="h-4 w-4" />}
             </div>
             <div>
-              <p className="font-semibold">{item.language?.toUpperCase() || "Unknown"} {item.enhanced_code ? "Enhancement" : "Scan"}</p>
+              <p className="font-medium">{item.language?.toUpperCase() || "Unknown"} {item.enhanced_code ? "Enhancement" : "Scan"}</p>
               <p className="text-xs text-muted-foreground">{new Date(item.timestamp || "").toLocaleString()}</p>
             </div>
           </div>

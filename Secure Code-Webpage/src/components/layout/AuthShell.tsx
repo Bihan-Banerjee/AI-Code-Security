@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 export default function AuthShell({ children }: { children: ReactNode }) {
   return (
     <div className="relative flex min-h-screen flex-col bg-background bg-grid">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-twilight" />
       <Header />
       <main className="relative flex flex-1 items-center justify-center px-4 py-12">
         <motion.div

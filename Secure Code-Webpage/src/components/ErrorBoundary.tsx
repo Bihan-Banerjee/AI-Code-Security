@@ -20,11 +20,11 @@ export default class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="grid min-h-screen place-items-center bg-background px-4">
           <div className="glass-strong max-w-md rounded-2xl p-8 text-center">
-            <h1 className="font-display text-2xl font-bold text-gradient">Something went wrong</h1>
+            <h1 className="font-display text-2xl font-medium text-gradient">Something went wrong</h1>
             <p className="mt-2 text-muted-foreground">An unexpected error occurred. Try reloading the page.</p>
             <button
               onClick={() => window.location.reload()}
-              className="mt-6 rounded-xl bg-gradient-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow"
+              className="mt-6 rounded-xl bg-gradient-primary px-6 py-3 font-medium text-primary-foreground shadow-glow"
             >
               Reload
             </button>

@@ -39,7 +39,7 @@ export default function MobileNav({
             transition={{ type: "spring", stiffness: 280, damping: 30 }}
           >
             <div className="mb-4 flex items-center justify-between">
-              <span className="font-display text-lg font-bold text-gradient">FortiScan</span>
+              <span className="font-display text-lg font-medium text-gradient">FortiScan</span>
               <button
                 aria-label="Close menu"
                 onClick={onClose}
@@ -59,7 +59,7 @@ export default function MobileNav({
                 <Link
                   to={item.to}
                   onClick={onClose}
-                  className="block rounded-xl px-4 py-3 text-base font-semibold text-foreground/90 transition-colors hover:bg-secondary/60 hover:text-primary"
+                  className="block rounded-xl px-4 py-3 text-base font-medium text-foreground/90 transition-colors hover:bg-secondary/60 hover:text-primary"
                 >
                   {item.label}
                 </Link>
@@ -70,11 +70,11 @@ export default function MobileNav({
               {username ? (
                 <>
                   <span className="px-1 text-sm text-muted-foreground">
-                    Signed in as <span className="font-semibold text-foreground">{username}</span>
+                    Signed in as <span className="font-medium text-foreground">{username}</span>
                   </span>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center justify-center gap-2 rounded-xl border border-destructive/50 px-4 py-3 font-semibold text-destructive hover:bg-destructive/10"
+                    className="flex items-center justify-center gap-2 rounded-xl border border-destructive/50 px-4 py-3 font-medium text-destructive hover:bg-destructive/10"
                   >
                     <LogOut className="h-4 w-4" /> Log out
                   </button>
@@ -84,14 +84,14 @@ export default function MobileNav({
                   <Link
                     to="/login"
                     onClick={onClose}
-                    className="flex items-center justify-center gap-2 rounded-xl border border-border px-4 py-3 font-semibold hover:border-primary hover:text-primary"
+                    className="flex items-center justify-center gap-2 rounded-xl border border-border px-4 py-3 font-medium hover:border-primary hover:text-primary"
                   >
                     <LogIn className="h-4 w-4" /> Sign In
                   </Link>
                   <Link
                     to="/register"
                     onClick={onClose}
-                    className="flex items-center justify-center gap-2 rounded-xl bg-gradient-primary px-4 py-3 font-semibold text-primary-foreground shadow-glow"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-gradient-primary px-4 py-3 font-medium text-primary-foreground shadow-glow"
                   >
                     <UserPlus className="h-4 w-4" /> Get Started
                   </Link>

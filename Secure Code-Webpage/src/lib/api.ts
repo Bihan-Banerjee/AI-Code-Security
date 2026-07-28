@@ -122,8 +122,8 @@ export interface BanditIssue {
 
 export interface ScanResult {
   results?: BanditIssue[];
-  metrics?: any;
-  errors?: any[];
+  metrics?: Record<string, unknown>;
+  errors?: unknown[];
   generated_at?: string;
 }
 

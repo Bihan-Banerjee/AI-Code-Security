@@ -13,7 +13,7 @@ const NotFound = () => {
 
   return (
     <div className="relative flex min-h-screen flex-col bg-background bg-grid">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-twilight" />
       <Header />
       <main className="relative flex flex-1 items-center justify-center px-4 py-20">
         <motion.div
@@ -25,21 +25,21 @@ const NotFound = () => {
           <div className="mx-auto mb-6 grid h-20 w-20 place-items-center rounded-2xl bg-gradient-primary shadow-glow">
             <ShieldAlert className="h-10 w-10 text-primary-foreground" />
           </div>
-          <h1 className="font-display text-7xl font-bold text-gradient">404</h1>
-          <p className="mt-3 text-xl font-semibold">Page not found</p>
+          <h1 className="font-display text-7xl font-medium text-gradient">404</h1>
+          <p className="mt-3 text-xl font-medium">Page not found</p>
           <p className="mt-2 text-muted-foreground">
             The page you're looking for has moved, been secured away, or never existed.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               to="/"
-              className="flex items-center gap-2 rounded-xl bg-gradient-primary px-6 py-3 font-semibold text-primary-foreground shadow-glow"
+              className="flex items-center gap-2 rounded-xl bg-gradient-primary px-6 py-3 font-medium text-primary-foreground shadow-glow"
             >
               <Home className="h-4 w-4" /> Back home
             </Link>
             <Link
               to="/scanner"
-              className="flex items-center gap-2 rounded-xl border border-border bg-secondary/30 px-6 py-3 font-semibold transition-colors hover:border-primary/60 hover:text-primary"
+              className="flex items-center gap-2 rounded-xl border border-border bg-secondary/30 px-6 py-3 font-medium transition-colors hover:border-primary/60 hover:text-primary"
             >
               <Compass className="h-4 w-4" /> Go to scanner
             </Link>

@@ -121,7 +121,7 @@ export default function Register() {
         <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-primary shadow-glow">
           <User className="h-8 w-8 text-primary-foreground" />
         </div>
-        <h1 className="font-display text-3xl font-bold">Create account</h1>
+        <h1 className="font-display text-3xl font-medium">Create account</h1>
         <p className="mt-1 text-muted-foreground">Join us to secure your code with AI</p>
       </div>
 
@@ -129,7 +129,7 @@ export default function Register() {
         <form onSubmit={handleRegister} className="space-y-5">
           {/* Username */}
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
+            <label className="flex items-center gap-2 text-sm font-medium text-foreground/80">
               <User className="h-4 w-4" /> Username
             </label>
             <div className="relative">
@@ -154,7 +154,7 @@ export default function Register() {
 
           {/* Email */}
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
+            <label className="flex items-center gap-2 text-sm font-medium text-foreground/80">
               <Mail className="h-4 w-4" /> Email Address
             </label>
             <div className="relative">
@@ -190,7 +190,7 @@ export default function Register() {
 
           {/* Password */}
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
+            <label className="flex items-center gap-2 text-sm font-medium text-foreground/80">
               <Lock className="h-4 w-4" /> Password
             </label>
             <div className="relative">
@@ -226,7 +226,7 @@ export default function Register() {
           <Button
             type="submit"
             disabled={isLoading || emailValid === false || usernameValid === false}
-            className="h-12 w-full bg-gradient-primary font-semibold text-primary-foreground shadow-glow"
+            className="h-12 w-full bg-gradient-primary font-medium text-primary-foreground shadow-glow"
           >
             {isLoading ? (
               <>
@@ -241,7 +241,7 @@ export default function Register() {
         <div className="border-t border-border/50 pt-4 text-center">
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link to="/login" className="font-semibold text-primary hover:underline">
+            <Link to="/login" className="font-medium text-primary hover:underline">
               Sign In
             </Link>
           </p>

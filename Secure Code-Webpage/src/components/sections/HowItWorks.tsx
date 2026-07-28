@@ -2,12 +2,13 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Upload, ScanSearch, Wand2 } from "lucide-react";
 import Reveal from "@/components/effects/Reveal";
+import Eyebrow from "@/components/Eyebrow";
 
 const steps = [
   {
     icon: Upload,
     title: "1 · Submit code",
-    description: "Paste or drop your Python / JavaScript files. Everything runs on demand — nothing is stored without your account.",
+    description: "Paste or drop your Python or JavaScript files. Everything runs on demand, and nothing is stored without your account.",
   },
   {
     icon: ScanSearch,
@@ -33,7 +34,8 @@ export default function HowItWorks() {
     <section className="relative py-24">
       <div className="container mx-auto px-4" ref={ref}>
         <Reveal className="mx-auto mb-16 max-w-2xl text-center">
-          <h2 className="font-display text-3xl font-bold sm:text-4xl">
+          <div className="mb-5 flex justify-center"><Eyebrow>Workflow</Eyebrow></div>
+          <h2 className="font-display text-4xl font-medium tracking-[-0.03em] sm:text-5xl">
             How it <span className="text-gradient">works</span>
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">Three steps from risky code to a secure fix.</p>
@@ -65,7 +67,7 @@ export default function HowItWorks() {
                   <div className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-primary shadow-glow">
                     <s.icon className="h-8 w-8 text-primary-foreground" />
                   </div>
-                  <h3 className="mb-2 font-display text-lg font-bold">{s.title}</h3>
+                  <h3 className="mb-2 font-display text-lg font-medium">{s.title}</h3>
                   <p className="text-sm leading-relaxed text-muted-foreground">{s.description}</p>
                 </div>
               </Reveal>

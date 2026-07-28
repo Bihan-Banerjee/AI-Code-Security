@@ -4,6 +4,7 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from werkzeug.middleware.proxy_fix import ProxyFix
 from dotenv import load_dotenv
 from model import enhance_code
+from llm import test_llm, SUPPORTED as LLM_PROVIDERS
 import tempfile
 import os
 import subprocess
@@ -140,7 +141,13 @@ def scan_code():
         try:
             req = ScanRequest(**data)
         except ValidationError as e:
-            return jsonify({"error": e.errors()}), 400
+            # pydantic v2 errors() embeds the original exception under ctx, which
+            # is not JSON-serialisable; flatten to field/message pairs.
+            details = [
+                {"field": ".".join(str(x) for x in err.get("loc", [])), "message": err.get("msg", "Invalid value")}
+                for err in e.errors()
+            ]
+            return jsonify({"error": "Validation failed", "details": details}), 400
 
         files = [f.model_dump() for f in req.files]
         language = req.language.lower()
@@ -204,6 +211,44 @@ def health():
     return jsonify({"status": "ok"})
 
 
+def _extract_llm(data):
+    """Pull per-request LLM config out of the request body. Never stored."""
+    raw = data.get("llm")
+    if not isinstance(raw, dict):
+        # also accept flat fields for convenience
+        raw = {
+            "provider": data.get("provider"),
+            "api_key": data.get("api_key"),
+            "model": data.get("model"),
+            "base_url": data.get("base_url"),
+        }
+    return {
+        "provider": str(raw.get("provider") or "").strip().lower(),
+        "api_key": str(raw.get("api_key") or ""),
+        "model": str(raw.get("model") or "").strip(),
+        "base_url": str(raw.get("base_url") or "").strip(),
+    }
+
+
+@app.route("/api/test-llm", methods=["POST"])
+@limiter.limit("10/minute")
+@jwt_required()
+def test_llm_connection():
+    """Live-check a user-supplied LLM provider/key before enhancing. Key not stored."""
+    try:
+        data = request.get_json(silent=True) or {}
+        cfg = _extract_llm(data)
+        if cfg["provider"] not in LLM_PROVIDERS:
+            return jsonify({"ok": False, "message": "Unsupported provider"}), 400
+        ok, message = test_llm(
+            cfg["provider"], api_key=cfg["api_key"], model=cfg["model"], base_url=cfg["base_url"]
+        )
+        return jsonify({"ok": ok, "message": message}), (200 if ok else 400)
+    except Exception as e:
+        app.logger.exception("Unexpected error in /api/test-llm: %s", e)
+        return jsonify({"ok": False, "message": "Connection test failed"}), 500
+
+
 @app.route("/api/enhance", methods=["POST"])
 @limiter.limit("5/minute")
 @jwt_required()
@@ -219,7 +264,9 @@ def enhance():
         if language not in ("python", "javascript"):
             return jsonify({"error": "Unsupported language"}), 400
 
-        result = enhance_code(code, language)
+        engine = str(data.get("engine", "deterministic")).lower()
+        llm = _extract_llm(data) if engine == "ai" else None
+        result = enhance_code(code, language, engine=engine, llm=llm)
 
         try:
             enhance_history.insert_one({
@@ -288,11 +335,14 @@ def enhance_stream():
     if language not in ("python", "javascript"):
         return jsonify({"error": "Unsupported language"}), 400
 
+    engine = str(data.get("engine", "deterministic")).lower()
+    llm = _extract_llm(data) if engine == "ai" else None
+
     def generate():
         try:
             yield json.dumps({"type": "progress", "progress": 10}) + "\n"
 
-            result = enhance_code(code, language)
+            result = enhance_code(code, language, engine=engine, llm=llm)
 
             yield json.dumps({"type": "progress", "progress": 90}) + "\n"
 

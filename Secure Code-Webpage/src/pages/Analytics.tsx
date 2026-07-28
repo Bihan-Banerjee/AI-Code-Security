@@ -97,11 +97,11 @@ export default function Analytics() {
 
   return (
     <div className="relative min-h-screen bg-background bg-grid">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-twilight" />
       <Header />
       <main className="relative mx-auto max-w-6xl space-y-8 px-4 py-12">
         <Reveal>
-          <h1 className="font-display text-3xl font-bold sm:text-4xl">Security <span className="text-gradient">analytics</span></h1>
+          <h1 className="font-display text-3xl font-medium sm:text-4xl">Security <span className="text-gradient">analytics</span></h1>
           <p className="mt-2 text-muted-foreground">Visualize vulnerabilities by CWE, severity, or timeline.</p>
         </Reveal>
 

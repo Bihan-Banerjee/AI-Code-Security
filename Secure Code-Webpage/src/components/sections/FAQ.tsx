@@ -1,5 +1,6 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Reveal from "@/components/effects/Reveal";
+import Eyebrow from "@/components/Eyebrow";
 
 const faqs = [
   {
@@ -8,7 +9,7 @@ const faqs = [
   },
   {
     q: "How accurate are the results?",
-    a: "Findings come directly from Bandit and Semgrep — established open-source security scanners — so accuracy matches those tools. Each result is mapped to a CWE and severity.",
+    a: "Findings come directly from Bandit and Semgrep, established open-source security scanners, so accuracy matches those tools. Each result is mapped to a CWE and severity.",
   },
   {
     q: "Will the enhancer break my code?",
@@ -20,7 +21,7 @@ const faqs = [
   },
   {
     q: "Is FortiScan free?",
-    a: "Yes — it's a free, open-source project. You can self-host the backend or use the hosted instance.",
+    a: "Yes, it's a free, open-source project. You can self-host the backend or use the hosted instance.",
   },
 ];
 
@@ -29,7 +30,8 @@ export default function FAQ() {
     <section className="relative py-24">
       <div className="container mx-auto max-w-3xl px-4">
         <Reveal className="mb-12 text-center">
-          <h2 className="font-display text-3xl font-bold sm:text-4xl">
+          <div className="mb-5 flex justify-center"><Eyebrow>FAQ</Eyebrow></div>
+          <h2 className="font-display text-4xl font-medium tracking-[-0.03em] sm:text-5xl">
             Frequently asked <span className="text-gradient">questions</span>
           </h2>
         </Reveal>

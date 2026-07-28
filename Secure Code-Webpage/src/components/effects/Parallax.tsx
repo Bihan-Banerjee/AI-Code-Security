@@ -19,8 +19,8 @@ export default function Parallax({
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 120, damping: 18 });
-  const sy = useSpring(y, { stiffness: 120, damping: 18 });
+  const sx = useSpring(x, { stiffness: 70, damping: 22, mass: 0.6 });
+  const sy = useSpring(y, { stiffness: 70, damping: 22, mass: 0.6 });
 
   useEffect(() => {
     if (!enabled) return;

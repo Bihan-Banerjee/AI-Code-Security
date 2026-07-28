@@ -151,14 +151,14 @@ export default function CodeScanner() {
 
   return (
     <div className="relative min-h-screen bg-background bg-grid">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-twilight" />
       <Header />
       <main className="relative mx-auto max-w-7xl px-4 py-12">
         <Reveal className="mb-10 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
             <Shield className="h-4 w-4" /> Security Scanner
           </span>
-          <h1 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
+          <h1 className="mt-4 font-display text-3xl font-medium sm:text-4xl">
             Scan your code for <span className="text-gradient">vulnerabilities</span>
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
@@ -170,7 +170,7 @@ export default function CodeScanner() {
           {/* Input column */}
           <div className="space-y-6">
             <div className="glass rounded-2xl p-6">
-              <label className="mb-2 block text-sm font-semibold text-foreground/80">Language</label>
+              <label className="mb-2 block text-sm font-medium text-foreground/80">Language</label>
               <Select onValueChange={setLanguage} defaultValue="python">
                 <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -239,7 +239,7 @@ export default function CodeScanner() {
               <Button
                 onClick={handleScan}
                 disabled={scanMutation.isPending}
-                className="h-14 w-full bg-gradient-primary text-base font-semibold text-primary-foreground shadow-glow transition-shadow hover:shadow-glow-accent"
+                className="h-14 w-full bg-gradient-primary text-base font-medium text-primary-foreground shadow-glow transition-shadow hover:shadow-glow-accent"
               >
                 {scanMutation.isPending ? (
                   <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Scanning...</>
@@ -268,18 +268,18 @@ export default function CodeScanner() {
               <>
                 <div className="glass rounded-2xl p-6">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 font-display text-lg font-bold">
+                    <div className="flex items-center gap-2 font-display text-lg font-medium">
                       <CheckCircle2 className="h-5 w-5 text-success" /> Scan complete
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-muted-foreground">Security score</p>
-                      <p className="text-2xl font-bold text-gradient">{score}</p>
+                      <p className="text-2xl font-medium text-gradient">{score}</p>
                     </div>
                   </div>
                   {issues.length === 0 ? (
                     <div className="mt-6 text-center">
                       <CheckCircle2 className="mx-auto mb-3 h-14 w-14 text-success" />
-                      <p className="text-lg font-semibold text-success">No vulnerabilities found!</p>
+                      <p className="text-lg font-medium text-success">No vulnerabilities found!</p>
                     </div>
                   ) : (
                     <div className="mt-5 flex flex-wrap gap-2">
@@ -287,7 +287,7 @@ export default function CodeScanner() {
                         <button
                           key={f}
                           onClick={() => setFilter(f)}
-                          className={`rounded-full px-3 py-1.5 text-xs font-semibold capitalize transition-colors ${
+                          className={`rounded-full px-3 py-1.5 text-xs font-medium capitalize transition-colors ${
                             filter === f ? "bg-primary text-primary-foreground" : "bg-secondary/50 text-muted-foreground hover:text-foreground"
                           }`}
                         >
@@ -300,7 +300,7 @@ export default function CodeScanner() {
 
                 {filteredIssues.length > 0 && (
                   <div className="glass space-y-3 rounded-2xl p-6">
-                    <div className="flex items-center gap-2 font-display text-lg font-bold">
+                    <div className="flex items-center gap-2 font-display text-lg font-medium">
                       <AlertTriangle className="h-5 w-5 text-warning" /> Detected vulnerabilities
                     </div>
                     {filteredIssues.map((issue, idx) => (
@@ -319,7 +319,7 @@ export default function CodeScanner() {
                                 {baseName(issue.filename)}:{issue.line_number || "?"}
                               </span>
                             </div>
-                            <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${sevBadge(issue.issue_severity)}`}>
+                            <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${sevBadge(issue.issue_severity)}`}>
                               {issue.issue_severity || "-"}
                             </span>
                           </div>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Copy, Play, AlertTriangle, CheckCircle2, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import Reveal from "@/components/effects/Reveal";
+import Eyebrow from "@/components/Eyebrow";
 
 const vulnerableCode = `import sqlite3
 
@@ -80,10 +81,8 @@ export default function LiveDemo() {
     <section id="demo" className="relative py-24">
       <div className="container mx-auto px-4">
         <Reveal className="mx-auto mb-12 max-w-2xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary">
-            Interactive demo
-          </span>
-          <h2 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
+          <div className="mb-5 flex justify-center"><Eyebrow>Interactive demo</Eyebrow></div>
+          <h2 className="font-display text-4xl font-medium tracking-[-0.03em] sm:text-5xl">
             See it <span className="text-gradient">in action</span>
           </h2>
         </Reveal>
@@ -95,10 +94,10 @@ export default function LiveDemo() {
               <span className="h-3 w-3 rounded-full bg-destructive/70" />
               <span className="h-3 w-3 rounded-full bg-warning/70" />
               <span className="h-3 w-3 rounded-full bg-success/70" />
-              <span className="ml-3 font-mono text-xs text-muted-foreground">auth.py — FortiScan</span>
+              <span className="ml-3 font-mono text-xs text-muted-foreground">auth.py · FortiScan</span>
               <Link
                 to="/scanner"
-                className="ml-auto inline-flex items-center gap-1.5 rounded-lg bg-gradient-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground"
+                className="ml-auto inline-flex items-center gap-1.5 rounded-lg bg-gradient-primary px-3 py-1.5 text-xs font-medium text-primary-foreground"
               >
                 <Play className="h-3.5 w-3.5" /> Try yours
               </Link>
@@ -110,7 +109,7 @@ export default function LiveDemo() {
                 <button
                   key={t}
                   onClick={() => setTab(t)}
-                  className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
+                  className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                     tab === t ? "bg-secondary/70 text-primary" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
@@ -136,14 +135,14 @@ export default function LiveDemo() {
                           className={`h-5 w-5 ${f.severity === "High" ? "text-destructive" : "text-warning"}`}
                         />
                         <div>
-                          <p className="font-semibold">{f.type}</p>
+                          <p className="font-medium">{f.type}</p>
                           <p className="text-xs text-muted-foreground">
                             {f.cwe} · line {f.line}
                           </p>
                         </div>
                       </div>
                       <span
-                        className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                        className={`rounded-full px-3 py-1 text-xs font-medium ${
                           f.severity === "High"
                             ? "bg-destructive/15 text-destructive"
                             : "bg-warning/15 text-warning"
@@ -155,7 +154,7 @@ export default function LiveDemo() {
                   ))}
                   <button
                     onClick={() => setTab("fixed")}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-success/40 bg-success/10 py-3 font-semibold text-success transition-colors hover:bg-success/20"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-success/40 bg-success/10 py-3 font-medium text-success transition-colors hover:bg-success/20"
                   >
                     <CheckCircle2 className="h-4 w-4" /> View secured code <ArrowRight className="h-4 w-4" />
                   </button>

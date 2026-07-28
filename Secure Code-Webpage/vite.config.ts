@@ -8,10 +8,11 @@ import viteCompression from "vite-plugin-compression";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
-    port: 8080,
+    // Defaults preserved; override locally with VITE_PORT / VITE_PROXY_TARGET.
+    port: Number(process.env.VITE_PORT) || 8080,
     proxy: {
       '/api': {
-        target: 'https://darthbihan-ai-code-security-backend.hf.space',
+        target: process.env.VITE_PROXY_TARGET || 'https://darthbihan-ai-code-security-backend.hf.space',
         changeOrigin: true,
         secure: false
       },

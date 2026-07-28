@@ -34,7 +34,7 @@ const TermsAndConditions = () => {
   const navigate = useNavigate();
   return (
     <div className="relative min-h-screen bg-background bg-grid">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-aurora" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-twilight" />
       <Header />
 
       <section className="relative px-4 py-20">
@@ -42,7 +42,7 @@ const TermsAndConditions = () => {
           <div className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-primary shadow-glow">
             <FileText className="h-8 w-8 text-primary-foreground" />
           </div>
-          <h1 className="font-display text-5xl font-bold sm:text-6xl">
+          <h1 className="font-display text-5xl font-medium sm:text-6xl">
             Terms &amp; <span className="text-gradient">Conditions</span>
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-xl text-muted-foreground">
@@ -55,13 +55,13 @@ const TermsAndConditions = () => {
                   <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-gradient-primary shadow-glow transition-transform group-hover:scale-110">
                     <Icon className="h-6 w-6 text-primary-foreground" />
                   </div>
-                  <h3 className="mb-1 font-display text-lg font-bold">{title}</h3>
+                  <h3 className="mb-1 font-display text-lg font-medium">{title}</h3>
                   <p className="text-sm text-muted-foreground">{text}</p>
                 </div>
               </Reveal>
             ))}
           </div>
-          <div className="mt-12 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-6 py-3 text-sm font-semibold text-muted-foreground">
+          <div className="mt-12 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-6 py-3 text-sm font-medium text-muted-foreground">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
             Last updated: December 2025
           </div>
@@ -73,7 +73,7 @@ const TermsAndConditions = () => {
           <div className="glass space-y-10 rounded-2xl p-8 md:p-12">
             {sections.map((s) => (
               <div key={s.title}>
-                <h2 className="mb-4 font-display text-2xl font-bold sm:text-3xl text-gradient">{s.title}</h2>
+                <h2 className="mb-4 font-display text-2xl font-medium sm:text-3xl text-gradient">{s.title}</h2>
                 <p className="text-lg leading-relaxed text-muted-foreground">{s.body}</p>
               </div>
             ))}
@@ -83,13 +83,13 @@ const TermsAndConditions = () => {
 
       <section className="px-4 py-16">
         <Reveal direction="scale" className="mx-auto max-w-3xl">
-          <div className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-aurora p-12 text-center">
+          <div className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-twilight p-12 text-center">
             <div className="pointer-events-none absolute inset-0 bg-grid bg-grid-fade opacity-50" />
             <div className="relative">
-              <h2 className="font-display text-3xl font-bold">Questions?</h2>
+              <h2 className="font-display text-3xl font-medium">Questions?</h2>
               <p className="mt-3 text-lg text-muted-foreground">If you have any questions about these terms, reach out.</p>
               <Button size="lg" onClick={() => navigate("/about")}
-                className="mt-6 bg-gradient-primary px-8 py-6 font-bold text-primary-foreground shadow-glow transition-transform hover:scale-105">
+                className="mt-6 bg-gradient-primary px-8 py-6 font-medium text-primary-foreground shadow-glow transition-transform hover:scale-105">
                 Contact Us <ChevronRight className="ml-2 h-5 w-5" />
               </Button>
             </div>

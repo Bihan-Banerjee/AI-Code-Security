@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
 	darkMode: ["class"],
@@ -79,17 +80,19 @@ export default {
 			},
 			fontFamily: {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
-				display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+				display: ['Inter', 'system-ui', 'sans-serif'],
 				mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
 			},
 			boxShadow: {
-				glow: '0 0 40px -8px hsl(var(--primary) / 0.5)',
-				'glow-accent': '0 0 40px -8px hsl(var(--accent) / 0.5)',
-				'glow-sm': '0 0 18px -4px hsl(var(--primary) / 0.45)',
+				// Auros achieves depth through tone, not shadow.
+				glow: 'none',
+				'glow-accent': 'none',
+				'glow-sm': 'none',
 			},
 			backgroundImage: {
-				'gradient-primary': 'linear-gradient(120deg, hsl(var(--primary)), hsl(var(--accent)))',
-				'gradient-aurora': 'radial-gradient(60% 60% at 20% 10%, hsl(var(--primary) / 0.18), transparent 60%), radial-gradient(50% 50% at 90% 20%, hsl(var(--accent) / 0.18), transparent 60%)',
+				'gradient-primary': 'linear-gradient(90deg, #00827c 0%, #cbfffc 100%)',
+				'gradient-aurora': 'linear-gradient(90deg, #cbfffc 0%, #edfffe 26%, #fffdfa 48%, #fad1ff 89%)',
+				'gradient-twilight': 'radial-gradient(120% 120% at 50% 0%, rgba(250,209,255,0.10) 0%, rgba(255,253,250,0.05) 45%, rgba(203,255,252,0.06) 85%, transparent 100%)',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -159,5 +162,5 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [tailwindcssAnimate],
 } satisfies Config;

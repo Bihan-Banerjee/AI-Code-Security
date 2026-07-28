@@ -33,7 +33,7 @@ export interface SemgrepIssue {
   path?: string;
   line?: number;
   message?: string;
-  extra?: any;
+  extra?: Record<string, unknown>;
 }
 
 export interface SemgrepReport {

@@ -43,14 +43,14 @@ export default function Login() {
         <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-primary shadow-glow">
           <LogIn className="h-8 w-8 text-primary-foreground" />
         </div>
-        <h1 className="font-display text-3xl font-bold">Welcome back</h1>
+        <h1 className="font-display text-3xl font-medium">Welcome back</h1>
         <p className="mt-1 text-muted-foreground">Sign in to access your secure dashboard</p>
       </div>
 
       <div className="glass-strong space-y-6 rounded-2xl p-8">
         <form onSubmit={handleLogin} className="space-y-5">
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
+            <label className="flex items-center gap-2 text-sm font-medium text-foreground/80">
               <User className="h-4 w-4" /> Username
             </label>
             <Input
@@ -65,7 +65,7 @@ export default function Login() {
           </div>
 
           <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
+            <label className="flex items-center gap-2 text-sm font-medium text-foreground/80">
               <Lock className="h-4 w-4" /> Password
             </label>
             <div className="relative">
@@ -97,7 +97,7 @@ export default function Login() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="h-12 w-full bg-gradient-primary font-semibold text-primary-foreground shadow-glow transition-shadow hover:shadow-glow-accent"
+            className="h-12 w-full bg-gradient-primary font-medium text-primary-foreground shadow-glow transition-shadow hover:shadow-glow-accent"
           >
             {isLoading ? (
               <>
@@ -114,7 +114,7 @@ export default function Login() {
         <div className="border-t border-border/50 pt-4 text-center">
           <p className="text-sm text-muted-foreground">
             Don't have an account?{" "}
-            <Link to="/register" className="font-semibold text-primary hover:underline">
+            <Link to="/register" className="font-medium text-primary hover:underline">
               Create Account
             </Link>
           </p>
