@@ -156,10 +156,10 @@ Contributions are welcome. Please open an issue first to discuss proposed change
 ## Authors
 
 **Bihan Banerjee** – Cybersecurity Specialist  
-3rd year CSE (Information Security), VIT Vellore
+4th year CSE (Information Security), VIT Vellore
 
 **Nethra Krishnan** – AI Specialist  
-3rd year CSE (Data Science), VIT Vellore
+4th year CSE (Data Science), VIT Vellore
 
 ## License
 
