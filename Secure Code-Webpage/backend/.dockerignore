@@ -1,0 +1,17 @@
+# Never bake the local virtualenv, caches, or secrets into the image.
+venv311/
+venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+
+# Secrets come from HF Space Secrets (env vars), not the image.
+.env
+.env.development
+.env.production
+
+# Local scratch / model caches.
+temp/
+models/
+requirements-ml.txt

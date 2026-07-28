@@ -1,29 +1,27 @@
-flask==2.3.3
-flask-cors==4.0.0
-flask-jwt-extended==4.5.3
-flask-limiter==3.5.0
-flask-compress==1.13
-flask-caching==2.1.0
+# Core backend — pinned to the versions verified locally (Python 3.11).
+# Lean by design: the optional local Transformers models (ENABLE_MODELS=true)
+# are NOT installed here. See requirements-ml.txt for those (heavy: torch etc.).
+Flask==2.3.3
+Werkzeug==3.1.8
+Flask-Cors==4.0.0
+Flask-JWT-Extended==4.5.3
+Flask-Limiter==3.5.0
+Flask-Compress==1.13
+Flask-Caching==2.1.0
 python-dotenv==1.0.0
 
+# MongoDB — dnspython is REQUIRED for mongodb+srv:// URIs.
 pymongo==4.5.0
+dnspython==2.8.0
 
-pydantic>=2.9.2
-libcst>=1.1.0
-
-
-torch>=2.0.0
-transformers==4.40.2
-tokenizers==0.19.1
-
-bandit>=1.7.5
-semgrep>=1.45.0
-
-accelerate>=0.20.0
-safetensors>=0.3.0
-
-bcrypt>=4.0.1
-python-dotenv
-gunicorn
-
+pydantic==2.13.0
+libcst==1.8.6
+bcrypt==5.0.0
 requests==2.31.0
+
+# Scanners (invoked as subprocesses).
+bandit==1.9.4
+semgrep==1.159.0
+
+# Production WSGI server.
+gunicorn==25.3.0

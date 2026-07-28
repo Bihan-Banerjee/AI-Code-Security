@@ -34,11 +34,19 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 Compress(app)
 
 # CORS: localhost is only allowed in development.
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+# Trailing slashes must be stripped — browsers send the Origin header without
+# one, so "https://site/" would never match and every request would be blocked.
+def _clean_origin(url):
+    return (url or "").strip().rstrip("/")
+
+FRONTEND_URL = _clean_origin(os.getenv("FRONTEND_URL", "http://localhost:5173"))
+# Optional comma-separated extra origins (e.g. Vercel preview deployments).
+_extra_origins = [_clean_origin(o) for o in os.getenv("ALLOWED_ORIGINS", "").split(",") if o.strip()]
 if IS_DEV:
-    allowed_origins = list({FRONTEND_URL, "http://localhost:5173", "http://localhost:3000", "http://localhost:8080"})
+    allowed_origins = list({FRONTEND_URL, "http://localhost:5173", "http://localhost:3000", "http://localhost:8080", *_extra_origins})
 else:
-    allowed_origins = [FRONTEND_URL]
+    allowed_origins = list({FRONTEND_URL, *_extra_origins})
+allowed_origins = [o for o in allowed_origins if o]
 CORS(app, origins=allowed_origins)
 
 app.config["MAX_CONTENT_LENGTH"] = 1 * 1024 * 1024

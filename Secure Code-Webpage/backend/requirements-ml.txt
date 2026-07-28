@@ -1,0 +1,9 @@
+# OPTIONAL — only needed if you set ENABLE_MODELS=true to surface local
+# Transformers model candidates in the enhancer. These are heavy (torch alone
+# is ~800 MB+) and are NOT required for the deterministic engine or the hosted
+# LLM ("AI") engine. Install with:  pip install -r requirements-ml.txt
+torch>=2.0.0
+transformers==4.40.2
+tokenizers==0.19.1
+accelerate>=0.20.0
+safetensors>=0.3.0
