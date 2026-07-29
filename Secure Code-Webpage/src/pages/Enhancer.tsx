@@ -32,7 +32,7 @@ type Engine = "deterministic" | "ai";
 type LlmStatus = "idle" | "testing" | "ok" | "fail";
 
 const PROVIDERS: Record<string, { label: string; needsKey: boolean; defaultModel: string; baseUrl?: string; builtIn?: boolean }> = {
-  default: { label: "FortiScan free · Nemotron (no key needed)", needsKey: false, defaultModel: "", builtIn: true },
+  default: { label: "FortiScan Free · Nemotron (No Key Needed)", needsKey: false, defaultModel: "", builtIn: true },
   openai: { label: "OpenAI", needsKey: true, defaultModel: "gpt-4o-mini" },
   anthropic: { label: "Anthropic (Claude)", needsKey: true, defaultModel: "claude-haiku-4-5-20251001" },
   gemini: { label: "Google Gemini", needsKey: true, defaultModel: "gemini-1.5-flash" },
