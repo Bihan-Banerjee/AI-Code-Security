@@ -22,8 +22,8 @@ const goals = [
 ];
 
 const team = [
-  { name: "Bihan Banerjee", role: "Cybersecurity Specialist", bio: "3rd year undergraduate specializing in CSE Information Security at VIT Vellore.", image: BihanPic },
-  { name: "Nethra Krishnan", role: "AI Specialist", bio: "3rd year undergraduate specializing in CSE Data Science at VIT Vellore.", image: NethraPic },
+  { name: "Bihan Banerjee", role: "Cybersecurity Specialist", bio: "4th year undergraduate specializing in CSE Information Security at VIT Vellore.", image: BihanPic },
+  { name: "Nethra Krishnan", role: "AI Specialist", bio: "4th year undergraduate specializing in CSE Data Science at VIT Vellore.", image: NethraPic },
 ];
 
 const floatIcons = [
