@@ -238,6 +238,30 @@ def _extract_llm(data):
     }
 
 
+def _resolve_llm(cfg):
+    """Resolve the request LLM config to a concrete provider.
+
+    A provider of "" or "default" means "use the built-in free model": the
+    server-side OpenRouter key + model. Users who supply their own provider/key
+    are passed through untouched. Returns None when "default" is requested but
+    the server has no OpenRouter key configured.
+    """
+    provider = (cfg or {}).get("provider", "")
+    if provider in ("", "default", "fortiscan"):
+        key = os.getenv("OPENROUTER_API_KEY", "")
+        if not key:
+            return None
+        # The shared key is server-controlled: force the configured model so it
+        # can't be pointed at an arbitrary (costly) model by the client.
+        return {
+            "provider": "openrouter",
+            "api_key": key,
+            "model": os.getenv("OPENROUTER_FALLBACK_MODEL", "nvidia/nemotron-3-super-120b-a12b:free"),
+            "base_url": "",
+        }
+    return cfg
+
+
 @app.route("/api/test-llm", methods=["POST"])
 @limiter.limit("10/minute")
 @jwt_required()
@@ -245,11 +269,16 @@ def test_llm_connection():
     """Live-check a user-supplied LLM provider/key before enhancing. Key not stored."""
     try:
         data = request.get_json(silent=True) or {}
-        cfg = _extract_llm(data)
-        if cfg["provider"] not in LLM_PROVIDERS:
+        resolved = _resolve_llm(_extract_llm(data))
+        if resolved is None:
+            return jsonify({
+                "ok": False,
+                "message": "The built-in free AI isn't configured on the server. Choose a provider and enter your own key.",
+            }), 400
+        if resolved["provider"] not in LLM_PROVIDERS:
             return jsonify({"ok": False, "message": "Unsupported provider"}), 400
         ok, message = test_llm(
-            cfg["provider"], api_key=cfg["api_key"], model=cfg["model"], base_url=cfg["base_url"]
+            resolved["provider"], api_key=resolved["api_key"], model=resolved["model"], base_url=resolved["base_url"]
         )
         return jsonify({"ok": ok, "message": message}), (200 if ok else 400)
     except Exception as e:
@@ -273,7 +302,7 @@ def enhance():
             return jsonify({"error": "Unsupported language"}), 400
 
         engine = str(data.get("engine", "deterministic")).lower()
-        llm = _extract_llm(data) if engine == "ai" else None
+        llm = _resolve_llm(_extract_llm(data)) if engine == "ai" else None
         result = enhance_code(code, language, engine=engine, llm=llm)
 
         try:
@@ -344,7 +373,7 @@ def enhance_stream():
         return jsonify({"error": "Unsupported language"}), 400
 
     engine = str(data.get("engine", "deterministic")).lower()
-    llm = _extract_llm(data) if engine == "ai" else None
+    llm = _resolve_llm(_extract_llm(data)) if engine == "ai" else None
 
     def generate():
         try:

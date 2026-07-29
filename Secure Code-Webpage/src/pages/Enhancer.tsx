@@ -31,7 +31,8 @@ interface EnhanceResult {
 type Engine = "deterministic" | "ai";
 type LlmStatus = "idle" | "testing" | "ok" | "fail";
 
-const PROVIDERS: Record<string, { label: string; needsKey: boolean; defaultModel: string; baseUrl?: string }> = {
+const PROVIDERS: Record<string, { label: string; needsKey: boolean; defaultModel: string; baseUrl?: string; builtIn?: boolean }> = {
+  default: { label: "FortiScan free · Nemotron (no key needed)", needsKey: false, defaultModel: "", builtIn: true },
   openai: { label: "OpenAI", needsKey: true, defaultModel: "gpt-4o-mini" },
   anthropic: { label: "Anthropic (Claude)", needsKey: true, defaultModel: "claude-haiku-4-5-20251001" },
   gemini: { label: "Google Gemini", needsKey: true, defaultModel: "gemini-1.5-flash" },
@@ -40,7 +41,7 @@ const PROVIDERS: Record<string, { label: string; needsKey: boolean; defaultModel
   ollama: { label: "Ollama (local)", needsKey: false, defaultModel: "llama3.2", baseUrl: "http://localhost:11434/v1" },
 };
 
-const EXPLANATIONS_PER_PAGE = 6;
+const EXPLANATIONS_PER_PAGE = 8;
 const DIFF_LINES_PER_PAGE = 30;
 
 export default function Enhancer() {
@@ -58,7 +59,7 @@ export default function Enhancer() {
 
   // --- Engine / AI-provider config -----------------------------------------
   const [engine, setEngine] = useState<Engine>("deterministic");
-  const [provider, setProvider] = useState("openai");
+  const [provider, setProvider] = useState("default");
   const [apiKey, setApiKey] = useState("");
   const [model, setModel] = useState("");
   const [baseUrl, setBaseUrl] = useState("");
@@ -276,13 +277,13 @@ export default function Enhancer() {
                   <div className="mb-1 flex items-center gap-2 font-medium">
                     <Bot className="h-4 w-4 text-accent" /> AI model
                   </div>
-                  <p className="text-xs text-muted-foreground">Full rewrite by your own LLM. Bring a key and test it live first.</p>
+                  <p className="text-xs text-muted-foreground">Full rewrite by an LLM. Use the built-in free model, or bring your own key.</p>
                 </button>
               </div>
 
               {engine === "ai" && (
                 <div className="space-y-3 rounded-xl border border-border/60 bg-card/40 p-4">
-                  <div className="grid gap-3 sm:grid-cols-2">
+                  <div className={PROVIDERS[provider].builtIn ? "" : "grid gap-3 sm:grid-cols-2"}>
                     <div>
                       <label className="mb-2 block text-sm font-medium text-foreground/80">Provider</label>
                       <Select value={provider} onValueChange={setProvider}>
@@ -294,20 +295,27 @@ export default function Enhancer() {
                         </SelectContent>
                       </Select>
                     </div>
-                    <div>
-                      <label className="mb-2 block text-sm font-medium text-foreground/80">
-                        Model <span className="opacity-60">(optional)</span>
-                      </label>
-                      <Input
-                        value={model}
-                        onChange={(e) => setModel(e.target.value)}
-                        placeholder={PROVIDERS[provider].defaultModel}
-                        className="font-mono text-sm"
-                      />
-                    </div>
+                    {!PROVIDERS[provider].builtIn && (
+                      <div>
+                        <label className="mb-2 block text-sm font-medium text-foreground/80">
+                          Model <span className="opacity-60">(optional)</span>
+                        </label>
+                        <Input
+                          value={model}
+                          onChange={(e) => setModel(e.target.value)}
+                          placeholder={PROVIDERS[provider].defaultModel}
+                          className="font-mono text-sm"
+                        />
+                      </div>
+                    )}
                   </div>
 
-                  {PROVIDERS[provider].needsKey ? (
+                  {PROVIDERS[provider].builtIn ? (
+                    <p className="rounded-lg border border-accent/30 bg-accent/10 px-3 py-2 text-xs text-muted-foreground">
+                      Uses FortiScan's built-in free model (OpenRouter · Nemotron). No key required — just test the
+                      connection and enhance. Prefer your own model? Pick another provider above.
+                    </p>
+                  ) : PROVIDERS[provider].needsKey ? (
                     <div>
                       <label className="mb-2 block text-sm font-medium text-foreground/80">API key</label>
                       <Input
@@ -351,9 +359,11 @@ export default function Enhancer() {
                     )}
                   </div>
 
-                  <p className="text-xs text-muted-foreground">
-                    Your key is used only to run this request and is kept in this browser. It is never stored on our servers.
-                  </p>
+                  {!PROVIDERS[provider].builtIn && (
+                    <p className="text-xs text-muted-foreground">
+                      Your key is used only to run this request and is kept in this browser. It is never stored on our servers.
+                    </p>
+                  )}
                 </div>
               )}
             </div>
