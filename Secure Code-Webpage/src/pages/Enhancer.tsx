@@ -7,6 +7,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/Footer";
 import CodeMirrorEditor from "@/components/CodeMirrorEditor";
 import Reveal from "@/components/effects/Reveal";
+import PaginationBar from "@/components/PaginationBar";
 import { toast } from "sonner";
 import {
   Loader2, Sparkles, Upload, FileCode, CheckCircle2, AlertCircle, Copy, Download,
@@ -39,6 +40,9 @@ const PROVIDERS: Record<string, { label: string; needsKey: boolean; defaultModel
   ollama: { label: "Ollama (local)", needsKey: false, defaultModel: "llama3.2", baseUrl: "http://localhost:11434/v1" },
 };
 
+const EXPLANATIONS_PER_PAGE = 6;
+const DIFF_LINES_PER_PAGE = 30;
+
 export default function Enhancer() {
   const [code, setCode] = useState("");
   const [filename, setFilename] = useState("code.py");
@@ -47,6 +51,8 @@ export default function Enhancer() {
   const [loading, setLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
+  const [explPage, setExplPage] = useState(1);
+  const [diffPage, setDiffPage] = useState(1);
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -187,6 +193,9 @@ export default function Enhancer() {
           if (msg.type === "progress") setProgress(msg.progress);
           if (msg.type === "result") {
             setResult(msg.data);
+            setExplPage(1);
+            setDiffPage(1);
+            setActiveTab(0);
             setLoading(false);
             toast.success("Enhancement complete!");
           }
@@ -449,17 +458,28 @@ export default function Enhancer() {
                     <CheckCircle2 className="h-5 w-5 text-success" /> What changed &amp; why
                   </div>
                   {result.explanations?.length ? (
-                    <ul className="space-y-3">
-                      {result.explanations.map((ex, i) => (
-                        <li key={i} className="flex gap-3">
-                          <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-success" />
-                          <div className="text-sm">
-                            <strong>{ex.change}:</strong>{" "}
-                            <span className="text-muted-foreground">{ex.reason}</span>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
+                    <>
+                      <ul className="space-y-3">
+                        {result.explanations
+                          .slice((explPage - 1) * EXPLANATIONS_PER_PAGE, explPage * EXPLANATIONS_PER_PAGE)
+                          .map((ex, i) => (
+                            <li key={(explPage - 1) * EXPLANATIONS_PER_PAGE + i} className="flex gap-3">
+                              <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-success" />
+                              <div className="text-sm">
+                                <strong>{ex.change}:</strong>{" "}
+                                <span className="text-muted-foreground">{ex.reason}</span>
+                              </div>
+                            </li>
+                          ))}
+                      </ul>
+                      <PaginationBar
+                        page={explPage}
+                        pageSize={EXPLANATIONS_PER_PAGE}
+                        total={result.explanations.length}
+                        onPageChange={setExplPage}
+                        itemLabel="changes"
+                      />
+                    </>
                   ) : (
                     <p className="text-sm text-muted-foreground">No specific explanations provided.</p>
                   )}
@@ -501,25 +521,40 @@ export default function Enhancer() {
                 <div className="glass rounded-2xl p-6">
                   <div className="mb-1 font-display text-lg font-medium">Code changes (diff)</div>
                   <p className="mb-4 text-sm text-muted-foreground">Red removed · green added</p>
-                  <div className="overflow-hidden rounded-xl border border-border/60 font-mono text-xs">
-                    {(result.diff ?? []).map((line, i) => (
-                      <div
-                        key={i}
-                        className={`px-4 py-1 ${
-                          line.type === "add"
-                            ? "border-l-2 border-success bg-success/10 text-success"
-                            : line.type === "remove"
-                            ? "border-l-2 border-destructive bg-destructive/10 text-destructive"
-                            : "text-muted-foreground"
-                        }`}
-                      >
-                        <span className="mr-2 select-none opacity-50">
-                          {line.type === "add" ? "+" : line.type === "remove" ? "-" : " "}
-                        </span>
-                        {line.content}
+                  {(result.diff?.length ?? 0) === 0 ? (
+                    <p className="text-sm text-muted-foreground">No line-level changes (advisory-only findings).</p>
+                  ) : (
+                    <>
+                      <div className="overflow-hidden rounded-xl border border-border/60 font-mono text-xs">
+                        {result.diff
+                          .slice((diffPage - 1) * DIFF_LINES_PER_PAGE, diffPage * DIFF_LINES_PER_PAGE)
+                          .map((line, i) => (
+                            <div
+                              key={(diffPage - 1) * DIFF_LINES_PER_PAGE + i}
+                              className={`px-4 py-1 ${
+                                line.type === "add"
+                                  ? "border-l-2 border-success bg-success/10 text-success"
+                                  : line.type === "remove"
+                                  ? "border-l-2 border-destructive bg-destructive/10 text-destructive"
+                                  : "text-muted-foreground"
+                              }`}
+                            >
+                              <span className="mr-2 select-none opacity-50">
+                                {line.type === "add" ? "+" : line.type === "remove" ? "-" : " "}
+                              </span>
+                              {line.content}
+                            </div>
+                          ))}
                       </div>
-                    ))}
-                  </div>
+                      <PaginationBar
+                        page={diffPage}
+                        pageSize={DIFF_LINES_PER_PAGE}
+                        total={result.diff.length}
+                        onPageChange={setDiffPage}
+                        itemLabel="lines"
+                      />
+                    </>
+                  )}
                 </div>
               </>
             )}

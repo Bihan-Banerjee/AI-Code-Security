@@ -8,6 +8,7 @@ import {
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
   ScatterChart, Scatter, ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
+import type { TooltipProps } from "recharts";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/Footer";
@@ -15,6 +16,7 @@ import Reveal from "@/components/effects/Reveal";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
+import { getCweName } from "@/lib/cwe";
 
 interface HistoryItem {
   language?: string;
@@ -27,6 +29,21 @@ const COLORS = ["#22d3ee", "#8b5cf6", "#34d399", "#fbbf24", "#f87171", "#60a5fa"
 const AXIS = "#94a3b8";
 const GRID = "rgba(148,163,184,0.15)";
 const tooltipStyle = { background: "hsl(222 44% 9%)", border: "1px solid hsl(217 33% 17%)", borderRadius: 12, color: "#f1f5f9" };
+
+/** Chart tooltip that spells out what a CWE is when the id is known. */
+function CweTooltip({ active, payload, label }: TooltipProps<number, string>) {
+  if (!active || !payload || !payload.length) return null;
+  const name = String(label ?? payload[0]?.payload?.name ?? "");
+  const match = /^CWE-(\d+)$/.exec(name);
+  const desc = match ? getCweName(Number(match[1])) : undefined;
+  const value = Number(payload[0]?.value ?? 0);
+  return (
+    <div style={tooltipStyle} className="px-3 py-2 text-sm">
+      <div className="max-w-[240px] font-medium">{name}{desc ? ` — ${desc}` : ""}</div>
+      <div className="text-muted-foreground">{value} issue{value === 1 ? "" : "s"}</div>
+    </div>
+  );
+}
 
 const fetchHistory = async (): Promise<HistoryItem[]> => {
   if (!getToken()) throw new Error("Not logged in");
@@ -74,7 +91,13 @@ export default function Analytics() {
     if (!chartData.length) return <p className="py-16 text-center text-muted-foreground">No data available</p>;
     const grid = <CartesianGrid strokeDasharray="3 3" stroke={GRID} />;
     const axes = <><XAxis dataKey="name" tick={{ fill: AXIS, fontSize: 12 }} stroke={GRID} /><YAxis tick={{ fill: AXIS, fontSize: 12 }} stroke={GRID} /></>;
-    const tip = <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "rgba(148,163,184,0.08)" }} />;
+    const tip = (
+      <Tooltip
+        contentStyle={tooltipStyle}
+        cursor={{ fill: "rgba(148,163,184,0.08)" }}
+        content={groupBy === "CWE" ? <CweTooltip /> : undefined}
+      />
+    );
     switch (chartType) {
       case "Line":
         return <ResponsiveContainer width="100%" height={400}><LineChart data={chartData}>{grid}{axes}{tip}<Legend /><Line type="monotone" dataKey="value" stroke="#22d3ee" strokeWidth={2} /></LineChart></ResponsiveContainer>;

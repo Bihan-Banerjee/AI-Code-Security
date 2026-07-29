@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { AxiosError } from "axios";
 import api from "@/lib/api";
 import { getErrorMessage } from "@/lib/errors";
@@ -8,6 +8,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/Footer";
 import CodeMirrorEditor from "@/components/CodeMirrorEditor";
 import Reveal from "@/components/effects/Reveal";
+import PaginationBar from "@/components/PaginationBar";
+import CweBadge from "@/components/CweBadge";
 import { useMutation } from "@tanstack/react-query";
 import {
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
@@ -16,18 +18,21 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { BanditResponse, BanditItem } from "@/lib/schemas";
 import {
-  Upload, FileCode, X, Shield, Loader2, AlertTriangle, CheckCircle2, XCircle, AlertCircle,
+  Upload, FileCode, X, Shield, Loader2, AlertTriangle, CheckCircle2, XCircle, AlertCircle, ArrowUpDown,
 } from "lucide-react";
 
 const MAX_FILE_SIZE_BYTES = 500 * 1024;
 const MAX_FILE_COUNT = 10;
+const ISSUES_PER_PAGE = 8;
 
 type CodeFile = { filename: string; content: string };
 type ScanResult = z.infer<typeof BanditResponse>;
 type Issue = z.infer<typeof BanditItem>;
 type Filter = "all" | "high" | "medium" | "low";
+type SortBy = "severity" | "line" | "file" | "cwe";
 
 const baseName = (p?: string) => (p ? p.split(/[\\/]/).pop() || p : "");
+const SEVERITY_RANK: Record<string, number> = { high: 3, medium: 2, low: 1 };
 
 export default function CodeScanner() {
   const [files, setFiles] = useState<CodeFile[]>([{ filename: "app.py", content: "" }]);
@@ -36,6 +41,8 @@ export default function CodeScanner() {
   const [scanComplete, setScanComplete] = useState(false);
   const [score, setScore] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
+  const [sortBy, setSortBy] = useState<SortBy>("severity");
+  const [page, setPage] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -136,7 +143,29 @@ export default function CodeScanner() {
     low: issues.filter((i) => i.issue_severity?.toLowerCase() === "low").length,
   }), [issues]);
 
-  const filteredIssues = filter === "all" ? issues : issues.filter((i) => i.issue_severity?.toLowerCase() === filter);
+  const sortedFilteredIssues = useMemo(() => {
+    const list = filter === "all" ? issues : issues.filter((i) => i.issue_severity?.toLowerCase() === filter);
+    const sorted = [...list].sort((a, b) => {
+      switch (sortBy) {
+        case "line":
+          return (a.line_number ?? 0) - (b.line_number ?? 0);
+        case "file":
+          return baseName(a.filename).localeCompare(baseName(b.filename));
+        case "cwe":
+          return (a.issue_cwe?.id ?? 0) - (b.issue_cwe?.id ?? 0);
+        case "severity":
+        default:
+          return (SEVERITY_RANK[b.issue_severity?.toLowerCase() ?? ""] ?? 0) -
+                 (SEVERITY_RANK[a.issue_severity?.toLowerCase() ?? ""] ?? 0);
+      }
+    });
+    return sorted;
+  }, [issues, filter, sortBy]);
+
+  // Reset to the first page whenever the list, filter, or sort changes.
+  useEffect(() => { setPage(1); }, [filter, sortBy, issues]);
+
+  const pageIssues = sortedFilteredIssues.slice((page - 1) * ISSUES_PER_PAGE, page * ISSUES_PER_PAGE);
 
   const highlightFor = (filename: string) =>
     issues.filter((i) => baseName(i.filename) === baseName(filename) && i.line_number).map((i) => i.line_number as number);
@@ -282,29 +311,43 @@ export default function CodeScanner() {
                       <p className="text-lg font-medium text-success">No vulnerabilities found!</p>
                     </div>
                   ) : (
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {(["all", "high", "medium", "low"] as Filter[]).map((f) => (
-                        <button
-                          key={f}
-                          onClick={() => setFilter(f)}
-                          className={`rounded-full px-3 py-1.5 text-xs font-medium capitalize transition-colors ${
-                            filter === f ? "bg-primary text-primary-foreground" : "bg-secondary/50 text-muted-foreground hover:text-foreground"
-                          }`}
-                        >
-                          {f === "all" ? `All (${issues.length})` : `${f} (${counts[f]})`}
-                        </button>
-                      ))}
+                    <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="flex flex-wrap gap-2">
+                        {(["all", "high", "medium", "low"] as Filter[]).map((f) => (
+                          <button
+                            key={f}
+                            onClick={() => setFilter(f)}
+                            className={`rounded-full px-3 py-1.5 text-xs font-medium capitalize transition-colors ${
+                              filter === f ? "bg-primary text-primary-foreground" : "bg-secondary/50 text-muted-foreground hover:text-foreground"
+                            }`}
+                          >
+                            {f === "all" ? `All (${issues.length})` : `${f} (${counts[f]})`}
+                          </button>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
+                        <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortBy)}>
+                          <SelectTrigger className="h-9 w-[150px] text-xs"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="severity">Severity</SelectItem>
+                            <SelectItem value="line">Line number</SelectItem>
+                            <SelectItem value="file">File name</SelectItem>
+                            <SelectItem value="cwe">CWE</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                   )}
                 </div>
 
-                {filteredIssues.length > 0 && (
+                {sortedFilteredIssues.length > 0 && (
                   <div className="glass space-y-3 rounded-2xl p-6">
                     <div className="flex items-center gap-2 font-display text-lg font-medium">
                       <AlertTriangle className="h-5 w-5 text-warning" /> Detected vulnerabilities
                     </div>
-                    {filteredIssues.map((issue, idx) => (
-                      <Reveal key={idx} delay={Math.min(idx * 0.04, 0.3)} direction="up">
+                    {pageIssues.map((issue, idx) => (
+                      <Reveal key={(page - 1) * ISSUES_PER_PAGE + idx} delay={Math.min(idx * 0.04, 0.3)} direction="up">
                         <div className="rounded-xl border border-border/60 bg-card/40 p-4">
                           <div className="mb-2 flex items-center justify-between gap-3">
                             <div className="flex items-center gap-2">
@@ -324,15 +367,17 @@ export default function CodeScanner() {
                             </span>
                           </div>
                           <p className="text-sm text-foreground/80">{issue.issue_text || "-"}</p>
-                          {issue.issue_cwe?.id && (
-                            <a href={issue.issue_cwe.link} target="_blank" rel="noopener noreferrer"
-                              className="mt-2 inline-block text-xs font-medium text-primary hover:underline">
-                              CWE-{issue.issue_cwe.id}
-                            </a>
-                          )}
+                          <CweBadge id={issue.issue_cwe?.id} link={issue.issue_cwe?.link} className="mt-2 inline-block text-xs" />
                         </div>
                       </Reveal>
                     ))}
+                    <PaginationBar
+                      page={page}
+                      pageSize={ISSUES_PER_PAGE}
+                      total={sortedFilteredIssues.length}
+                      onPageChange={setPage}
+                      itemLabel="vulnerabilities"
+                    />
                   </div>
                 )}
               </>

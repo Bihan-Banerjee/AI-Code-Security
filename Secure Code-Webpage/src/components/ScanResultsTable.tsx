@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { BanditItem } from "@/lib/schemas";
 import { CheckCircle2 } from "lucide-react";
+import CweBadge from "@/components/CweBadge";
 
 type Issue = z.infer<typeof BanditItem>;
 
@@ -53,14 +54,7 @@ export default function ScanResultsTable({ issues }: { issues: Issue[] }) {
               <td className="p-3 text-foreground/80">{issue.issue_text || "-"}</td>
               <td className="p-3">
                 {issue.issue_cwe?.id ? (
-                  <a
-                    href={issue.issue_cwe.link}
-                    className="font-medium text-primary underline-offset-2 hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    CWE-{issue.issue_cwe.id}
-                  </a>
+                  <CweBadge id={issue.issue_cwe.id} link={issue.issue_cwe.link} />
                 ) : (
                   "-"
                 )}
